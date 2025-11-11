@@ -1,0 +1,118 @@
+name: Deploy to Hetzner
+
+on:
+  workflow_run:
+    workflows: ["Build and Push Docker Image"]
+    types:
+      - completed
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    # Deploy if build succeeded and was triggered by v-* tag, or if manually triggered
+    if: ${{ (github.event.workflow_run.conclusion == 'success' && startsWith(github.event.workflow_run.head_branch, 'v-')) || github.event_name == 'workflow_dispatch' }}
+
+    steps:
+      - name: Checkout repository to get commit SHA
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_branch || github.ref }}
+
+      - name: Deploy to Hetzner VPS
+        uses: appleboy/ssh-action@v1.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GHCR_USERNAME: ${{ github.actor }}
+          COMMIT_SHA: ${{ github.event.workflow_run.head_sha || github.sha }}
+          BRANCH_NAME: ${{ github.event.workflow_run.head_branch || github.ref_name }}
+        with:
+          host: 138.199.167.69
+          username: david
+          key: ${{ secrets.HETZNER_SSH_KEY }}
+          envs: GITHUB_TOKEN,GHCR_USERNAME,COMMIT_SHA,BRANCH_NAME
+          script: |
+            cd /home/david/portfolio
+
+            # Determine image tag based on whether this is a git tag or branch
+            if [[ "$BRANCH_NAME" == v-* ]]; then
+              # For git tags, use the tag name directly (no SHA)
+              IMAGE_TAG="$BRANCH_NAME"
+            else
+              # For branches, append SHA
+              SHORT_SHA=$(echo $COMMIT_SHA | cut -c1-7)
+              IMAGE_TAG="${BRANCH_NAME}-${SHORT_SHA}"
+            fi
+
+            echo "📦 Deploying image: ghcr.io/dblumenau/portfolio:$IMAGE_TAG"
+
+            # Pull specific image and tag as latest
+            echo "📥 Pulling image $IMAGE_TAG..."
+            if ! docker pull ghcr.io/dblumenau/portfolio:$IMAGE_TAG; then
+              echo "❌ Failed to pull Docker image"
+              exit 1
+            fi
+
+            docker tag ghcr.io/dblumenau/portfolio:$IMAGE_TAG ghcr.io/dblumenau/portfolio:latest
+
+            # Restart containers
+            echo "🔄 Restarting containers..."
+            docker compose -f docker-compose.prod.yml down
+            docker compose -f docker-compose.prod.yml up -d
+
+            # Wait for containers to start (retry up to 30 seconds)
+            echo "⏳ Waiting for containers to start..."
+            for i in {1..30}; do
+              if docker ps | grep "portfolio-app" | grep -q "Up"; then
+                echo "✅ Containers are running"
+                break
+              fi
+              if [ $i -eq 30 ]; then
+                echo "❌ Container failed to start after 30 seconds"
+                docker logs portfolio-app --tail 50
+                exit 1
+              fi
+              sleep 1
+            done
+
+            # Fix storage and database permissions (volumes override Dockerfile permissions)
+            echo "🔧 Fixing storage permissions..."
+            docker exec portfolio-app chown -R www-data:www-data /app/storage /app/bootstrap/cache
+            docker exec portfolio-app chmod -R 775 /app/storage /app/bootstrap/cache
+
+            echo "🔧 Fixing database permissions..."
+            docker exec portfolio-app chown -R www-data:www-data /app/database
+            docker exec portfolio-app chmod -R 775 /app/database
+            docker exec portfolio-app chmod 664 /app/database/database.sqlite
+
+            # Fix bootstrap cache file ownership (created by artisan commands running as root)
+            docker exec portfolio-app find /app/bootstrap/cache -type f -exec chown www-data:www-data {} \;
+
+            # Run migrations and optimize
+            echo "🗄️ Running migrations..."
+            docker exec portfolio-app php artisan migrate --force
+
+            echo "🔗 Creating storage symlink..."
+            docker exec portfolio-app php artisan storage:link
+
+            echo "⚡ Optimizing caches..."
+            docker exec portfolio-app php artisan config:cache
+            docker exec portfolio-app php artisan route:cache
+            docker exec portfolio-app php artisan view:cache
+
+            # Clean up old images (keep only last 3)
+            echo "🧹 Cleaning up old Docker images..."
+            docker images ghcr.io/dblumenau/portfolio --format "{{.ID}} {{.Repository}}:{{.Tag}}" | \
+              grep -v "latest" | \
+              tail -n +4 | \
+              awk '{print $1}' | \
+              xargs -r docker rmi -f || true
+            docker image prune -f
+
+            # Health check
+            if ! curl -f -s http://localhost:8091 > /dev/null; then
+              echo "❌ Deployment health check failed"
+              exit 1
+            fi
+
+            echo "✅ Deployment successful - $IMAGE_TAG"
