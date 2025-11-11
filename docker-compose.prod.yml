@@ -10,7 +10,7 @@ services:
     env_file:
       - .env.production
     volumes:
-      - ./database:/app/database
+      - ./database/database.sqlite:/app/database/database.sqlite
       - ./storage:/app/storage
       - ./.env:/app/.env:ro
     healthcheck:
