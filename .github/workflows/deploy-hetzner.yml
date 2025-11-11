@@ -100,6 +100,10 @@ jobs:
             docker exec portfolio-app php artisan route:cache
             docker exec portfolio-app php artisan view:cache
 
+            # Fix permissions after artisan commands
+            docker exec portfolio-app chown -R www-data:www-data /app/storage /app/bootstrap/cache /app/database
+            docker exec portfolio-app find /app/bootstrap/cache -type f -exec chown www-data:www-data {} \;
+
             # Clean up old images (keep only last 3)
             echo "🧹 Cleaning up old Docker images..."
             docker images ghcr.io/dblumenau/portfolio --format "{{.ID}} {{.Repository}}:{{.Tag}}" | \
