@@ -22,7 +22,6 @@ RUN npm install
 COPY resources ./resources
 COPY public ./public
 COPY vite.config.js ./
-COPY jsconfig.json ./
 
 # Build assets (production mode)
 RUN npm run build
