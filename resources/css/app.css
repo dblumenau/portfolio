@@ -1,0 +1,73 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+
+    /* Dark theme color palette */
+    --color-dark-bg: #0f172a;
+    --color-dark-bg-secondary: #1e293b;
+    --color-dark-text: #f1f5f9;
+    --color-dark-text-secondary: #cbd5e1;
+    --color-accent-cyan: #06b6d4;
+    --color-accent-blue: #3b82f6;
+}
+
+@layer base {
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        @apply bg-slate-900 text-slate-100 font-sans antialiased;
+    }
+}
+
+/* Swiper custom styles */
+swiper-container {
+    width: 100%;
+    height: 100%;
+}
+
+swiper-slide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+/* Swiper navigation buttons */
+swiper-container::part(button-prev),
+swiper-container::part(button-next) {
+    color: rgb(148 163 184);
+    background: rgba(15, 23, 42, 0.8);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    backdrop-filter: blur(8px);
+}
+
+swiper-container::part(button-prev):hover,
+swiper-container::part(button-next):hover {
+    color: rgb(6 182 212);
+    background: rgba(15, 23, 42, 0.95);
+}
+
+/* Swiper pagination */
+swiper-container::part(pagination) {
+    --swiper-pagination-color: rgb(6 182 212);
+    --swiper-pagination-bullet-inactive-color: rgb(71 85 105);
+    --swiper-pagination-bullet-inactive-opacity: 1;
+}
+
+/* Glassmorphism effect */
+.glass {
+    background: rgba(30, 41, 59, 0.7);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(148, 163, 184, 0.1);
+}
