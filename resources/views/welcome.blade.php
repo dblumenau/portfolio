@@ -20,7 +20,7 @@
                     Danish Dave
                 </h1>
                 <p class="text-xl md:text-2xl text-slate-300">
-                    Developer, Author, Self Appointed AI Expert
+                    Developer, Writer, Self Appointed AI Expert
                 </p>
             </div>
 
@@ -94,21 +94,35 @@
 
     <!-- About Section -->
     <section id="about" class="py-20 bg-slate-900">
-        <div class="container mx-auto px-4 max-w-4xl">
+        <div class="container mx-auto px-4 max-w-5xl">
             <div class="glass rounded-2xl p-8 md:p-12">
-                <h2 class="text-4xl md:text-5xl font-bold text-center mb-8 bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-                    About Me
-                </h2>
-                <div class="space-y-6 text-slate-300 text-lg leading-relaxed">
-                    <p>
-                        Hey there! I'm David Blumenau, but you might know me as Danish Dave. I'm a developer with a passion for building tools that make life more interesting and enjoyable.
-                    </p>
-                    <p>
-                        From natural language interfaces for music control to AI-powered creative studios, I love exploring the intersection of technology and everyday experiences. Whether it's helping people learn languages through games or documenting life's adventures in Denmark, I'm all about creating things that matter.
-                    </p>
-                    <p>
-                        I work with modern technologies like Laravel, Vue.js, Tailwind CSS, and AI APIs to bring ideas to life. Each project is an opportunity to solve real problems and learn something new.
-                    </p>
+                <div class="flex flex-col md:flex-row gap-8 md:gap-12 items-center md:items-start">
+                    <!-- Profile Image -->
+                    <div class="flex-shrink-0 md:mt-22">
+                        <img
+                            src="{{ asset('images/david.jpeg') }}"
+                            alt="David Blumenau"
+                            class="w-48 md:w-64 rounded-2xl border-2 border-cyan-400/30 shadow-lg shadow-cyan-500/20"
+                        >
+                    </div>
+
+                    <!-- Text Content -->
+                    <div class="flex-1">
+                        <h2 class="text-4xl md:text-5xl font-bold text-center md:text-left mb-8 bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+                            About Me
+                        </h2>
+                        <div class="space-y-6 text-slate-300 text-lg leading-relaxed">
+                            <p>
+                                Hey there! I'm David Blumenau, but you might know me as Danish Dave. I'm a developer with a passion for building tools that make life more interesting and enjoyable.
+                            </p>
+                            <p>
+                                From natural language interfaces for music control to AI-powered creative studios, I love exploring the intersection of technology and everyday experiences. Whether it's helping people learn languages through games or documenting life's adventures in Denmark, I'm all about creating things that matter.
+                            </p>
+                            <p>
+                                I work with modern technologies like Laravel, Vue.js, Tailwind CSS, and AI APIs to bring ideas to life. Each project is an opportunity to solve real problems and learn something new.
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
