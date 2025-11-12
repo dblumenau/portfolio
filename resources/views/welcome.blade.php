@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Portfolio of David Blumenau - Developer & Creator">
+    <meta name="description" content="Portfolio of David Blumenau (Danish Dave) - Full-stack developer in Copenhagen creating AI-powered applications, language learning platforms, and innovative web experiences with Laravel, React, and modern web technologies.">
     <title>Danish Dave - Portfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
