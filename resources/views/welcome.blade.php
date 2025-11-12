@@ -5,27 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Portfolio of David Blumenau (Danish Dave) - Full-stack developer in Copenhagen creating AI-powered applications, language learning platforms, and innovative web experiences with Laravel, React, and modern web technologies.">
     <title>Danish Dave - Portfolio</title>
+    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('apple-touch-icon.png') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="bg-slate-900 text-slate-100">
-<!-- Hero Section with Swiper -->
-<section id="projects" class="min-h-screen flex items-center justify-center bg-gradient-to-b from-slate-950 to-slate-900 py-8 md:py-20 overflow-hidden">
-    <div class="container mx-auto px-4 overflow-hidden">
-        <!-- Header -->
-        <div class="text-center mb-12">
-            <h1 class="text-5xl md:text-7xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent mb-4">
-                Danish Dave
-            </h1>
-            <p class="text-xl md:text-2xl text-slate-300">
-                Developer, Writer, Self Appointed AI Expert
-            </p>
+<!-- Navigation -->
+<nav class="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-sm border-b border-slate-800">
+    <div class="container mx-auto px-4 py-0 flex items-center justify-between">
+        <!-- Logo -->
+        <div class="flex items-center">
+            <img src="{{ asset('images/logo.png') }}" alt="Danish Dave" class="h-12 md:h-14 py-1">
         </div>
 
-        <!-- Swiper Carousel -->
-        <div class="relative w-full mx-auto">
+        <!-- Nav Links -->
+        <div class="flex items-center gap-4 md:gap-6">
+            <a href="#projects" class="nav-link text-slate-300 hover:text-cyan-400 transition-all text-sm md:text-base" data-section="projects">Portfolio</a>
+            <a href="#about" class="nav-link text-slate-300 hover:text-cyan-400 transition-all text-sm md:text-base" data-section="about">About</a>
+            <a href="#ai-development" class="nav-link text-slate-300 hover:text-cyan-400 transition-all text-sm md:text-base" data-section="ai-development">AI Supervision</a>
+            <a href="#contact" class="nav-link text-slate-300 hover:text-cyan-400 transition-all text-sm md:text-base" data-section="contact">Contact</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero Section with Swiper -->
+<section id="projects" class="min-h-screen relative bg-gradient-to-b from-slate-950 to-slate-900 overflow-hidden pt-14">
+    <!-- Swiper Carousel -->
+    <div class="relative w-full h-screen flex items-center justify-center">
             <swiper-container
                 id="projects-swiper"
                 class="w-full swiper-responsive"
@@ -45,7 +54,7 @@
                 @foreach ($projects as $project)
                     <swiper-slide class="swiper-slide-responsive">
                         <a href="{{ $project->url }}" target="_blank" rel="noopener noreferrer" class="block h-full">
-                            <div class="glass rounded-2xl p-4 md:p-8 h-full flex flex-col transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/20 overflow-y-auto">
+                            <div class="glass rounded-2xl p-6 md:p-10 h-full flex flex-col transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/20 overflow-hidden">
                                 <!-- Project Image -->
                                 <div class="relative mb-4 md:mb-6 flex-shrink-0">
                                     <picture class="cursor-zoom-in" onclick="event.preventDefault(); event.stopPropagation(); openLightbox('{{ asset($project->desktop_image) }}', '{{ $project->name }}');">
@@ -75,10 +84,10 @@
                                         </svg>
                                     </div>
 
-                                    <h3 class="text-xl md:text-3xl font-bold text-cyan-400 mb-2 md:mb-4">
+                                    <h3 class="text-xl md:text-3xl font-bold text-cyan-400 mb-2 md:mb-4 break-words">
                                         {{ $project->name }}
                                     </h3>
-                                    <p class="text-slate-300 text-sm md:text-lg leading-relaxed">
+                                    <p class="text-slate-300 text-sm md:text-lg leading-relaxed break-words">
                                         {{ $project->description }}
                                     </p>
                                 </div>
@@ -87,7 +96,6 @@
                     </swiper-slide>
                 @endforeach
             </swiper-container>
-        </div>
     </div>
 </section>
 
@@ -372,8 +380,38 @@ I have already made an a record to point to the server with the url swiftdanish.
             // Swiper is initialized via web components
             console.log('Projects swiper initialized');
             console.log('What are you doing in the dev tools of my portfolio website you sneaky tricky hobbit? :)');
-
         }
+
+        // Active section highlighting
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        const observerOptions = {
+            root: null,
+            rootMargin: '-50% 0px -50% 0px',
+            threshold: 0
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const sectionId = entry.target.getAttribute('id');
+
+                    // Remove active class from all links
+                    navLinks.forEach(link => {
+                        link.classList.remove('active-nav');
+                    });
+
+                    // Add active class to current link
+                    const activeLink = document.querySelector(`.nav-link[data-section="${sectionId}"]`);
+                    if (activeLink) {
+                        activeLink.classList.add('active-nav');
+                    }
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => observer.observe(section));
     });
 
     // Lightbox functions
