@@ -21,10 +21,13 @@
 @layer base {
     html {
         scroll-behavior: smooth;
+        overflow-x: hidden;
     }
 
     body {
         @apply bg-slate-900 text-slate-100 font-sans antialiased;
+        overflow-x: hidden;
+        max-width: 100vw;
     }
 }
 
@@ -32,6 +35,18 @@
 swiper-container {
     width: 100%;
     height: 100%;
+    overflow: hidden;
+    max-width: 100vw;
+}
+
+swiper-container.swiper-responsive {
+    height: 700px;
+}
+
+@media (min-width: 768px) {
+    swiper-container.swiper-responsive {
+        height: 850px;
+    }
 }
 
 swiper-slide {
@@ -39,6 +54,18 @@ swiper-slide {
     align-items: center;
     justify-content: center;
     position: relative;
+}
+
+swiper-slide.swiper-slide-responsive {
+    width: 90vw !important;
+    max-width: 500px !important;
+}
+
+@media (min-width: 768px) {
+    swiper-slide.swiper-slide-responsive {
+        width: 750px !important;
+        max-width: 90vw !important;
+    }
 }
 
 /* Swiper navigation buttons */

@@ -89,8 +89,8 @@ jobs:
             docker exec portfolio-app find /app/bootstrap/cache -type f -exec chown www-data:www-data {} \;
 
             # Run migrations and optimize
-            echo "🗄️ Running migrations..."
-            docker exec portfolio-app php artisan migrate --force
+            echo "🗄️ Resetting database with fresh migrations and seeds..."
+            docker exec portfolio-app php artisan migrate:fresh --seed --force
 
             echo "🔗 Creating storage symlink..."
             docker exec portfolio-app php artisan storage:link
