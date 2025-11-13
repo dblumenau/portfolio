@@ -105,3 +105,22 @@ swiper-container::part(pagination) {
     text-shadow: 0 0 10px rgba(6, 182, 212, 0.5), 0 0 20px rgba(6, 182, 212, 0.3);
     font-weight: 600;
 }
+
+/* Grid view styles */
+#grid-view {
+    padding: 40px 0;
+}
+
+#grid-view .grid {
+    min-height: 600px;
+}
+
+#grid-view .project-card {
+    min-height: 300px;
+}
+
+@media (min-width: 768px) {
+    #grid-view .project-card {
+        min-height: 350px;
+    }
+}

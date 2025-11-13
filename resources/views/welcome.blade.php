@@ -32,70 +32,139 @@
 </nav>
 
 <!-- Hero Section with Swiper -->
-<section id="projects" class="min-h-screen relative bg-gradient-to-b from-slate-950 to-slate-900 overflow-hidden pt-14">
+<section id="projects" class="min-h-screen relative bg-gradient-to-b from-slate-950 to-slate-900 pt-14">
+    <!-- View Toggle Button -->
+    <div class="absolute top-20 right-4 md:right-8 z-50">
+        <button id="view-toggle" class="glass rounded-full px-4 py-2 md:px-6 md:py-3 flex items-center gap-2 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-cyan-500/30 shadow-lg">
+            <svg id="toggle-icon-coverflow" class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h4a1 1 0 011 1v7a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM14 5a1 1 0 011-1h4a1 1 0 011 1v7a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM4 16a1 1 0 011-1h4a1 1 0 011 1v3a1 1 0 01-1 1H5a1 1 0 01-1-1v-3zM14 16a1 1 0 011-1h4a1 1 0 011 1v3a1 1 0 01-1 1h-4a1 1 0 01-1-1v-3z"></path>
+            </svg>
+            <svg id="toggle-icon-grid" class="w-5 h-5 text-cyan-400 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path>
+            </svg>
+            <span id="toggle-text" class="text-slate-100 font-medium text-sm md:text-base">Grid View</span>
+        </button>
+    </div>
+
     <!-- Swiper Carousel -->
-    <div class="relative w-full h-screen flex items-center justify-center">
-            <swiper-container
-                id="projects-swiper"
-                class="w-full swiper-responsive"
-                effect="coverflow"
-                grab-cursor="true"
-                centered-slides="true"
-                slides-per-view="auto"
-                coverflow-effect-modifier="1"
-                coverflow-effect-slide-shadows="false"
-                autoplay-delay="15000"
-                autoplay-disable-on-interaction="false"
-                loop="true"
-                navigation="true"
-                pagination="true"
-                pagination-clickable="true"
-            >
-                @foreach ($projects as $project)
-                    <swiper-slide class="swiper-slide-responsive">
-                        <a href="{{ $project->url }}" target="_blank" rel="noopener noreferrer" class="block h-full">
-                            <div class="glass rounded-2xl p-6 md:p-10 h-full flex flex-col transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/20 overflow-hidden">
-                                <!-- Project Image -->
-                                <div class="relative mb-4 md:mb-6 flex-shrink-0">
-                                    <picture class="cursor-zoom-in" onclick="event.preventDefault(); event.stopPropagation(); openLightbox('{{ asset($project->desktop_image) }}', '{{ $project->name }}');">
-                                        <!-- Mobile image for small screens -->
-                                        <source
-                                            media="(max-width: 768px)"
-                                            srcset="{{ asset($project->mobile_image) }}"
-                                        >
-                                        <!-- Desktop image for larger screens -->
-                                        <img
-                                            src="{{ asset($project->desktop_image) }}"
-                                            alt="{{ $project->name }}"
-                                            class="w-full max-h-[350px] md:h-80 md:max-h-none md:object-cover object-contain rounded-xl"
-                                        >
-                                    </picture>
-                                    <!-- Overlay gradient -->
-                                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent rounded-xl pointer-events-none"></div>
+    <div id="swiper-container" class="relative w-full h-screen flex items-center justify-center">
+        <!-- Coverflow Swiper -->
+        <swiper-container
+            id="swiper-coverflow"
+            class="w-full swiper-responsive"
+            effect="coverflow"
+            grab-cursor="true"
+            centered-slides="true"
+            slides-per-view="auto"
+            coverflow-effect-modifier="1"
+            coverflow-effect-slide-shadows="false"
+            autoplay-delay="15000"
+            autoplay-disable-on-interaction="false"
+            loop="true"
+            navigation="true"
+            pagination="true"
+            pagination-clickable="true"
+        >
+            @foreach ($projects as $project)
+                <swiper-slide class="swiper-slide-responsive">
+                    <a href="{{ $project->url }}" target="_blank" rel="noopener noreferrer" class="block h-full">
+                        <div class="glass rounded-2xl p-6 md:p-10 h-full flex flex-col transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/20 overflow-hidden">
+                            <!-- Project Image -->
+                            <div class="relative mb-4 md:mb-6 flex-shrink-0">
+                                <picture class="cursor-zoom-in" onclick="event.preventDefault(); event.stopPropagation(); openLightbox('{{ asset($project->desktop_image) }}', '{{ $project->name }}');">
+                                    <!-- Mobile image for small screens -->
+                                    <source
+                                        media="(max-width: 768px)"
+                                        srcset="{{ asset($project->mobile_image) }}"
+                                    >
+                                    <!-- Desktop image for larger screens -->
+                                    <img
+                                        src="{{ asset($project->desktop_image) }}"
+                                        alt="{{ $project->name }}"
+                                        class="w-full max-h-[350px] md:h-80 md:max-h-none md:object-cover object-contain rounded-xl"
+                                    >
+                                </picture>
+                                <!-- Overlay gradient -->
+                                <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent rounded-xl pointer-events-none"></div>
+                            </div>
+
+                            <!-- Project Info -->
+                            <div class="flex-grow">
+                                <!-- Visit Link Indicator -->
+                                <div class="mb-2 md:mb-3 flex items-center text-cyan-400 font-medium text-sm md:text-base">
+                                    <span>Visit Project</span>
+                                    <svg class="w-4 h-4 md:w-5 md:h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                    </svg>
                                 </div>
 
-                                <!-- Project Info -->
-                                <div class="flex-grow">
-                                    <!-- Visit Link Indicator -->
-                                    <div class="mb-2 md:mb-3 flex items-center text-cyan-400 font-medium text-sm md:text-base">
-                                        <span>Visit Project</span>
-                                        <svg class="w-4 h-4 md:w-5 md:h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                                        </svg>
-                                    </div>
+                                <h3 class="text-xl md:text-3xl font-bold text-cyan-400 mb-2 md:mb-4 break-words">
+                                    {{ $project->name }}
+                                </h3>
+                                <p class="text-slate-300 text-sm md:text-lg leading-relaxed break-words">
+                                    {{ $project->description }}
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                </swiper-slide>
+            @endforeach
+        </swiper-container>
 
-                                    <h3 class="text-xl md:text-3xl font-bold text-cyan-400 mb-2 md:mb-4 break-words">
-                                        {{ $project->name }}
-                                    </h3>
-                                    <p class="text-slate-300 text-sm md:text-lg leading-relaxed break-words">
-                                        {{ $project->description }}
-                                    </p>
+        <!-- Grid View -->
+        <div id="grid-view" class="w-full hidden px-4 md:px-8 pt-24 pb-8">
+            <div class="grid grid-cols-2 gap-3 md:gap-4 max-w-7xl mx-auto">
+                @foreach ($projects as $project)
+                    <div class="project-card cursor-pointer"
+                         data-project-name="{{ $project->name }}"
+                         data-project-description="{{ $project->description }}"
+                         data-project-url="{{ $project->url }}"
+                         data-project-desktop-image="{{ asset($project->desktop_image) }}"
+                         data-project-mobile-image="{{ asset($project->mobile_image) }}">
+                        <div class="glass rounded-xl md:rounded-2xl p-3 md:p-6 h-full flex flex-col transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/20 overflow-y-auto">
+                            <!-- Project Image -->
+                            <div class="relative mb-2 md:mb-4 flex-shrink-0">
+                                <picture>
+                                    <!-- Mobile image for small screens -->
+                                    <source
+                                        media="(max-width: 768px)"
+                                        srcset="{{ asset($project->mobile_image) }}"
+                                    >
+                                    <!-- Desktop image for larger screens -->
+                                    <img
+                                        src="{{ asset($project->desktop_image) }}"
+                                        alt="{{ $project->name }}"
+                                        class="w-full h-32 md:h-48 object-contain rounded-lg"
+                                    >
+                                </picture>
+                                <!-- Overlay gradient -->
+                                <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent rounded-lg pointer-events-none"></div>
+                            </div>
+
+                            <!-- Project Info -->
+                            <div class="flex-grow">
+                                <h3 class="text-sm md:text-xl font-bold text-cyan-400 mb-1 md:mb-2 break-words">
+                                    {{ $project->name }}
+                                </h3>
+                                <p class="text-slate-300 text-xs md:text-sm leading-relaxed break-words line-clamp-3 md:line-clamp-4">
+                                    {{ $project->description }}
+                                </p>
+                            </div>
+
+                            <!-- Mobile Tap Indicator -->
+                            <div class="mt-3 md:hidden">
+                                <div class="flex items-center justify-center gap-2 bg-cyan-400/10 border border-cyan-400/30 rounded-lg px-3 py-2 text-cyan-400 text-xs font-medium">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"></path>
+                                    </svg>
+                                    <span>Tap for details</span>
                                 </div>
                             </div>
-                        </a>
-                    </swiper-slide>
+                        </div>
+                    </div>
                 @endforeach
-            </swiper-container>
+            </div>
+        </div>
     </div>
 </section>
 
@@ -352,7 +421,7 @@ I have already made an a record to point to the server with the url swiftdanish.
     </div>
 </footer>
 
-<!-- Lightbox Modal -->
+<!-- Image Lightbox Modal -->
 <div id="lightbox" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/90 p-4" onclick="closeLightbox()">
     <button
         onclick="closeLightbox()"
@@ -372,14 +441,83 @@ I have already made an a record to point to the server with the url swiftdanish.
     >
 </div>
 
+<!-- Description Lightbox Modal -->
+<div id="description-lightbox" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/0 p-4 transition-all duration-300" onclick="closeDescriptionLightbox()">
+    <div id="description-content" class="glass rounded-2xl p-6 md:p-10 max-w-4xl w-full max-h-[90vh] overflow-y-auto transform scale-95 opacity-0 transition-all duration-300" onclick="event.stopPropagation()">
+        <button
+            onclick="closeDescriptionLightbox()"
+            class="sticky md:absolute top-2 md:top-4 right-2 md:right-4 ml-auto flex items-center justify-center w-10 h-10 rounded-full bg-slate-800/95 md:bg-slate-800/80 backdrop-blur-md border border-slate-700/50 text-slate-300 hover:text-white hover:bg-cyan-500/20 hover:border-cyan-500/50 transition-all duration-200 shadow-lg hover:shadow-cyan-500/20 z-10 mb-4 md:mb-0"
+            aria-label="Close description"
+        >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+        </button>
+
+        <!-- Project Image -->
+        <div class="relative mb-6">
+            <picture>
+                <source
+                    id="description-image-mobile-source"
+                    media="(max-width: 768px)"
+                    srcset=""
+                >
+                <img
+                    id="description-image"
+                    src=""
+                    alt=""
+                    class="w-full h-auto max-h-[600px] md:max-h-96 object-contain rounded-xl"
+                >
+            </picture>
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent rounded-xl pointer-events-none"></div>
+        </div>
+
+        <h3 id="description-title" class="text-2xl md:text-4xl font-bold text-cyan-400 mb-4 pr-8">
+        </h3>
+
+        <p id="description-text" class="text-slate-300 text-base md:text-lg leading-relaxed mb-6">
+        </p>
+
+        <a id="description-link" href="#" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-cyan-400 hover:bg-cyan-500 text-slate-900 font-semibold px-6 py-3 rounded-lg transition-all duration-300 hover:scale-105">
+            <span>Visit Project</span>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+            </svg>
+        </a>
+    </div>
+</div>
+
 <script>
-    // Initialize swiper with custom configuration
+    // View mode state
+    let currentView = localStorage.getItem('portfolioView') || 'coverflow';
+    let coverflowSwiper, gridView;
+
+    // Initialize views
     document.addEventListener('DOMContentLoaded', function () {
-        const swiper = document.getElementById('projects-swiper');
-        if (swiper) {
-            // Swiper is initialized via web components
-            console.log('Projects swiper initialized');
-            console.log('What are you doing in the dev tools of my portfolio website you sneaky tricky hobbit? :)');
+        coverflowSwiper = document.getElementById('swiper-coverflow');
+        gridView = document.getElementById('grid-view');
+
+        console.log('Projects swiper initialized');
+        console.log('What are you doing in the dev tools of my portfolio website you sneaky tricky hobbit? :)');
+
+        // Show the correct view based on saved preference
+        if (currentView === 'grid') {
+            updateUIForGrid();
+            enableGridClickHandlers();
+        } else {
+            updateUIForCoverflow();
+        }
+
+        // Toggle button functionality
+        const toggleButton = document.getElementById('view-toggle');
+        if (toggleButton) {
+            toggleButton.addEventListener('click', function() {
+                if (currentView === 'coverflow') {
+                    switchToGridView();
+                } else {
+                    switchToCoverflowView();
+                }
+            });
         }
 
         // Active section highlighting
@@ -414,6 +552,140 @@ I have already made an a record to point to the server with the url swiftdanish.
         sections.forEach(section => observer.observe(section));
     });
 
+    // UI update functions
+    function updateUIForGrid() {
+        const toggleText = document.getElementById('toggle-text');
+        const iconCoverflow = document.getElementById('toggle-icon-coverflow');
+        const iconGrid = document.getElementById('toggle-icon-grid');
+        const swiperContainer = document.getElementById('swiper-container');
+
+        // Update toggle button
+        toggleText.textContent = 'Coverflow View';
+        iconCoverflow.classList.remove('hidden');
+        iconGrid.classList.add('hidden');
+
+        // Change container alignment for grid view
+        swiperContainer.classList.remove('items-center');
+        swiperContainer.classList.add('items-start');
+
+        // Toggle visibility
+        coverflowSwiper.classList.add('hidden');
+        gridView.classList.remove('hidden');
+    }
+
+    function updateUIForCoverflow() {
+        const toggleText = document.getElementById('toggle-text');
+        const iconCoverflow = document.getElementById('toggle-icon-coverflow');
+        const iconGrid = document.getElementById('toggle-icon-grid');
+        const swiperContainer = document.getElementById('swiper-container');
+
+        // Update toggle button
+        toggleText.textContent = 'Grid View';
+        iconCoverflow.classList.add('hidden');
+        iconGrid.classList.remove('hidden');
+
+        // Restore center alignment for coverflow view
+        swiperContainer.classList.remove('items-start');
+        swiperContainer.classList.add('items-center');
+
+        // Toggle visibility
+        coverflowSwiper.classList.remove('hidden');
+        gridView.classList.add('hidden');
+    }
+
+    // View switching functions
+    function switchToGridView() {
+        currentView = 'grid';
+        localStorage.setItem('portfolioView', 'grid');
+        updateUIForGrid();
+        enableGridClickHandlers();
+    }
+
+    function switchToCoverflowView() {
+        currentView = 'coverflow';
+        localStorage.setItem('portfolioView', 'coverflow');
+        updateUIForCoverflow();
+        disableGridClickHandlers();
+    }
+
+    function enableGridClickHandlers() {
+        const projectCards = gridView.querySelectorAll('.project-card');
+        projectCards.forEach(card => {
+            card.addEventListener('click', handleGridCardClick);
+        });
+    }
+
+    function disableGridClickHandlers() {
+        const projectCards = gridView.querySelectorAll('.project-card');
+        projectCards.forEach(card => {
+            card.removeEventListener('click', handleGridCardClick);
+        });
+    }
+
+    function handleGridCardClick(event) {
+        event.preventDefault();
+        const card = event.currentTarget;
+        const projectName = card.getAttribute('data-project-name');
+        const projectDescription = card.getAttribute('data-project-description');
+        const projectUrl = card.getAttribute('data-project-url');
+        const desktopImage = card.getAttribute('data-project-desktop-image');
+        const mobileImage = card.getAttribute('data-project-mobile-image');
+
+        openDescriptionLightbox(projectName, projectDescription, projectUrl, desktopImage, mobileImage);
+    }
+
+    // Description lightbox functions
+    function openDescriptionLightbox(title, description, url, desktopImageSrc, mobileImageSrc) {
+        const lightbox = document.getElementById('description-lightbox');
+        const content = document.getElementById('description-content');
+        const titleElement = document.getElementById('description-title');
+        const textElement = document.getElementById('description-text');
+        const linkElement = document.getElementById('description-link');
+        const imageElement = document.getElementById('description-image');
+        const mobileSourceElement = document.getElementById('description-image-mobile-source');
+
+        titleElement.textContent = title;
+        textElement.textContent = description;
+        linkElement.href = url;
+        imageElement.src = desktopImageSrc;
+        imageElement.alt = title;
+        mobileSourceElement.srcset = mobileImageSrc;
+
+        lightbox.classList.remove('hidden');
+        lightbox.classList.add('flex');
+
+        // Trigger animation after a brief delay to ensure display changes apply first
+        setTimeout(() => {
+            lightbox.classList.remove('bg-black/0');
+            lightbox.classList.add('bg-black/90');
+            content.classList.remove('scale-95', 'opacity-0');
+            content.classList.add('scale-100', 'opacity-100');
+        }, 10);
+
+        // Prevent body scroll when lightbox is open
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeDescriptionLightbox() {
+        const lightbox = document.getElementById('description-lightbox');
+        const content = document.getElementById('description-content');
+
+        // Trigger close animation
+        lightbox.classList.remove('bg-black/90');
+        lightbox.classList.add('bg-black/0');
+        content.classList.remove('scale-100', 'opacity-100');
+        content.classList.add('scale-95', 'opacity-0');
+
+        // Wait for animation to complete before hiding
+        setTimeout(() => {
+            lightbox.classList.add('hidden');
+            lightbox.classList.remove('flex');
+
+            // Restore body scroll
+            document.body.style.overflow = '';
+        }, 300); // Match the transition duration
+    }
+
     // Lightbox functions
     function openLightbox(imageSrc, imageAlt) {
         const lightbox = document.getElementById('lightbox');
@@ -439,10 +711,11 @@ I have already made an a record to point to the server with the url swiftdanish.
         document.body.style.overflow = '';
     }
 
-    // Close lightbox with Escape key
+    // Close lightboxes with Escape key
     document.addEventListener('keydown', function (event) {
         if (event.key === 'Escape') {
             closeLightbox();
+            closeDescriptionLightbox();
         }
     });
 </script>
