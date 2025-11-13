@@ -24,9 +24,10 @@
         <!-- Nav Links -->
         <div class="flex items-center gap-4 md:gap-6">
             <a href="#projects" class="nav-link text-slate-300 hover:text-cyan-400 transition-all text-sm md:text-base" data-section="projects">Portfolio</a>
-            <a href="#about" class="nav-link text-slate-300 hover:text-cyan-400 transition-all text-sm md:text-base" data-section="about">About</a>
-            <a href="#ai-development" class="nav-link text-slate-300 hover:text-cyan-400 transition-all text-sm md:text-base" data-section="ai-development">AI Supervision</a>
+            <a href="#about" class="nav-link hidden sm:block text-slate-300 hover:text-cyan-400 transition-all text-sm md:text-base" data-section="about">About</a>
+            <a href="#ai-development" class="nav-link hidden sm:block text-slate-300 hover:text-cyan-400 transition-all text-sm md:text-base" data-section="ai-development">AI Supervision</a>
             <a href="#contact" class="nav-link text-slate-300 hover:text-cyan-400 transition-all text-sm md:text-base" data-section="contact">Contact</a>
+            <a href="https://blog.danishdave.com" target="_blank" rel="noopener noreferrer" class="nav-link blog-link text-[#C8102E] hover:text-[#C8102E] transition-all text-sm md:text-base">Blog</a>
         </div>
     </div>
 </nav>
@@ -67,52 +68,52 @@
         >
             @foreach ($projects as $project)
                 <swiper-slide class="swiper-slide-responsive">
-                    <a href="{{ $project->url }}" target="_blank" rel="noopener noreferrer" class="block h-full">
-                        <div class="glass rounded-2xl p-6 md:p-10 h-full flex flex-col transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/20 overflow-hidden">
-                            <!-- Project Image -->
-                            <div class="relative mb-4 md:mb-6 flex-shrink-0">
-                                <picture class="cursor-zoom-in" onclick="event.preventDefault(); event.stopPropagation(); openLightbox('{{ asset($project->desktop_image) }}', '{{ $project->name }}');">
-                                    <!-- Mobile image for small screens -->
-                                    <source
-                                        media="(max-width: 768px)"
-                                        srcset="{{ asset($project->mobile_image) }}"
-                                    >
-                                    <!-- Desktop image for larger screens -->
-                                    <img
-                                        src="{{ asset($project->desktop_image) }}"
-                                        alt="{{ $project->name }}"
-                                        class="w-full max-h-[350px] md:h-80 md:max-h-none md:object-cover object-contain rounded-xl"
-                                    >
-                                </picture>
-                                <!-- Overlay gradient -->
-                                <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent rounded-xl pointer-events-none"></div>
-                            </div>
+                    <div class="glass rounded-2xl p-6 md:p-10 h-full flex flex-col transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:shadow-cyan-500/10">
+                        <!-- Project Image -->
+                        <div class="relative mb-4 md:mb-6 flex-shrink-0">
+                            <picture class="cursor-zoom-in" onclick="openLightbox('{{ asset($project->desktop_image) }}', '{{ $project->name }}');">
+                                <!-- Mobile image for small screens -->
+                                <source
+                                    media="(max-width: 768px)"
+                                    srcset="{{ asset($project->mobile_image) }}"
+                                >
+                                <!-- Desktop image for larger screens -->
+                                <img
+                                    src="{{ asset($project->desktop_image) }}"
+                                    alt="{{ $project->name }}"
+                                    class="w-full max-h-[350px] md:h-80 md:max-h-none md:object-cover object-contain rounded-xl"
+                                >
+                            </picture>
+                            <!-- Overlay gradient -->
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent rounded-xl pointer-events-none"></div>
+                        </div>
 
-                            <!-- Project Info -->
-                            <div class="flex-grow">
-                                <!-- Visit Link Indicator -->
-                                <div class="mb-2 md:mb-3 flex items-center text-cyan-400 font-medium text-sm md:text-base">
+                        <!-- Project Info -->
+                        <div class="flex-grow flex flex-col min-h-0">
+                            <!-- Visit Link -->
+                            <a href="{{ $project->url }}" target="_blank" rel="noopener noreferrer" class="inline-block mb-2 md:mb-3 flex-shrink-0">
+                                <div class="flex items-center text-cyan-400 font-medium text-sm md:text-base hover:text-cyan-300 transition-colors">
                                     <span>Visit Project</span>
                                     <svg class="w-4 h-4 md:w-5 md:h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
                                     </svg>
                                 </div>
+                            </a>
 
-                                <h3 class="text-xl md:text-3xl font-bold text-cyan-400 mb-2 md:mb-4 break-words">
-                                    {{ $project->name }}
-                                </h3>
-                                <p class="text-slate-300 text-sm md:text-lg leading-relaxed break-words">
-                                    {{ $project->description }}
-                                </p>
-                            </div>
+                            <h3 class="text-xl md:text-3xl font-bold text-cyan-400 mb-2 md:mb-4 break-words flex-shrink-0">
+                                {{ $project->name }}
+                            </h3>
+                            <p class="text-slate-300 text-sm md:text-lg leading-relaxed break-words overflow-y-auto scrollbar-thin scrollbar-thumb-cyan-500/20 scrollbar-track-transparent">
+                                {{ $project->description }}
+                            </p>
                         </div>
-                    </a>
+                    </div>
                 </swiper-slide>
             @endforeach
         </swiper-container>
 
         <!-- Grid View -->
-        <div id="grid-view" class="w-full hidden px-4 md:px-8 pt-24 pb-8">
+        <div id="grid-view" class="w-full hidden px-4 md:px-8 pt-24 pb-16">
             <div class="grid grid-cols-2 gap-3 md:gap-4 max-w-7xl mx-auto">
                 @foreach ($projects as $project)
                     <div class="project-card cursor-pointer"
@@ -564,9 +565,9 @@ I have already made an a record to point to the server with the url swiftdanish.
         iconCoverflow.classList.remove('hidden');
         iconGrid.classList.add('hidden');
 
-        // Change container alignment for grid view
-        swiperContainer.classList.remove('items-center');
-        swiperContainer.classList.add('items-start');
+        // Change container alignment and height for grid view
+        swiperContainer.classList.remove('items-center', 'justify-center', 'h-screen');
+        swiperContainer.classList.add('items-start', 'min-h-screen');
 
         // Toggle visibility
         coverflowSwiper.classList.add('hidden');
@@ -584,9 +585,9 @@ I have already made an a record to point to the server with the url swiftdanish.
         iconCoverflow.classList.add('hidden');
         iconGrid.classList.remove('hidden');
 
-        // Restore center alignment for coverflow view
-        swiperContainer.classList.remove('items-start');
-        swiperContainer.classList.add('items-center');
+        // Restore center alignment and fixed height for coverflow view
+        swiperContainer.classList.remove('items-start', 'min-h-screen');
+        swiperContainer.classList.add('items-center', 'justify-center', 'h-screen');
 
         // Toggle visibility
         coverflowSwiper.classList.remove('hidden');

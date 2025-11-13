@@ -63,6 +63,16 @@ class ProjectSeeder extends Seeder
                 'order' => 5,
                 'is_active' => true,
             ],
+            [
+                'name' => 'Danish Dave Portfolio',
+                'slug' => 'portfolio',
+                'description' => 'Whoa talk about meta. That\'s this site! So this site is my personal portfolio website where I showcase my projects, skills, and experiences as a developer and tech enthusiast. The site includes sections for my bio, project highlights (which is literally the thing you are reading, I CANNOT with this level of meta), links to my blog, and contact information.',
+                'url' => 'https://danishdave.com',
+                'desktop_image' => 'images/projects/portfolio-desktop.png',
+                'mobile_image' => 'images/projects/portfolio-mobile.png',
+                'order' => 6,
+                'is_active' => true,
+            ],
         ];
 
         foreach ($projects as $project) {
