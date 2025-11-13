@@ -11,6 +11,37 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <style>
+        /* Glassmorphism Scrollbar Styling */
+        .glass-scrollbar {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(6, 182, 212, 0.3) rgba(15, 23, 42, 0.2);
+        }
+
+        .glass-scrollbar::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .glass-scrollbar::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.2);
+            backdrop-filter: blur(4px);
+            border-radius: 10px;
+        }
+
+        .glass-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(6, 182, 212, 0.3);
+            backdrop-filter: blur(8px);
+            border-radius: 10px;
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .glass-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(6, 182, 212, 0.5);
+            border-color: rgba(6, 182, 212, 0.4);
+            box-shadow: 0 0 8px rgba(6, 182, 212, 0.3);
+        }
+    </style>
 </head>
 <body class="bg-slate-900 text-slate-100">
 <!-- Navigation -->
@@ -103,7 +134,7 @@
                             <h3 class="text-xl md:text-3xl font-bold text-cyan-400 mb-2 md:mb-4 break-words flex-shrink-0">
                                 {{ $project->name }}
                             </h3>
-                            <p class="text-slate-300 text-sm md:text-lg leading-relaxed break-words overflow-y-auto scrollbar-thin scrollbar-thumb-cyan-500/20 scrollbar-track-transparent">
+                            <p class="text-slate-300 text-sm md:text-lg leading-relaxed break-words overflow-y-auto glass-scrollbar">
                                 {{ $project->description }}
                             </p>
                         </div>
@@ -122,7 +153,7 @@
                          data-project-url="{{ $project->url }}"
                          data-project-desktop-image="{{ asset($project->desktop_image) }}"
                          data-project-mobile-image="{{ asset($project->mobile_image) }}">
-                        <div class="glass rounded-xl md:rounded-2xl p-3 md:p-6 h-full flex flex-col transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/20 overflow-y-auto">
+                        <div class="glass rounded-xl md:rounded-2xl p-3 md:p-6 h-full flex flex-col transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/20 overflow-y-auto glass-scrollbar">
                             <!-- Project Image -->
                             <div class="relative mb-2 md:mb-4 flex-shrink-0">
                                 <picture>
@@ -444,7 +475,7 @@ I have already made an a record to point to the server with the url swiftdanish.
 
 <!-- Description Lightbox Modal -->
 <div id="description-lightbox" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/0 p-4 transition-all duration-300" onclick="closeDescriptionLightbox()">
-    <div id="description-content" class="glass rounded-2xl p-6 md:p-10 max-w-4xl w-full max-h-[90vh] overflow-y-auto transform scale-95 opacity-0 transition-all duration-300" onclick="event.stopPropagation()">
+    <div id="description-content" class="glass rounded-2xl p-6 md:p-10 max-w-4xl w-full max-h-[90vh] overflow-y-auto glass-scrollbar transform scale-95 opacity-0 transition-all duration-300" onclick="event.stopPropagation()">
         <button
             onclick="closeDescriptionLightbox()"
             class="sticky md:absolute top-2 md:top-4 right-2 md:right-4 ml-auto flex items-center justify-center w-10 h-10 rounded-full bg-slate-800/95 md:bg-slate-800/80 backdrop-blur-md border border-slate-700/50 text-slate-300 hover:text-white hover:bg-cyan-500/20 hover:border-cyan-500/50 transition-all duration-200 shadow-lg hover:shadow-cyan-500/20 z-10 mb-4 md:mb-0"
@@ -664,7 +695,8 @@ I have already made an a record to point to the server with the url swiftdanish.
         }, 10);
 
         // Prevent body scroll when lightbox is open
-        document.body.style.overflow = 'hidden';
+        document.documentElement.classList.add('overflow-hidden');
+        document.body.classList.add('overflow-hidden');
     }
 
     function closeDescriptionLightbox() {
@@ -683,7 +715,8 @@ I have already made an a record to point to the server with the url swiftdanish.
             lightbox.classList.remove('flex');
 
             // Restore body scroll
-            document.body.style.overflow = '';
+            document.documentElement.classList.remove('overflow-hidden');
+            document.body.classList.remove('overflow-hidden');
         }, 300); // Match the transition duration
     }
 
@@ -699,7 +732,8 @@ I have already made an a record to point to the server with the url swiftdanish.
         lightbox.classList.add('flex');
 
         // Prevent body scroll when lightbox is open
-        document.body.style.overflow = 'hidden';
+        document.documentElement.classList.add('overflow-hidden');
+        document.body.classList.add('overflow-hidden');
     }
 
     function closeLightbox() {
@@ -709,7 +743,8 @@ I have already made an a record to point to the server with the url swiftdanish.
         lightbox.classList.remove('flex');
 
         // Restore body scroll
-        document.body.style.overflow = '';
+        document.documentElement.classList.remove('overflow-hidden');
+        document.body.classList.remove('overflow-hidden');
     }
 
     // Close lightboxes with Escape key
