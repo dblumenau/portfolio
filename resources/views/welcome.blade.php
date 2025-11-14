@@ -41,26 +41,82 @@
             border-color: rgba(6, 182, 212, 0.4);
             box-shadow: 0 0 8px rgba(6, 182, 212, 0.3);
         }
+
+        /* Large screen optimization (> 1920px) */
+        @media (min-width: 1920px) {
+            /* Constrain navigation width */
+            nav .container {
+                max-width: 1920px;
+            }
+
+            /* Constrain the main swiper container wrapper */
+            #swiper-container {
+                max-width: 1600px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            /* Ensure swiper takes full available width */
+            #swiper-coverflow {
+                width: 100% !important;
+            }
+
+            /* Constrain swiper slide width for better presentation */
+            .swiper-slide-responsive {
+                max-width: 800px !important;
+            }
+
+            /* Constrain grid view for better card sizing */
+            #grid-view .grid {
+                max-width: 1600px;
+            }
+
+            /* Ensure sections don't stretch too wide */
+            section .container {
+                max-width: 1400px;
+            }
+
+            /* Constrain modal content */
+            #description-content {
+                max-width: 1200px;
+            }
+        }
     </style>
 </head>
 <body class="bg-slate-900 text-slate-100">
 <!-- Navigation -->
-<nav class="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-sm border-b border-slate-800">
+<nav class="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-sm border-b border-slate-800" x-data="{ mobileMenuOpen: false }">
     <div class="container mx-auto px-4 py-0 flex items-center justify-between">
         <!-- Logo -->
         <div class="flex items-center">
             <img src="{{ asset('images/logo.png') }}" alt="{{ __('meta.logo_alt') }}" class="h-12 md:h-14 py-1">
         </div>
 
-        <!-- Nav Links -->
-        <div class="flex items-center gap-4 md:gap-6">
+        <!-- Mobile: Active Section Indicator -->
+        <div class="sm:hidden flex-1 text-center">
+            <span id="mobile-active-section" class="text-slate-300 text-sm font-medium"></span>
+        </div>
+
+        <!-- Desktop Nav Links -->
+        <div class="hidden sm:flex items-center gap-4 md:gap-6">
             <a href="#projects" class="nav-link text-slate-300 hover:text-cyan-400 transition-all text-sm md:text-base" data-section="projects">{{ __('navigation.portfolio') }}</a>
-            <a href="#about" class="nav-link hidden sm:block text-slate-300 hover:text-cyan-400 transition-all text-sm md:text-base" data-section="about">{{ __('navigation.about') }}</a>
-            <a href="#ai-development" class="nav-link hidden sm:block text-slate-300 hover:text-cyan-400 transition-all text-sm md:text-base" data-section="ai-development">{{ __('navigation.ai_supervision') }}</a>
+            <a href="#about" class="nav-link text-slate-300 hover:text-cyan-400 transition-all text-sm md:text-base" data-section="about">{{ __('navigation.about') }}</a>
+            <a href="#ai-development" class="nav-link text-slate-300 hover:text-cyan-400 transition-all text-sm md:text-base" data-section="ai-development">{{ __('navigation.ai_supervision') }}</a>
             <a href="#contact" class="nav-link text-slate-300 hover:text-cyan-400 transition-all text-sm md:text-base" data-section="contact">{{ __('navigation.contact') }}</a>
             <a href="https://blog.danishdave.com" target="_blank" rel="noopener noreferrer" class="nav-link blog-link text-[#C8102E] hover:text-[#C8102E] transition-all text-sm md:text-base">{{ __('navigation.blog') }}</a>
 
-            <!-- Language Switcher Dropdown -->
+            <!-- View Toggle Button - Desktop -->
+            <button id="view-toggle" class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-cyan-400/10 hover:bg-cyan-400/20 border border-cyan-400/30 transition-all duration-300 hover:scale-105">
+                <svg id="toggle-icon-coverflow" class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h4a1 1 0 011 1v7a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM14 5a1 1 0 011-1h4a1 1 0 011 1v7a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM4 16a1 1 0 011-1h4a1 1 0 011 1v3a1 1 0 01-1 1H5a1 1 0 01-1-1v-3zM14 16a1 1 0 011-1h4a1 1 0 011 1v3a1 1 0 01-1 1h-4a1 1 0 01-1-1v-3z"></path>
+                </svg>
+                <svg id="toggle-icon-grid" class="w-4 h-4 text-cyan-400 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path>
+                </svg>
+                <span id="toggle-text" class="text-slate-100 font-medium text-xs md:text-sm">{{ __('projects.grid_view') }}</span>
+            </button>
+
+            <!-- Language Switcher Dropdown - Desktop -->
             <div class="relative ml-2" x-data="{ open: false }" @click.away="open = false">
                 <button @click="open = !open" class="flex items-center gap-2 text-slate-400 hover:text-cyan-400 transition-all text-xs md:text-sm font-medium">
                     <span>{{ app()->getLocale() === 'en' ? '🇬🇧 EN' : '🇩🇰 DA' }}</span>
@@ -92,24 +148,119 @@
                 </div>
             </div>
         </div>
+
+        <!-- Mobile: Blog Link + Burger Button -->
+        <div class="sm:hidden flex items-center gap-3">
+            <a href="https://blog.danishdave.com" target="_blank" rel="noopener noreferrer" class="text-[#C8102E] hover:text-[#C8102E] transition-all text-sm font-medium">{{ __('navigation.blog') }}</a>
+
+            <!-- Burger Menu Button -->
+            <button @click="mobileMenuOpen = !mobileMenuOpen" class="flex items-center justify-center w-8 h-8 text-slate-300 hover:text-cyan-400 transition-colors" :aria-label="__('navigation.menu')">
+                <!-- Hamburger Icon -->
+                <svg x-show="!mobileMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+                <!-- Close Icon -->
+                <svg x-show="mobileMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display: none;">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Mobile Burger Menu Overlay -->
+    <div x-show="mobileMenuOpen"
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0 transform translate-x-full"
+         x-transition:enter-end="opacity-100 transform translate-x-0"
+         x-transition:leave="transition ease-in duration-200"
+         x-transition:leave-start="opacity-100 transform translate-x-0"
+         x-transition:leave-end="opacity-0 transform translate-x-full"
+         class="sm:hidden fixed inset-0 z-60 bg-slate-900/98 backdrop-blur-md"
+         style="display: none;"
+         @click.self="mobileMenuOpen = false">
+
+        <div class="flex flex-col h-full pt-20 px-6 pb-6">
+            <!-- Navigation Links -->
+            <div class="flex flex-col gap-6 mb-8">
+                <a href="#projects"
+                   @click="mobileMenuOpen = false"
+                   class="nav-link mobile-nav-link text-slate-300 hover:text-cyan-400 transition-all text-lg font-medium py-2 border-b border-slate-800"
+                   data-section="projects">
+                    {{ __('navigation.portfolio') }}
+                </a>
+                <a href="#about"
+                   @click="mobileMenuOpen = false"
+                   class="nav-link mobile-nav-link text-slate-300 hover:text-cyan-400 transition-all text-lg font-medium py-2 border-b border-slate-800"
+                   data-section="about">
+                    {{ __('navigation.about') }}
+                </a>
+                <a href="#ai-development"
+                   @click="mobileMenuOpen = false"
+                   class="nav-link mobile-nav-link text-slate-300 hover:text-cyan-400 transition-all text-lg font-medium py-2 border-b border-slate-800"
+                   data-section="ai-development">
+                    {{ __('navigation.ai_supervision') }}
+                </a>
+                <a href="#contact"
+                   @click="mobileMenuOpen = false"
+                   class="nav-link mobile-nav-link text-slate-300 hover:text-cyan-400 transition-all text-lg font-medium py-2 border-b border-slate-800"
+                   data-section="contact">
+                    {{ __('navigation.contact') }}
+                </a>
+            </div>
+
+            <!-- View Toggle Button -->
+            <div class="mb-8">
+                <div class="text-slate-500 text-xs uppercase tracking-wider mb-3">View Mode</div>
+                <button id="view-toggle-mobile" class="w-full flex items-center justify-between px-4 py-3 rounded-lg bg-cyan-400/10 hover:bg-cyan-400/20 border border-cyan-400/30 transition-all">
+                    <div class="flex items-center gap-3">
+                        <svg id="toggle-icon-coverflow-mobile" class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h4a1 1 0 011 1v7a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM14 5a1 1 0 011-1h4a1 1 0 011 1v7a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM4 16a1 1 0 011-1h4a1 1 0 011 1v3a1 1 0 01-1 1H5a1 1 0 01-1-1v-3zM14 16a1 1 0 011-1h4a1 1 0 011 1v3a1 1 0 01-1 1h-4a1 1 0 01-1-1v-3z"></path>
+                        </svg>
+                        <svg id="toggle-icon-grid-mobile" class="w-5 h-5 text-cyan-400 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path>
+                        </svg>
+                        <span id="toggle-text-mobile" class="text-slate-100 font-medium">{{ __('projects.grid_view') }}</span>
+                    </div>
+                    <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Language Switcher -->
+            <div class="mb-8">
+                <div class="text-slate-500 text-xs uppercase tracking-wider mb-3">Language</div>
+                <div class="flex flex-col gap-2">
+                    <a href="/en" class="flex items-center justify-between px-4 py-3 rounded-lg transition-colors {{ app()->getLocale() === 'en' ? 'bg-cyan-400/10 border border-cyan-400/30 text-cyan-400' : 'bg-slate-800/50 border border-slate-700 text-slate-300 hover:bg-slate-800' }}">
+                        <div class="flex items-center gap-3">
+                            <span class="text-xl">🇬🇧</span>
+                            <span class="font-medium">English</span>
+                        </div>
+                        @if(app()->getLocale() === 'en')
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                        @endif
+                    </a>
+                    <a href="/da" class="flex items-center justify-between px-4 py-3 rounded-lg transition-colors {{ app()->getLocale() === 'da' ? 'bg-cyan-400/10 border border-cyan-400/30 text-cyan-400' : 'bg-slate-800/50 border border-slate-700 text-slate-300 hover:bg-slate-800' }}">
+                        <div class="flex items-center gap-3">
+                            <span class="text-xl">🇩🇰</span>
+                            <span class="font-medium">Dansk</span>
+                        </div>
+                        @if(app()->getLocale() === 'da')
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                        @endif
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
 </nav>
 
 <!-- Hero Section with Swiper -->
 <section id="projects" class="min-h-screen relative bg-gradient-to-b from-slate-950 to-slate-900 pt-14">
-    <!-- View Toggle Button -->
-    <div class="absolute top-20 right-4 md:right-8 z-50">
-        <button id="view-toggle" class="glass rounded-full px-4 py-2 md:px-6 md:py-3 flex items-center gap-2 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-cyan-500/30 shadow-lg">
-            <svg id="toggle-icon-coverflow" class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h4a1 1 0 011 1v7a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM14 5a1 1 0 011-1h4a1 1 0 011 1v7a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM4 16a1 1 0 011-1h4a1 1 0 011 1v3a1 1 0 01-1 1H5a1 1 0 01-1-1v-3zM14 16a1 1 0 011-1h4a1 1 0 011 1v3a1 1 0 01-1 1h-4a1 1 0 01-1-1v-3z"></path>
-            </svg>
-            <svg id="toggle-icon-grid" class="w-5 h-5 text-cyan-400 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path>
-            </svg>
-            <span id="toggle-text" class="text-slate-100 font-medium text-sm md:text-base">{{ __('projects.grid_view') }}</span>
-        </button>
-    </div>
-
     <!-- Swiper Carousel -->
     <div id="swiper-container" class="relative w-full h-screen flex items-center justify-center">
         <!-- Coverflow Swiper -->
@@ -125,6 +276,7 @@
             autoplay-delay="15000"
             autoplay-disable-on-interaction="false"
             loop="true"
+            initial-slide="0"
             navigation="true"
             pagination="true"
             pagination-clickable="true"
@@ -176,7 +328,7 @@
         </swiper-container>
 
         <!-- Grid View -->
-        <div id="grid-view" class="w-full hidden px-4 md:px-8 pt-24 pb-16">
+        <div id="grid-view" class="w-full hidden px-4 md:px-8 pt-8 pb-16">
             <div class="grid grid-cols-2 gap-3 md:gap-4 max-w-7xl mx-auto">
                 @foreach ($projects as $project)
                     <div class="project-card cursor-pointer"
@@ -548,7 +700,13 @@ I have already made an a record to point to the server with the url swiftdanish.
     // Translation strings
     const translations = {
         gridView: '{{ __('projects.grid_view') }}',
-        coverflowView: '{{ __('projects.coverflow_view') }}'
+        coverflowView: '{{ __('projects.coverflow_view') }}',
+        sections: {
+            'projects': '{{ __('navigation.portfolio') }}',
+            'about': '{{ __('navigation.about') }}',
+            'ai-development': '{{ __('navigation.ai_supervision') }}',
+            'contact': '{{ __('navigation.contact') }}'
+        }
     };
 
     // Initialize views
@@ -567,16 +725,23 @@ I have already made an a record to point to the server with the url swiftdanish.
             updateUIForCoverflow();
         }
 
-        // Toggle button functionality
+        // Toggle button functionality (both desktop and mobile)
         const toggleButton = document.getElementById('view-toggle');
+        const toggleButtonMobile = document.getElementById('view-toggle-mobile');
+
+        const handleToggle = function() {
+            if (currentView === 'coverflow') {
+                switchToGridView();
+            } else {
+                switchToCoverflowView();
+            }
+        };
+
         if (toggleButton) {
-            toggleButton.addEventListener('click', function() {
-                if (currentView === 'coverflow') {
-                    switchToGridView();
-                } else {
-                    switchToCoverflowView();
-                }
-            });
+            toggleButton.addEventListener('click', handleToggle);
+        }
+        if (toggleButtonMobile) {
+            toggleButtonMobile.addEventListener('click', handleToggle);
         }
 
         // Active section highlighting
@@ -604,6 +769,12 @@ I have already made an a record to point to the server with the url swiftdanish.
                     if (activeLink) {
                         activeLink.classList.add('active-nav');
                     }
+
+                    // Update mobile active section indicator
+                    const mobileIndicator = document.getElementById('mobile-active-section');
+                    if (mobileIndicator && translations.sections[sectionId]) {
+                        mobileIndicator.textContent = translations.sections[sectionId];
+                    }
                 }
             });
         }, observerOptions);
@@ -614,14 +785,22 @@ I have already made an a record to point to the server with the url swiftdanish.
     // UI update functions
     function updateUIForGrid() {
         const toggleText = document.getElementById('toggle-text');
+        const toggleTextMobile = document.getElementById('toggle-text-mobile');
         const iconCoverflow = document.getElementById('toggle-icon-coverflow');
         const iconGrid = document.getElementById('toggle-icon-grid');
+        const iconCoverflowMobile = document.getElementById('toggle-icon-coverflow-mobile');
+        const iconGridMobile = document.getElementById('toggle-icon-grid-mobile');
         const swiperContainer = document.getElementById('swiper-container');
 
-        // Update toggle button
+        // Update toggle button (desktop)
         toggleText.textContent = translations.coverflowView;
         iconCoverflow.classList.remove('hidden');
         iconGrid.classList.add('hidden');
+
+        // Update toggle button (mobile - burger menu)
+        if (toggleTextMobile) toggleTextMobile.textContent = translations.coverflowView;
+        iconCoverflowMobile.classList.remove('hidden');
+        iconGridMobile.classList.add('hidden');
 
         // Change container alignment and height for grid view
         swiperContainer.classList.remove('items-center', 'justify-center', 'h-screen');
@@ -634,14 +813,22 @@ I have already made an a record to point to the server with the url swiftdanish.
 
     function updateUIForCoverflow() {
         const toggleText = document.getElementById('toggle-text');
+        const toggleTextMobile = document.getElementById('toggle-text-mobile');
         const iconCoverflow = document.getElementById('toggle-icon-coverflow');
         const iconGrid = document.getElementById('toggle-icon-grid');
+        const iconCoverflowMobile = document.getElementById('toggle-icon-coverflow-mobile');
+        const iconGridMobile = document.getElementById('toggle-icon-grid-mobile');
         const swiperContainer = document.getElementById('swiper-container');
 
-        // Update toggle button
+        // Update toggle button (desktop)
         toggleText.textContent = translations.gridView;
         iconCoverflow.classList.add('hidden');
         iconGrid.classList.remove('hidden');
+
+        // Update toggle button (mobile - burger menu)
+        if (toggleTextMobile) toggleTextMobile.textContent = translations.gridView;
+        iconCoverflowMobile.classList.add('hidden');
+        iconGridMobile.classList.remove('hidden');
 
         // Restore center alignment and fixed height for coverflow view
         swiperContainer.classList.remove('items-start', 'min-h-screen');

@@ -6,4 +6,5 @@ return [
     'ai_supervision' => 'AI Supervision',
     'contact' => 'Kontakt',
     'blog' => 'Blog',
+    'menu' => 'Menu',
 ];
