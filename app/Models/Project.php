@@ -8,8 +8,10 @@ class Project extends Model
 {
     protected $fillable = [
         'name',
+        'name_da',
         'slug',
         'description',
+        'description_da',
         'url',
         'desktop_image',
         'mobile_image',
@@ -36,5 +38,33 @@ class Project extends Model
     public function scopeOrdered($query)
     {
         return $query->orderBy('order');
+    }
+
+    /**
+     * Get the localized name based on the current locale
+     */
+    public function getLocalizedNameAttribute(): string
+    {
+        $locale = app()->getLocale();
+
+        if ($locale === 'da' && !empty($this->name_da)) {
+            return $this->name_da;
+        }
+
+        return $this->name;
+    }
+
+    /**
+     * Get the localized description based on the current locale
+     */
+    public function getLocalizedDescriptionAttribute(): string
+    {
+        $locale = app()->getLocale();
+
+        if ($locale === 'da' && !empty($this->description_da)) {
+            return $this->description_da;
+        }
+
+        return $this->description;
     }
 }
