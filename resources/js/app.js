@@ -11,3 +11,14 @@ import { register } from 'swiper/element/bundle';
 // Register Swiper custom elements
 // The bundle includes all modules (Grid, Navigation, Pagination, etc.)
 register();
+
+// Import Lucide icons
+import { createIcons, icons } from 'lucide';
+
+// Expose createIcons globally for use in inline scripts
+window.lucideCreateIcons = () => createIcons({ icons });
+
+// Initialize Lucide icons
+document.addEventListener('DOMContentLoaded', () => {
+    window.lucideCreateIcons();
+});
