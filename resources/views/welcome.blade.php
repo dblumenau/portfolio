@@ -154,7 +154,7 @@
             <a href="https://blog.danishdave.com" target="_blank" rel="noopener noreferrer" class="text-[#C8102E] hover:text-[#C8102E] transition-all text-sm font-medium">{{ __('navigation.blog') }}</a>
 
             <!-- Burger Menu Button -->
-            <button @click="mobileMenuOpen = !mobileMenuOpen" class="flex items-center justify-center w-8 h-8 text-slate-300 hover:text-cyan-400 transition-colors" :aria-label="__('navigation.menu')">
+            <button @click="mobileMenuOpen = !mobileMenuOpen" class="flex items-center justify-center w-8 h-8 text-slate-300 hover:text-cyan-400 transition-colors" aria-label="{{ __('navigation.menu') }}">
                 <!-- Hamburger Icon -->
                 <svg x-show="!mobileMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
@@ -176,10 +176,19 @@
          x-transition:leave-start="opacity-100 transform translate-x-0"
          x-transition:leave-end="opacity-0 transform translate-x-full"
          class="sm:hidden fixed inset-0 z-60 bg-slate-900/98 backdrop-blur-md"
-         style="display: none;"
+         style="display: none; position: fixed !important; top: 0 !important; right: 0 !important; bottom: 0 !important; left: 0 !important; width: 100vw !important; height: 100vh !important; background-color: rgba(15, 23, 42, 0.98) !important; backdrop-filter: blur(12px) !important;"
          @click.self="mobileMenuOpen = false">
 
         <div class="flex flex-col h-full pt-20 px-6 pb-6">
+            <!-- Close Button -->
+            <button @click="mobileMenuOpen = false"
+                    class="absolute top-4 right-4 w-10 h-10 flex items-center justify-center text-slate-300 hover:text-cyan-400 transition-colors rounded-full hover:bg-slate-800/50"
+                    aria-label="{{ __('navigation.close') }}">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+
             <!-- Navigation Links -->
             <div class="flex flex-col gap-6 mb-8">
                 <a href="#projects"
