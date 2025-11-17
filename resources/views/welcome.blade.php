@@ -429,7 +429,7 @@
 
 <!-- AI Supervision & Architecture Section -->
 <section id="ai-development" class="py-8 md:py-16 bg-slate-950">
-    <div class="container mx-auto px-4 max-w-6xl">
+    <div class="container mx-auto px-2 sm:px-4 max-w-6xl">
         <h2 class="text-4xl md:text-5xl font-bold text-center mb-8 bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
             {{ __('ai.heading') }}
         </h2>
@@ -448,12 +448,12 @@
             </div>
 
             <!-- Code Blocks Grid -->
-            <div class="grid md:grid-cols-2 gap-6 md:gap-8">
+            <div class="grid md:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
                 <!-- First Prompt -->
-                <div class="space-y-4">
-                    <h3 class="text-xl font-semibold text-cyan-400">{{ __('ai.initial_prompt_heading') }}</h3>
-                    <div class="glass rounded-xl p-6">
-                            <pre class="text-xs md:text-sm text-cyan-100 font-mono leading-relaxed whitespace-pre-wrap break-words"><code>I have created several development and product projects,
+                <div class="space-y-4 min-w-0">
+                    <h3 class="text-base sm:text-xl font-semibold text-cyan-400">{{ __('ai.initial_prompt_heading') }}</h3>
+                    <div class="glass rounded-lg sm:rounded-xl p-2 sm:p-3 md:p-6 overflow-hidden min-w-0">
+                            <pre class="text-[10px] sm:text-xs md:text-sm text-cyan-100 font-mono leading-relaxed whitespace-pre-wrap break-all overflow-x-auto w-full" style="word-break: break-all; overflow-wrap: anywhere;"><code>I have created several development and product projects,
 DJ Forge /Users/davidblumenau/projects/scratch/djforge
 Panel Forge /Users/davidblumenau/projects/scratch/dreamatorium - ignore that the repo is called dreamatorium
 Swift Danish /Users/davidblumenau/projects/scratch/swiftdanish
@@ -474,10 +474,10 @@ significantly from tailwind 3.</code></pre>
                 </div>
 
                 <!-- Second Prompt -->
-                <div class="space-y-4">
-                    <h3 class="text-xl font-semibold text-cyan-400">{{ __('ai.deployment_prompt_heading') }}</h3>
-                    <div class="glass rounded-xl p-6">
-                            <pre class="text-xs md:text-sm text-cyan-100 font-mono leading-relaxed whitespace-pre-wrap break-words"><code>Please use my github cli tool (gh to make a new repo called portfolio (if there is already one then rename that one so that this repo becomes the portfolio one) - the repo can be public.
+                <div class="space-y-4 min-w-0">
+                    <h3 class="text-base sm:text-xl font-semibold text-cyan-400">{{ __('ai.deployment_prompt_heading') }}</h3>
+                    <div class="glass rounded-lg sm:rounded-xl p-2 sm:p-3 md:p-6 overflow-hidden min-w-0">
+                            <pre class="text-[10px] sm:text-xs md:text-sm text-cyan-100 font-mono leading-relaxed whitespace-pre-wrap break-all overflow-x-auto w-full" style="word-break: break-all; overflow-wrap: anywhere;"><code>Please use my github cli tool (gh to make a new repo called portfolio (if there is already one then rename that one so that this repo becomes the portfolio one) - the repo can be public.
 See this directory.  /Users/davidblumenau/projects/scratch/dreamatorium/
 This is a standard laravel project, and that is a nativephp / regular laravel hybrid project.
 That project (dreamatorium) is deployed to my hetzner vps in a really nice way with github actions running and compiling the app building a docker image then deploying that app to the hetzner vps, all upon pushing a tag labelled web-something. In this case, I'm happy for it to run that pipeline instead when you push something with the tag v-something eg v-1.0.1 or v-1.1.0 or v-2.0.0 etc.
