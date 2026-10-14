@@ -40,9 +40,10 @@ export const districts: WorldDistrict[] = [
       { title: 'Keep more than one good direction', description: 'Branch navigation, comparison and a preferred path keep revisions connected to their shared history.', href: '/features/branching-workbench/' },
     ],
     href: '/work/panelforge/', link: 'Inside PanelForge',
-    image: '/media/panelforge-gallery-desktop.webp', alt: 'The real PanelForge gallery with a workspace tree and generated artwork.', caption: 'Working web application · curated gallery capture',
-    video: '/media/panelforge-workflow.mp4', captions: '/media/panelforge-workflow.vtt',
-    videoDescription: 'A recorded visit to the working gallery: open an existing image, inspect its prompt and generation information, then return to the collection.',
+    image: '/media/branches/comparison.webp', alt: 'The actual PanelForge comparison view shows two retained directions in a controlled fictional workflow.', caption: 'Actual local PanelForge workflow · fixture answers · unreleased comparison fix',
+    video: '/media/branches/execution.mp4', captions: '/media/branches/execution.vtt',
+    videoDescription: 'A Studio reference moves into chat, two edits retain the original, and Quiet becomes preferred. Actual application footage with fictional seeded answers and loading pauses removed. Comparison uses the disclosed unreleased local fix.',
+    videoAction: 'Watch the reference and revisions',
   },
   {
     id: 'engines', number: '02', name: 'The engine room', label: 'A turn keeps going', color: '#44664c', position: [0, 0, -10],

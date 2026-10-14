@@ -32,6 +32,7 @@ import '../world/world.css';
         <p class="world-detail-intro">{district.description}</p>
         <div class="world-detail-actions">
           {district.image && <button class="world-button world-button-solid" type="button" data-open-exhibit={district.id}>Open the exhibit <span aria-hidden="true"><Icon name="arrow-up-right" /></span></button>}
+          {district.id === 'studio' && <a class="world-button" href="/labs/branches/">Try the Branch Lab <span aria-hidden="true"><Icon name="arrow-up-right" /></span></a>}
           {district.id === 'small-tools' && <a class="world-button" href="/labs/studio/">Make a graphic <span aria-hidden="true"><Icon name="arrow-up-right" /></span></a>}
           {district.id === 'connections' && <a class="world-button" href="/labs/gateway/">Try the Gateway Lab <span aria-hidden="true"><Icon name="arrow-up-right" /></span></a>}
           {district.id === 'workbench' && <a class="world-button" href="/labs/workbench/">Try the Workbench Lab <span aria-hidden="true"><Icon name="arrow-up-right" /></span></a>}
@@ -84,7 +85,8 @@ import '../world/world.css';
       if (entries.some((entry) => entry.isIntersecting)) { observer.disconnect(); void start(); }
     }, { rootMargin: '240px' });
     observer.observe(worldRoot.querySelector('[data-world-stage]')!);
-    window.addEventListener('pagehide', () => {
+    window.addEventListener('pagehide', (event) => {
+      if (event.persisted) return;
       observer.disconnect();
       dispose?.();
       dispose = undefined;

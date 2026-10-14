@@ -1,0 +1,361 @@
+{
+  "schema": "portfolio-branches-public-v1",
+  "executedAt": "2026-10-14T22:40:18.841Z",
+  "source": {
+    "baseRevision": "93881d2eca613fde498e0933405cee3a07220a4c",
+    "testedRevision": "905cceef4ba1936908220d940bf6786a27562ad8",
+    "comparisonPatchReleased": false,
+    "patchSummary": "Read messages from the conversation API data envelope while retaining direct-payload support.",
+    "sourceFiles": [
+      {
+        "path": "app/Services/ConversationForkService.php",
+        "sha256": "223dcc999a4da30037bba4fe6ff3e82c9e33d7686a78cb728d64afc2fd1e9a23",
+        "unmodified": true
+      },
+      {
+        "path": "app/Http/Controllers/Api/ConversationForkController.php",
+        "sha256": "e360656c027b64a434c3086cc9fef312e7be51d814302a365f173dae8756e5e0",
+        "unmodified": true
+      },
+      {
+        "path": "app/Models/Conversation.php",
+        "sha256": "7694205d8b8ce29a35c5f7f6e9ec4a1d226f0f8c423725642187bc580f75affc",
+        "unmodified": true
+      },
+      {
+        "path": "app/Models/ConversationMessage.php",
+        "sha256": "2be024da39fe065a0a7b94f67440761f9acbc45b8677aa748500a35b76dd5e67",
+        "unmodified": true
+      },
+      {
+        "path": "resources/js/components/chat/ChatSplitView.vue",
+        "sha256": "984bb4c571b0e1b8c933de3cec6523fd5713e31bce38f824772120ad6167dbcb",
+        "unmodified": true
+      },
+      {
+        "path": "resources/js/components/chat/ChatBranchNavigator.vue",
+        "sha256": "9b2db13186312834ebaa3a9e189714d13135e66ebd62c4ca137f5907251d6ffc",
+        "unmodified": true
+      },
+      {
+        "path": "resources/js/composables/useBranchNavigation.ts",
+        "sha256": "f896d2839811983c237a747b5a91f89c0af0eea76cce522c4532fbc5b363c82a",
+        "unmodified": true
+      },
+      {
+        "path": "resources/js/composables/useChatAttachments.ts",
+        "sha256": "eee04cb1f2eb85c3538fc285913fb9fbaec16d4e2fdd4ab3bfbc0cacd87f371e",
+        "unmodified": true
+      },
+      {
+        "path": "resources/js/composables/useImageDetailsHandlers.ts",
+        "sha256": "13d79ae96d72d9d7b6ef4c591f6884f8ee55f04d0c576e5ba4674cabf248c70f",
+        "unmodified": true
+      }
+    ],
+    "filesVerifiedAgainstRevision": "905cceef4ba1936908220d940bf6786a27562ad8"
+  },
+  "fixture": {
+    "actual": [
+      "Vue/Inertia gallery and chat interface",
+      "Validated Laravel fork controller and ConversationForkService",
+      "Eloquent messages and input-image associations",
+      "Native preferred-branch endpoint and branch tree",
+      "Actual comparison component with the local source patch"
+    ],
+    "substituted": [
+      "Fictional approved Sunday Studio owner, workspace and uploaded reference",
+      "Deterministic local SSE answers for the initial two exchanges",
+      "Native skip_dispatch option enabled; seeded branch answers and readable ASCII titles",
+      "Fresh local database; queue workers and broadcasting disabled; browser reloads read persisted state"
+    ],
+    "inferencePerformed": false,
+    "productionDataUsed": false
+  },
+  "reference": {
+    "imageId": 1,
+    "file": "/media/studio/sample-print.png",
+    "sha256": "fd603ddc3e93133215f019a905a1996a31664c6b285db65504c1749c5b77f14a",
+    "origin": "Actual Studio Lab print export with fictional Sunday Studio content"
+  },
+  "observations": {
+    "rootId": 1,
+    "boldId": 2,
+    "quietId": 3,
+    "forkAtMessageId": 3,
+    "originalMessageCount": 4,
+    "branchCount": 3,
+    "copiedMessagesPerFork": 2,
+    "referenceImageIdInAllBranches": 1,
+    "preferredId": 3,
+    "originalRowsByteIdentical": true,
+    "chatAttempts": 0,
+    "queuedJobs": 0,
+    "providerCalls": 0
+  },
+  "originalRows": {
+    "sha256Before": "50d914bf3184c420f79073622f27b4f8210de857fe0a2d410924f9e103b82e2c",
+    "sha256After": "50d914bf3184c420f79073622f27b4f8210de857fe0a2d410924f9e103b82e2c",
+    "unchanged": true
+  },
+  "requests": [
+    {
+      "method": "POST",
+      "route": "/api/chat/conversations",
+      "status": 201,
+      "responseSha256": "bd06192b5600450c0b6ba2ba4a20315e0e28955c80aa5fc1044688392132fa32"
+    },
+    {
+      "method": "POST",
+      "route": "/api/chat/openai/stream",
+      "status": 200,
+      "responseSha256": "f2dd33cfc26b53f1478c9f7da67c84673d7a516281c8248c5e7c964713783bdc"
+    },
+    {
+      "method": "POST",
+      "route": "/api/chat/openai/stream",
+      "status": 200,
+      "responseSha256": "34ebb38d7c6a1208ade9c14d942ed37ffeef53aae33e9420f6a8934a5958b5bc"
+    },
+    {
+      "method": "POST",
+      "route": "/api/chat/conversations/1/fork",
+      "status": 202,
+      "responseSha256": "651b2e260dd2e24a0cbf2acfb7f3cc4d105fee4d13d3f7e34ccb685eeb53190a"
+    },
+    {
+      "method": "POST",
+      "route": "/api/chat/conversations/1/fork",
+      "status": 202,
+      "responseSha256": "5e00aaced0c81b59d8234ebac3c85e079fdd54551822f1469698ef295f0af188"
+    },
+    {
+      "method": "POST",
+      "route": "/api/chat/conversations/3/mark-preferred",
+      "status": 200,
+      "responseSha256": "aa59341876f6c21443c8f0a749835e5ee9cc04a56e3311db92ffa81f861c0d5e"
+    }
+  ],
+  "branches": [
+    {
+      "id": 1,
+      "title": "Sunday Studio art direction",
+      "root_conversation_id": null,
+      "forked_from_id": null,
+      "forked_at_message_id": null,
+      "is_preferred": false,
+      "messages": [
+        {
+          "id": 1,
+          "role": "user",
+          "content": "Use this Sunday Studio poster as our shared art direction reference. Describe the structure to preserve.",
+          "contentSha256": "eb23b0378dc92184cb694750b796e479a237ace78b5415e2d361801836575c8c",
+          "metadata": {
+            "fixture_seeded": true
+          },
+          "imageIds": [
+            1
+          ]
+        },
+        {
+          "id": 2,
+          "role": "model",
+          "content": "Fixture answer: The reference uses a flowing green arc, cream type and generous spacing. Preserve that structure while exploring two title treatments.",
+          "contentSha256": "95afb0c8d1e2be31f23462c5bd3dc4014e3fce5735bd83916d75ec031fbfbc80",
+          "metadata": {
+            "model": "gpt-5.5",
+            "fixture_seeded": true,
+            "no_model_inference": true
+          },
+          "imageIds": []
+        },
+        {
+          "id": 3,
+          "role": "user",
+          "content": "Keep the reference and propose a balanced title treatment for the original direction.",
+          "contentSha256": "95e72c6e7cc2d2c9963fc647f0cfd4b0f2557aa45b4be9e75547437875024e5a",
+          "metadata": {
+            "fixture_seeded": true
+          },
+          "imageIds": []
+        },
+        {
+          "id": 4,
+          "role": "model",
+          "content": "Fixture answer: Original direction keeps the title balanced and the accent restrained. The reference stays attached to this exchange.",
+          "contentSha256": "62ad8d1889746eeb0da3455522f7699707a6884fd3e91ade40989daded30e5d1",
+          "metadata": {
+            "model": "gpt-5.5",
+            "fixture_seeded": true,
+            "no_model_inference": true
+          },
+          "imageIds": []
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Bold direction",
+      "root_conversation_id": 1,
+      "forked_from_id": 1,
+      "forked_at_message_id": 3,
+      "is_preferred": false,
+      "messages": [
+        {
+          "id": 5,
+          "role": "user",
+          "content": "Use this Sunday Studio poster as our shared art direction reference. Describe the structure to preserve.",
+          "contentSha256": "eb23b0378dc92184cb694750b796e479a237ace78b5415e2d361801836575c8c",
+          "metadata": {
+            "fixture_seeded": true
+          },
+          "imageIds": [
+            1
+          ]
+        },
+        {
+          "id": 6,
+          "role": "model",
+          "content": "Fixture answer: The reference uses a flowing green arc, cream type and generous spacing. Preserve that structure while exploring two title treatments.",
+          "contentSha256": "95afb0c8d1e2be31f23462c5bd3dc4014e3fce5735bd83916d75ec031fbfbc80",
+          "metadata": {
+            "model": "gpt-5.5",
+            "fixture_seeded": true,
+            "no_model_inference": true
+          },
+          "imageIds": []
+        },
+        {
+          "id": 7,
+          "role": "user",
+          "content": "Keep the reference and make the title treatment bold, with a larger cream headline.",
+          "contentSha256": "3771618d26cb4a9cb24c6217a6ff74aeb68388fc77f52577d9372be9889c8a8a",
+          "metadata": {
+            "settings": {
+              "model": "gpt-5.5",
+              "resolution": "2K",
+              "web_search": false,
+              "aspect_ratio": "auto",
+              "low_thinking": false,
+              "gemini_config": [],
+              "response_mode": "text",
+              "include_thoughts": false,
+              "direct_gpt_image_config": null
+            },
+            "forked_from": {
+              "message_id": 3,
+              "conversation_id": 1
+            }
+          },
+          "imageIds": []
+        },
+        {
+          "id": 8,
+          "role": "model",
+          "content": "Fixture answer: Keep the original composition. Enlarge the title and use a strong cream title.",
+          "contentSha256": "aa790a1a05192cc59b2e15dd406b1eebf1e0bf43af9df302650b7208f50afbdb",
+          "metadata": {
+            "model": "gpt-5.5",
+            "fixture_seeded": true,
+            "no_model_inference": true
+          },
+          "imageIds": []
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Quiet direction",
+      "root_conversation_id": 1,
+      "forked_from_id": 1,
+      "forked_at_message_id": 3,
+      "is_preferred": true,
+      "messages": [
+        {
+          "id": 9,
+          "role": "user",
+          "content": "Use this Sunday Studio poster as our shared art direction reference. Describe the structure to preserve.",
+          "contentSha256": "eb23b0378dc92184cb694750b796e479a237ace78b5415e2d361801836575c8c",
+          "metadata": {
+            "fixture_seeded": true
+          },
+          "imageIds": [
+            1
+          ]
+        },
+        {
+          "id": 10,
+          "role": "model",
+          "content": "Fixture answer: The reference uses a flowing green arc, cream type and generous spacing. Preserve that structure while exploring two title treatments.",
+          "contentSha256": "95afb0c8d1e2be31f23462c5bd3dc4014e3fce5735bd83916d75ec031fbfbc80",
+          "metadata": {
+            "model": "gpt-5.5",
+            "fixture_seeded": true,
+            "no_model_inference": true
+          },
+          "imageIds": []
+        },
+        {
+          "id": 11,
+          "role": "user",
+          "content": "Keep the reference and make the title treatment quiet, with more open space and smaller cream type.",
+          "contentSha256": "e6e98b3b35846097d33848d101c07cfb886afb5477e865762255bed76b119197",
+          "metadata": {
+            "settings": {
+              "model": "gpt-5.5",
+              "resolution": "2K",
+              "web_search": false,
+              "aspect_ratio": "auto",
+              "low_thinking": false,
+              "gemini_config": [],
+              "response_mode": "text",
+              "include_thoughts": false,
+              "direct_gpt_image_config": null
+            },
+            "forked_from": {
+              "message_id": 3,
+              "conversation_id": 1
+            }
+          },
+          "imageIds": []
+        },
+        {
+          "id": 12,
+          "role": "model",
+          "content": "Fixture answer: Keep the green arc and generous spacing. Reduce the title size and use a soft cream title.",
+          "contentSha256": "104882871f9f156d4f2230423c11cc2d53f5d615a23f522d8116afd8154eeef1",
+          "metadata": {
+            "model": "gpt-5.5",
+            "fixture_seeded": true,
+            "no_model_inference": true
+          },
+          "imageIds": []
+        }
+      ]
+    }
+  ],
+  "comparison": {
+    "baseResult": "The original component opened blank panes because it read top-level messages while the API returns a data envelope.",
+    "localPatch": "905cceef4ba1936908220d940bf6786a27562ad8",
+    "released": false,
+    "regression": "The mounted wrapped-payload test failed before the fix. Wrapped and direct-payload tests both passed after it.",
+    "verifiedWidths": [
+      390,
+      821,
+      1440
+    ]
+  },
+  "recording": {
+    "type": "Edited screen recording of the actual app fixture",
+    "durationSeconds": 26.92,
+    "editing": "Browser loading intervals removed from a continuous 37.92-second capture. No invented frames or answers.",
+    "testedRevision": "905cceef4ba1936908220d940bf6786a27562ad8",
+    "answers": "Deterministic fixture content; no model inference"
+  },
+  "limitations": [
+    "The interactive exhibit replays these observed results; it does not publish the app backend.",
+    "No provider inference or image generation was exercised.",
+    "Comparison captures show the unreleased local source patch.",
+    "The fixture contains four messages per conversation; long-history pagination was not exercised."
+  ]
+}

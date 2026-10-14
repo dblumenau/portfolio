@@ -40,7 +40,7 @@ export const coreFeatures: Feature[] = [
         "app/Models/Conversation.php"
       ],
       "status": "source-current",
-      "note": "Source and release record inspected; no current product execution is claimed for this illustration.",
+      "note": "Source and release record inspected. This page keeps a small invented illustration; the linked Branch Lab adds an actual isolated PanelForge run with fictional data, seeded answers and an explicitly unreleased comparison fix.",
       "release": "web-v5.1.0"
     },
     "related": [
@@ -113,7 +113,7 @@ export const coreFeatures: Feature[] = [
         "resources/js/composables/useChatAttachments.ts"
       ],
       "status": "source-current",
-      "note": "Source and release record inspected; no current product execution is claimed for this illustration.",
+      "note": "Source and release record inspected. This page keeps a small invented illustration; the linked Branch Lab adds an actual isolated PanelForge run with fictional data, seeded answers and an explicitly unreleased comparison fix.",
       "release": "web-v4.13.0"
     },
     "related": [

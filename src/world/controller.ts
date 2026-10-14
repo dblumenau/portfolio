@@ -41,7 +41,13 @@ export function mountWorld(root: HTMLElement): () => void {
   let tourIndex = -1;
   let frame = 0;
   let disposed = false;
-  let visible = true;
+  let visible = false;
+  let contextLost = false;
+  let pageSuspended = false;
+  let restoreScrollFrame = 0;
+  let drawingWidth = 0;
+  let drawingHeight = 0;
+  let drawingRatio = 0;
   let pointerStart: { x: number; y: number; time: number; id: number } | null = null;
   const activePointers = new Set<number>();
   let multiplePointers = false;
@@ -51,7 +57,6 @@ export function mountWorld(root: HTMLElement): () => void {
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false, powerPreference: 'high-performance' });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.6));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.05;
@@ -72,19 +77,36 @@ export function mountWorld(root: HTMLElement): () => void {
   controls.maxPolarAngle = Math.PI * 0.47;
   controls.rotateSpeed = 0.52;
   controls.zoomSpeed = 0.8;
-  const world = buildWorld(() => { if (!disposed) renderer.render(world.scene, camera); });
+  const world = buildWorld(requestRender);
 
   function listen(target: EventTarget, type: string, callback: EventListener) {
     target.addEventListener(type, callback);
     listeners.push(() => target.removeEventListener(type, callback));
   }
+  function canRender() {
+    return !disposed && !contextLost && !pageSuspended && !document.hidden && visible;
+  }
+  function requestRender() {
+    if (canRender() && !frame) frame = requestAnimationFrame(render);
+  }
+  function stopRendering() {
+    cancelAnimationFrame(frame);
+    frame = 0;
+  }
   function size() {
     const rect = viewport.getBoundingClientRect();
     if (rect.width < 1 || rect.height < 1) return;
-    renderer.setSize(rect.width, rect.height, false);
-    camera.aspect = rect.width / rect.height;
-    camera.updateProjectionMatrix();
+    const ratio = Math.min(window.devicePixelRatio, 1.6);
+    if (rect.width !== drawingWidth || rect.height !== drawingHeight || ratio !== drawingRatio) {
+      renderer.setDrawingBufferSize(rect.width, rect.height, ratio);
+      drawingWidth = rect.width;
+      drawingHeight = rect.height;
+      drawingRatio = ratio;
+      camera.aspect = rect.width / rect.height;
+      camera.updateProjectionMatrix();
+    }
     updateLabels();
+    requestRender();
   }
   function updateLabels() {
     const width = viewport.clientWidth;
@@ -241,7 +263,11 @@ export function mountWorld(root: HTMLElement): () => void {
     }
     if (scroll !== undefined) {
       window.scrollTo({ top: scroll, behavior: 'instant' });
-      requestAnimationFrame(() => window.scrollTo({ top: scroll, behavior: 'instant' }));
+      cancelAnimationFrame(restoreScrollFrame);
+      restoreScrollFrame = requestAnimationFrame(() => {
+        restoreScrollFrame = 0;
+        if (!disposed) window.scrollTo({ top: scroll, behavior: 'instant' });
+      });
     }
     if (inspectorScroll !== undefined) inspector.scrollTop = inspectorScroll;
   }
@@ -319,24 +345,48 @@ export function mountWorld(root: HTMLElement): () => void {
   resizeObserver.observe(viewport);
   const intersection = new IntersectionObserver(([entry]) => {
     visible = entry?.isIntersecting ?? true;
-    if (visible && !frame) frame = requestAnimationFrame(render);
+    if (visible) requestRender();
+    else stopRendering();
   }, { rootMargin: '160px' });
-  intersection.observe(stage);
+  intersection.observe(viewport);
+  listen(window, 'resize', size);
+  listen(window, 'pagehide', (event) => {
+    if (!(event as PageTransitionEvent).persisted) return;
+    pageSuspended = true;
+    stopRendering();
+    pauseMedia();
+  });
+  listen(window, 'pageshow', (event) => {
+    if (!(event as PageTransitionEvent).persisted) return;
+    pageSuspended = false;
+    size();
+    requestRender();
+  });
   listen(document, 'visibilitychange', () => {
-    if (!document.hidden && visible && !frame) frame = requestAnimationFrame(render);
+    if (document.hidden) stopRendering();
+    else requestRender();
   });
   listen(canvas, 'webglcontextlost', (event) => {
     event.preventDefault();
     message.hidden = false;
-    message.textContent = 'The illustrated view paused. Explore the district descriptions below, or reload to return to the world.';
+    contextLost = true;
+    message.textContent = 'The illustrated view paused. Your district is kept while the view recovers. The complete readable map is below.';
     root.dataset.worldState = 'fallback';
-    cancelAnimationFrame(frame);
-    frame = 0;
+    stopRendering();
+  });
+  listen(canvas, 'webglcontextrestored', () => {
+    // Three.js restores its renderer before this listener; the static shadow needs a fresh pass.
+    contextLost = false;
+    renderer.shadowMap.needsUpdate = true;
+    root.dataset.worldState = 'ready';
+    message.hidden = true;
+    size();
+    requestRender();
   });
 
   function render(now: number) {
     frame = 0;
-    if (disposed || document.hidden || !visible || root.dataset.worldState === 'fallback') return;
+    if (!canRender()) return;
     if (move) {
       const progress = move.duration ? Math.min((now - move.started) / move.duration, 1) : 1;
       const eased = progress < 0.5 ? 4 * progress ** 3 : 1 - (-2 * progress + 2) ** 3 / 2;
@@ -349,7 +399,7 @@ export function mountWorld(root: HTMLElement): () => void {
     world.animate(reducedMotion ? 0 : now / 1000, hovered ?? selected);
     renderer.render(world.scene, camera);
     updateLabels();
-    frame = requestAnimationFrame(render);
+    requestRender();
   }
   root.dataset.worldState = 'ready';
   message.hidden = true;
@@ -357,13 +407,15 @@ export function mountWorld(root: HTMLElement): () => void {
   size();
   if (window.location.hash && districts.some((district) => district.id === window.location.hash.slice(1).split('/')[0])) fromHash();
   else cameraTo(null);
-  frame = requestAnimationFrame(render);
+  requestRender();
 
   return () => {
+    if (disposed) return;
     disposed = true;
     history.scrollRestoration = previousScrollRestoration;
     pauseMedia();
-    cancelAnimationFrame(frame);
+    stopRendering();
+    cancelAnimationFrame(restoreScrollFrame);
     resizeObserver.disconnect();
     intersection.disconnect();
     listeners.forEach((remove) => remove());
@@ -371,5 +423,6 @@ export function mountWorld(root: HTMLElement): () => void {
     controls.dispose();
     world.dispose();
     renderer.dispose();
+    renderer.forceContextLoss();
   };
 }

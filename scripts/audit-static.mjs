@@ -16,6 +16,8 @@ const reviewedEvidenceMedia = [
   'gateway/browser-replay.mp4', 'gateway/browser-replay.png', 'gateway/browser-replay.vtt',
   'gateway/gateway-boundary.png', 'gateway/receipt.json', 'gateway/transcript.txt',
   'studio/sample-print.png', 'studio/sample-loop.mp4', 'studio/sample-loop.webp', 'studio/sample-loop.vtt',
+  'branches/comparison.webp', 'branches/execution.mp4', 'branches/execution.vtt',
+  'branches/original-retained.webp', 'branches/receipt.json', 'branches/reference-handoff.webp',
 ];
 const reviewedTextMedia = new Set(reviewedEvidenceMedia.filter(name => /\.(?:json|txt)$/.test(name)));
 const required = [

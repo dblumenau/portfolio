@@ -53,7 +53,7 @@ export interface SupportingProject {
 
 export const siteCopy = {
   title: 'I make the tools I wish existed.',
-  intro: "I'm David, a developer in Copenhagen. I build software for making things, working with AI, and the everyday jobs that could be a little less awkward.",
+  intro: "I'm David, a developer in Copenhagen. I build creative workspaces, tools that keep AI work moving, and small apps for everyday jobs.",
   selectedIntro: 'A closer look at what I built, the decisions behind it, and how it changed with use.',
   architectureIntro: 'The interfaces connect to a wider system: agent engines, shared tools, inspectable memory and a workbench that carries the practice between sessions.',
   releasesIntro: 'A release can add a whole workspace. It can also stop a quiet agent being interrupted, or make a transcript easier to read. These changes explain how the products became usable.',
@@ -94,7 +94,7 @@ export const caseStudies: CaseStudy[] = [
       releaseStories[2],
       { kind: 'Patch', version: 'web-v10.20.97', date: 'October 2026', title: 'Give the transcript the full pane', description: 'Read-only coding transcripts gained the full pane. This followed patches for digest cards, session previews and more accurate slash-command counting.', project: 'PanelForge' },
     ],
-    current: 'PanelForge brings the gallery, conversations and coding-session history into one web workspace. The gallery shown here is a fresh capture of the working product.',
+    current: 'PanelForge brings the gallery, conversations and coding-session history into one web workspace. The gallery shown here is a fresh capture of the working product. The Branch Lab separately runs the actual interface and fork service in a controlled local fixture. Its answers are seeded, and its comparison footage includes a disclosed unreleased source fix. No model inference is claimed for that run.',
     evidence: 'The first image and revision loop was working in May 2025. The releases below trace the product’s changes through October 2026.',
     stack: ['Laravel', 'Vue', 'TypeScript', 'MySQL', 'Redis'],
     image: '/media/panelforge-gallery-desktop.webp',

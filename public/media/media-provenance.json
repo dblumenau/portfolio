@@ -811,6 +811,85 @@
       ],
       "bytes": 1869,
       "sha256": "e0bc707f250f38ea1c6482811299e231e1994f0e5785a7114f55e83ee50d7b69"
+    },
+    {
+      "file": "branches/comparison.webp",
+      "product": "PanelForge Branch Lab / controlled local fixture",
+      "captured": "2026-10-15",
+      "method": "Actual Vue/Inertia and Laravel app in an isolated fictional fixture. Tested source 905cceef4 includes an unreleased comparison fix.",
+      "content": "Fictional Sunday Studio image and conversation. Initial and branch answers are deterministic fixture text; no model inference or image generation.",
+      "redactions": [],
+      "bytes": 53402,
+      "sha256": "2d4ad5f0bdab4c13b298740733fb0e8b58b17e5e3e36d107e2d8da232c3a3b78",
+      "codec_name": "webp",
+      "width": 1440,
+      "height": 1000,
+      "editing": "Actual app screenshot converted to WebP. No content replacement or redaction was required."
+    },
+    {
+      "file": "branches/execution.mp4",
+      "product": "PanelForge Branch Lab / controlled local fixture",
+      "captured": "2026-10-15",
+      "method": "Actual Vue/Inertia and Laravel app in an isolated fictional fixture. Tested source 905cceef4 includes an unreleased comparison fix.",
+      "content": "Fictional Sunday Studio image and conversation. Initial and branch answers are deterministic fixture text; no model inference or image generation.",
+      "redactions": [],
+      "bytes": 2087965,
+      "sha256": "d4c726813e1bcaf3dbb288bca8c47a3d82c75a894fe0ed19a8200c9ca7f8f822",
+      "codec_name": "h264",
+      "width": 1440,
+      "height": 1000,
+      "duration_seconds": 26.92,
+      "editing": "Edited actual app screen recording. Loading intervals removed from a continuous 37.92-second run; no invented frames or answers. Silent H.264 with descriptive WebVTT."
+    },
+    {
+      "file": "branches/execution.vtt",
+      "product": "PanelForge Branch Lab / controlled local fixture",
+      "captured": "2026-10-15",
+      "method": "Actual Vue/Inertia and Laravel app in an isolated fictional fixture. Tested source 905cceef4 includes an unreleased comparison fix.",
+      "content": "Readable descriptive captions for the edited actual app recording, identifying fictional fixture answers and the unreleased comparison fix. Final cue ends at26.900 seconds within the26.920-second film.",
+      "redactions": [],
+      "bytes": 559,
+      "sha256": "606b5aac784bc3f355f66a5f02dc916c9058a0f176fdbaae77c70d61c6d9bb94"
+    },
+    {
+      "file": "branches/original-retained.webp",
+      "product": "PanelForge Branch Lab / controlled local fixture",
+      "captured": "2026-10-15",
+      "method": "Actual Vue/Inertia and Laravel app in an isolated fictional fixture. Tested source 905cceef4 includes an unreleased comparison fix.",
+      "content": "Fictional Sunday Studio image and conversation. Initial and branch answers are deterministic fixture text; no model inference or image generation.",
+      "redactions": [],
+      "bytes": 84296,
+      "sha256": "fe07ba8598f6333619c384d23ade991794c4a40e72c1d50e750aaef496a16557",
+      "codec_name": "webp",
+      "width": 1440,
+      "height": 1000,
+      "editing": "Actual app screenshot converted to WebP. No content replacement or redaction was required."
+    },
+    {
+      "file": "branches/receipt.json",
+      "product": "PanelForge Branch Lab / controlled local fixture",
+      "captured": "2026-10-15",
+      "method": "Actual Vue/Inertia and Laravel app in an isolated fictional fixture. Tested source 905cceef4 includes an unreleased comparison fix.",
+      "content": "Sanitized public receipt: exact source revisions/hashes, fictional conversation links, original-row hashes, shared reference, status receipts and fixture disclosures.",
+      "redactions": [
+        "Private filesystem/transport paths and real archive/session references excluded. Only fictional fixture conversation IDs are included."
+      ],
+      "bytes": 13088,
+      "sha256": "1bd78fb92bdd658379a041f4f5dd5e92bec7458e7c7d46b59098297a4b0972d2"
+    },
+    {
+      "file": "branches/reference-handoff.webp",
+      "product": "PanelForge Branch Lab / controlled local fixture",
+      "captured": "2026-10-15",
+      "method": "Actual Vue/Inertia and Laravel app in an isolated fictional fixture. Tested source 905cceef4 includes an unreleased comparison fix.",
+      "content": "Fictional Sunday Studio image and conversation. Initial and branch answers are deterministic fixture text; no model inference or image generation.",
+      "redactions": [],
+      "bytes": 41830,
+      "sha256": "1d27fcd6f954bf5aef13990f5a31dcb16b42c70be381f1f8169c6c20f19d32d3",
+      "codec_name": "webp",
+      "width": 1440,
+      "height": 1000,
+      "editing": "Actual app screenshot converted to WebP. No content replacement or redaction was required."
     }
   ]
 }

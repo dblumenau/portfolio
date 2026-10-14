@@ -415,7 +415,9 @@ export function buildWorld(onTexture: () => void): WorldScene {
       });
     },
     dispose() {
+      if (disposed) return;
       disposed = true;
+      sun.shadow.dispose();
       const shapes = new Set<THREE.BufferGeometry>();
       const mats = new Set<THREE.Material>();
       geometries.forEach((shape) => shapes.add(shape));

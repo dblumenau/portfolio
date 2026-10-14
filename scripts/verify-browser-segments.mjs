@@ -9,7 +9,8 @@ const groups = {
   recovery: ['recovery'],
   studio: ['studio'],
   gateway: ['gateway'],
-  world: ['world', 'world-exhibit'],
+  branches: ['branches'],
+  world: ['world', 'world-exhibit', 'world-lifecycle'],
 };
 if (process.argv.includes('--list')) { console.log(JSON.stringify(groups, null, 2)); process.exit(0); }
 const output = resolve(process.argv[2] ?? `test-results/segments-${process.pid}`);

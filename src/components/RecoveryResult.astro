@@ -1,0 +1,14 @@
+---
+import Icon from './Icon.astro';
+import execution from '../labs/recovery/execution.json';
+---
+<a class="recovery-result" href="/labs/recovery/" aria-label="Replay the actual disconnect and answer recovery">
+  <span class="recovery-result-label">One recorded run</span>
+  <span class="recovery-result-counts"><span><strong>{execution.checks.partial_characters}</strong><small>characters received</small></span><Icon name="arrow-right" /><span><strong>{execution.checks.recovered_characters.toLocaleString('en')}</strong><small>characters recovered</small></span></span>
+  <span class="recovery-result-action">Replay the disconnect <Icon name="arrow-up-right" /></span>
+  <span class="recovery-result-scope">Controlled Claude Engine run · the same process kept working.</span>
+</a>
+<style>
+  .recovery-result{display:grid;gap:12px;padding:18px 20px;margin-top:22px;border:1px solid #819477;border-radius:4px;text-decoration:none;background:#ffffff08;transition:background .2s,border-color .2s}.recovery-result:hover{background:#ffffff12;border-color:var(--acid)}.recovery-result-label{font-size:.6rem;text-transform:uppercase;letter-spacing:.12em;color:#d6e2cd}.recovery-result-counts{display:flex;align-items:center;gap:24px}.recovery-result-counts>span{display:grid;gap:3px}.recovery-result-counts strong{font-family:var(--serif);font-size:2.1rem;font-weight:500;line-height:1;color:var(--acid)}.recovery-result-counts small{font-size:.66rem;color:#e0e8d9}.recovery-result-counts :global(.ui-icon){width:1.5rem;height:1.5rem;color:#bfd2ab}.recovery-result-action{display:flex;justify-content:space-between;align-items:center;font-size:.8rem;font-weight:550;color:var(--paper);border-top:1px solid #698260;padding-top:12px}.recovery-result-scope{font-size:.62rem;color:#d6e2cd;line-height:1.5}
+  @media(max-width:600px){.recovery-result{margin-top:18px;padding:16px 18px;gap:10px}.recovery-result-counts{gap:22px}.recovery-result-counts strong{font-size:2rem}}
+</style>
