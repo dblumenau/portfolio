@@ -1,0 +1,219 @@
+{
+  "version": 1,
+  "purpose": "Capture provenance for the selected public portfolio media. Recorded demonstrations are distinct from illustrated architecture.",
+  "assets": [
+    {
+      "file": "apple-client-workflow.mp4",
+      "product": "Claude Engine Apple client",
+      "captured": "2026-10-14",
+      "method": "iPhone Simulator",
+      "content": "Real saved showcase conversation, native provider and model menus. No new playback or model request.",
+      "redactions": [
+        "Local workspace path hidden in video options view."
+      ],
+      "bytes": 338843,
+      "sha256": "4443d88bd459f928995a375f4e1b61048b983323db7c465437879a665da76e16",
+      "codec_name": "h264",
+      "width": 720,
+      "height": 1566,
+      "duration_seconds": 24.0,
+      "editing": "Silent recording; pauses trimmed with hard cuts. Descriptive WebVTT provided."
+    },
+    {
+      "file": "apple-client-workflow.vtt",
+      "product": "Claude Engine Apple client",
+      "captured": "2026-10-14",
+      "method": "iPhone Simulator",
+      "content": "Real saved showcase conversation, native provider and model menus. No new playback or model request.",
+      "redactions": [],
+      "bytes": 377,
+      "sha256": "e854d6ebe8c2712305c9ae21d4f479a4406b4910007629c3b623a77357aafa34"
+    },
+    {
+      "file": "apple-client.webp",
+      "product": "Claude Engine Apple client",
+      "captured": "2026-10-14",
+      "method": "iPhone Simulator",
+      "content": "Real saved showcase conversation, native provider and model menus. No new playback or model request.",
+      "redactions": [],
+      "bytes": 137052,
+      "sha256": "6960e519c3e8753ac2a717f4bdba0cf91517da8f178d44e6c0590690fe483495",
+      "codec_name": "webp",
+      "width": 1206,
+      "height": 2622
+    },
+    {
+      "file": "kitforge-desktop.webp",
+      "product": "Kitforge",
+      "captured": "2026-10-14",
+      "method": "Chrome desktop viewport",
+      "content": "Custom sample card edited in the live browser application; animated background preview.",
+      "redactions": [
+        "Capture-tool tab marker removed."
+      ],
+      "bytes": 54598,
+      "sha256": "d3b846eb20d466dda7a7f6cdda1846106ae6918d261b24b70eb8947540bcaec2",
+      "codec_name": "webp",
+      "width": 1440,
+      "height": 960
+    },
+    {
+      "file": "kitforge-workflow.mp4",
+      "product": "Kitforge",
+      "captured": "2026-10-14",
+      "method": "Chrome desktop viewport",
+      "content": "Custom sample card edited in the live browser application; animated background preview.",
+      "redactions": [
+        "Capture-tool tab marker removed."
+      ],
+      "bytes": 2077258,
+      "sha256": "19d26989972b69b6e4dee0e230e5be41a0f3dbf8b2ee2d84c5bec7caf8464b67",
+      "codec_name": "h264",
+      "width": 1280,
+      "height": 854,
+      "duration_seconds": 32.0,
+      "editing": "Silent recording; pauses trimmed with hard cuts. Descriptive WebVTT provided."
+    },
+    {
+      "file": "kitforge-workflow.vtt",
+      "product": "Kitforge",
+      "captured": "2026-10-14",
+      "method": "Chrome desktop viewport",
+      "content": "Custom sample card edited in the live browser application; animated background preview.",
+      "redactions": [
+        "Capture-tool tab marker removed."
+      ],
+      "bytes": 306,
+      "sha256": "7e24bc1c3a74a8bf76025b7beb30cc45ebd062685e8d15833c8bcf62e5ff5c66"
+    },
+    {
+      "file": "panelforge-chat-desktop.webp",
+      "product": "PanelForge",
+      "captured": "2026-10-14",
+      "method": "Chrome viewport emulation",
+      "content": "Saved Spotify showcase conversation in the working web interface.",
+      "redactions": [
+        "Device identifier redacted where shown.",
+        "Capture-tool tab marker and unrelated notification popups removed."
+      ],
+      "bytes": 81088,
+      "sha256": "01fb48657c73c6c7df391b6ca585fb717863556805d9616ec3adebc0946d1d64",
+      "codec_name": "webp",
+      "width": 1440,
+      "height": 960
+    },
+    {
+      "file": "panelforge-chat-mobile.webp",
+      "product": "PanelForge",
+      "captured": "2026-10-14",
+      "method": "Chrome viewport emulation",
+      "content": "Saved Spotify showcase conversation in the working web interface.",
+      "redactions": [
+        "Device identifier redacted where shown.",
+        "Capture-tool tab marker and unrelated notification popups removed."
+      ],
+      "bytes": 78574,
+      "sha256": "eb91c010779d2a421a620a13867ca9266d3d108f23ca43aee89a51db9bfdcbac",
+      "codec_name": "webp",
+      "width": 780,
+      "height": 1688
+    },
+    {
+      "file": "panelforge-gallery-desktop.webp",
+      "product": "PanelForge",
+      "captured": "2026-10-14",
+      "method": "Chrome viewport emulation",
+      "content": "Existing safe-for-work generated artwork, gallery browsing and image details.",
+      "redactions": [
+        "Capture-tool tab marker and unrelated notification popups removed."
+      ],
+      "bytes": 264470,
+      "sha256": "5f1b98aee838a83f33c46a040de69536424433564ef22a26d31a440dee642f57",
+      "codec_name": "webp",
+      "width": 1440,
+      "height": 960
+    },
+    {
+      "file": "panelforge-gallery-mobile.webp",
+      "product": "PanelForge",
+      "captured": "2026-10-14",
+      "method": "Chrome viewport emulation",
+      "content": "Existing safe-for-work generated artwork, gallery browsing and image details.",
+      "redactions": [
+        "Capture-tool tab marker and unrelated notification popups removed."
+      ],
+      "bytes": 167396,
+      "sha256": "24298c45a96949358097477bf51987442e09a0053a91b192484bfee2b96f833f",
+      "codec_name": "webp",
+      "width": 780,
+      "height": 1688
+    },
+    {
+      "file": "panelforge-workflow.mp4",
+      "product": "PanelForge",
+      "captured": "2026-10-14",
+      "method": "Chrome viewport emulation",
+      "content": "Existing safe-for-work generated artwork, gallery browsing and image details.",
+      "redactions": [
+        "Capture-tool tab marker and unrelated notification popups removed."
+      ],
+      "bytes": 795338,
+      "sha256": "53556ae4df48c75a421a6c6638f8209d1a6bd092f49542ee59bce5504607ce0c",
+      "codec_name": "h264",
+      "width": 1280,
+      "height": 854,
+      "duration_seconds": 23.0,
+      "editing": "Silent recording; pauses trimmed with hard cuts. Descriptive WebVTT provided."
+    },
+    {
+      "file": "panelforge-workflow.vtt",
+      "product": "PanelForge",
+      "captured": "2026-10-14",
+      "method": "Chrome viewport emulation",
+      "content": "Existing safe-for-work generated artwork, gallery browsing and image details.",
+      "redactions": [
+        "Capture-tool tab marker and unrelated notification popups removed."
+      ],
+      "bytes": 331,
+      "sha256": "ffba224f7cbf6d153b89c85879f9bbfc7c3e522d517bed663be41f576de3031a"
+    },
+    {
+      "file": "pencil-page-workflow.mp4",
+      "product": "Pencil Page",
+      "captured": "2026-10-14",
+      "method": "iPad Simulator",
+      "content": "Synthetic demo ink, actual Opus 5.5 review and follow-up.",
+      "redactions": [],
+      "bytes": 296079,
+      "sha256": "2b2aaebe9c138a14222d8688e06741db6a584d5a3ab8a1d2ead8d1adbbdd0502",
+      "codec_name": "h264",
+      "width": 1280,
+      "height": 800,
+      "duration_seconds": 27.566667,
+      "editing": "Silent recording; pauses trimmed with hard cuts. Descriptive WebVTT provided."
+    },
+    {
+      "file": "pencil-page-workflow.vtt",
+      "product": "Pencil Page",
+      "captured": "2026-10-14",
+      "method": "iPad Simulator",
+      "content": "Synthetic demo ink, actual Opus 5.5 review and follow-up.",
+      "redactions": [],
+      "bytes": 368,
+      "sha256": "80316a983f276832626f36171c55ddb5d629950f0453694a58ff52c4d21aa9a1"
+    },
+    {
+      "file": "pencil-page.webp",
+      "product": "Pencil Page",
+      "captured": "2026-10-14",
+      "method": "iPad Simulator",
+      "content": "Synthetic demo ink, actual Opus 5.5 review and follow-up.",
+      "redactions": [],
+      "bytes": 99414,
+      "sha256": "6e9287dd66af449952613e4edcfaad06e2cbf373f566c06513207269383d94a0",
+      "codec_name": "webp",
+      "width": 2064,
+      "height": 1290
+    }
+  ]
+}

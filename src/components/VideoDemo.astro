@@ -1,0 +1,10 @@
+---
+import { existsSync } from 'node:fs';
+import { resolve } from 'node:path';
+interface Props { src: string; poster: string; title: string; description: string; captions?: string; mediaCaption?: string; }
+const { src, poster, title, description, captions, mediaCaption } = Astro.props;
+const available = existsSync(resolve('public', src.slice(1)));
+const captionPath = captions ?? src.replace(/\.mp4$/, '.vtt');
+const hasCaptions = existsSync(resolve('public', captionPath.slice(1)));
+---
+{available && <figure class="video-demo"><div class="video-heading"><p class="eyebrow">Recorded in the product</p><h3>{title}</h3></div><video controls preload="none" poster={poster} playsinline aria-label={title} aria-describedby={`${src.split('/').pop()?.replace('.', '-')}-description`}>{<source src={src} type="video/mp4" />}{hasCaptions && <track kind="captions" src={captionPath} srclang="en" label="English" default />}Your browser does not support video playback. <a href={src}>Download this recording.</a></video><figcaption id={`${src.split('/').pop()?.replace('.', '-')}-description`}>{mediaCaption && <strong class="video-provenance">{mediaCaption}</strong>}{description}</figcaption><details class="transcript-details"><summary>What happens in this recording</summary>{mediaCaption && <p>{mediaCaption}</p>}<p>{description}</p></details></figure>}

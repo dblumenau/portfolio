@@ -1,0 +1,6 @@
+---
+import type { ReleaseStory } from '../data/projects';
+interface Props { stories: ReleaseStory[]; }
+const { stories } = Astro.props;
+---
+<ol class="release-cards">{stories.map((story) => <li class={`release-card release-${story.kind.toLowerCase()}`}><div class="release-meta"><span class="release-kind">{story.kind}</span><time>{story.date}</time></div><h3>{story.title}</h3><p>{story.description}</p><div class="release-source"><span>{story.project}</span><code>{story.version}</code></div></li>)}</ol>

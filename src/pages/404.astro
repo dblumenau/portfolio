@@ -1,0 +1,7 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Page not found | David Blumenau" description="This page could not be found. Explore David Blumenau's selected projects.">
+  <main class="wrap error-page" id="main"><div id="top"><p class="eyebrow">404 / A missing connection</p><h1>This page<br />is elsewhere.</h1><p>That link does not lead to a page here. The selected work is a good place to start.</p><a class="button button-dark" href="/">Back to the work <span aria-hidden="true">↗</span></a></div></main>
+</BaseLayout>
+<style>.error-page { padding-block: 80px 100px; }.error-page .eyebrow { color: var(--rust); margin-bottom: 22px; }.error-page p:not(.eyebrow) { max-width: 440px; margin-block: 28px; color: var(--muted); }</style>

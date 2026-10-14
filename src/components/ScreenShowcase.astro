@@ -1,0 +1,53 @@
+---
+import { existsSync } from 'node:fs';
+import { resolve } from 'node:path';
+interface Props { id: string; desktop: string; desktopAlt: string; mobile?: string; mobileAlt?: string; caption: string; label?: string; eager?: boolean; }
+const { id, desktop, desktopAlt, mobile, mobileAlt, caption, label = 'Product view', eager = false } = Astro.props;
+const available = (path: string) => existsSync(resolve('public', path.slice(1)));
+const desktopAvailable = available(desktop);
+const mobileAvailable = mobile && available(mobile);
+---
+<section class="screen-showcase" data-showcase aria-label={label}>
+  <div class="showcase-toolbar"><span class="showcase-label"><span class="status-dot" aria-hidden="true"></span>{label}</span>{mobileAvailable && <div class="view-switch" role="group" aria-label="Screenshot size" hidden><button type="button" class="is-selected" aria-pressed="true" data-view="desktop">Desktop</button><button type="button" aria-pressed="false" data-view="mobile">Phone</button></div>}</div>
+  <div class="screen-stage" data-stage>
+    <figure data-screen="desktop" class="screen-figure">
+      <div class="browser-frame"><div class="browser-bar" aria-hidden="true"><span></span><span></span><span></span><i> {label.toLowerCase()} / workspace </i></div>
+        {desktopAvailable ? <a class="image-zoom" href={desktop} data-zoom aria-label={`Enlarge screenshot: ${desktopAlt}`}><img src={desktop} alt={desktopAlt} width="1600" height="1000" loading={eager ? 'eager' : 'lazy'} decoding="async" fetchpriority={eager ? 'high' : 'auto'} /><span class="zoom-hint" aria-hidden="true">View full screen ↗</span></a> : <div class="missing-media"><p>Product capture</p><span>This authentic screenshot is being prepared.</span></div>}
+      </div>
+    </figure>
+    {mobileAvailable && <figure data-screen="mobile" class="screen-figure mobile-figure" hidden><div class="phone-frame"><a class="image-zoom" href={mobile} data-zoom aria-label={`Enlarge phone screenshot: ${mobileAlt}`}><img src={mobile} alt={mobileAlt ?? desktopAlt} width="430" height="932" loading="lazy" decoding="async" /><span class="zoom-hint" aria-hidden="true">Enlarge ↗</span></a></div></figure>}
+  </div>
+  <p class="media-caption"><span class="caption-marker" aria-hidden="true">↳</span>{caption}{desktopAvailable && <span class="caption-action">Select the image to explore the details.</span>}</p>
+  <dialog id={`${id}-dialog`} class="image-dialog" aria-label={`${label} enlarged screenshot`}><div class="dialog-toolbar"><span>{label}</span><button type="button" data-close aria-label="Close enlarged screenshot">Close <span aria-hidden="true">×</span></button></div><div class="dialog-content"><img data-dialog-image alt="" /></div><div class="dialog-caption"><p>{caption}</p><a href={desktop} data-original target="_blank" rel="noopener">Open full-resolution image <span aria-hidden="true">↗</span></a></div></dialog>
+</section>
+<script>
+  document.querySelectorAll<HTMLElement>('[data-showcase]').forEach((showcase) => {
+    const switcher = showcase.querySelector<HTMLElement>('.view-switch');
+    if (switcher) switcher.hidden = false;
+    const dialog = showcase.querySelector<HTMLDialogElement>('dialog');
+    showcase.querySelectorAll<HTMLButtonElement>('[data-view]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const view = button.dataset.view;
+        showcase.querySelectorAll<HTMLButtonElement>('[data-view]').forEach((item) => { item.setAttribute('aria-pressed', String(item === button)); item.classList.toggle('is-selected', item === button); });
+        showcase.querySelectorAll<HTMLElement>('[data-screen]').forEach((screen) => { screen.hidden = screen.dataset.screen !== view; });
+        showcase.querySelector('[data-stage]')?.classList.toggle('is-mobile', view === 'mobile');
+      });
+    });
+    showcase.querySelectorAll<HTMLAnchorElement>('[data-zoom]').forEach((link) => {
+      link.addEventListener('click', (event) => {
+        if (!dialog || typeof dialog.showModal !== 'function' || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+        event.preventDefault();
+        const source = link.querySelector('img');
+        const target = dialog.querySelector<HTMLImageElement>('[data-dialog-image]');
+        const original = dialog.querySelector<HTMLAnchorElement>('[data-original]');
+        if (target && source) { target.src = source.src; target.alt = source.alt; }
+        if (original) original.href = link.href;
+        dialog.showModal();
+        document.body.classList.add('dialog-open');
+      });
+    });
+    dialog?.querySelector('[data-close]')?.addEventListener('click', () => dialog.close());
+    dialog?.addEventListener('click', (event) => { if (event.target === dialog) { const bounds = dialog.getBoundingClientRect(); if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) dialog.close(); } });
+    dialog?.addEventListener('close', () => document.body.classList.remove('dialog-open'));
+  });
+</script>

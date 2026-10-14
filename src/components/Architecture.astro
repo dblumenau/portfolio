@@ -1,0 +1,37 @@
+---
+interface Props { compact?: boolean; defaultView?: 'products' | 'connections' | 'choices'; }
+const { compact = false, defaultView = compact ? 'connections' : 'products' } = Astro.props;
+const prefix = compact ? 'case-system' : 'home-system';
+const views = [
+  { key: 'products', label: 'The products', title: 'Start with what a person sees.', text: 'PanelForge is the web workspace. The Apple client brings conversations to another screen. Both use the engine services to reach agent runtimes through a shared stream format.', note: 'Two ways into the work. A shared engine boundary.', nodes: ['PanelForge', 'Agent engines', 'Apple client'], details: ['Web workspace', 'Claude / Codex / OpenCode', 'Conversations on Apple devices'], diagram: 'PanelForge and the Apple client both connect to the agent engines.' },
+  { key: 'connections', label: 'The connections', title: 'Let each part do its own job.', text: 'Claude, Codex and OpenCode speak through one client stream contract. The MCP gateway connects those engines to separate tool services. A service may live on a different machine.', note: 'Shared boundaries make differences easier to handle.', nodes: ['Agent engines', 'MCP gateway', 'Tool services'], details: ['Agent runtimes', 'A common entry point', 'Independent capabilities'], diagram: 'Agent engines reach independent tool services through the MCP gateway.' },
+  { key: 'choices', label: 'The choices', title: 'Give each check a specific job.', text: 'Authentication identifies a caller. Resource scopes govern access. Conversation profiles narrow the tools a model can see. These controls govern different boundaries; the engine also enforces its own execution permissions.', note: 'A tool appearing in the catalog is not permission to run it.', nodes: ['Caller identity', 'Resource access', 'Tool profile'], details: ['Who is calling?', 'Which resources may they use?', 'Which tools does the model see?'], diagram: 'Three distinct checks: caller identity, access to resources, and tools visible in the conversation profile.' },
+];
+---
+<div class:list={['architecture', { 'architecture-compact': compact }]} data-architecture>
+  <div class="architecture-tabs" role="tablist" aria-label="Explore the Forge system" hidden>{views.map((view, index) => <button type="button" id={`${prefix}-${view.key}-tab`} role="tab" aria-selected={view.key === defaultView} aria-controls={`${prefix}-${view.key}-panel`} tabindex={view.key === defaultView ? 0 : -1} data-system-tab={view.key}>{view.label}<span aria-hidden="true">0{index + 1}</span></button>)}</div>
+  {views.map((view, index) => <section id={`${prefix}-${view.key}-panel`} role="tabpanel" aria-labelledby={`${prefix}-${view.key}-tab`} tabindex="0" data-system-panel={view.key} hidden={view.key !== defaultView}><div class="architecture-map" aria-label={`Conceptual diagram: ${view.diagram}`} role="img"><div class="map-grid" aria-hidden="true"></div>{view.nodes.map((node, position) => <div class={`map-node node-${position}`}><span class="node-index">0{position + 1}</span><strong>{node}</strong><span class="node-detail">{view.details[position]}</span></div>)}{view.key !== 'choices' && <svg class="map-lines" viewBox="0 0 720 380" preserveAspectRatio="none" aria-hidden="true"><path d={view.key === 'products' ? 'M230 105 H355 V180 M490 280 H355 V205' : 'M230 105 H355 V280 H490'} fill="none" stroke="currentColor" stroke-width="2" /><circle cx="355" cy="185" r="7" fill="currentColor" /></svg>}<p class="map-label">Forge / {view.key === 'choices' ? 'distinct permission boundaries' : 'connected by design'}</p></div><div class="architecture-explanation"><span class="eyebrow">View 0{index + 1}</span><h3>{view.title}</h3><p>{view.text}</p><p class="architecture-note">{view.note}</p></div></section>)}
+  <noscript><p class="architecture-noscript">The engines share a stream contract. The tool gateway handles scoped connections. Attention creates durable questions for a person to answer.</p></noscript>
+</div>
+<script>
+  document.querySelectorAll<HTMLElement>('[data-architecture]').forEach((architecture) => {
+    const tabs = Array.from(architecture.querySelectorAll<HTMLButtonElement>('[data-system-tab]'));
+    const tablist = architecture.querySelector<HTMLElement>('[role="tablist"]');
+    if (tablist) tablist.hidden = false;
+    function select(tab: HTMLButtonElement) {
+      tabs.forEach((item) => { item.setAttribute('aria-selected', String(item === tab)); item.tabIndex = item === tab ? 0 : -1; });
+      architecture.querySelectorAll<HTMLElement>('[data-system-panel]').forEach((panel) => { panel.hidden = panel.dataset.systemPanel !== tab.dataset.systemTab; });
+    }
+    tabs.forEach((tab, index) => {
+      tab.addEventListener('click', () => select(tab));
+      tab.addEventListener('keydown', (event) => {
+        let next: number | undefined;
+        if (event.key === 'ArrowRight') next = (index + 1) % tabs.length;
+        if (event.key === 'ArrowLeft') next = (index - 1 + tabs.length) % tabs.length;
+        if (event.key === 'Home') next = 0;
+        if (event.key === 'End') next = tabs.length - 1;
+        if (next !== undefined) { event.preventDefault(); select(tabs[next]); tabs[next].focus(); }
+      });
+    });
+  });
+</script>
