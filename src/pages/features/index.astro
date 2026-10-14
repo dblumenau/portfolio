@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import FeatureAtlas from '../../components/FeatureAtlas.astro';
+import '../../styles/features.css';
+---
+<BaseLayout title="Feature atlas | David Blumenau" description="Nineteen real feature stories about knowledge graphs, archive recall, portable agent setup and browser evidence. Explore how and why I built them.">
+  <main id="main" class="features-page">
+    <section class="atlas-hero wrap" id="top"><a class="feature-back" href="/">← The portfolio</a><div class="atlas-hero-grid"><div><p class="eyebrow">Memory + workbench / First collection</p><h1>The work<br /><em>inside the work.</em></h1></div><div><p>A knowledge graph needs a way to correct a fact. A browser bridge needs to know which tab belongs to which session. The details are where a broad idea becomes something I can use.</p><p>These are nineteen researched stories from PanelForge, metaclaude, metacodex and Helm. Choose a starting point, or browse the complete catalogue below.</p><a class="text-link" href="#atlas-heading">Browse the features <span aria-hidden="true">↓</span></a></div></div></section>
+    <section class="atlas-paths wrap" aria-labelledby="atlas-paths-title"><div class="atlas-paths-heading"><p class="eyebrow">Three ways in</p><h2 id="atlas-paths-title">Pick a useful question.</h2></div><div class="atlas-path-grid">
+      <article><span class="atlas-path-number">01 / Recall</span><h3>Where did we work that out?</h3><p>Find one detail, load the relevant context, then follow connections across the archive.</p><ol><li><a href="/features/find-that/">FindThat</a></li><li><a href="/features/same-page/">Same-Page</a></li><li><a href="/features/knowledge-graph/">Knowledge graph</a></li></ol></article>
+      <article><span class="atlas-path-number">02 / Trust</span><h3>Why should this fact stay?</h3><p>Resolve a name, inspect its source and keep a reasoned history of corrections.</p><ol><li><a href="/features/grounded-analysis/">Grounded analysis</a></li><li><a href="/features/personal-relevance/">Personal relevance</a></li><li><a href="/features/graph-curation/">Curation history</a></li></ol></article>
+      <article><span class="atlas-path-number">03 / Workbench</span><h3>How does this work carry across sessions?</h3><p>Share the setup, give browser work an owner and return evidence for review.</p><ol><li><a href="/features/metacodex/">Portable configuration</a></li><li><a href="/features/browser-handoff/">Browser handoff</a></li><li><a href="/features/helm/">Helm</a></li></ol></article>
+    </div></section>
+    <div class="atlas-main wrap"><FeatureAtlas /></div>
+    <aside class="atlas-source-note wrap"><p class="eyebrow">What the catalogue establishes</p><h2>Each story has a source boundary.</h2><p>I checked these stories against archived implementation discussions and inspected source through 14 October 2026. A current source file, a historical delivery and a defined skill workflow establish different things. Every story tells you which evidence it has.</p><p>The small exhibits use invented records to explain the design. They are not screenshots, model runs or proof of present deployment. Private archive references remain in the research ledger.</p><a class="text-link" href="/world/">Explore the illustrated world <span aria-hidden="true">↗</span></a></aside>
+  </main>
+</BaseLayout>

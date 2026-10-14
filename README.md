@@ -1,8 +1,8 @@
 # David Blumenau’s portfolio
 
-A static Astro site with product screenshots, captioned recordings, keyboard-accessible architecture diagrams and three case studies. nginx serves the production build; browser interactions run without an application server.
+A static Astro site with six case studies, a Three.js world, a feature atlas, an interactive memory lab and a release explorer. Product screenshots, captioned recordings and downloadable samples accompany the stories. nginx serves the production build; browser interactions run without an application server.
 
-Use Node 22.12 or newer, npm, and ffprobe for the media audit.
+Use Node 22.12 or newer, npm, ffprobe and exiftool for the media audit.
 
 ```sh
 npm ci

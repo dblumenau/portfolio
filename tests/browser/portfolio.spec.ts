@@ -1,7 +1,7 @@
 import { test, expect, type Page } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
-const routes = ['/', '/work/panelforge/', '/work/connected-agents/', '/work/connected-tools/'];
+const routes = ['/', '/work/panelforge/', '/work/connected-agents/', '/work/connected-tools/', '/work/knowledge-graph/', '/work/agent-workbench/', '/work/conference-notes/', '/about-the-demos/'];
 const sizes = [{ name: 'phone', width: 390, height: 844 }, { name: 'tablet', width: 768, height: 1024 }, { name: 'desktop', width: 1440, height: 1000 }];
 
 async function loadImages(page: Page) {
@@ -50,18 +50,65 @@ test('navigation and contact links reach their destinations', async ({ page }) =
   await expect(page.getByRole('link', { name: 'Email me', exact: true })).toHaveAttribute('href', 'mailto:dblumenau@gmail.com');
 });
 
-test('phone navigation is reachable and operable by keyboard', async ({ page }) => {
-  await page.setViewportSize(sizes[0]);
+for (const width of [390, 768, 820]) {
+  test(`mobile menu at ${width}px supports keyboard, Escape, outside clicks and links`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto('/');
+    await page.keyboard.press('Tab');
+    await expect(page.getByRole('link', { name: 'Skip to content' })).toBeFocused();
+    await page.keyboard.press('Enter');
+    await expect(page).toHaveURL(/#main$/);
+    const menu = page.locator('.mobile-menu');
+    const summary = menu.locator('summary');
+    await expect(summary).toBeVisible();
+    await expect(page.getByRole('navigation', { name: 'Main navigation' })).toBeHidden();
+    await summary.focus();
+    await page.keyboard.press('Enter');
+    await expect(menu).toHaveAttribute('open', '');
+    await expect(menu.getByRole('link')).toHaveCount(await page.locator('.desktop-navigation a').count());
+    expect(await menu.getByRole('link').count()).toBeGreaterThanOrEqual(5);
+    await page.keyboard.press('Tab');
+    await expect(menu.getByRole('link', { name: /Selected work/ })).toBeFocused();
+    await page.keyboard.press('Escape');
+    await expect(menu).not.toHaveAttribute('open', '');
+    await expect(summary).toBeFocused();
+    await page.keyboard.press('Enter');
+    await page.getByRole('heading', { level: 1 }).click({ position: { x: 4, y: 4 } });
+    await expect(menu).not.toHaveAttribute('open', '');
+    await summary.focus();
+    await page.keyboard.press('Enter');
+    const about = menu.getByRole('link', { name: /About/ });
+    await about.focus();
+    await page.keyboard.press('Enter');
+    await expect(page).toHaveURL(/#approach$/);
+    await expect(menu).not.toHaveAttribute('open', '');
+    await summary.click();
+    await menu.getByRole('link', { name: /Feature atlas/ }).click();
+    await expect(page).toHaveURL('/features/');
+    await expect(page.locator('.mobile-menu')).not.toHaveAttribute('open', '');
+  });
+}
+
+test('desktop navigation appears after the mobile-menu breakpoint', async ({ page }) => {
+  await page.setViewportSize({ width: 821, height: 900 });
   await page.goto('/');
-  await page.keyboard.press('Tab');
-  await expect(page.getByRole('link', { name: 'Skip to content' })).toBeFocused();
-  await page.keyboard.press('Enter');
-  await expect(page).toHaveURL(/#main$/);
-  const about = page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: 'About', exact: true });
-  await about.focus();
-  await expect(about).toBeVisible();
-  await page.keyboard.press('Enter');
-  await expect(page).toHaveURL(/#approach$/);
+  await expect(page.locator('.mobile-menu')).toBeHidden();
+  expect(await page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link').count()).toBeGreaterThanOrEqual(5);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+});
+
+test('workbench paths support arrow keys, Home and End with one readable panel', async ({ page }) => {
+  await page.goto('/work/agent-workbench/');
+  const tabs = page.getByRole('tab', { name: /Set up a session|Carry a lesson forward/ });
+  await expect(tabs).toHaveCount(2);
+  await tabs.first().focus();
+  for (const [key, index] of [['ArrowRight', 1], ['ArrowRight', 0], ['End', 1], ['Home', 0], ['ArrowLeft', 1]] as const) {
+    await page.keyboard.press(key);
+    await expect(tabs.nth(index)).toBeFocused();
+    await expect(tabs.nth(index)).toHaveAttribute('aria-selected', 'true');
+    await expect(page.locator('[data-bench-panel]:visible')).toHaveCount(1);
+    await expect(page.locator('[data-bench-panel]:visible li')).toHaveCount(3);
+  }
 });
 
 test('architecture tabs support arrows, Home and End with one selected panel', async ({ page }) => {
@@ -109,9 +156,9 @@ test('screenshot size selection and enlarged dialog preserve focus', async ({ pa
 
 test('recordings have working playback, captions, posters and text alternatives', async ({ page }) => {
   const observed = new Set<string>();
-  for (const route of ['/', '/work/panelforge/', '/work/connected-agents/']) {
+  for (const route of ['/', '/work/panelforge/', '/work/connected-agents/', '/work/knowledge-graph/', '/work/conference-notes/']) {
     await page.goto(route);
-    const videos = page.locator('video');
+    const videos = page.locator('figure.video-demo video');
     expect(await videos.count()).toBeGreaterThanOrEqual(route === '/' ? 2 : 1);
     for (const video of await videos.all()) {
     observed.add((await video.locator('source').getAttribute('src'))!);
@@ -140,7 +187,7 @@ test('recordings have working playback, captions, posters and text alternatives'
     await expect(transcript.locator('p').last()).toBeVisible();
     }
   }
-  for (const name of ['kitforge', 'pencil-page', 'panelforge', 'apple-client']) expect(observed).toContain(`/media/${name}-workflow.mp4`);
+  for (const name of ['kitforge', 'pencil-page', 'panelforge', 'apple-client', 'knowledge-graph', 'conference-notes']) expect(observed).toContain(`/media/${name}-workflow.mp4`);
 });
 
 test('reduced motion keeps navigation and interactive content usable', async ({ page }) => {
@@ -150,6 +197,38 @@ test('reduced motion keeps navigation and interactive content usable', async ({ 
   await expect(page.getByRole('tab').last()).toHaveAttribute('aria-selected', 'true');
   expect(await page.evaluate(() => getComputedStyle(document.documentElement).scrollBehavior)).toBe('auto');
   expect(await page.locator('video').evaluateAll(videos => videos.every(video => !(video as HTMLVideoElement).autoplay))).toBe(true);
+});
+
+test('the Kitforge output showcase plays the actual square browser export', async ({ page }) => {
+  await page.goto('/');
+  const showcase = page.locator('[data-kitforge-output]');
+  await expect(showcase).toBeVisible();
+  const video = showcase.locator('video');
+  await expect(video).toBeHidden();
+  await showcase.locator('summary').focus();
+  await page.keyboard.press('Enter');
+  await expect(video).toBeVisible();
+  await expect(video.locator('source')).toHaveAttribute('src', '/media/kitforge-output.mp4');
+  await expect(video).toHaveAttribute('controls', '');
+  await video.scrollIntoViewIfNeeded();
+  await video.evaluate(async element => {
+    const media = element as HTMLVideoElement;
+    media.muted = true;
+    media.load();
+    await media.play();
+  });
+  await expect.poll(() => video.evaluate(element => (element as HTMLVideoElement).currentTime)).toBeGreaterThan(0.1);
+  expect(await video.evaluate(element => {
+    const media = element as HTMLVideoElement;
+    return { width: media.videoWidth, height: media.videoHeight, duration: media.duration };
+  })).toEqual({ width: 1080, height: 1080, duration: 4 });
+  const track = video.locator('track[kind="captions"]');
+  await expect(track).toHaveAttribute('src', '/media/kitforge-output.vtt');
+  await expect.poll(() => track.evaluate(element => (element as HTMLTrackElement).readyState)).toBe(2);
+  expect(await track.evaluate(element => (element as HTMLTrackElement).track.cues?.length ?? 0)).toBeGreaterThan(0);
+  await video.evaluate(element => (element as HTMLVideoElement).pause());
+  await expect(showcase.locator('p')).toContainText('exported directly from the working application');
+  await expect(showcase.getByRole('link', { name: /Download.*sample MP4/ })).toHaveAttribute('href', '/media/kitforge-output.mp4');
 });
 
 test('unknown routes show an accessible route home', async ({ page }) => {

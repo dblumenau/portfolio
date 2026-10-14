@@ -1,3 +1,6 @@
+import { conferenceCaseStudy } from './conference-case-study';
+import { memoryCaseStudies } from './memory-case-studies';
+
 export interface ReleaseStory {
   kind: 'Major' | 'Minor' | 'Patch';
   version: string;
@@ -12,6 +15,7 @@ export interface CaseStudy {
   number: string;
   name: string;
   category: string;
+  context?: string;
   title: string;
   intro: string;
   premise: string;
@@ -51,7 +55,7 @@ export const siteCopy = {
   title: 'I make the tools I wish existed.',
   intro: "I'm David, a developer in Copenhagen. I build software for making things, working with AI, and the everyday jobs that could be a little less awkward.",
   selectedIntro: 'A closer look at what I built, the decisions behind it, and how it changed with use.',
-  architectureIntro: 'PanelForge is the web workspace. Three engines connect it and the Apple app to different agent runtimes. A shared gateway connects those agents to tools.',
+  architectureIntro: 'The interfaces connect to a wider system: agent engines, shared tools, inspectable memory and a workbench that carries the practice between sessions.',
   releasesIntro: 'A release can add a whole workspace. It can also stop a quiet agent being interrupted, or make a transcript easier to read. These changes explain how the products became usable.',
   approach: 'These projects started with specific problems: finding an image again, keeping an agent’s answer when a connection drops, making a social graphic without opening a design app. Some stayed small. PanelForge became the workspace that connects much of the rest. I use AI coding agents in that process and make the product decisions myself.',
 };
@@ -169,6 +173,8 @@ export const caseStudies: CaseStudy[] = [
     imageAlt: 'PanelForge conversation workspace, a client of the connected engine and tool system.',
     imageCaption: 'The conversation workspace connects to capabilities through the shared gateway.',
   },
+  ...memoryCaseStudies,
+  conferenceCaseStudy,
 ];
 
 export const supportingProjects: SupportingProject[] = [

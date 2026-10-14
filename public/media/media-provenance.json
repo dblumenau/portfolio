@@ -43,6 +43,247 @@
       "height": 2622
     },
     {
+      "file": "code-history-peek.webp",
+      "product": "PanelForge Code History",
+      "captured": "2026-10-14",
+      "method": "Desktop Chrome",
+      "content": "A saved development session that introduced Code History, inspected in the current interface. Its open questions describe that historical session.",
+      "redactions": [
+        "Private background session cards and cost figures redacted.",
+        "Capture marker and unrelated notifications hidden."
+      ],
+      "bytes": 154794,
+      "sha256": "8d1728b987734575262289188888d1e1d7605687a9011797a98a1fc77081e50b",
+      "codec_name": "webp",
+      "width": 1440,
+      "height": 1000
+    },
+    {
+      "file": "code-history-week.webp",
+      "product": "PanelForge Code History",
+      "captured": "2026-10-14",
+      "method": "Desktop Chrome",
+      "content": "Week view of real development sessions. Private cards and financial figures are obscured.",
+      "redactions": [
+        "Private session cards and cost figures redacted.",
+        "Capture marker and unrelated notifications hidden."
+      ],
+      "bytes": 174836,
+      "sha256": "5436d74c46c4ee5b32657d54456b60727bbd42b9adec3d0fb4e0ad26bb26ef32",
+      "codec_name": "webp",
+      "width": 1440,
+      "height": 1000
+    },
+    {
+      "file": "conference-notes-agenda.webp",
+      "product": "Conference Notes",
+      "captured": "2026-10-14",
+      "method": "Isolated actual application, archived v1.1.1 source",
+      "content": "Fictional attendees and conference notes. Actual application and completed Claude subscription analysis. Demonstration counts are not event outcomes.",
+      "redactions": [],
+      "bytes": 49110,
+      "sha256": "e18fea740b397def82b8cf0792868007c4c114998325e6e89bc0106f379236db",
+      "codec_name": "webp",
+      "width": 1440,
+      "height": 1161,
+      "editing": "Browser or actual generated presentation capture; WebP compression."
+    },
+    {
+      "file": "conference-notes-attendee.webp",
+      "product": "Conference Notes",
+      "captured": "2026-10-14",
+      "method": "Isolated actual application, archived v1.1.1 source",
+      "content": "Fictional attendees and conference notes. Actual application and completed Claude subscription analysis. Demonstration counts are not event outcomes.",
+      "redactions": [],
+      "bytes": 49440,
+      "sha256": "4432092cb6ba2db775a0b501280910fb5609c239a3e354baabbe0277725af6a0",
+      "codec_name": "webp",
+      "width": 1420,
+      "height": 960,
+      "editing": "Browser or actual generated presentation capture; WebP compression."
+    },
+    {
+      "file": "conference-notes-deck-builder.webp",
+      "product": "Conference Notes",
+      "captured": "2026-10-14",
+      "method": "Isolated actual application, archived v1.1.1 source",
+      "content": "Fictional attendees and conference notes. Actual application and completed Claude subscription analysis. Demonstration counts are not event outcomes.",
+      "redactions": [],
+      "bytes": 129824,
+      "sha256": "f1370d14c00b0c0916a1ea189b4e3a02e3559b5395b97e4f31dace49d651d5e4",
+      "codec_name": "webp",
+      "width": 1440,
+      "height": 1000,
+      "editing": "Browser or actual generated presentation capture; WebP compression."
+    },
+    {
+      "file": "conference-notes-deck-theme.webp",
+      "product": "Conference Notes",
+      "captured": "2026-10-14",
+      "method": "Isolated actual application, archived v1.1.1 source",
+      "content": "Fictional attendees and conference notes. Actual application and completed Claude subscription analysis. Demonstration counts are not event outcomes.",
+      "redactions": [],
+      "bytes": 71724,
+      "sha256": "106da8fb5aed68c644c41892bb18af0cdaa34a4bb1d6a62b939eb244c6542af9",
+      "codec_name": "webp",
+      "width": 1100,
+      "height": 619,
+      "editing": "Browser or actual generated presentation capture; WebP compression."
+    },
+    {
+      "file": "conference-notes-deck.webp",
+      "product": "Conference Notes",
+      "captured": "2026-10-14",
+      "method": "Isolated actual application, archived v1.1.1 source",
+      "content": "Fictional attendees and conference notes. Actual application and completed Claude subscription analysis. Demonstration counts are not event outcomes.",
+      "redactions": [],
+      "bytes": 65080,
+      "sha256": "67dc4cc5d9d2e71ebf7448f6db220461e94a45d95fe8334a89eb98e71da1ecc6",
+      "codec_name": "webp",
+      "width": 1100,
+      "height": 619,
+      "editing": "Browser or actual generated presentation capture; WebP compression."
+    },
+    {
+      "file": "conference-notes-mobile-agenda.webp",
+      "product": "Conference Notes",
+      "captured": "2026-10-14",
+      "method": "Isolated actual application, archived v1.1.1 source",
+      "content": "Fictional attendees and conference notes. Actual application and completed Claude subscription analysis. Demonstration counts are not event outcomes.",
+      "redactions": [],
+      "bytes": 166092,
+      "sha256": "29b28d06a360dcdcda1d70d2e1ed76b8a36ab4c43c12aee5ac37d3ae66a22658",
+      "codec_name": "webp",
+      "width": 1170,
+      "height": 3969,
+      "editing": "Browser or actual generated presentation capture; WebP compression."
+    },
+    {
+      "file": "conference-notes-mobile.webp",
+      "product": "Conference Notes",
+      "captured": "2026-10-14",
+      "method": "Isolated actual application, archived v1.1.1 source",
+      "content": "Fictional attendees and conference notes. Actual application and completed Claude subscription analysis. Demonstration counts are not event outcomes.",
+      "redactions": [],
+      "bytes": 125292,
+      "sha256": "09f4daba3e4bebf30f8877c4324a0d23300989dcae54b4f9573629ed424d159d",
+      "codec_name": "webp",
+      "width": 1170,
+      "height": 2484,
+      "editing": "Browser or actual generated presentation capture; WebP compression."
+    },
+    {
+      "file": "conference-notes-offline.webp",
+      "product": "Conference Notes",
+      "captured": "2026-10-14",
+      "method": "Isolated actual application, archived v1.1.1 source",
+      "content": "Fictional attendees and conference notes. Actual application and completed Claude subscription analysis. Demonstration counts are not event outcomes.",
+      "redactions": [],
+      "bytes": 53616,
+      "sha256": "7c80cdaaca4c4bb14e674828da1542236cf87e3c3a72552f6f98f908dbfb48aa",
+      "codec_name": "webp",
+      "width": 1440,
+      "height": 1000,
+      "editing": "Browser or actual generated presentation capture; WebP compression."
+    },
+    {
+      "file": "conference-notes-responses.webp",
+      "product": "Conference Notes",
+      "captured": "2026-10-14",
+      "method": "Isolated actual application, archived v1.1.1 source",
+      "content": "Fictional attendees and conference notes. Actual application and completed Claude subscription analysis. Demonstration counts are not event outcomes.",
+      "redactions": [],
+      "bytes": 72970,
+      "sha256": "5df9390ee23dc7f4d8c075fa1e2be9438acc389834d873b439d7ed810fb47640",
+      "codec_name": "webp",
+      "width": 1440,
+      "height": 1000,
+      "editing": "Browser or actual generated presentation capture; WebP compression."
+    },
+    {
+      "file": "conference-notes-sources.webp",
+      "product": "Conference Notes",
+      "captured": "2026-10-14",
+      "method": "Isolated actual application, archived v1.1.1 source",
+      "content": "Fictional attendees and conference notes. Actual application and completed Claude subscription analysis. Demonstration counts are not event outcomes.",
+      "redactions": [],
+      "bytes": 163778,
+      "sha256": "b3c019907df1f16e8cef715d2dbee7e5531489c7e0ed5ee56c70e504822ed360",
+      "codec_name": "webp",
+      "width": 1440,
+      "height": 1000,
+      "editing": "Browser or actual generated presentation capture; WebP compression."
+    },
+    {
+      "file": "conference-notes-themes.webp",
+      "product": "Conference Notes",
+      "captured": "2026-10-14",
+      "method": "Isolated actual application, archived v1.1.1 source",
+      "content": "Fictional attendees and conference notes. Actual application and completed Claude subscription analysis. Demonstration counts are not event outcomes.",
+      "redactions": [],
+      "bytes": 147270,
+      "sha256": "46f7866016688a8484ea1704b6de930e718ebb28fd9e9c1b7254cd33a6148290",
+      "codec_name": "webp",
+      "width": 1420,
+      "height": 960,
+      "editing": "Browser screenshot cropped to remove the agent capture marker; WebP compression."
+    },
+    {
+      "file": "conference-notes-workflow.mp4",
+      "product": "Conference Notes",
+      "captured": "2026-10-14",
+      "method": "Isolated actual application, archived v1.1.1 source",
+      "content": "Fictional attendees and conference notes. Actual application and completed Claude subscription analysis. Demonstration counts are not event outcomes.",
+      "redactions": [],
+      "bytes": 2359498,
+      "sha256": "24683612178434c086f701f7d6c5a2c64d5e2b54047f84a78417899304182bb1",
+      "codec_name": "h264",
+      "width": 1440,
+      "height": 1000,
+      "duration_seconds": 35.96,
+      "editing": "Re-encoded silent real-time browser recording. No cuts or speed changes. Analysis completed beforehand. Descriptive captions supplied."
+    },
+    {
+      "file": "conference-notes-workflow.vtt",
+      "product": "Conference Notes",
+      "captured": "2026-10-14",
+      "method": "Isolated actual application, archived v1.1.1 source",
+      "content": "Fictional attendees and conference notes. Actual application and completed Claude subscription analysis. Demonstration counts are not event outcomes.",
+      "redactions": [],
+      "bytes": 1020,
+      "sha256": "dc2b945a30d0eead29e93ca91b229d1b4a33cbaa5a6d3430d23fc99d9ac2b94e",
+      "editing": "Descriptive captions for the recorded actions."
+    },
+    {
+      "file": "conference-notes.webp",
+      "product": "Conference Notes",
+      "captured": "2026-10-14",
+      "method": "Isolated actual application, archived v1.1.1 source",
+      "content": "Fictional attendees and conference notes. Actual application and completed Claude subscription analysis. Demonstration counts are not event outcomes.",
+      "redactions": [],
+      "bytes": 99304,
+      "sha256": "ddd57b30f88ed44b118d076fa60517504c6f69d069d364e7ed4beb1abc2266fa",
+      "codec_name": "webp",
+      "width": 1440,
+      "height": 1297,
+      "editing": "Browser or actual generated presentation capture; WebP compression."
+    },
+    {
+      "file": "forge-world-overview.webp",
+      "product": "Forge World portfolio illustration",
+      "captured": "2026-10-14",
+      "method": "Actual rendered Three.js scene in desktop Chrome",
+      "content": "Designed miniature map of six project districts, using reviewed product screenshots as textures. An illustration, not an operational system map.",
+      "redactions": [
+        "Unrelated browser agent marker hidden."
+      ],
+      "bytes": 72806,
+      "sha256": "cd4396cd9a9e41c0765b2b05a1fea794fcf51d558ec69a24ca0a4ec050b3256e",
+      "codec_name": "webp",
+      "width": 1377,
+      "height": 650
+    },
+    {
       "file": "kitforge-desktop.webp",
       "product": "Kitforge",
       "captured": "2026-10-14",
@@ -56,6 +297,30 @@
       "codec_name": "webp",
       "width": 1440,
       "height": 960
+    },
+    {
+      "file": "kitforge-output.mp4",
+      "product": "Kitforge",
+      "captured": "2026-10-14",
+      "method": "Actual export from the live browser application",
+      "content": "Four-second 1080px H.264 loop exported from the fictional sample card. Source bytes are unchanged.",
+      "redactions": [],
+      "bytes": 3044089,
+      "sha256": "dd5f6d7950d808610c61712d335ce8d0829d04e3f82bc71b88a3d9230817911d",
+      "codec_name": "h264",
+      "width": 1080,
+      "height": 1080,
+      "duration_seconds": 4.0
+    },
+    {
+      "file": "kitforge-output.vtt",
+      "product": "Kitforge",
+      "captured": "2026-10-14",
+      "method": "Descriptive captions",
+      "content": "Description of the animated sample card.",
+      "redactions": [],
+      "bytes": 148,
+      "sha256": "2bd92bc11ba67007914633ad00bc1f6967a768566a98195dfa714a9eee778895"
     },
     {
       "file": "kitforge-workflow.mp4",
@@ -85,6 +350,48 @@
       ],
       "bytes": 306,
       "sha256": "7e24bc1c3a74a8bf76025b7beb30cc45ebd062685e8d15833c8bcf62e5ff5c66"
+    },
+    {
+      "file": "knowledge-graph-workflow.mp4",
+      "product": "PanelForge knowledge graph",
+      "captured": "2026-10-14",
+      "method": "Desktop Chrome",
+      "content": "Real search, predicate filtering, entity focus, zoom and fit on inspected project/software records.",
+      "redactions": [
+        "Capture marker, unrelated notifications and unread count hidden."
+      ],
+      "bytes": 1211320,
+      "sha256": "b7d3d6e509e4166e5e402f387017422fe7bb22b215a3b66f7f0f9bd9c56916c6",
+      "codec_name": "h264",
+      "width": 1440,
+      "height": 900,
+      "duration_seconds": 16.133333,
+      "editing": "Silent real compositor recording. Stationary gaps shortened; chronological actions preserved. Descriptive captions supplied."
+    },
+    {
+      "file": "knowledge-graph-workflow.vtt",
+      "product": "PanelForge knowledge graph",
+      "captured": "2026-10-14",
+      "method": "Descriptive captions",
+      "content": "Captions describe the recorded graph navigation.",
+      "redactions": [],
+      "bytes": 411,
+      "sha256": "4afe9f7b084eedaa06cea8756142524a3b486a8f9a0886c009a85fad289d3587"
+    },
+    {
+      "file": "knowledge-graph.webp",
+      "product": "PanelForge knowledge graph",
+      "captured": "2026-10-14",
+      "method": "Desktop Chrome",
+      "content": "Real filtered project/software relationships; historical aliases and versions retained.",
+      "redactions": [
+        "Capture marker, unrelated notifications and unread count hidden."
+      ],
+      "bytes": 72622,
+      "sha256": "512e673a851ab1b909fa9286d82858e4183be7e6705912586ab1594dd95121cc",
+      "codec_name": "webp",
+      "width": 1440,
+      "height": 900
     },
     {
       "file": "panelforge-chat-desktop.webp",
@@ -214,6 +521,19 @@
       "codec_name": "webp",
       "width": 2064,
       "height": 1290
+    },
+    {
+      "file": "portfolio-social-card.png",
+      "product": "David Blumenau portfolio",
+      "captured": "2026-10-14",
+      "method": "Native HTML/CSS rendered in Chromium",
+      "content": "Portfolio sharing card. Designed typography with the reviewed Forge World illustration.",
+      "redactions": [],
+      "bytes": 226619,
+      "sha256": "ee5cbe9af4c5a0316692c54263800e12f853ef929441f345157f696d304f3642",
+      "codec_name": "png",
+      "width": 1200,
+      "height": 630
     }
   ]
 }

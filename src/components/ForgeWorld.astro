@@ -1,0 +1,90 @@
+---
+import { districts } from '../world/data';
+import { imageDimensions } from '../data/media';
+import '../world/world.css';
+---
+<section class="forge-world" data-forge-world data-world-state="loading" aria-label="Forge World, an illustrated map of David's work">
+  <div class="world-toolbar">
+    <div class="world-toolbar-title"><span class="world-cross" aria-hidden="true">✳</span><div><span>Forge World</span><p>A little place for the whole idea.</p></div></div>
+    <div class="world-toolbar-actions"><button class="world-button world-button-solid" type="button" data-start-tour data-world-control disabled>Take the guided route <span aria-hidden="true">→</span></button><a class="world-text-button" href="#districts">Read the map <span aria-hidden="true">↓</span></a></div>
+  </div>
+  <div class="world-tour" data-world-tour hidden>
+    <span class="world-tour-step" data-tour-step>01 / 06</span>
+    <div class="world-tour-copy"><strong data-tour-title></strong><p data-tour-description></p></div>
+    <div class="world-tour-actions"><button class="world-text-button" type="button" data-tour-prev aria-label="Previous district">←</button><button class="world-button world-button-solid" type="button" data-tour-next>Next district →</button><button class="world-icon-button" type="button" data-tour-stop aria-label="Leave the guided route">×</button></div>
+  </div>
+  <div class="world-stage" data-world-stage data-selected="" data-exhibit="">
+    <div class="world-exhibit-bar" data-exhibit-bar hidden><p><span>THE EXHIBIT</span><strong data-exhibit-name></strong></p><button class="world-button" type="button" data-close-exhibit>← Return to the district</button></div>
+    <div class="world-viewport" data-world-viewport>
+      <canvas class="world-canvas" data-world-canvas aria-hidden="true"></canvas>
+      <div class="world-loading" data-world-status role="status"><svg viewBox="0 0 160 160" width="96" height="96" aria-hidden="true"><circle cx="80" cy="80" r="57" fill="none" stroke="currentColor" stroke-width="1"/><circle cx="80" cy="80" r="13" fill="currentColor"/><g fill="currentColor"><circle cx="80" cy="23" r="7"/><circle cx="130" cy="52" r="7"/><circle cx="130" cy="108" r="7"/><circle cx="80" cy="137" r="7"/><circle cx="30" cy="108" r="7"/><circle cx="30" cy="52" r="7"/></g></svg><span>Building the miniature…</span><a href="#districts">The readable map is below ↓</a></div>
+      <div class="world-view-meta" aria-hidden="true"><span>AN ILLUSTRATED WORKSPACE</span><span>01–06</span></div>
+      <div class="world-labels">{districts.map((district) => <button class="world-label" type="button" data-world-label={district.id} aria-label={`Explore ${district.name}`} aria-pressed="false" style={`--district-color:${district.color}`} hidden><span>{district.number}</span><strong>{district.name}</strong><span class="world-label-arrow" aria-hidden="true">↗</span></button>)}</div>
+      <div class="world-view-controls"><p class="world-gesture-hint"><span aria-hidden="true">↔</span> Drag to turn · scroll or pinch to explore</p><button class="world-button world-reset" type="button" data-world-reset data-world-control disabled><span aria-hidden="true">↺</span> Overview</button></div>
+      <span class="world-corner world-corner-tl" aria-hidden="true"></span><span class="world-corner world-corner-tr" aria-hidden="true"></span><span class="world-corner world-corner-bl" aria-hidden="true"></span><span class="world-corner world-corner-br" aria-hidden="true"></span>
+    </div>
+    <aside class="world-inspector" data-world-inspector aria-label="Selected district" hidden>
+      <button class="world-close" type="button" data-world-reset aria-label="Close district and return to overview">×</button>
+      {districts.map((district) => <article class="world-detail" data-district-detail={district.id} style={`--district-color:${district.color}`} hidden>
+        <p class="world-detail-kicker"><span>{district.number}</span> {district.name}</p>
+        <h2 tabindex="-1">{district.title}</h2>
+        <p class="world-detail-intro">{district.description}</p>
+        <div class="world-detail-actions">
+          {district.image && <button class="world-button world-button-solid" type="button" data-open-exhibit={district.id}>Open the exhibit <span aria-hidden="true">↗</span></button>}
+          {district.id === 'memory' && <a class="world-button" href="/labs/memory/">Try the Memory Lab <span aria-hidden="true">↗</span></a>}
+          <a class="world-case-link" href={district.href}>{district.link}<span aria-hidden="true">↗</span></a>
+        </div>
+        {district.image && <figure class={`world-media ${district.id === 'engines' ? 'world-media-phone' : ''}`} data-media-exhibit>
+          <div data-still><a href={district.image} aria-label={`View the full ${district.name} product screenshot`}><img src={district.image} alt={district.alt} loading="lazy" decoding="async" {...imageDimensions(district.image)} /></a></div>
+          {district.video && <><video controls playsinline preload="none" data-src={district.video} aria-label={district.videoDescription} hidden>{district.captions && <track kind="captions" src={district.captions} srclang="en" label="English" default />}</video><button class="world-play" type="button" data-play-recording><span aria-hidden="true">▷</span> Watch the real workflow</button></>}
+          <figcaption>{district.caption}</figcaption>
+        </figure>}
+        {district.id === 'connections' && <div class="world-diagram" aria-label="An illustrated relationship between clients, a gateway and separate tool servers"><div class="world-diagram-row"><span>Agent clients</span><span aria-hidden="true">↓</span></div><div class="world-diagram-hub">MCP gateway<small>Identity · scopes · catalog</small></div><div class="world-diagram-branches"><span>Canvas</span><span>Files</span><span>Apps</span></div><p>Illustrated relationships · separate capabilities</p></div>}
+        {district.id === 'memory' && <div class="world-memory-graphic"><svg viewBox="0 0 360 206" role="img" aria-labelledby="memory-diagram-title"><title id="memory-diagram-title">Illustration: conversation history connects to entities, beliefs and decisions.</title><g fill="none" stroke="#a69aaf" stroke-width="1.5"><path d="M180 105L63 40M180 105L280 32M180 105L308 151M180 105L82 173M63 40L280 32L308 151L82 173Z"/><circle cx="180" cy="105" r="75" stroke-dasharray="3 8"/></g><g fill="#796381"><circle cx="63" cy="40" r="7"/><circle cx="280" cy="32" r="6"/><circle cx="308" cy="151" r="8"/><circle cx="82" cy="173" r="6"/></g><circle cx="180" cy="105" r="39" fill="#344d3d"/><g font-family="sans-serif" font-size="12" fill="#344d3d" text-anchor="middle"><text x="63" y="23">Entities</text><text x="280" y="17">Beliefs</text><text x="304" y="177">Decisions</text><text x="82" y="196">FindThat</text><text x="180" y="101" fill="#f4f1e9">Conversation</text><text x="180" y="118" fill="#f4f1e9">history</text></g></svg><p>Conceptual map · source-derived knowledge</p></div>}
+        {district.id === 'workbench' && <div class="world-layer-graphic" aria-label="Shared configuration and local setup"><div><span>SHARED PRACTICE</span><strong>Instructions · skills · hooks</strong></div><div><span>RUNTIME CONFIGURATION</span><strong>metaclaude · metacodex</strong></div><div><span>LOCAL SETUP</span><strong>Machine settings · credentials</strong></div><p>Configuration roles · illustrative layers</p></div>}
+        <ul class="world-exhibits">{district.exhibits.map((exhibit) => <li><h3>{exhibit.href ? <a href={exhibit.href}>{exhibit.title}<span aria-hidden="true">↗</span></a> : exhibit.title}</h3><p>{exhibit.description}</p></li>)}</ul>
+        <details class="world-architecture-note"><summary>What the model represents</summary><p>{district.architecture}</p></details>
+      </article>)}
+    </aside>
+  </div>
+  <nav class="world-district-nav" aria-label="Choose a district">{districts.map((district) => <button type="button" data-select-district={district.id} data-world-control disabled aria-pressed="false" style={`--district-color:${district.color}`}><span class="world-nav-number">{district.number}</span><strong>{district.name}</strong><span class="world-nav-label">{district.label}</span><span class="world-nav-arrow" aria-hidden="true">↗</span></button>)}</nav>
+  <div class="world-caption"><p>A designed map of personal projects, with actual product screenshots and recordings.</p><span>Choose a place. See what happens there.</span></div>
+  <p class="world-live-region" data-world-announcement aria-live="polite" aria-atomic="true"></p>
+  <div class="world-directory" id="districts">
+    <div class="world-directory-heading"><p class="eyebrow">The readable map</p><h2>Six places.<br /><em>One connected practice.</em></h2><p>The world is a way in. Each district has a plain-language story and a route to the work behind it.</p></div>
+    <div class="world-directory-grid">{districts.map((district) => <article class="world-directory-card" style={`--district-color:${district.color}`}><p class="world-directory-number">{district.number} / {district.name}</p><h3>{district.title}</h3><p>{district.description}</p><details><summary>Look inside this district <span aria-hidden="true">+</span></summary><ul>{district.exhibits.map((exhibit) => <li><strong>{exhibit.href ? <a href={exhibit.href}>{exhibit.title} ↗</a> : exhibit.title}</strong><p>{exhibit.description}</p></li>)}</ul><p class="world-model-caption">{district.architecture}</p></details><a class="world-case-link" href={district.href}>{district.link}<span aria-hidden="true">↗</span></a></article>)}</div>
+  </div>
+  <noscript><style>.world-stage,.world-toolbar-actions button,.world-district-nav{display:none!important}.world-directory{padding-top:32px}</style></noscript>
+</section>
+
+<script>
+  const worldRoot = document.querySelector<HTMLElement>('[data-forge-world]');
+  if (worldRoot) {
+    let dispose: (() => void) | undefined;
+    let loading = false;
+    const start = async () => {
+      if (loading) return;
+      loading = true;
+      try {
+        const { mountWorld } = await import('../world/controller');
+        dispose = mountWorld(worldRoot);
+      } catch (error) {
+        worldRoot.dataset.worldState = 'fallback';
+        const status = worldRoot.querySelector<HTMLElement>('[data-world-status]')!;
+        status.textContent = 'The illustrated view is unavailable here. The complete readable map is below.';
+        console.warn('Forge World could not start:', error);
+      }
+    };
+    const observer = new IntersectionObserver((entries) => {
+      if (entries.some((entry) => entry.isIntersecting)) { observer.disconnect(); void start(); }
+    }, { rootMargin: '240px' });
+    observer.observe(worldRoot.querySelector('[data-world-stage]')!);
+    window.addEventListener('pagehide', () => {
+      observer.disconnect();
+      dispose?.();
+      dispose = undefined;
+      loading = false;
+    });
+    window.addEventListener('pageshow', (event) => { if (event.persisted) void start(); });
+  }
+</script>

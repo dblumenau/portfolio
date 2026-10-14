@@ -1,0 +1,283 @@
+{
+  "asOf": "2026-10-14",
+  "projects": [
+    {
+      "id": "panel-forge",
+      "label": "PanelForge",
+      "area": "studio",
+      "firstCommit": {
+        "date": "2025-05-01",
+        "commit": "0a7a4fd0a"
+      },
+      "firstTag": "2025-10-08",
+      "lastTag": "2026-10-12",
+      "tagCount": 2624,
+      "head": "93881d2ec"
+    },
+    {
+      "id": "claude-engine",
+      "label": "Claude Engine",
+      "area": "engines",
+      "firstCommit": {
+        "date": "2026-01-27",
+        "commit": "03c023af4"
+      },
+      "firstTag": "2026-02-13",
+      "lastTag": "2026-10-08",
+      "tagCount": 130,
+      "head": "bf89abc16"
+    },
+    {
+      "id": "codex-engine",
+      "label": "Codex Engine",
+      "area": "engines",
+      "firstCommit": {
+        "date": "2026-05-14",
+        "commit": "67787aa0f"
+      },
+      "firstTag": "2026-05-14",
+      "lastTag": "2026-10-09",
+      "tagCount": 72,
+      "head": "e1553a508"
+    },
+    {
+      "id": "opencode-engine",
+      "label": "OpenCode Engine",
+      "area": "engines",
+      "firstCommit": {
+        "date": "2026-05-16",
+        "commit": "f8e4df46e"
+      },
+      "firstTag": "2026-05-16",
+      "lastTag": "2026-10-06",
+      "tagCount": 49,
+      "head": "671de66ac"
+    },
+    {
+      "id": "claude-engine-app",
+      "label": "Apple client",
+      "area": "engines",
+      "firstCommit": {
+        "date": "2026-02-09",
+        "commit": "0d6e0876a"
+      },
+      "firstTag": "2026-07-06",
+      "lastTag": "2026-10-10",
+      "tagCount": 111,
+      "head": "48d380467"
+    },
+    {
+      "id": "claude-relay",
+      "label": "Claude Relay",
+      "area": "connections",
+      "firstCommit": {
+        "date": "2026-01-27",
+        "commit": "7e04ce985"
+      },
+      "firstTag": "2026-07-12",
+      "lastTag": "2026-10-07",
+      "tagCount": 15,
+      "head": "58b172446"
+    },
+    {
+      "id": "panelforge-mcp",
+      "label": "PanelForge MCP",
+      "area": "connections",
+      "firstCommit": {
+        "date": "2026-02-21",
+        "commit": "64a554ba6"
+      },
+      "firstTag": "2026-02-26",
+      "lastTag": "2026-10-13",
+      "tagCount": 288,
+      "head": "40185b054"
+    },
+    {
+      "id": "mcp-bridge",
+      "label": "MCP Bridge",
+      "area": "connections",
+      "firstCommit": {
+        "date": "2026-02-24",
+        "commit": "ecd0c865e"
+      },
+      "firstTag": "2026-03-03",
+      "lastTag": "2026-10-08",
+      "tagCount": 49,
+      "head": "d10659188"
+    },
+    {
+      "id": "attention-mcp",
+      "label": "Attention",
+      "area": "connections",
+      "firstCommit": {
+        "date": "2026-07-22",
+        "commit": "49aeb3f94"
+      },
+      "firstTag": "2026-07-22",
+      "lastTag": "2026-10-07",
+      "tagCount": 15,
+      "head": "f8576acc8"
+    },
+    {
+      "id": "bosun-mcp",
+      "label": "Bosun",
+      "area": "workbench",
+      "firstCommit": {
+        "date": "2026-07-17",
+        "commit": "b21b7410f"
+      },
+      "firstTag": "2026-07-30",
+      "lastTag": "2026-09-24",
+      "tagCount": 8,
+      "head": "8e6e2fe3c"
+    },
+    {
+      "id": "helm",
+      "label": "Helm",
+      "area": "workbench",
+      "firstCommit": {
+        "date": "2026-09-16",
+        "commit": "d4f463804"
+      },
+      "firstTag": "2026-09-18",
+      "lastTag": "2026-09-30",
+      "tagCount": 3,
+      "head": "c13ca3fe6"
+    },
+    {
+      "id": "kitforge",
+      "label": "Kitforge",
+      "area": "small",
+      "firstCommit": {
+        "date": "2026-09-08",
+        "commit": "f7e0c2890"
+      },
+      "firstTag": "2026-09-08",
+      "lastTag": "2026-10-01",
+      "tagCount": 10,
+      "head": "809d559d8"
+    },
+    {
+      "id": "legobro",
+      "label": "Legobro",
+      "area": "small",
+      "firstCommit": {
+        "date": "2026-01-21",
+        "commit": "6e4188f2e"
+      },
+      "firstTag": null,
+      "lastTag": null,
+      "tagCount": 0,
+      "head": "0de94e10f"
+    },
+    {
+      "id": "photo-archive",
+      "label": "Photo Archive",
+      "area": "small",
+      "firstCommit": {
+        "date": "2026-07-29",
+        "commit": "5b477cec8"
+      },
+      "firstTag": "2026-07-30",
+      "lastTag": "2026-07-31",
+      "tagCount": 4,
+      "head": "7ecfaf029"
+    },
+    {
+      "id": "photo-enrich",
+      "label": "Photo Enrich",
+      "area": "small",
+      "firstCommit": {
+        "date": "2026-07-22",
+        "commit": "103048009"
+      },
+      "firstTag": "2026-07-25",
+      "lastTag": "2026-08-31",
+      "tagCount": 5,
+      "head": "05d89b42e"
+    },
+    {
+      "id": "freeform-mcp",
+      "label": "Freeform tools",
+      "area": "small",
+      "firstCommit": {
+        "date": "2026-09-14",
+        "commit": "ccee1cf6b"
+      },
+      "firstTag": "2026-09-14",
+      "lastTag": "2026-09-20",
+      "tagCount": 81,
+      "head": "1f2bf565d"
+    },
+    {
+      "id": "mbp",
+      "label": "Blog publishing",
+      "area": "small",
+      "firstCommit": {
+        "date": "2026-05-02",
+        "commit": "962766e56"
+      },
+      "firstTag": "2026-05-02",
+      "lastTag": "2026-05-03",
+      "tagCount": 13,
+      "head": "5c925b1de"
+    },
+    {
+      "id": "my-south-africa-era",
+      "label": "Personal archive",
+      "area": "small",
+      "firstCommit": {
+        "date": "2026-07-28",
+        "commit": "a409c8612"
+      },
+      "firstTag": "2026-07-28",
+      "lastTag": "2026-08-10",
+      "tagCount": 76,
+      "head": "6c4f6031d"
+    },
+    {
+      "id": "ecc-notes",
+      "label": "Conference notebook",
+      "area": "small",
+      "firstCommit": {
+        "date": "2026-09-25",
+        "commit": "3bf4622e3"
+      },
+      "firstTag": "2026-09-25",
+      "lastTag": "2026-10-05",
+      "tagCount": 24,
+      "head": "6acc869a4"
+    },
+    {
+      "id": "metaclaude",
+      "label": "Metaclaude",
+      "area": "workbench",
+      "firstCommit": {
+        "date": "2025-12-17",
+        "commit": "f9efabb8d"
+      },
+      "firstTag": "2026-07-22",
+      "lastTag": "2026-10-14",
+      "tagCount": 60,
+      "head": "df057324d"
+    },
+    {
+      "id": "metacodex",
+      "label": "Metacodex",
+      "area": "workbench",
+      "firstCommit": {
+        "date": "2026-07-14",
+        "commit": "86bae28b6"
+      },
+      "firstTag": "2026-07-23",
+      "lastTag": "2026-10-08",
+      "tagCount": 29,
+      "head": "f03494781"
+    }
+  ],
+  "tagCount": 3666,
+  "dateBasis": "Git tag creator date; lightweight tags use commit date. Calendar days retain the source offset.",
+  "firstCommitBasis": "Earliest committer timestamp reachable from the inspected HEAD; not a product launch.",
+  "cacheNote": "19 repository inventories cached on 14 October 2026; metaclaude and metacodex tags refreshed from origin on that date. No full remote completeness claim.",
+  "errors": []
+}

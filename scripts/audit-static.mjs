@@ -1,12 +1,13 @@
 import { readdir, readFile, stat, lstat, mkdir, writeFile } from 'node:fs/promises';
 import { resolve, relative, dirname, extname } from 'node:path';
 import { spawnSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
 import { chromium } from '@playwright/test';
 
 const root = resolve('dist');
 const errors = [];
 const external = new Set();
-const report = { date: new Date().toISOString(), routes: [], assets: [], externalLinks: [], errors };
+const report = { date: new Date().toISOString(), routes: [], assets: [], sampleFiles: [], externalLinks: [], errors };
 const required = [
   'panelforge-gallery-desktop.webp', 'panelforge-gallery-mobile.webp',
   'panelforge-chat-desktop.webp', 'panelforge-chat-mobile.webp',
@@ -14,8 +15,21 @@ const required = [
   'kitforge-desktop.webp', 'kitforge-workflow.mp4', 'kitforge-workflow.vtt',
   'pencil-page.webp', 'pencil-page-workflow.mp4', 'pencil-page-workflow.vtt',
   'apple-client.webp', 'apple-client-workflow.mp4', 'apple-client-workflow.vtt', 'media-provenance.json',
+  'knowledge-graph.webp', 'knowledge-graph-workflow.mp4', 'knowledge-graph-workflow.vtt',
+  'code-history-peek.webp', 'code-history-week.webp', 'kitforge-output.mp4', 'kitforge-output.vtt',
+  'forge-world-overview.webp',
+  'portfolio-social-card.png',
+  'conference-notes-agenda.webp', 'conference-notes-attendee.webp',
+  'conference-notes-deck-builder.webp', 'conference-notes-deck-theme.webp', 'conference-notes-deck.webp',
+  'conference-notes-mobile-agenda.webp', 'conference-notes-mobile.webp', 'conference-notes-offline.webp',
+  'conference-notes-responses.webp', 'conference-notes-sources.webp', 'conference-notes-themes.webp',
+  'conference-notes-workflow.mp4', 'conference-notes-workflow.vtt', 'conference-notes.webp',
 ];
 const allowed = new Set(required);
+const requiredSamples = ['conference-notes-demo.pptx', 'conference-notes-demo.pdf', 'sample-provenance.json'];
+const provenanceEntries = new Map();
+const captionEnds = new Map();
+const videoDurations = new Map();
 
 async function files(directory) {
   const result = [];
@@ -28,6 +42,14 @@ async function files(directory) {
   return result;
 }
 const all = await files(root);
+for (const name of ['three', 'fraunces', 'dm-sans']) if (!all.includes(resolve(root, 'licenses', `${name}.txt`))) errors.push(`Missing distributed dependency license: ${name}`);
+const imageFiles = all.filter(file => ['.webp', '.png', '.jpg', '.jpeg', '.avif'].includes(extname(file)));
+const locationTags = spawnSync('exiftool', ['-j', '-GPS:all', ...imageFiles], { encoding: 'utf8' });
+if (locationTags.status !== 0) errors.push('Image location metadata audit requires exiftool.');
+else for (const item of JSON.parse(locationTags.stdout)) {
+  if (Object.keys(item).some(key => key !== 'SourceFile')) errors.push(`Public image includes GPS metadata: ${relative(root, item.SourceFile)}`);
+}
+report.locationMetadata = { inspectedImages: imageFiles.length, gpsTags: errors.filter(error => error.includes('GPS metadata')).length };
 const htmlFiles = all.filter(file => extname(file) === '.html');
 const browser = await chromium.launch();
 const context = await browser.newContext({ javaScriptEnabled: false });
@@ -42,17 +64,30 @@ for (const file of htmlFiles) {
   const data = await page.evaluate(() => ({
     title: document.title,
     ids: [...document.querySelectorAll('[id]')].map(item => item.id),
-    refs: [...document.querySelectorAll('a[href],link[href],img[src],script[src],source[src],track[src],video[poster]')].filter(item => item.getAttribute('rel') !== 'canonical').map(item => ({ tag: item.tagName, value: item.getAttribute(item.tagName === 'VIDEO' ? 'poster' : item.hasAttribute('href') ? 'href' : 'src') })),
-    videos: [...document.querySelectorAll('video')].map(video => ({ source: video.querySelector('source')?.getAttribute('src'), captions: video.querySelector('track[kind="captions"]')?.getAttribute('src'), controls: video.controls, autoplay: video.autoplay })),
+    routeHashes: document.querySelector('[data-forge-world]') ? [...document.querySelectorAll('[data-select-district]')].map(item => item.getAttribute('data-select-district')) : [],
+    refs: [
+      ...[...document.querySelectorAll('a[href],link[href],img[src],script[src],source[src],track[src],video[poster],video[data-src]')].filter(item => item.getAttribute('rel') !== 'canonical').map(item => ({ tag: item.tagName, value: item.getAttribute(item.tagName === 'VIDEO' ? item.hasAttribute('poster') ? 'poster' : 'data-src' : item.hasAttribute('href') ? 'href' : 'src') })),
+      ...[...document.querySelectorAll('[srcset]')].flatMap(item => (item.getAttribute('srcset') ?? '').split(',').map(candidate => ({ tag: item.tagName, value: candidate.trim().split(/\s+/)[0] }))),
+      ...[...document.querySelectorAll('meta[property="og:image"]')].map(item => ({ tag: 'META', value: item.getAttribute('content') })),
+    ],
+    videos: [...document.querySelectorAll('video')].map(video => ({ source: video.querySelector('source')?.getAttribute('src') ?? video.getAttribute('src') ?? video.getAttribute('data-src'), captions: video.querySelector('track[kind="captions"]')?.getAttribute('src'), controls: video.controls, autoplay: video.autoplay })),
     placeholders: document.querySelectorAll('.missing-media').length,
-    inputs: document.querySelectorAll('form,iframe,script[src^="http"]').length,
+    embeds: document.querySelectorAll('iframe,script[src^="http"]').length,
+    forms: [...document.querySelectorAll('form')].map(form => ({
+      approved: (form.matches('[data-feature-atlas] form.atlas-controls') && form.getAttribute('role') === 'search') || (form.matches('[data-release-explorer] form.release-filter-form') && form.getAttribute('aria-label') === 'Filter release history'),
+      action: form.getAttribute('action'), method: form.getAttribute('method'), target: form.getAttribute('target'),
+      mutationControls: form.querySelectorAll('input[type="file"],input[type="password"],button[formaction],input[formaction],button[formmethod],input[formmethod]').length,
+    })),
     canonical: document.querySelector('link[rel="canonical"]')?.getAttribute('href'),
+    social: { image: document.querySelector('meta[property="og:image"]')?.getAttribute('content'), width: document.querySelector('meta[property="og:image:width"]')?.getAttribute('content'), height: document.querySelector('meta[property="og:image:height"]')?.getAttribute('content'), alt: document.querySelector('meta[property="og:image:alt"]')?.getAttribute('content'), card: document.querySelector('meta[name="twitter:card"]')?.getAttribute('content') },
   }));
   if (!data.title) errors.push(`Missing title: ${route}`);
   if (new Set(data.ids).size !== data.ids.length) errors.push(`Duplicate IDs: ${route}`);
   if (data.placeholders) errors.push(`Unfinished capture placeholder: ${route}`);
-  if (data.inputs) errors.push(`Unexpected form, embedded page or remote script: ${route}`);
+  if (data.embeds) errors.push(`Unexpected embedded page or remote script: ${route}`);
+  for (const form of data.forms) if (!form.approved || form.action || (form.method && form.method.toLowerCase() !== 'get') || form.target || form.mutationControls) errors.push(`Unreviewed or mutating form: ${route}`);
   if (!data.canonical?.startsWith('https://danishdave.com/')) errors.push(`Invalid canonical: ${route}`);
+  if (data.social.image !== 'https://danishdave.com/media/portfolio-social-card.png' || data.social.width !== '1200' || data.social.height !== '630' || !data.social.alt || data.social.card !== 'summary_large_image') errors.push(`Incomplete social preview metadata: ${route}`);
   for (const video of data.videos) {
     if (!video.source || !video.captions || !video.controls || video.autoplay) errors.push(`Recording lacks controlled playback/captions: ${route} ${video.source}`);
   }
@@ -61,6 +96,16 @@ for (const file of htmlFiles) {
   await page.close();
 }
 await browser.close();
+if (!all.includes(resolve(root, 'sitemap.xml')) || !all.includes(resolve(root, 'robots.txt'))) errors.push('Missing sitemap or robots discovery endpoint.');
+else {
+  const sitemap = await readFile(resolve(root, 'sitemap.xml'), 'utf8');
+  const published = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(match => match[1]);
+  const expected = [...pages.keys()].filter(route => route !== '/404.html').map(route => `https://danishdave.com${route}`);
+  if (new Set(published).size !== published.length || published.length !== expected.length || expected.some(url => !published.includes(url))) errors.push('Sitemap does not match the complete published route set.');
+  const robots = await readFile(resolve(root, 'robots.txt'), 'utf8');
+  if (!robots.includes('Sitemap: https://danishdave.com/sitemap.xml') || /Disallow:\s*\/(?:\s|$)/.test(robots)) errors.push('Robots endpoint does not expose the sitemap or blocks the site.');
+  report.discovery = { sitemapRoutes: published.length, sitemap: '/sitemap.xml', robots: '/robots.txt' };
+}
 
 for (const [route, data] of pages) for (const { value, tag } of data.refs) {
   if (!value) continue;
@@ -70,11 +115,14 @@ for (const [route, data] of pages) for (const { value, tag } of data.refs) {
   }
   const url = new URL(value, `https://danishdave.com${route}`);
   if (url.protocol !== 'https:') { errors.push(`Unexpected link protocol: ${value}`); continue; }
-  if (url.hostname !== 'danishdave.com') { external.add(url.href); continue; }
+  if (url.hostname !== 'danishdave.com') {
+    if (tag !== 'A') errors.push(`Unexpected external resource: ${route} -> ${value}`);
+    external.add(url.href); continue;
+  }
   let target = pages.get(url.pathname);
   if (!target && !extname(url.pathname)) target = pages.get(url.pathname.replace(/\/$/, '') + '/');
   if (target) {
-    if (url.hash && !target.ids.includes(decodeURIComponent(url.hash.slice(1)))) errors.push(`Missing anchor: ${route} -> ${value}`);
+    if (url.hash && ![...target.ids, ...target.routeHashes].includes(decodeURIComponent(url.hash.slice(1)))) errors.push(`Missing anchor: ${route} -> ${value}`);
   } else {
     const path = resolve(root, '.' + decodeURIComponent(url.pathname));
     if (!path.startsWith(root + '/') || !all.includes(path)) errors.push(`Missing ${tag} destination: ${route} -> ${value}`);
@@ -93,13 +141,27 @@ for (const file of all) {
     const provenance = await readFile(file, 'utf8');
     try {
       const data = JSON.parse(provenance);
-      if (!data || typeof data !== 'object' || Object.keys(data).length === 0) errors.push('Public media provenance is empty.');
+      if (!data || !Array.isArray(data.assets) || data.assets.length === 0) errors.push('Public media provenance has no asset records.');
+      else for (const entry of data.assets) {
+        if (typeof entry.file !== 'string' || !/^[a-z0-9-]+\.(?:webp|mp4|vtt|png)$/.test(entry.file) || provenanceEntries.has(entry.file)) { errors.push(`Invalid or duplicate provenance filename: ${entry.file}`); continue; }
+        if (!allowed.has(entry.file)) errors.push(`Unreviewed provenance asset: ${entry.file}`);
+        if (!Number.isSafeInteger(entry.bytes) || entry.bytes < 1 || !/^[a-f0-9]{64}$/.test(entry.sha256 ?? '') || !/^\d{4}-\d{2}-\d{2}$/.test(entry.captured ?? '') || !entry.product || !entry.method || !entry.content || !Array.isArray(entry.redactions)) errors.push(`Incomplete provenance record: ${entry.file}`);
+        provenanceEntries.set(entry.file, entry);
+      }
     } catch { errors.push('Public media provenance is not valid JSON.'); }
     if (/(?:\/home\/|r2:\/\/|127\.0\.0\.1|localhost|BEGIN .*PRIVATE KEY|sk-[a-zA-Z0-9]{20,}|ghp_[a-zA-Z0-9]{20,})/.test(provenance)) errors.push('Public media provenance contains a private/development reference.');
   }
   if (extname(file) === '.vtt') {
     const captions = await readFile(file, 'utf8');
     if (!/^WEBVTT\b/.test(captions) || !/\d{2}:\d{2}(?::\d{2})?\.\d{3} --> \d{2}:\d{2}(?::\d{2})?\.\d{3}/.test(captions)) errors.push(`Invalid/empty caption file: ${name}`);
+    const seconds = value => value.split(':').reduce((total, part) => total * 60 + Number(part), 0);
+    let previousEnd = 0;
+    for (const match of captions.matchAll(/(\d{2}:\d{2}(?::\d{2})?\.\d{3}) --> (\d{2}:\d{2}(?::\d{2})?\.\d{3})/g)) {
+      const start = seconds(match[1]), end = seconds(match[2]);
+      if (end <= start || start < previousEnd) errors.push(`Unordered caption interval: ${name}`);
+      previousEnd = end;
+    }
+    captionEnds.set(name.replace(/\.vtt$/, '.mp4'), previousEnd);
   }
   if (extname(file) === '.mp4') {
     const result = spawnSync('ffprobe', ['-v', 'error', '-show_entries', 'format=duration:stream=codec_name,codec_type,width,height', '-of', 'json', file], { encoding: 'utf8' });
@@ -107,11 +169,52 @@ for (const file of all) {
     else {
       const metadata = JSON.parse(result.stdout);
       info.duration = Number(metadata.format.duration);
+      videoDurations.set(name, info.duration);
       info.streams = metadata.streams;
       if (!(info.duration > 1) || !metadata.streams.some(stream => stream.codec_type === 'video' && stream.codec_name === 'h264')) errors.push(`Invalid browser MP4: ${name}`);
     }
   }
   report.assets.push(info);
+}
+for (const [video, end] of captionEnds) {
+  const duration = videoDurations.get(video);
+  if (!duration) errors.push(`Captions have no paired recording: ${video}`);
+  else if (end > duration + 0.05) errors.push(`Captions run beyond the recording: ${video}`);
+}
+for (const asset of report.assets) {
+  if (asset.path === 'media/media-provenance.json') continue;
+  const name = asset.path.slice(6);
+  const entry = provenanceEntries.get(name);
+  if (!entry) { errors.push(`Missing reviewed provenance record: ${name}`); continue; }
+  asset.sha256 = createHash('sha256').update(await readFile(resolve(root, asset.path))).digest('hex');
+  if (asset.sha256 !== entry.sha256 || asset.bytes !== entry.bytes) errors.push(`Media differs from reviewed provenance: ${name}`);
+}
+for (const name of provenanceEntries.keys()) if (!report.assets.some(asset => asset.path === `media/${name}`)) errors.push(`Provenance points to missing media: ${name}`);
+for (const name of requiredSamples) if (!all.includes(resolve(root, 'sample-files', name))) errors.push(`Missing approved sample file: ${name}`);
+const sampleEntries = new Map();
+if (all.includes(resolve(root, 'sample-files/sample-provenance.json'))) {
+  const content = await readFile(resolve(root, 'sample-files/sample-provenance.json'), 'utf8');
+  try {
+    const data = JSON.parse(content);
+    if (!Array.isArray(data.assets) || data.assets.length !== 2) errors.push('Sample provenance must cover both approved artifacts.');
+    else for (const entry of data.assets) {
+      if (!requiredSamples.includes(entry.file) || entry.file === 'sample-provenance.json' || sampleEntries.has(entry.file)) errors.push(`Unreviewed or duplicate sample record: ${entry.file}`);
+      if (!entry.content || !entry.editing || !/^[a-f0-9]{64}$/.test(entry.sha256 ?? '') || !Number.isSafeInteger(entry.bytes)) errors.push(`Incomplete sample provenance: ${entry.file}`);
+      sampleEntries.set(entry.file, entry);
+    }
+  } catch { errors.push('Sample provenance is not valid JSON.'); }
+  if (/(?:\/home\/|r2:\/\/|127\.0\.0\.1|localhost|BEGIN .*PRIVATE KEY)/.test(content)) errors.push('Sample provenance includes a private/development reference.');
+}
+for (const file of all.filter(path => path.startsWith(resolve(root, 'sample-files') + '/'))) {
+  const name = relative(resolve(root, 'sample-files'), file);
+  if (!requiredSamples.includes(name)) { errors.push(`Sample file needs explicit public review: ${name}`); continue; }
+  if (name === 'sample-provenance.json') continue;
+  const bytes = await readFile(file);
+  const entry = sampleEntries.get(name);
+  const sha256 = createHash('sha256').update(bytes).digest('hex');
+  if (!entry || entry.bytes !== bytes.length || entry.sha256 !== sha256) errors.push(`Sample differs from reviewed provenance: ${name}`);
+  if ((name.endsWith('.pdf') && bytes.subarray(0, 5).toString() !== '%PDF-') || (name.endsWith('.pptx') && bytes.readUInt32LE(0) !== 0x04034b50)) errors.push(`Invalid sample file format: ${name}`);
+  report.sampleFiles.push({ path: `sample-files/${name}`, bytes: bytes.length, sha256 });
 }
 report.externalLinks = [...external].sort().map(url => ({ url }));
 if (process.argv.includes('--external')) for (const link of report.externalLinks) {

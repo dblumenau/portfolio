@@ -1,0 +1,37 @@
+---
+const paths = [
+  { number: '01', label: 'Try a small experiment', title: 'Follow a memory back to its source.', description: 'Explore a real sample of the knowledge graph. Inspect a connection, set it aside, then undo the change.', href: '/labs/memory/', link: 'Open the Memory Lab' },
+  { number: '02', label: 'Find a particular idea', title: 'The features have their own stories.', description: 'From portable agent setup to a correction with a history. Browse the decisions that shaped the work.', href: '/features/', link: 'Browse the feature atlas' },
+  { number: '03', label: 'See the work accumulate', title: 'Follow the changes over time.', description: 'A release map connects selected turning points with the major, minor and patch tags behind them.', href: '/releases/', link: 'Explore the release history' },
+];
+---
+<section class="explore-workbench wrap" aria-labelledby="explore-title">
+  <div class="explore-heading"><div><p class="eyebrow">Another way into the work</p><h2 id="explore-title">A place you can<br /><em>look around.</em></h2></div><p>Walk through the connected projects, try a small part for yourself, or follow an idea back to the change that made it work.</p></div>
+  <a class="world-invitation" href="/world/" aria-label="Enter Forge World, an interactive illustrated map of six project districts"><img src="/media/forge-world-overview.webp" width="1377" height="650" alt="A miniature world with a gallery, engine room, tool gateway, memory observatory, workbench and small workshop." loading="lazy" decoding="async" /><div class="world-invitation-caption"><div><span class="eyebrow">An interactive illustrated map</span><strong>Enter Forge World</strong></div><span class="world-invitation-arrow" aria-hidden="true">↗</span></div></a>
+  <div class="explore-paths">{paths.map(path => <a href={path.href}><span class="explore-path-number">{path.number} / {path.label}</span><h3>{path.title}</h3><p>{path.description}</p><span class="explore-path-link">{path.link}<span aria-hidden="true">↗</span></span></a>)}</div>
+</section>
+
+<style>
+  .explore-workbench { padding-top: 88px; }
+  .explore-heading { display:grid; grid-template-columns:1.15fr 1fr; gap:5rem; align-items:end; margin-bottom:32px; }
+  .explore-heading .eyebrow { color:var(--rust);margin-bottom:16px; }
+  .explore-heading h2 { font-size:clamp(2.7rem,4vw,4.5rem); }
+  .explore-heading em { color:var(--forest); }
+  .explore-heading > p { max-width:390px; justify-self:end; color:var(--muted);font-size:1rem; }
+  .world-invitation { display:block; position:relative; border:1px solid var(--line);border-radius:5px;overflow:hidden;text-decoration:none;background:#ecece2; }
+  .world-invitation img { width:100%;height:auto;transition:transform 600ms ease; }
+  .world-invitation:hover img { transform:scale(1.025); }
+  .world-invitation-caption { position:relative;display:flex;justify-content:space-between;align-items:center;gap:24px;padding:24px 30px;background:var(--forest);color:var(--paper); }
+  .world-invitation-caption .eyebrow { color:var(--acid);font-size:.62rem; }
+  .world-invitation-caption strong { display:block;font-size:clamp(1.4rem,2.6vw,2.4rem);font-weight:500;letter-spacing:-.035em; }
+  .world-invitation-arrow { display:grid;place-items:center;width:52px;height:52px;border:1px solid #91a382;border-radius:50%;font-size:1.7rem;flex-shrink:0; }
+  .explore-paths { display:grid;grid-template-columns:repeat(3,1fr);gap:35px;margin-top:35px; }
+  .explore-paths > a { display:flex;flex-direction:column;align-items:start;border-top:1px solid var(--line);padding:22px 0 10px;text-decoration:none; }
+  .explore-path-number { font-size:.64rem;text-transform:uppercase;letter-spacing:.075em;color:var(--rust);margin-bottom:17px; }
+  .explore-paths h3 { font-size:1.75rem;max-width:300px;margin-bottom:13px; }
+  .explore-paths p { color:var(--muted);font-size:.87rem;line-height:1.75;max-width:355px;margin-bottom:20px; }
+  .explore-path-link { display:flex;gap:16px;align-items:center;font-size:.78rem;font-weight:600;margin-top:auto;padding-block:8px;border-bottom:1px solid var(--line); }
+  .explore-paths > a:hover h3 { color:var(--rust); }
+  @media(max-width:820px) { .explore-workbench{padding-top:65px}.explore-heading{gap:30px}.explore-paths{gap:22px}.explore-paths h3{font-size:1.4rem}.world-invitation-caption{padding:19px 23px} }
+  @media(max-width:600px) { .explore-heading{grid-template-columns:1fr;gap:20px}.explore-heading>p{justify-self:start}.explore-paths{grid-template-columns:1fr;gap:14px}.explore-paths h3{font-size:1.7rem;max-width:100%}.explore-paths p{max-width:100%;margin-bottom:10px}.world-invitation img{aspect-ratio:1.4;object-fit:cover}.world-invitation-caption{padding:18px}.world-invitation-arrow{width:42px;height:42px}.world-invitation-caption .eyebrow{font-size:.54rem} }
+</style>

@@ -1,0 +1,29 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import VideoDemo from '../../components/VideoDemo.astro';
+import { features, featureBySlug, featureEvidenceLabels, formatFeatureDate, type Feature } from '../../data/features';
+import '../../styles/features.css';
+export function getStaticPaths() { return features.map((feature) => ({ params: { slug: feature.slug }, props: { feature } })); }
+interface Props { feature: Feature; }
+const { feature } = Astro.props;
+const related = feature.related.map(featureBySlug).filter((item): item is Feature => Boolean(item));
+const areaUrl = `/features/?area=${feature.area}`;
+const hasGraphCapture = feature.slug === 'knowledge-graph' || feature.slug === 'graph-exploration';
+---
+<BaseLayout title={`${feature.name} | Feature atlas | David Blumenau`} description={feature.intro}>
+  <main id="main" class="features-page feature-page">
+    <section class="feature-hero wrap" id="top"><a class="feature-back" href="/features/">← Feature atlas</a><div class="feature-kicker"><a href={areaUrl}>{feature.area}</a><span>{feature.name}</span><time datetime={feature.date}>{formatFeatureDate(feature.date)}</time></div><div class="feature-hero-grid"><h1>{feature.title}</h1><div><p>{feature.intro}</p><div class="atlas-tags">{feature.topics.map((topic) => <a href={`/features/?topic=${encodeURIComponent(topic)}`}>{topic}</a>)}</div></div></div></section>
+    <nav class="feature-section-nav wrap" aria-label="Feature story sections"><a href="#starting-point">Starting point</a><a href="#the-feature">How I built it</a><a href="#small-example">Small example</a><a href="#using-it">How to use it</a><a href="#source-notes">Sources</a></nav>
+    <section class="feature-problem wrap" id="starting-point"><p class="eyebrow">The starting point</p><h2>{feature.problem}</h2></section>
+    <section class="feature-built wrap" id="the-feature"><p class="eyebrow">The named feature / {feature.name}</p><div class="feature-built-grid"><h2>The decisions<br /><em>in the implementation.</em></h2><div>{feature.built.map((paragraph) => <p>{paragraph}</p>)}</div></div></section>
+    {hasGraphCapture && <section class="feature-real-media wrap" aria-label="Recorded knowledge graph workflow"><VideoDemo src="/media/knowledge-graph-workflow.mp4" poster="/media/knowledge-graph.webp" captions="/media/knowledge-graph-workflow.vtt" title="Focus on a project and its connections" mediaCaption="Actual PanelForge interface · public-safe project and software relationships · edited recording" description="The real graph is filtered to PanelForge and its build relationships. Selecting a project brings connected technologies into focus; zoom and fit change the view. These are extracted relationships, including historical names and aliases, rather than a verified inventory of the current architecture." /></section>}
+    <section class="feature-exhibit" id="small-example" aria-labelledby="exhibit-heading"><div class="wrap"><div class="feature-exhibit-header"><div><p class="eyebrow">An explanatory exhibit</p><h2 id="exhibit-heading">{feature.exhibit.title}</h2></div><p>{feature.exhibit.caption}</p></div>
+      <ol class="feature-process" aria-label="Illustrated feature sequence">{feature.exhibit.steps.map((item, index) => <li><span class="feature-process-index">0{index + 1}</span><h3>{item.name}</h3><p>{item.detail}</p>{index < feature.exhibit.steps.length - 1 && <span class="feature-process-arrow" aria-hidden="true">→</span>}</li>)}</ol>
+      <div class="feature-example-choices"><p class="eyebrow">Open an example to inspect the outcome</p>{feature.exhibit.choices.map((item, index) => <details open={index === 0}><summary>{item.label}<span aria-hidden="true">+</span></summary><div><h3>{item.result}</h3><p>{item.explanation}</p></div></details>)}</div>
+    </div></section>
+    <section class="feature-use wrap" id="using-it"><p class="eyebrow">How to use the feature</p><h2>A useful path through it.</h2><ol>{feature.use.map((item, index) => <li><span>0{index + 1}</span><div><h3>{item.title}</h3><p>{item.description}</p></div></li>)}</ol></section>
+    <section class="feature-evolution wrap" id="evolution"><div><p class="eyebrow">The evolution</p><h2>Recorded<br /><em>along the way.</em></h2><p>Selected researched episodes explain this feature’s origin and later work. These dates describe the record, rather than a claim about today’s deployment.</p></div><ol>{feature.evolution.map((item) => <li><time datetime={item.date}>{formatFeatureDate(item.date)}</time><h3>{item.title}</h3></li>)}</ol></section>
+    <section class="feature-sources wrap" id="source-notes"><p class="eyebrow">Source information sheet</p><details><summary>What supports this story? <span>{featureEvidenceLabels[feature.sources.status]}</span></summary><div class="feature-source-content"><div><h3>What I checked</h3><p>{feature.sources.note}</p><p>Research cut: 14 October 2026. Source areas below are from <strong>{feature.sources.repo}</strong>. Private conversation references are retained in the research ledger and are not published here.</p></div><div><h3>Source areas</h3><ul>{feature.sources.files.map((file) => <li><code>{file}</code></li>)}</ul><p>Every illustrated record in this story is invented. The exhibit explains the mechanism and makes no claim about a live system result.</p></div></div></details></section>
+    <section class="feature-related wrap" aria-label="Related feature stories"><p class="eyebrow">Follow a connection</p><div>{related.map((item) => <a href={`/features/${item.slug}/`}><span>{item.area} / {item.name}</span><h3>{item.title}</h3><span class="feature-related-arrow" aria-hidden="true">↗</span></a>)}</div><a class="text-link" href={areaUrl}>All {feature.area.toLowerCase()} features <span aria-hidden="true">→</span></a></section>
+  </main>
+</BaseLayout>

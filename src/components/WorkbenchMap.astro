@@ -1,0 +1,44 @@
+---
+const flows = [
+  { id: 'setup', label: 'Set up a session', title: 'Shared practice. Local boundaries.', intro: 'A portable workbench brings the useful setup with it. The things that belong to one machine stay local.', steps: [
+    { name: 'Shared source', detail: 'Instructions, skills and hooks live in versioned repositories.', token: 'metaclaude / metacodex' },
+    { name: 'Local choices', detail: 'Machine settings and private credentials supply the local configuration.', token: 'Machine + secret overlays' },
+    { name: 'A working session', detail: 'The selected runtime reads the assembled configuration and its own tools.', token: 'Claude Code or Codex' },
+  ]},
+  { id: 'learning', label: 'Carry a lesson forward', title: 'Keep the evidence with the lesson.', intro: 'A useful finding can improve the next session. Review is the step between one observation and a standing instruction.', steps: [
+    { name: 'Observe', detail: 'A worker records what happened and the evidence behind its finding.', token: 'Result + supporting evidence' },
+    { name: 'Review', detail: 'The lead agent checks the result and decides whether the lesson should generalise.', token: 'Helm captain protocol' },
+    { name: 'Carry forward', detail: 'Accepted guidance becomes part of the workbench a later session can read.', token: 'Reviewed rules + handoff' },
+  ]},
+];
+---
+<section class="workbench-map" data-workbench-map aria-label="Two paths through the agent workbench">
+  <div class="workbench-tabs" role="tablist" aria-label="Workbench paths">
+    {flows.map((flow, index) => <button id={`bench-${flow.id}-tab`} role="tab" aria-selected={index === 0} aria-controls={`bench-${flow.id}`} tabindex={index === 0 ? 0 : -1} data-bench-tab={flow.id}>{flow.label}</button>)}
+  </div>
+  {flows.map((flow, index) => <section id={`bench-${flow.id}`} role="tabpanel" aria-labelledby={`bench-${flow.id}-tab`} data-bench-panel={flow.id} hidden={index !== 0}>
+    <div class="workbench-map-intro"><p class="eyebrow">An illustrated workflow</p><h3>{flow.title}</h3><p>{flow.intro}</p></div>
+    <ol class="workbench-steps">{flow.steps.map((step, i) => <li><span class="bench-number">0{i + 1}</span><h4>{step.name}</h4><p>{step.detail}</p><span class="bench-token">{step.token}</span></li>)}</ol>
+  </section>)}
+  <p class="workbench-footnote">A map of the working practice. It does not read or change a machine’s configuration.</p>
+</section>
+<style>
+  .workbench-map{background:#e8e9df;border:1px solid #bec6b6;padding:clamp(20px,4vw,52px)}
+  .workbench-tabs{display:flex;gap:8px;flex-wrap:wrap;border-bottom:1px solid #b8c2b2;padding-bottom:20px;margin-bottom:32px}
+  .workbench-tabs button{border:1px solid #aab8a4;background:transparent;padding:12px 18px;color:#24372b;cursor:pointer;font:inherit;font-size:.9rem}
+  .workbench-tabs button[aria-selected=true]{background:#344d3d;color:#fff;border-color:#344d3d}
+  .workbench-map-intro{max-width:680px}.workbench-map-intro h3{font-size:clamp(1.6rem,3vw,2.5rem);letter-spacing:-.035em;margin:12px 0}.workbench-map-intro>p:last-child{max-width:580px;color:#485347;line-height:1.7}
+  .workbench-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;margin:32px 0 0;padding:0;list-style:none}
+  .workbench-steps li{position:relative;background:#f8f6ef;border:1px solid #c6cdbf;padding:24px;min-width:0}
+  .workbench-steps li+li::before{content:'→';position:absolute;left:-23px;top:45%;color:#46664d;font-size:22px}
+  .bench-number{font:12px monospace;color:#8a422c}.workbench-steps h4{font-size:1.2rem;margin:18px 0 12px}.workbench-steps p{font-size:.95rem;line-height:1.65;margin:0 0 24px;color:#4b554a}.bench-token{display:block;border-top:1px solid #d4d8cc;padding-top:12px;font-size:.75rem;color:#344d3d}
+  .workbench-footnote{font-size:.75rem;color:#54614f;margin:24px 0 0}
+  @media(max-width:660px){.workbench-steps{grid-template-columns:1fr;gap:22px}.workbench-steps li+li::before{content:'↓';left:50%;top:-24px}.workbench-tabs button{flex:1;min-width:130px}}
+</style>
+<script>
+  document.querySelectorAll<HTMLElement>('[data-workbench-map]').forEach(root=>{
+    const tabs=[...root.querySelectorAll<HTMLButtonElement>('[data-bench-tab]')];
+    const select=(tab:HTMLButtonElement)=>{tabs.forEach(item=>{item.setAttribute('aria-selected',String(item===tab));item.tabIndex=item===tab?0:-1;});root.querySelectorAll<HTMLElement>('[data-bench-panel]').forEach(panel=>panel.hidden=panel.dataset.benchPanel!==tab.dataset.benchTab);};
+    tabs.forEach((tab,index)=>{tab.addEventListener('click',()=>select(tab));tab.addEventListener('keydown',event=>{let next:number|undefined;if(event.key==='ArrowRight')next=(index+1)%tabs.length;if(event.key==='ArrowLeft')next=(index-1+tabs.length)%tabs.length;if(event.key==='Home')next=0;if(event.key==='End')next=tabs.length-1;if(next!==undefined){event.preventDefault();select(tabs[next]);tabs[next].focus();}});});
+  });
+</script>

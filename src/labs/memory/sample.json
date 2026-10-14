@@ -1,0 +1,316 @@
+{
+  "schemaVersion": 1,
+  "title": "PanelForge extracted project relationships",
+  "description": "An audited project/software subset of real extracted knowledge. Labels retain historical software versions and aliases; this sample does not claim to represent the current architecture.",
+  "capturedDate": "2026-10-14",
+  "filters": {
+    "search": "panelforge",
+    "predicates": [
+      "built_with"
+    ]
+  },
+  "counts": {
+    "nodeLabels": 31,
+    "originalFilteredRowCount": 155,
+    "distinctRelationships": 33
+  },
+  "nodes": [
+    {
+      "label": "panelforge",
+      "type": "project"
+    },
+    {
+      "label": "claude-haiku-4.5",
+      "type": "technology"
+    },
+    {
+      "label": "shadcn-vue",
+      "type": "technology"
+    },
+    {
+      "label": "konva-js",
+      "type": "technology"
+    },
+    {
+      "label": "nativephp",
+      "type": "technology"
+    },
+    {
+      "label": "panelforge-app",
+      "type": "project"
+    },
+    {
+      "label": "laravel-12-nativephp",
+      "type": "technology"
+    },
+    {
+      "label": "vue-3",
+      "type": "technology"
+    },
+    {
+      "label": "inertia-js",
+      "type": "technology"
+    },
+    {
+      "label": "vue",
+      "type": null
+    },
+    {
+      "label": "inertia",
+      "type": null
+    },
+    {
+      "label": "panelforge-mcp",
+      "type": "project"
+    },
+    {
+      "label": "typescript",
+      "type": "technology"
+    },
+    {
+      "label": "vue-js",
+      "type": "technology"
+    },
+    {
+      "label": "node-js",
+      "type": "technology"
+    },
+    {
+      "label": "laravel",
+      "type": "technology"
+    },
+    {
+      "label": "express",
+      "type": "technology"
+    },
+    {
+      "label": "express-ai-service",
+      "type": "project"
+    },
+    {
+      "label": "vue-typescript",
+      "type": "technology"
+    },
+    {
+      "label": "php",
+      "type": "technology"
+    },
+    {
+      "label": "tailwind-css",
+      "type": "technology"
+    },
+    {
+      "label": "laravel-12",
+      "type": "technology"
+    },
+    {
+      "label": "tailwind-4",
+      "type": "technology"
+    },
+    {
+      "label": "inertia-js-2",
+      "type": "technology"
+    },
+    {
+      "label": "php-8.4",
+      "type": "technology"
+    },
+    {
+      "label": "panelforge-chat-ui",
+      "type": "project"
+    },
+    {
+      "label": "panelforge-gallery",
+      "type": "project"
+    },
+    {
+      "label": "panelforge-chat",
+      "type": "project"
+    },
+    {
+      "label": "vue-3-inertia-laravel",
+      "type": "technology"
+    },
+    {
+      "label": "laravel-vue-inertia",
+      "type": "technology"
+    },
+    {
+      "label": "panelforge-chat-app",
+      "type": "project"
+    }
+  ],
+  "relationships": [
+    {
+      "subject": "panelforge",
+      "predicate": "built_with",
+      "object": "claude-haiku-4.5"
+    },
+    {
+      "subject": "panelforge",
+      "predicate": "built_with",
+      "object": "shadcn-vue"
+    },
+    {
+      "subject": "panelforge",
+      "predicate": "built_with",
+      "object": "konva-js"
+    },
+    {
+      "subject": "panelforge",
+      "predicate": "built_with",
+      "object": "nativephp"
+    },
+    {
+      "subject": "panelforge-app",
+      "predicate": "built_with",
+      "object": "laravel-12-nativephp"
+    },
+    {
+      "subject": "panelforge",
+      "predicate": "built_with",
+      "object": "laravel-12-nativephp"
+    },
+    {
+      "subject": "panelforge",
+      "predicate": "built_with",
+      "object": "vue-3"
+    },
+    {
+      "subject": "panelforge",
+      "predicate": "built_with",
+      "object": "inertia-js"
+    },
+    {
+      "subject": "panelforge",
+      "predicate": "built_with",
+      "object": "vue"
+    },
+    {
+      "subject": "panelforge",
+      "predicate": "built_with",
+      "object": "inertia"
+    },
+    {
+      "subject": "panelforge-mcp",
+      "predicate": "built_with",
+      "object": "typescript"
+    },
+    {
+      "subject": "panelforge",
+      "predicate": "built_with",
+      "object": "vue-js"
+    },
+    {
+      "subject": "panelforge-mcp",
+      "predicate": "built_with",
+      "object": "node-js"
+    },
+    {
+      "subject": "panelforge",
+      "predicate": "built_with",
+      "object": "laravel"
+    },
+    {
+      "subject": "panelforge",
+      "predicate": "built_with",
+      "object": "express"
+    },
+    {
+      "subject": "panelforge",
+      "predicate": "built_with",
+      "object": "express-ai-service"
+    },
+    {
+      "subject": "panelforge",
+      "predicate": "built_with",
+      "object": "vue-typescript"
+    },
+    {
+      "subject": "panelforge",
+      "predicate": "built_with",
+      "object": "php"
+    },
+    {
+      "subject": "panelforge",
+      "predicate": "built_with",
+      "object": "tailwind-css"
+    },
+    {
+      "subject": "panelforge",
+      "predicate": "built_with",
+      "object": "laravel-12"
+    },
+    {
+      "subject": "panelforge",
+      "predicate": "built_with",
+      "object": "tailwind-4"
+    },
+    {
+      "subject": "panelforge",
+      "predicate": "built_with",
+      "object": "typescript"
+    },
+    {
+      "subject": "panelforge",
+      "predicate": "built_with",
+      "object": "inertia-js-2"
+    },
+    {
+      "subject": "panelforge",
+      "predicate": "built_with",
+      "object": "php-8.4"
+    },
+    {
+      "subject": "panelforge-chat-ui",
+      "predicate": "built_with",
+      "object": "vue"
+    },
+    {
+      "subject": "panelforge-chat-ui",
+      "predicate": "built_with",
+      "object": "inertia"
+    },
+    {
+      "subject": "panelforge-chat-ui",
+      "predicate": "built_with",
+      "object": "laravel"
+    },
+    {
+      "subject": "panelforge-gallery",
+      "predicate": "built_with",
+      "object": "vue-3"
+    },
+    {
+      "subject": "panelforge-gallery",
+      "predicate": "built_with",
+      "object": "laravel"
+    },
+    {
+      "subject": "panelforge-gallery",
+      "predicate": "built_with",
+      "object": "inertia"
+    },
+    {
+      "subject": "panelforge-chat",
+      "predicate": "built_with",
+      "object": "vue-3-inertia-laravel"
+    },
+    {
+      "subject": "panelforge",
+      "predicate": "built_with",
+      "object": "laravel-vue-inertia"
+    },
+    {
+      "subject": "panelforge-chat-app",
+      "predicate": "built_with",
+      "object": "vue"
+    }
+  ],
+  "provenance": {
+    "kind": "Actual extracted graph records, exported read-only from the same filtered graph shown in the portfolio capture",
+    "deduplication": "Repeated identical subject/predicate/object tuples removed; aliases and historical versions retained",
+    "privacy": "Only audited project/software labels, original entity types and relationship tuples are included. Account identifiers and conversation/source references are omitted.",
+    "captureMedia": "knowledge-graph.webp"
+  }
+}

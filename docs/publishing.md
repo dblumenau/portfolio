@@ -27,14 +27,14 @@ The current deployment is the `portfolio-app` container under `/home/david/portf
 Inspect and save the live container before the cutover:
 
 ```sh
-mkdir -p /home/david/portfolio-backups/RELEASE
+install -d -m 700 /home/david/portfolio-backups/RELEASE
 docker inspect portfolio-app > /home/david/portfolio-backups/RELEASE/container.json
 docker image inspect "$(docker inspect --format '{{.Image}}' portfolio-app)" > /home/david/portfolio-backups/RELEASE/image.json
 cp -a /home/david/portfolio /home/david/portfolio-backups/RELEASE/deployment
 docker tag "$(docker inspect --format '{{.Image}}' portfolio-app)" portfolio:before-RELEASE
 ```
 
-Run the new image temporarily on `127.0.0.1:8097` and verify it before approval. Do not bind the preview to 8091 while the live container owns that port. Do not change the host nginx upstream for this release.
+Run the new image temporarily on `127.0.0.1:8097` and verify it before approval. Check that the preview port is free first. Do not bind the preview to 8091 while the live container owns that port. Do not change the host nginx upstream for this release.
 
 ## Approved cutover
 
