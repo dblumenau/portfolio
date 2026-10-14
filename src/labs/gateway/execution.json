@@ -1,0 +1,1616 @@
+{
+  "executed_at": "2026-10-14T21:59:25.064Z",
+  "source": {
+    "repository": "dblumenau/panelforge-mcp",
+    "commit": "40185b05486ff5c3ed8c6b1ff6f7653851f4080c",
+    "tag": "v5.11.24",
+    "archive": "git archive of committed source; production repository read only",
+    "source_hashes": {
+      "src/server.ts": "a9981d1624f46a9bb255056118896a70577abad8bcc598d3592670ec1f8aed20",
+      "src/proxy/proxy-mcp-handler.ts": "90a08d6d556d1d32165b9d9dcb4edfb7e15ab8a26b4b50230a363a7fcaef3f38",
+      "src/permissions/permission-cache.ts": "f133629a7eaaf8df79c5043508bef5d7ec75139c75f04d799bd933bc17f984ce",
+      "src/auth/sanctum-verifier.ts": "8a3b3083f827eb77a04a8bea51a40f0d0da57f67685440ff896e0c305642ba0a",
+      "src/auth/service-key-middleware.ts": "356e99eed262fd4d80214f4c7e54600d1479ce4ea7c30c24f791effd379d33a3",
+      "src/auth/metadata.ts": "98b0062be4c3a964e1126eb91974f92e09405d3db1fa9150874ad713dc0b69e6"
+    },
+    "validation": "65 existing source tests passed across six suites; fixture compilation with TypeScript succeeded."
+  },
+  "fixture": {
+    "gateway": "http://gateway.fixture.invalid",
+    "services": "http://services.fixture.invalid",
+    "service_names": [
+      "Fictional Sanctum whoami",
+      "Fictional permission snapshots",
+      "Fictional native API data",
+      "Fictional music MCP backend",
+      "Local usage sink"
+    ],
+    "real": [
+      "Complete archived Express gateway entrypoint",
+      "Sanctum verifier, dispatch and MCP SDK bearer middleware",
+      "Resource scope middleware",
+      "PermissionCache and metering middleware",
+      "Proxy catalog allowlist and call rejection",
+      "Gateway-authored user metadata overwrite",
+      "Native MCP profile registration and tool handlers"
+    ],
+    "replaced": [
+      "Laravel token verification answers",
+      "Laravel profiles, permissions, budgets and user records",
+      "Music backend and all provider actions",
+      "Usage ingestion endpoint"
+    ],
+    "not_tested": [
+      "OAuth issuance, consent or audience-bound OAuth introspection",
+      "Real Spotify credentials, backend credential lookup or provider operations",
+      "Native engine/client permission systems",
+      "Batch user metadata isolation",
+      "Real admin profile editing or stale-cache refresh timing"
+    ],
+    "native_profile_limit": "Unknown slug and permission backend failure return the master catalog. Tool execution still passes PermissionCache, which fails closed on a fresh permission lookup failure.",
+    "redis_used": false,
+    "real_credentials_used": false,
+    "external_network_requests": 0,
+    "allowlisted_fetches": 26
+  },
+  "results": {
+    "passed": true,
+    "asserted_requests": 17,
+    "counters": {
+      "upstreamRequests": 4,
+      "upstreamToolCalls": 2,
+      "nativeDataCalls": 2,
+      "whoami": 3,
+      "permissions": 4,
+      "usage": 12
+    },
+    "gateway_exit": {
+      "code": 0,
+      "signal": null
+    },
+    "identity_values_at_fake_upstream": [
+      {
+        "tool": "search",
+        "user_id": "101"
+      },
+      {
+        "tool": "queue_specific_song",
+        "user_id": "202"
+      }
+    ],
+    "bearer_forwarded": false
+  },
+  "records": [
+    {
+      "key": "scout-catalog",
+      "path": "/soundtrack-scout/mcp",
+      "identity": "scout",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "method": "tools/list"
+      },
+      "request_headers": {
+        "authorization": "Bearer [fictional scout token]"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "cache-control": "no-store",
+          "connection": "keep-alive",
+          "content-length": "149",
+          "content-type": "application/json; charset=utf-8",
+          "date": "Wed, 14 Oct 2026 21:59:24 GMT",
+          "etag": "W/\"95-Dj1VJVsJCeNMxcsK1bS8ziZi8q0\"",
+          "keep-alive": "timeout=65",
+          "x-powered-by": "Express"
+        },
+        "body": {
+          "jsonrpc": "2.0",
+          "id": 1,
+          "result": {
+            "tools": [
+              {
+                "name": "search"
+              }
+            ]
+          }
+        }
+      },
+      "duration_ms": 35.372,
+      "counters_before": {
+        "upstreamRequests": 0,
+        "upstreamToolCalls": 0,
+        "nativeDataCalls": 0,
+        "whoami": 0,
+        "permissions": 0,
+        "usage": 0
+      },
+      "counters_after": {
+        "upstreamRequests": 1,
+        "upstreamToolCalls": 0,
+        "nativeDataCalls": 0,
+        "whoami": 1,
+        "permissions": 0,
+        "usage": 0
+      },
+      "upstream_delta": 0,
+      "native_data_delta": 0
+    },
+    {
+      "key": "host-catalog",
+      "path": "/room-host/mcp",
+      "identity": "host",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 2,
+        "method": "tools/list"
+      },
+      "request_headers": {
+        "authorization": "Bearer [fictional host token]"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "cache-control": "no-store",
+          "connection": "keep-alive",
+          "content-length": "391",
+          "content-type": "application/json; charset=utf-8",
+          "date": "Wed, 14 Oct 2026 21:59:24 GMT",
+          "etag": "W/\"187-/ZYSonkzTl8t6Iwtwv1clsv8/ME\"",
+          "keep-alive": "timeout=65",
+          "x-powered-by": "Express"
+        },
+        "body": {
+          "jsonrpc": "2.0",
+          "id": 2,
+          "result": {
+            "tools": [
+              {
+                "name": "search"
+              },
+              {
+                "name": "queue_specific_song"
+              },
+              {
+                "name": "set_volume"
+              }
+            ]
+          }
+        }
+      },
+      "duration_ms": 7.856,
+      "counters_before": {
+        "upstreamRequests": 1,
+        "upstreamToolCalls": 0,
+        "nativeDataCalls": 0,
+        "whoami": 1,
+        "permissions": 0,
+        "usage": 0
+      },
+      "counters_after": {
+        "upstreamRequests": 2,
+        "upstreamToolCalls": 0,
+        "nativeDataCalls": 0,
+        "whoami": 2,
+        "permissions": 0,
+        "usage": 0
+      },
+      "upstream_delta": 0,
+      "native_data_delta": 0
+    },
+    {
+      "key": "scout-search",
+      "path": "/soundtrack-scout/mcp",
+      "identity": "scout",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 3,
+        "method": "tools/call",
+        "params": {
+          "name": "search",
+          "arguments": {
+            "query": "Small Hours"
+          },
+          "_meta": {
+            "user_id": "202",
+            "progressToken": "fictional-safe-progress"
+          }
+        }
+      },
+      "request_headers": {
+        "authorization": "Bearer [fictional scout token]",
+        "x-mcp-user-id": "202"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "cache-control": "no-store",
+          "connection": "keep-alive",
+          "content-length": "450",
+          "content-type": "application/json; charset=utf-8",
+          "date": "Wed, 14 Oct 2026 21:59:24 GMT",
+          "etag": "W/\"1c2-nWQ+HcnqOjZfTGnmLH7EYxd208g\"",
+          "keep-alive": "timeout=65",
+          "x-powered-by": "Express"
+        },
+        "body": {
+          "jsonrpc": "2.0",
+          "id": 3,
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"fixture\":true,\"tool\":\"search\",\"user_id\":\"101\",\"account\":\"Scout soundtrack collection\",\"tracks\":[\"Small Hours \u2014 fictional track\",\"Window Light \u2014 fictional track\"]}"
+              }
+            ],
+            "structuredContent": {
+              "fixture": true,
+              "tool": "search",
+              "user_id": "101",
+              "account": "Scout soundtrack collection",
+              "tracks": [
+                "Small Hours \u2014 fictional track",
+                "Window Light \u2014 fictional track"
+              ]
+            }
+          }
+        }
+      },
+      "duration_ms": 10.501,
+      "counters_before": {
+        "upstreamRequests": 2,
+        "upstreamToolCalls": 0,
+        "nativeDataCalls": 0,
+        "whoami": 2,
+        "permissions": 0,
+        "usage": 0
+      },
+      "counters_after": {
+        "upstreamRequests": 3,
+        "upstreamToolCalls": 1,
+        "nativeDataCalls": 0,
+        "whoami": 2,
+        "permissions": 1,
+        "usage": 0
+      },
+      "upstream_delta": 1,
+      "native_data_delta": 0
+    },
+    {
+      "key": "scout-queue-denied",
+      "path": "/soundtrack-scout/mcp",
+      "identity": "scout",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 4,
+        "method": "tools/call",
+        "params": {
+          "name": "queue_specific_song",
+          "arguments": {
+            "track_name": "Small Hours"
+          },
+          "_meta": {
+            "user_id": "202",
+            "progressToken": "fictional-safe-progress"
+          }
+        }
+      },
+      "request_headers": {
+        "authorization": "Bearer [fictional scout token]"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "cache-control": "no-store",
+          "connection": "keep-alive",
+          "content-length": "117",
+          "content-type": "application/json; charset=utf-8",
+          "date": "Wed, 14 Oct 2026 21:59:24 GMT",
+          "etag": "W/\"75-CyTQ8lttZQI7mUQ/m1nEb7E8u08\"",
+          "keep-alive": "timeout=65",
+          "x-powered-by": "Express"
+        },
+        "body": {
+          "jsonrpc": "2.0",
+          "id": 4,
+          "error": {
+            "code": -32602,
+            "message": "Tool not available on this resource: queue_specific_song"
+          }
+        }
+      },
+      "duration_ms": 4.092,
+      "counters_before": {
+        "upstreamRequests": 3,
+        "upstreamToolCalls": 1,
+        "nativeDataCalls": 0,
+        "whoami": 2,
+        "permissions": 1,
+        "usage": 0
+      },
+      "counters_after": {
+        "upstreamRequests": 3,
+        "upstreamToolCalls": 1,
+        "nativeDataCalls": 0,
+        "whoami": 2,
+        "permissions": 1,
+        "usage": 0
+      },
+      "upstream_delta": 0,
+      "native_data_delta": 0
+    },
+    {
+      "key": "host-queue",
+      "path": "/room-host/mcp",
+      "identity": "host",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 5,
+        "method": "tools/call",
+        "params": {
+          "name": "queue_specific_song",
+          "arguments": {
+            "track_name": "Small Hours"
+          },
+          "_meta": {
+            "user_id": "101",
+            "progressToken": "fictional-safe-progress"
+          }
+        }
+      },
+      "request_headers": {
+        "authorization": "Bearer [fictional host token]"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "cache-control": "no-store",
+          "connection": "keep-alive",
+          "content-length": "430",
+          "content-type": "application/json; charset=utf-8",
+          "date": "Wed, 14 Oct 2026 21:59:24 GMT",
+          "etag": "W/\"1ae-jEpuWSl0lkzhs52q1fHGwdT4vcM\"",
+          "keep-alive": "timeout=65",
+          "x-powered-by": "Express"
+        },
+        "body": {
+          "jsonrpc": "2.0",
+          "id": 5,
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "{\"fixture\":true,\"tool\":\"queue_specific_song\",\"user_id\":\"202\",\"account\":\"Host room queue\",\"queued\":\"Small Hours \u2014 fictional track\",\"external_delivery\":false}"
+              }
+            ],
+            "structuredContent": {
+              "fixture": true,
+              "tool": "queue_specific_song",
+              "user_id": "202",
+              "account": "Host room queue",
+              "queued": "Small Hours \u2014 fictional track",
+              "external_delivery": false
+            }
+          }
+        }
+      },
+      "duration_ms": 8.912,
+      "counters_before": {
+        "upstreamRequests": 3,
+        "upstreamToolCalls": 1,
+        "nativeDataCalls": 0,
+        "whoami": 2,
+        "permissions": 1,
+        "usage": 0
+      },
+      "counters_after": {
+        "upstreamRequests": 4,
+        "upstreamToolCalls": 2,
+        "nativeDataCalls": 0,
+        "whoami": 2,
+        "permissions": 2,
+        "usage": 0
+      },
+      "upstream_delta": 1,
+      "native_data_delta": 0
+    },
+    {
+      "key": "host-volume-policy-denied",
+      "path": "/room-host/mcp",
+      "identity": "host",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 6,
+        "method": "tools/call",
+        "params": {
+          "name": "set_volume",
+          "arguments": {
+            "volume": 50
+          },
+          "_meta": {
+            "user_id": "101",
+            "progressToken": "fictional-safe-progress"
+          }
+        }
+      },
+      "request_headers": {
+        "authorization": "Bearer [fictional host token]"
+      },
+      "response": {
+        "status": 403,
+        "headers": {
+          "connection": "keep-alive",
+          "content-length": "89",
+          "content-type": "application/json; charset=utf-8",
+          "date": "Wed, 14 Oct 2026 21:59:24 GMT",
+          "etag": "W/\"59-cYL4c0EBS3UAT2d21dDHYBqJzWM\"",
+          "keep-alive": "timeout=65",
+          "www-authenticate": "Bearer error=\"access_denied\", error_description=\"Tool access denied by policy\"",
+          "x-powered-by": "Express"
+        },
+        "body": {
+          "error": "access_denied",
+          "error_description": "Room volume belongs to the venue operator"
+        }
+      },
+      "duration_ms": 2.696,
+      "counters_before": {
+        "upstreamRequests": 4,
+        "upstreamToolCalls": 2,
+        "nativeDataCalls": 0,
+        "whoami": 2,
+        "permissions": 2,
+        "usage": 0
+      },
+      "counters_after": {
+        "upstreamRequests": 4,
+        "upstreamToolCalls": 2,
+        "nativeDataCalls": 0,
+        "whoami": 2,
+        "permissions": 2,
+        "usage": 0
+      },
+      "upstream_delta": 0,
+      "native_data_delta": 0
+    },
+    {
+      "key": "wrong-resource-scope",
+      "path": "/room-host/mcp",
+      "identity": "limited",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 7,
+        "method": "tools/call",
+        "params": {
+          "name": "search",
+          "arguments": {},
+          "_meta": {
+            "user_id": "202",
+            "progressToken": "fictional-safe-progress"
+          }
+        }
+      },
+      "request_headers": {
+        "authorization": "Bearer [fictional limited token]"
+      },
+      "response": {
+        "status": 403,
+        "headers": {
+          "connection": "keep-alive",
+          "content-length": "90",
+          "content-type": "application/json; charset=utf-8",
+          "date": "Wed, 14 Oct 2026 21:59:24 GMT",
+          "etag": "W/\"5a-M5wkT+uQnBQRtyqrYhw76YPpn48\"",
+          "keep-alive": "timeout=65",
+          "www-authenticate": "Bearer error=\"insufficient_scope\", scope=\"mcp:spotify\"",
+          "x-powered-by": "Express"
+        },
+        "body": {
+          "error": "insufficient_scope",
+          "error_description": "Resource requires one of: mcp:spotify"
+        }
+      },
+      "duration_ms": 5.326,
+      "counters_before": {
+        "upstreamRequests": 4,
+        "upstreamToolCalls": 2,
+        "nativeDataCalls": 0,
+        "whoami": 2,
+        "permissions": 2,
+        "usage": 0
+      },
+      "counters_after": {
+        "upstreamRequests": 4,
+        "upstreamToolCalls": 2,
+        "nativeDataCalls": 0,
+        "whoami": 3,
+        "permissions": 2,
+        "usage": 0
+      },
+      "upstream_delta": 0,
+      "native_data_delta": 0
+    },
+    {
+      "key": "native-scout-profile",
+      "path": "/mcp/task",
+      "identity": "scout",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 8,
+        "method": "tools/list"
+      },
+      "request_headers": {
+        "authorization": "Bearer [fictional scout token]"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "cache-control": "no-cache, no-transform",
+          "connection": "keep-alive",
+          "content-length": "6310",
+          "content-type": "text/event-stream",
+          "date": "Wed, 14 Oct 2026 21:59:24 GMT",
+          "x-accel-buffering": "no",
+          "x-powered-by": "Express"
+        },
+        "body": {
+          "result": {
+            "tools": [
+              {
+                "name": "list_conversations"
+              }
+            ]
+          },
+          "jsonrpc": "2.0",
+          "id": 8
+        }
+      },
+      "duration_ms": 19.958,
+      "counters_before": {
+        "upstreamRequests": 4,
+        "upstreamToolCalls": 2,
+        "nativeDataCalls": 0,
+        "whoami": 3,
+        "permissions": 2,
+        "usage": 0
+      },
+      "counters_after": {
+        "upstreamRequests": 4,
+        "upstreamToolCalls": 2,
+        "nativeDataCalls": 0,
+        "whoami": 3,
+        "permissions": 2,
+        "usage": 0
+      },
+      "upstream_delta": 0,
+      "native_data_delta": 0
+    },
+    {
+      "key": "native-host-profile",
+      "path": "/mcp/task",
+      "identity": "host",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 9,
+        "method": "tools/list"
+      },
+      "request_headers": {
+        "authorization": "Bearer [fictional host token]"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "cache-control": "no-cache, no-transform",
+          "connection": "keep-alive",
+          "content-length": "681",
+          "content-type": "text/event-stream",
+          "date": "Wed, 14 Oct 2026 21:59:24 GMT",
+          "x-accel-buffering": "no",
+          "x-powered-by": "Express"
+        },
+        "body": {
+          "result": {
+            "tools": [
+              {
+                "name": "get_personal_context"
+              }
+            ]
+          },
+          "jsonrpc": "2.0",
+          "id": 9
+        }
+      },
+      "duration_ms": 7.111,
+      "counters_before": {
+        "upstreamRequests": 4,
+        "upstreamToolCalls": 2,
+        "nativeDataCalls": 0,
+        "whoami": 3,
+        "permissions": 2,
+        "usage": 0
+      },
+      "counters_after": {
+        "upstreamRequests": 4,
+        "upstreamToolCalls": 2,
+        "nativeDataCalls": 0,
+        "whoami": 3,
+        "permissions": 2,
+        "usage": 0
+      },
+      "upstream_delta": 0,
+      "native_data_delta": 0
+    },
+    {
+      "key": "native-scout-read",
+      "path": "/mcp/task",
+      "identity": "scout",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 10,
+        "method": "tools/call",
+        "params": {
+          "name": "list_conversations",
+          "arguments": {},
+          "_meta": {
+            "user_id": "202",
+            "progressToken": "fictional-safe-progress"
+          }
+        }
+      },
+      "request_headers": {
+        "authorization": "Bearer [fictional scout token]"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "cache-control": "no-cache, no-transform",
+          "connection": "keep-alive",
+          "content-type": "text/event-stream",
+          "date": "Wed, 14 Oct 2026 21:59:24 GMT",
+          "transfer-encoding": "chunked",
+          "x-accel-buffering": "no",
+          "x-powered-by": "Express"
+        },
+        "body": {
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "No conversations found matching your filters."
+              }
+            ]
+          },
+          "jsonrpc": "2.0",
+          "id": 10
+        }
+      },
+      "duration_ms": 9.32,
+      "counters_before": {
+        "upstreamRequests": 4,
+        "upstreamToolCalls": 2,
+        "nativeDataCalls": 0,
+        "whoami": 3,
+        "permissions": 2,
+        "usage": 0
+      },
+      "counters_after": {
+        "upstreamRequests": 4,
+        "upstreamToolCalls": 2,
+        "nativeDataCalls": 1,
+        "whoami": 3,
+        "permissions": 2,
+        "usage": 0
+      },
+      "upstream_delta": 0,
+      "native_data_delta": 1
+    },
+    {
+      "key": "native-scout-off-profile",
+      "path": "/mcp/task",
+      "identity": "scout",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 11,
+        "method": "tools/call",
+        "params": {
+          "name": "get_personal_context",
+          "arguments": {},
+          "_meta": {
+            "user_id": "202",
+            "progressToken": "fictional-safe-progress"
+          }
+        }
+      },
+      "request_headers": {
+        "authorization": "Bearer [fictional scout token]"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "cache-control": "no-cache, no-transform",
+          "connection": "keep-alive",
+          "content-length": "165",
+          "content-type": "text/event-stream",
+          "date": "Wed, 14 Oct 2026 21:59:24 GMT",
+          "x-accel-buffering": "no",
+          "x-powered-by": "Express"
+        },
+        "body": {
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "MCP error -32602: Tool get_personal_context not found"
+              }
+            ],
+            "isError": true
+          },
+          "jsonrpc": "2.0",
+          "id": 11
+        }
+      },
+      "duration_ms": 4.149,
+      "counters_before": {
+        "upstreamRequests": 4,
+        "upstreamToolCalls": 2,
+        "nativeDataCalls": 1,
+        "whoami": 3,
+        "permissions": 2,
+        "usage": 0
+      },
+      "counters_after": {
+        "upstreamRequests": 4,
+        "upstreamToolCalls": 2,
+        "nativeDataCalls": 1,
+        "whoami": 3,
+        "permissions": 2,
+        "usage": 0
+      },
+      "upstream_delta": 0,
+      "native_data_delta": 0
+    },
+    {
+      "key": "native-host-context",
+      "path": "/mcp/task",
+      "identity": "host",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 12,
+        "method": "tools/call",
+        "params": {
+          "name": "get_personal_context",
+          "arguments": {},
+          "_meta": {
+            "user_id": "101",
+            "progressToken": "fictional-safe-progress"
+          }
+        }
+      },
+      "request_headers": {
+        "authorization": "Bearer [fictional host token]"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "cache-control": "no-cache, no-transform",
+          "connection": "keep-alive",
+          "content-type": "text/event-stream",
+          "date": "Wed, 14 Oct 2026 21:59:24 GMT",
+          "transfer-encoding": "chunked",
+          "x-accel-buffering": "no",
+          "x-powered-by": "Express"
+        },
+        "body": {
+          "result": {
+            "content": [
+              {
+                "type": "text",
+                "text": "Fictional user 202: preparing a room soundtrack.\n\n--- Local fixture data"
+              }
+            ]
+          },
+          "jsonrpc": "2.0",
+          "id": 12
+        }
+      },
+      "duration_ms": 6.166,
+      "counters_before": {
+        "upstreamRequests": 4,
+        "upstreamToolCalls": 2,
+        "nativeDataCalls": 1,
+        "whoami": 3,
+        "permissions": 2,
+        "usage": 0
+      },
+      "counters_after": {
+        "upstreamRequests": 4,
+        "upstreamToolCalls": 2,
+        "nativeDataCalls": 2,
+        "whoami": 3,
+        "permissions": 2,
+        "usage": 0
+      },
+      "upstream_delta": 0,
+      "native_data_delta": 1
+    },
+    {
+      "key": "native-empty-profile",
+      "path": "/mcp/empty",
+      "identity": "scout",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 13,
+        "method": "tools/list"
+      },
+      "request_headers": {
+        "authorization": "Bearer [fictional scout token]"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "cache-control": "no-cache, no-transform",
+          "connection": "keep-alive",
+          "content-length": "101",
+          "content-type": "text/event-stream",
+          "date": "Wed, 14 Oct 2026 21:59:24 GMT",
+          "x-accel-buffering": "no",
+          "x-powered-by": "Express"
+        },
+        "body": {
+          "jsonrpc": "2.0",
+          "id": 13,
+          "error": {
+            "code": -32601,
+            "message": "Method not found"
+          }
+        }
+      },
+      "duration_ms": 3.531,
+      "counters_before": {
+        "upstreamRequests": 4,
+        "upstreamToolCalls": 2,
+        "nativeDataCalls": 2,
+        "whoami": 3,
+        "permissions": 2,
+        "usage": 0
+      },
+      "counters_after": {
+        "upstreamRequests": 4,
+        "upstreamToolCalls": 2,
+        "nativeDataCalls": 2,
+        "whoami": 3,
+        "permissions": 2,
+        "usage": 0
+      },
+      "upstream_delta": 0,
+      "native_data_delta": 0
+    },
+    {
+      "key": "native-unknown-profile-fallback",
+      "path": "/mcp/unknown-fictional-task",
+      "identity": "scout",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 14,
+        "method": "tools/list"
+      },
+      "request_headers": {
+        "authorization": "Bearer [fictional scout token]"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "cache-control": "no-cache, no-transform",
+          "connection": "keep-alive",
+          "content-length": "149869",
+          "content-type": "text/event-stream",
+          "date": "Wed, 14 Oct 2026 21:59:24 GMT",
+          "x-accel-buffering": "no",
+          "x-powered-by": "Express"
+        },
+        "body": {
+          "result": {
+            "tools": [
+              {
+                "name": "list_conversations"
+              },
+              {
+                "name": "get_conversation"
+              },
+              {
+                "name": "search_messages"
+              },
+              {
+                "name": "search_tool_calls"
+              },
+              {
+                "name": "get_message"
+              },
+              {
+                "name": "list_agent_sessions"
+              },
+              {
+                "name": "list_claude_sessions"
+              },
+              {
+                "name": "get_prompting_guide"
+              },
+              {
+                "name": "ask_user"
+              },
+              {
+                "name": "create_conversation"
+              },
+              {
+                "name": "send_message"
+              },
+              {
+                "name": "get_message_job"
+              },
+              {
+                "name": "tag_conversation"
+              },
+              {
+                "name": "analyze_conversation"
+              },
+              {
+                "name": "get_gallery_images"
+              },
+              {
+                "name": "get_image"
+              },
+              {
+                "name": "get_image_analysis"
+              },
+              {
+                "name": "analyze_image"
+              },
+              {
+                "name": "list_hierarchy"
+              },
+              {
+                "name": "get_image_job"
+              },
+              {
+                "name": "list_image_models"
+              },
+              {
+                "name": "export_manifest"
+              },
+              {
+                "name": "stage_file"
+              },
+              {
+                "name": "upload_image"
+              },
+              {
+                "name": "upload_images"
+              },
+              {
+                "name": "generate_image"
+              },
+              {
+                "name": "edit_image"
+              },
+              {
+                "name": "lint_image_prompt"
+              },
+              {
+                "name": "assign_images"
+              },
+              {
+                "name": "reorder_panel_images"
+              },
+              {
+                "name": "tag_images"
+              },
+              {
+                "name": "update_images"
+              },
+              {
+                "name": "manage_gallery_lightbox"
+              },
+              {
+                "name": "delete_image"
+              },
+              {
+                "name": "manage_hierarchy"
+              },
+              {
+                "name": "generate_video"
+              },
+              {
+                "name": "get_video_status"
+              },
+              {
+                "name": "search_knowledge"
+              },
+              {
+                "name": "get_entity_profile"
+              },
+              {
+                "name": "get_personal_context"
+              },
+              {
+                "name": "pd3_get_pack_section"
+              },
+              {
+                "name": "pd3_get_model_answer"
+              },
+              {
+                "name": "pd3_get_learner_profile"
+              },
+              {
+                "name": "pd3_generate_picture_pair"
+              },
+              {
+                "name": "pd3_log_practice_event"
+              },
+              {
+                "name": "pd3_record_observations"
+              },
+              {
+                "name": "add_knowledge"
+              },
+              {
+                "name": "curate_knowledge"
+              },
+              {
+                "name": "merge_entities"
+              },
+              {
+                "name": "revert_knowledge_edit"
+              },
+              {
+                "name": "list_knowledge_edits"
+              },
+              {
+                "name": "update_knowledge_status"
+              },
+              {
+                "name": "manage_timeline_event"
+              },
+              {
+                "name": "list_system_prompts"
+              },
+              {
+                "name": "manage_system_prompt"
+              },
+              {
+                "name": "list_chat_schedules"
+              },
+              {
+                "name": "manage_chat_schedule"
+              }
+            ]
+          },
+          "jsonrpc": "2.0",
+          "id": 14
+        }
+      },
+      "duration_ms": 20.645,
+      "counters_before": {
+        "upstreamRequests": 4,
+        "upstreamToolCalls": 2,
+        "nativeDataCalls": 2,
+        "whoami": 3,
+        "permissions": 2,
+        "usage": 0
+      },
+      "counters_after": {
+        "upstreamRequests": 4,
+        "upstreamToolCalls": 2,
+        "nativeDataCalls": 2,
+        "whoami": 3,
+        "permissions": 2,
+        "usage": 0
+      },
+      "upstream_delta": 0,
+      "native_data_delta": 0
+    },
+    {
+      "key": "native-master-catalog",
+      "path": "/mcp",
+      "identity": "scout",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 15,
+        "method": "tools/list"
+      },
+      "request_headers": {
+        "authorization": "Bearer [fictional scout token]"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "cache-control": "no-cache, no-transform",
+          "connection": "keep-alive",
+          "content-length": "149869",
+          "content-type": "text/event-stream",
+          "date": "Wed, 14 Oct 2026 21:59:25 GMT",
+          "x-accel-buffering": "no",
+          "x-powered-by": "Express"
+        },
+        "body": {
+          "result": {
+            "tools": [
+              {
+                "name": "list_conversations"
+              },
+              {
+                "name": "get_conversation"
+              },
+              {
+                "name": "search_messages"
+              },
+              {
+                "name": "search_tool_calls"
+              },
+              {
+                "name": "get_message"
+              },
+              {
+                "name": "list_agent_sessions"
+              },
+              {
+                "name": "list_claude_sessions"
+              },
+              {
+                "name": "get_prompting_guide"
+              },
+              {
+                "name": "ask_user"
+              },
+              {
+                "name": "create_conversation"
+              },
+              {
+                "name": "send_message"
+              },
+              {
+                "name": "get_message_job"
+              },
+              {
+                "name": "tag_conversation"
+              },
+              {
+                "name": "analyze_conversation"
+              },
+              {
+                "name": "get_gallery_images"
+              },
+              {
+                "name": "get_image"
+              },
+              {
+                "name": "get_image_analysis"
+              },
+              {
+                "name": "analyze_image"
+              },
+              {
+                "name": "list_hierarchy"
+              },
+              {
+                "name": "get_image_job"
+              },
+              {
+                "name": "list_image_models"
+              },
+              {
+                "name": "export_manifest"
+              },
+              {
+                "name": "stage_file"
+              },
+              {
+                "name": "upload_image"
+              },
+              {
+                "name": "upload_images"
+              },
+              {
+                "name": "generate_image"
+              },
+              {
+                "name": "edit_image"
+              },
+              {
+                "name": "lint_image_prompt"
+              },
+              {
+                "name": "assign_images"
+              },
+              {
+                "name": "reorder_panel_images"
+              },
+              {
+                "name": "tag_images"
+              },
+              {
+                "name": "update_images"
+              },
+              {
+                "name": "manage_gallery_lightbox"
+              },
+              {
+                "name": "delete_image"
+              },
+              {
+                "name": "manage_hierarchy"
+              },
+              {
+                "name": "generate_video"
+              },
+              {
+                "name": "get_video_status"
+              },
+              {
+                "name": "search_knowledge"
+              },
+              {
+                "name": "get_entity_profile"
+              },
+              {
+                "name": "get_personal_context"
+              },
+              {
+                "name": "pd3_get_pack_section"
+              },
+              {
+                "name": "pd3_get_model_answer"
+              },
+              {
+                "name": "pd3_get_learner_profile"
+              },
+              {
+                "name": "pd3_generate_picture_pair"
+              },
+              {
+                "name": "pd3_log_practice_event"
+              },
+              {
+                "name": "pd3_record_observations"
+              },
+              {
+                "name": "add_knowledge"
+              },
+              {
+                "name": "curate_knowledge"
+              },
+              {
+                "name": "merge_entities"
+              },
+              {
+                "name": "revert_knowledge_edit"
+              },
+              {
+                "name": "list_knowledge_edits"
+              },
+              {
+                "name": "update_knowledge_status"
+              },
+              {
+                "name": "manage_timeline_event"
+              },
+              {
+                "name": "list_system_prompts"
+              },
+              {
+                "name": "manage_system_prompt"
+              },
+              {
+                "name": "list_chat_schedules"
+              },
+              {
+                "name": "manage_chat_schedule"
+              }
+            ]
+          },
+          "jsonrpc": "2.0",
+          "id": 15
+        }
+      },
+      "duration_ms": 6.662,
+      "counters_before": {
+        "upstreamRequests": 4,
+        "upstreamToolCalls": 2,
+        "nativeDataCalls": 2,
+        "whoami": 3,
+        "permissions": 2,
+        "usage": 0
+      },
+      "counters_after": {
+        "upstreamRequests": 4,
+        "upstreamToolCalls": 2,
+        "nativeDataCalls": 2,
+        "whoami": 3,
+        "permissions": 2,
+        "usage": 0
+      },
+      "upstream_delta": 0,
+      "native_data_delta": 0
+    },
+    {
+      "key": "native-outage-catalog-fallback",
+      "path": "/mcp/task",
+      "identity": "limited",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 16,
+        "method": "tools/list"
+      },
+      "request_headers": {
+        "authorization": "Bearer [fictional limited token]"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "cache-control": "no-cache, no-transform",
+          "connection": "keep-alive",
+          "content-length": "149869",
+          "content-type": "text/event-stream",
+          "date": "Wed, 14 Oct 2026 21:59:25 GMT",
+          "x-accel-buffering": "no",
+          "x-powered-by": "Express"
+        },
+        "body": {
+          "result": {
+            "tools": [
+              {
+                "name": "list_conversations"
+              },
+              {
+                "name": "get_conversation"
+              },
+              {
+                "name": "search_messages"
+              },
+              {
+                "name": "search_tool_calls"
+              },
+              {
+                "name": "get_message"
+              },
+              {
+                "name": "list_agent_sessions"
+              },
+              {
+                "name": "list_claude_sessions"
+              },
+              {
+                "name": "get_prompting_guide"
+              },
+              {
+                "name": "ask_user"
+              },
+              {
+                "name": "create_conversation"
+              },
+              {
+                "name": "send_message"
+              },
+              {
+                "name": "get_message_job"
+              },
+              {
+                "name": "tag_conversation"
+              },
+              {
+                "name": "analyze_conversation"
+              },
+              {
+                "name": "get_gallery_images"
+              },
+              {
+                "name": "get_image"
+              },
+              {
+                "name": "get_image_analysis"
+              },
+              {
+                "name": "analyze_image"
+              },
+              {
+                "name": "list_hierarchy"
+              },
+              {
+                "name": "get_image_job"
+              },
+              {
+                "name": "list_image_models"
+              },
+              {
+                "name": "export_manifest"
+              },
+              {
+                "name": "stage_file"
+              },
+              {
+                "name": "upload_image"
+              },
+              {
+                "name": "upload_images"
+              },
+              {
+                "name": "generate_image"
+              },
+              {
+                "name": "edit_image"
+              },
+              {
+                "name": "lint_image_prompt"
+              },
+              {
+                "name": "assign_images"
+              },
+              {
+                "name": "reorder_panel_images"
+              },
+              {
+                "name": "tag_images"
+              },
+              {
+                "name": "update_images"
+              },
+              {
+                "name": "manage_gallery_lightbox"
+              },
+              {
+                "name": "delete_image"
+              },
+              {
+                "name": "manage_hierarchy"
+              },
+              {
+                "name": "generate_video"
+              },
+              {
+                "name": "get_video_status"
+              },
+              {
+                "name": "search_knowledge"
+              },
+              {
+                "name": "get_entity_profile"
+              },
+              {
+                "name": "get_personal_context"
+              },
+              {
+                "name": "pd3_get_pack_section"
+              },
+              {
+                "name": "pd3_get_model_answer"
+              },
+              {
+                "name": "pd3_get_learner_profile"
+              },
+              {
+                "name": "pd3_generate_picture_pair"
+              },
+              {
+                "name": "pd3_log_practice_event"
+              },
+              {
+                "name": "pd3_record_observations"
+              },
+              {
+                "name": "add_knowledge"
+              },
+              {
+                "name": "curate_knowledge"
+              },
+              {
+                "name": "merge_entities"
+              },
+              {
+                "name": "revert_knowledge_edit"
+              },
+              {
+                "name": "list_knowledge_edits"
+              },
+              {
+                "name": "update_knowledge_status"
+              },
+              {
+                "name": "manage_timeline_event"
+              },
+              {
+                "name": "list_system_prompts"
+              },
+              {
+                "name": "manage_system_prompt"
+              },
+              {
+                "name": "list_chat_schedules"
+              },
+              {
+                "name": "manage_chat_schedule"
+              }
+            ]
+          },
+          "jsonrpc": "2.0",
+          "id": 16
+        }
+      },
+      "duration_ms": 7.926,
+      "counters_before": {
+        "upstreamRequests": 4,
+        "upstreamToolCalls": 2,
+        "nativeDataCalls": 2,
+        "whoami": 3,
+        "permissions": 2,
+        "usage": 0
+      },
+      "counters_after": {
+        "upstreamRequests": 4,
+        "upstreamToolCalls": 2,
+        "nativeDataCalls": 2,
+        "whoami": 3,
+        "permissions": 3,
+        "usage": 0
+      },
+      "upstream_delta": 0,
+      "native_data_delta": 0
+    },
+    {
+      "key": "native-outage-call-fails-closed",
+      "path": "/mcp/task",
+      "identity": "limited",
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 17,
+        "method": "tools/call",
+        "params": {
+          "name": "list_conversations",
+          "arguments": {},
+          "_meta": {
+            "user_id": "101",
+            "progressToken": "fictional-safe-progress"
+          }
+        }
+      },
+      "request_headers": {
+        "authorization": "Bearer [fictional limited token]"
+      },
+      "response": {
+        "status": 403,
+        "headers": {
+          "connection": "keep-alive",
+          "content-length": "92",
+          "content-type": "application/json; charset=utf-8",
+          "date": "Wed, 14 Oct 2026 21:59:25 GMT",
+          "etag": "W/\"5c-bsWF8d3L+81tFZkq2Pcls/cXMyg\"",
+          "keep-alive": "timeout=65",
+          "www-authenticate": "Bearer error=\"backend_unreachable\", error_description=\"Permission backend unreachable\"",
+          "x-powered-by": "Express"
+        },
+        "body": {
+          "error": "backend_unreachable",
+          "error_description": "permissions endpoint returned HTTP 503"
+        }
+      },
+      "duration_ms": 3.235,
+      "counters_before": {
+        "upstreamRequests": 4,
+        "upstreamToolCalls": 2,
+        "nativeDataCalls": 2,
+        "whoami": 3,
+        "permissions": 3,
+        "usage": 0
+      },
+      "counters_after": {
+        "upstreamRequests": 4,
+        "upstreamToolCalls": 2,
+        "nativeDataCalls": 2,
+        "whoami": 3,
+        "permissions": 4,
+        "usage": 0
+      },
+      "upstream_delta": 0,
+      "native_data_delta": 0
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+PanelForge gateway — actual local fixture execution
+Source 40185b05486ff5c3ed8c6b1ff6f7653851f4080c / v5.11.24
+Fictional auth, permission/API records, music provider and usage sink. Actual gateway code.
+
+[scout-catalog] POST /soundtrack-scout/mcp as fictional scout
+HTTP 200 / upstream tool forwards +0 / native data calls +0 / observed 35.372 ms
+Request: {"jsonrpc": "2.0", "id": 1, "method": "tools/list"}
+Response catalog (names only for readability): search
+
+[host-catalog] POST /room-host/mcp as fictional host
+HTTP 200 / upstream tool forwards +0 / native data calls +0 / observed 7.856 ms
+Request: {"jsonrpc": "2.0", "id": 2, "method": "tools/list"}
+Response catalog (names only for readability): search, queue_specific_song, set_volume
+
+[scout-search] POST /soundtrack-scout/mcp as fictional scout
+HTTP 200 / upstream tool forwards +1 / native data calls +0 / observed 10.501 ms
+Request: {"jsonrpc": "2.0", "id": 3, "method": "tools/call", "params": {"name": "search", "arguments": {"query": "Small Hours"}, "_meta": {"user_id": "202", "progressToken": "fictional-safe-progress"}}}
+Response: {"jsonrpc":"2.0","id":3,"result":{"content":[{"type":"text","text":"{\"fixture\":true,\"tool\":\"search\",\"user_id\":\"101\",\"account\":\"Scout soundtrack collection\",\"tracks\":[\"Small Hours — fictional track\",\"Window Light — fictional track\"]}"}],"structuredContent":{"fixture":true,"tool":"search","user_id":"101","account":"Scout soundtrack collection","tracks":["Small Hours — fictional track","Window Light — fictional track"]}}}
+
+[scout-queue-denied] POST /soundtrack-scout/mcp as fictional scout
+HTTP 200 / upstream tool forwards +0 / native data calls +0 / observed 4.092 ms
+Request: {"jsonrpc": "2.0", "id": 4, "method": "tools/call", "params": {"name": "queue_specific_song", "arguments": {"track_name": "Small Hours"}, "_meta": {"user_id": "202", "progressToken": "fictional-safe-progress"}}}
+Response: {"jsonrpc":"2.0","id":4,"error":{"code":-32602,"message":"Tool not available on this resource: queue_specific_song"}}
+
+[host-queue] POST /room-host/mcp as fictional host
+HTTP 200 / upstream tool forwards +1 / native data calls +0 / observed 8.912 ms
+Request: {"jsonrpc": "2.0", "id": 5, "method": "tools/call", "params": {"name": "queue_specific_song", "arguments": {"track_name": "Small Hours"}, "_meta": {"user_id": "101", "progressToken": "fictional-safe-progress"}}}
+Response: {"jsonrpc":"2.0","id":5,"result":{"content":[{"type":"text","text":"{\"fixture\":true,\"tool\":\"queue_specific_song\",\"user_id\":\"202\",\"account\":\"Host room queue\",\"queued\":\"Small Hours — fictional track\",\"external_delivery\":false}"}],"structuredContent":{"fixture":true,"tool":"queue_specific_song","user_id":"202","account":"Host room queue","queued":"Small Hours — fictional track","external_delivery":false}}}
+
+[host-volume-policy-denied] POST /room-host/mcp as fictional host
+HTTP 403 / upstream tool forwards +0 / native data calls +0 / observed 2.696 ms
+Request: {"jsonrpc": "2.0", "id": 6, "method": "tools/call", "params": {"name": "set_volume", "arguments": {"volume": 50}, "_meta": {"user_id": "101", "progressToken": "fictional-safe-progress"}}}
+Response: {"error":"access_denied","error_description":"Room volume belongs to the venue operator"}
+
+[wrong-resource-scope] POST /room-host/mcp as fictional limited
+HTTP 403 / upstream tool forwards +0 / native data calls +0 / observed 5.326 ms
+Request: {"jsonrpc": "2.0", "id": 7, "method": "tools/call", "params": {"name": "search", "arguments": {}, "_meta": {"user_id": "202", "progressToken": "fictional-safe-progress"}}}
+Response: {"error":"insufficient_scope","error_description":"Resource requires one of: mcp:spotify"}
+
+[native-scout-profile] POST /mcp/task as fictional scout
+HTTP 200 / upstream tool forwards +0 / native data calls +0 / observed 19.958 ms
+Request: {"jsonrpc": "2.0", "id": 8, "method": "tools/list"}
+Response catalog (names only for readability): list_conversations
+
+[native-host-profile] POST /mcp/task as fictional host
+HTTP 200 / upstream tool forwards +0 / native data calls +0 / observed 7.111 ms
+Request: {"jsonrpc": "2.0", "id": 9, "method": "tools/list"}
+Response catalog (names only for readability): get_personal_context
+
+[native-scout-read] POST /mcp/task as fictional scout
+HTTP 200 / upstream tool forwards +0 / native data calls +1 / observed 9.32 ms
+Request: {"jsonrpc": "2.0", "id": 10, "method": "tools/call", "params": {"name": "list_conversations", "arguments": {}, "_meta": {"user_id": "202", "progressToken": "fictional-safe-progress"}}}
+Response: event: message
+data: {"result":{"content":[{"type":"text","text":"No conversations found matching your filters."}]},"jsonrpc":"2.0","id":10}
+
+
+
+[native-scout-off-profile] POST /mcp/task as fictional scout
+HTTP 200 / upstream tool forwards +0 / native data calls +0 / observed 4.149 ms
+Request: {"jsonrpc": "2.0", "id": 11, "method": "tools/call", "params": {"name": "get_personal_context", "arguments": {}, "_meta": {"user_id": "202", "progressToken": "fictional-safe-progress"}}}
+Response: event: message
+data: {"result":{"content":[{"type":"text","text":"MCP error -32602: Tool get_personal_context not found"}],"isError":true},"jsonrpc":"2.0","id":11}
+
+
+
+[native-host-context] POST /mcp/task as fictional host
+HTTP 200 / upstream tool forwards +0 / native data calls +1 / observed 6.166 ms
+Request: {"jsonrpc": "2.0", "id": 12, "method": "tools/call", "params": {"name": "get_personal_context", "arguments": {}, "_meta": {"user_id": "101", "progressToken": "fictional-safe-progress"}}}
+Response: event: message
+data: {"result":{"content":[{"type":"text","text":"Fictional user 202: preparing a room soundtrack.\n\n--- Local fixture data"}]},"jsonrpc":"2.0","id":12}
+
+
+
+[native-empty-profile] POST /mcp/empty as fictional scout
+HTTP 200 / upstream tool forwards +0 / native data calls +0 / observed 3.531 ms
+Request: {"jsonrpc": "2.0", "id": 13, "method": "tools/list"}
+Response: event: message
+data: {"jsonrpc":"2.0","id":13,"error":{"code":-32601,"message":"Method not found"}}
+
+
+
+[native-unknown-profile-fallback] POST /mcp/unknown-fictional-task as fictional scout
+HTTP 200 / upstream tool forwards +0 / native data calls +0 / observed 20.645 ms
+Request: {"jsonrpc": "2.0", "id": 14, "method": "tools/list"}
+Response catalog (names only for readability): list_conversations, get_conversation, search_messages, search_tool_calls, get_message, list_agent_sessions, list_claude_sessions, get_prompting_guide, ask_user, create_conversation, send_message, get_message_job, tag_conversation, analyze_conversation, get_gallery_images, get_image, get_image_analysis, analyze_image, list_hierarchy, get_image_job, list_image_models, export_manifest, stage_file, upload_image, upload_images, generate_image, edit_image, lint_image_prompt, assign_images, reorder_panel_images, tag_images, update_images, manage_gallery_lightbox, delete_image, manage_hierarchy, generate_video, get_video_status, search_knowledge, get_entity_profile, get_personal_context, pd3_get_pack_section, pd3_get_model_answer, pd3_get_learner_profile, pd3_generate_picture_pair, pd3_log_practice_event, pd3_record_observations, add_knowledge, curate_knowledge, merge_entities, revert_knowledge_edit, list_knowledge_edits, update_knowledge_status, manage_timeline_event, list_system_prompts, manage_system_prompt, list_chat_schedules, manage_chat_schedule
+
+[native-master-catalog] POST /mcp as fictional scout
+HTTP 200 / upstream tool forwards +0 / native data calls +0 / observed 6.662 ms
+Request: {"jsonrpc": "2.0", "id": 15, "method": "tools/list"}
+Response catalog (names only for readability): list_conversations, get_conversation, search_messages, search_tool_calls, get_message, list_agent_sessions, list_claude_sessions, get_prompting_guide, ask_user, create_conversation, send_message, get_message_job, tag_conversation, analyze_conversation, get_gallery_images, get_image, get_image_analysis, analyze_image, list_hierarchy, get_image_job, list_image_models, export_manifest, stage_file, upload_image, upload_images, generate_image, edit_image, lint_image_prompt, assign_images, reorder_panel_images, tag_images, update_images, manage_gallery_lightbox, delete_image, manage_hierarchy, generate_video, get_video_status, search_knowledge, get_entity_profile, get_personal_context, pd3_get_pack_section, pd3_get_model_answer, pd3_get_learner_profile, pd3_generate_picture_pair, pd3_log_practice_event, pd3_record_observations, add_knowledge, curate_knowledge, merge_entities, revert_knowledge_edit, list_knowledge_edits, update_knowledge_status, manage_timeline_event, list_system_prompts, manage_system_prompt, list_chat_schedules, manage_chat_schedule
+
+[native-outage-catalog-fallback] POST /mcp/task as fictional limited
+HTTP 200 / upstream tool forwards +0 / native data calls +0 / observed 7.926 ms
+Request: {"jsonrpc": "2.0", "id": 16, "method": "tools/list"}
+Response catalog (names only for readability): list_conversations, get_conversation, search_messages, search_tool_calls, get_message, list_agent_sessions, list_claude_sessions, get_prompting_guide, ask_user, create_conversation, send_message, get_message_job, tag_conversation, analyze_conversation, get_gallery_images, get_image, get_image_analysis, analyze_image, list_hierarchy, get_image_job, list_image_models, export_manifest, stage_file, upload_image, upload_images, generate_image, edit_image, lint_image_prompt, assign_images, reorder_panel_images, tag_images, update_images, manage_gallery_lightbox, delete_image, manage_hierarchy, generate_video, get_video_status, search_knowledge, get_entity_profile, get_personal_context, pd3_get_pack_section, pd3_get_model_answer, pd3_get_learner_profile, pd3_generate_picture_pair, pd3_log_practice_event, pd3_record_observations, add_knowledge, curate_knowledge, merge_entities, revert_knowledge_edit, list_knowledge_edits, update_knowledge_status, manage_timeline_event, list_system_prompts, manage_system_prompt, list_chat_schedules, manage_chat_schedule
+
+[native-outage-call-fails-closed] POST /mcp/task as fictional limited
+HTTP 403 / upstream tool forwards +0 / native data calls +0 / observed 3.235 ms
+Request: {"jsonrpc": "2.0", "id": 17, "method": "tools/call", "params": {"name": "list_conversations", "arguments": {}, "_meta": {"user_id": "101", "progressToken": "fictional-safe-progress"}}}
+Response: {"error":"backend_unreachable","error_description":"permissions endpoint returned HTTP 503"}
+
+Gateway exit 0. All 17 asserted requests passed. No caller bearer forwarded. No external network requests.
+
+Native profile caveat: unknown slug or permission backend failure falls back to the master catalog. A fresh permission lookup failure denies tool execution.

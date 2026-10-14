@@ -1,4 +1,5 @@
 ---
+import Icon from './Icon.astro';
 import { features, featureEvidenceLabels, formatFeatureDate } from '../data/features';
 interface Props { compact?: boolean; }
 const { compact = false } = Astro.props;
@@ -8,21 +9,21 @@ const monthName = (month: string) => new Intl.DateTimeFormat('en-GB', { month: '
 const ordered = [...features].sort((a, b) => a.date.localeCompare(b.date) || a.id.localeCompare(b.id));
 ---
 <section class:list={['feature-atlas', { 'feature-atlas-compact': compact }]} aria-labelledby="atlas-heading" data-feature-atlas>
-  <div class="atlas-heading"><div><p class="eyebrow">The feature atlas</p><h2 id="atlas-heading">Specific problems.<br /><em>Named features.</em></h2></div><p>I build the smaller pieces that make a workspace useful. This first collection follows memory, archive recall and the workbench around my coding agents.</p></div>
+  <div class="atlas-heading"><div><p class="eyebrow">The feature atlas</p><h2 id="atlas-heading">Specific problems.<br /><em>Named features.</em></h2></div><p>I build the smaller pieces that make a workspace useful. Explore image revisions, agent streams, tool boundaries, memory and the workbench around my coding agents.</p></div>
   <form class="atlas-controls" role="search" aria-label="Filter feature stories">
-    <label class="atlas-search">Find a feature<input type="search" name="q" placeholder="Try graph, browser or context" autocomplete="off" /></label>
-    <label>Area<select name="area" aria-label="Area"><option value="">Both areas</option><option>Memory</option><option>Workbench</option></select></label>
+    <label class="atlas-search">Find a feature<input type="search" name="q" placeholder="Try branches, tools or graph" autocomplete="off" /></label>
+    <label>Area<select name="area" aria-label="Area"><option value="">All areas</option><option>Studio</option><option>Engine</option><option>Connections</option><option>Memory</option><option>Workbench</option></select></label>
     <label>Topic<select name="topic" aria-label="Topic"><option value="">All topics</option>{topics.map((topic) => <option>{topic}</option>)}</select></label>
     <label>Story date<select name="month" aria-label="Story date"><option value="">All dates</option>{months.map((month) => <option value={month}>{monthName(month)}</option>)}</select></label>
-    <button type="reset">Clear filters <span aria-hidden="true">↺</span></button>
+    <button type="reset">Clear filters <span aria-hidden="true"><Icon name="rotate" /></span></button>
   </form>
-  <div class="atlas-results"><p role="status" aria-live="polite" aria-atomic="true" data-atlas-count>{features.length} feature stories</p><p>Dates mark the first researched episode in each story.</p></div>
+  <div class="atlas-results"><p role="status" aria-live="polite" aria-atomic="true" data-atlas-count>{features.length} feature stories</p><p>Dates mark a researched episode or release anchor.</p></div>
   <p class="atlas-empty" data-atlas-empty hidden>No features match that combination. Try a broader topic or clear the filters.</p>
   <ol class="atlas-catalogue" aria-label="Feature stories in date order">
     {ordered.map((feature) => <li class="atlas-row" data-area={feature.area} data-topics={feature.topics.join('|')} data-month={feature.date.slice(0, 7)} data-search={`${feature.name} ${feature.title} ${feature.intro} ${feature.topics.join(' ')} ${feature.sources.repo}`.toLowerCase()}>
       <div class="atlas-row-date"><time datetime={feature.date}>{formatFeatureDate(feature.date)}</time><span class:list={['atlas-area', { 'atlas-memory': feature.area === 'Memory' }]}>{feature.area}</span></div>
-      <a class="atlas-story-link" href={`/features/${feature.slug}/`}><span class="atlas-feature-name">{feature.name}</span><h3>{feature.title}</h3><p>{feature.intro}</p></a>
-      <div class="atlas-row-meta"><div class="atlas-tags">{feature.topics.map((topic) => <span>{topic}</span>)}</div><span class="atlas-evidence-label">{featureEvidenceLabels[feature.sources.status]}</span><a class="atlas-read" href={`/features/${feature.slug}/`} aria-label={`Read about ${feature.name}`}>Read the story <span aria-hidden="true">↗</span></a></div>
+      <a class="atlas-story-link" href={`/features/${feature.slug}/`}><span class="atlas-feature-name">{feature.name}</span><h3>{feature.title}</h3><p>{feature.problem}</p></a>
+      <div class="atlas-row-meta"><div class="atlas-tags">{feature.topics.map((topic) => <span>{topic}</span>)}</div><span class="atlas-evidence-label">{featureEvidenceLabels[feature.sources.status]}</span><a class="atlas-read" href={`/features/${feature.slug}/`} aria-label={`Read about ${feature.name}`}>{feature.presentation === 'branch' || feature.presentation === 'reference' || feature.presentation === 'policy' || feature.slug === 'browser-handoff' ? 'Try an example' : 'Read the story'} <span aria-hidden="true"><Icon name="arrow-up-right" /></span></a></div>
     </li>)}
   </ol>
   <noscript><p class="atlas-noscript">All stories are listed in date order. Search and filters need JavaScript; every story link works without it.</p></noscript>

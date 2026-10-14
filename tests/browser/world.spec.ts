@@ -2,14 +2,16 @@ import { test, expect, type Page } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import { districts, journey } from '../../src/world/data';
 import { readdir, readFile } from 'node:fs/promises';
+import { resolve } from 'node:path';
 
 test.use({ launchOptions: { args: ['--enable-unsafe-swiftshader'] } });
 test.describe.configure({ mode: 'default' });
 
 test('the Three.js chunk stays out of ordinary portfolio routes', async ({ page }) => {
-  const chunks = (await readdir('dist/_astro')).filter(name => name.endsWith('.js'));
+  const assets = resolve(process.env.PORTFOLIO_DIST_ROOT ?? 'dist', '_astro');
+  const chunks = (await readdir(assets)).filter(name => name.endsWith('.js'));
   const worldChunks: string[] = [];
-  for (const name of chunks) if ((await readFile(`dist/_astro/${name}`, 'utf8')).includes('WebGLRenderer')) worldChunks.push(name);
+  for (const name of chunks) if ((await readFile(resolve(assets, name), 'utf8')).includes('WebGLRenderer')) worldChunks.push(name);
   expect(worldChunks.length).toBeGreaterThan(0);
   const requests: string[] = [];
   page.on('request', request => requests.push(request.url()));

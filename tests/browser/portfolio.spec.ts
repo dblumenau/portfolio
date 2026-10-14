@@ -1,7 +1,7 @@
 import { test, expect, type Page } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
-const routes = ['/', '/work/panelforge/', '/work/connected-agents/', '/work/connected-tools/', '/work/knowledge-graph/', '/work/agent-workbench/', '/work/conference-notes/', '/about-the-demos/'];
+const routes = ['/', '/work/panelforge/', '/work/connected-agents/', '/work/connected-tools/', '/work/knowledge-graph/', '/work/agent-workbench/', '/work/conference-notes/', '/about-the-demos/', '/labs/'];
 const sizes = [{ name: 'phone', width: 390, height: 844 }, { name: 'tablet', width: 768, height: 1024 }, { name: 'desktop', width: 1440, height: 1000 }];
 
 async function loadImages(page: Page) {

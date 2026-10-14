@@ -1,0 +1,74 @@
+---
+import Icon from './Icon.astro';
+interface Props { kind: string; }
+const { kind } = Astro.props;
+---
+{(kind === 'branch' || kind === 'reference') && <div class="reference-playground" data-reference-playground data-kind={kind}>
+  <div class="fictional-poster" data-poster><span>Lantern / an evening of stories</span><div class="poster-orbit" aria-hidden="true"></div><strong>A little<br />light goes<br /><em>a long way.</em></strong><small>Fictional reference · CSS illustration</small></div>
+  <div class="reference-desk">
+    <p class="exhibit-object-label">{kind === 'branch' ? 'Shared ancestor / Original brief' : 'Gallery reference / Lantern poster'}</p>
+    <h3>{kind === 'branch' ? 'A quiet poster for a library evening.' : 'Keep this image beside the next request.'}</h3>
+    {kind === 'branch' ? <><div class="branch-tree"><span>Original</span><div><button type="button" data-branch="quiet" aria-pressed="true">01 / Quiet blue</button><button type="button" data-branch="warm" aria-pressed="false">02 / Warm terracotta</button></div></div><p class="branch-receipt" data-branch-receipt role="status">Viewing quiet blue. Both revisions retain the original brief and reference.</p><button class="exhibit-button" type="button" data-prefer>Mark this direction preferred</button><p class="preference-receipt" data-preference role="status">No preferred direction chosen.</p></> : <><button class="exhibit-button" type="button" data-attach>Send reference to chat</button><div class="reference-request" data-request><p class="attachment-state" role="status" data-attachment>Request has no attachment.</p><blockquote>“Keep the composition. Make the lettering quieter.”</blockquote><span class="attachment-chip" data-chip hidden><Icon name="image" /> Lantern poster · same reference</span></div><button class="exhibit-reset" type="button" data-reset>Reset handoff</button></>}
+  </div>
+  <noscript><p>Without scripts: both directions share the original brief. Sending the image to chat would attach this same reference beside the request. The examples below remain inspectable.</p></noscript>
+</div>}
+{kind === 'policy' && <div class="policy-playground" data-policy-playground>
+  <div class="policy-profile"><p class="exhibit-object-label">Synthetic catalog / exact names</p><h3>A selected tool is a grant.</h3><div class="policy-profiles" role="group" aria-label="Illustrative tool profile"><button type="button" data-profile="read" aria-pressed="true">Read only</button><button type="button" data-profile="edit" aria-pressed="false">Read + edit</button></div><p data-ceiling>Ceiling: read_file, list_directory</p><p class="policy-inheritance">Resume · fork · child<br /><span>The source preserves the ceiling; this exhibit illustrates the decision only.</span></p></div>
+  <div class="policy-actions"><p class="exhibit-object-label">Try an action against the profile</p><div><button type="button" data-tool="read_file">Read a file <code>read_file</code></button><button type="button" data-tool="write_file">Write a file <code>write_file</code></button><button type="button" data-tool="run_shell">Run a shell <code>run_shell</code></button></div><p class="policy-receipt" data-policy-result role="status">Choose an action. Nothing is executed.</p></div>
+  <noscript><p>The read-only profile grants read_file and list_directory. write_file and run_shell are outside that ceiling. These examples remain readable without scripts.</p></noscript>
+</div>}
+{kind === 'tabs' && <div class="tab-playground" data-tab-playground><p class="exhibit-object-label">Same title. Same URL. Different owners.</p><div class="illustrative-tabs"><button type="button" data-tab="A" aria-pressed="false"><strong>Documentation</strong><span>Tab 17 · Session A</span><code>example.test/docs</code></button><button type="button" data-tab="B" aria-pressed="false"><strong>Documentation</strong><span>Tab 24 · Session B</span><code>example.test/docs</code></button></div><p data-tab-result role="status">Session B needs its page. Select the tab you would hand back.</p><noscript><p>Tab 24 belongs to Session B. A title or URL cannot distinguish these two pages; their tab identities can.</p></noscript></div>}
+<script>
+for (const exhibit of document.querySelectorAll<HTMLElement>('[data-reference-playground]')) {
+  let branch = 'quiet';
+  const branches = exhibit.querySelectorAll<HTMLButtonElement>('[data-branch]');
+  for (const button of branches) button.addEventListener('click', () => {
+    branch = button.dataset.branch ?? 'quiet';
+    for (const candidate of branches) candidate.setAttribute('aria-pressed', String(candidate === button));
+    exhibit.querySelector('[data-poster]')?.classList.toggle('poster-warm', branch === 'warm');
+    const receipt = exhibit.querySelector('[data-branch-receipt]');
+    if (receipt) receipt.textContent = `Viewing ${branch === 'warm' ? 'warm terracotta' : 'quiet blue'}. Both revisions retain the original brief and reference.`;
+  });
+  exhibit.querySelector('[data-prefer]')?.addEventListener('click', () => {
+    const receipt = exhibit.querySelector('[data-preference]');
+    if (receipt) receipt.textContent = `Preferred: ${branch === 'warm' ? 'warm terracotta' : 'quiet blue'}. The sibling remains available.`;
+  });
+  const setAttachment = (attached: boolean) => {
+    const chip = exhibit.querySelector<HTMLElement>('[data-chip]');
+    const status = exhibit.querySelector('[data-attachment]');
+    if (chip) chip.hidden = !attached;
+    if (status) status.textContent = attached ? 'The gallery reference is attached to this request.' : 'Request has no attachment.';
+    const button = exhibit.querySelector<HTMLButtonElement>('[data-attach]');
+    if (button) button.disabled = attached;
+  };
+  exhibit.querySelector('[data-attach]')?.addEventListener('click', () => setAttachment(true));
+  exhibit.querySelector('[data-reset]')?.addEventListener('click', () => setAttachment(false));
+}
+for (const exhibit of document.querySelectorAll<HTMLElement>('[data-policy-playground]')) {
+  let profile = 'read';
+  let lastTool = '';
+  const showDecision = () => {
+    const receipt = exhibit.querySelector<HTMLElement>('[data-policy-result]');
+    if (!receipt) return;
+    if (!lastTool) { receipt.textContent = 'Choose an action. Nothing is executed.'; delete receipt.dataset.allowed; return; }
+    const allowed = lastTool === 'read_file' || (profile === 'edit' && lastTool === 'write_file');
+    receipt.dataset.allowed = String(allowed);
+    receipt.textContent = `${allowed ? 'Allowed' : 'Denied'}: ${lastTool}. ${allowed ? 'This exact name is in the selected ceiling.' : 'This exact name is outside the selected ceiling.'} No action runs here.`;
+  };
+  for (const button of exhibit.querySelectorAll<HTMLButtonElement>('[data-profile]')) button.addEventListener('click', () => {
+    profile = button.dataset.profile ?? 'read';
+    for (const candidate of exhibit.querySelectorAll('[data-profile]')) candidate.setAttribute('aria-pressed', String(candidate === button));
+    const ceiling = exhibit.querySelector('[data-ceiling]');
+    if (ceiling) ceiling.textContent = `Ceiling: read_file, list_directory${profile === 'edit' ? ', write_file' : ''}`;
+    showDecision();
+  });
+  for (const button of exhibit.querySelectorAll<HTMLButtonElement>('[data-tool]')) button.addEventListener('click', () => { lastTool = button.dataset.tool ?? ''; showDecision(); });
+}
+for (const exhibit of document.querySelectorAll<HTMLElement>('[data-tab-playground]')) {
+  for (const button of exhibit.querySelectorAll<HTMLButtonElement>('[data-tab]')) button.addEventListener('click', () => {
+    for (const candidate of exhibit.querySelectorAll('[data-tab]')) candidate.setAttribute('aria-pressed', String(candidate === button));
+    const result = exhibit.querySelector('[data-tab-result]');
+    if (result) result.textContent = button.dataset.tab === 'B' ? 'Tab 24 returns to Session B. Identity preserves the ownership of this page.' : 'Tab 17 belongs to Session A. The matching URL did not establish ownership.';
+  });
+}
+</script>

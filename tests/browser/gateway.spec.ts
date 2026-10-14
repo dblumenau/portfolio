@@ -1,0 +1,82 @@
+import { test, expect } from '@playwright/test';
+import AxeBuilder from '@axe-core/playwright';
+const evidence = process.env.GATEWAY_LAB_EVIDENCE_DIR ?? 'test-results/gateway-evidence';
+test('Scout allows search and refuses a guessed off-list queue tool', async ({ page }) => {
+  await page.goto('/labs/gateway/');
+  await page.getByRole('button', { name: 'Find tracks', exact: true }).click();
+  await expect(page.locator('[data-gateway-lab]')).toHaveAttribute('data-outcome', 'forwarded');
+  await expect(page.locator('[data-backend-user]')).toHaveText('101');
+  await expect(page.locator('[data-forwarded]')).toHaveText('+1');
+  await page.getByRole('button', { name: 'Try adding a track', exact: true }).click();
+  await expect(page.locator('[data-gateway-lab]')).toHaveAttribute('data-outcome', 'denied');
+  await expect(page.locator('[data-http]')).toHaveText('HTTP 200');
+  await expect(page.locator('[data-forwarded]')).toHaveText('+0');
+  await page.locator('[data-inspect] summary').click();
+  await expect(page.locator('[data-response]')).toContainText('-32602');
+  await expect(page.locator('[data-counter-proof]')).toContainText('1 to 1');
+});
+test('Host has a published volume tool but policy denies its use', async ({ page }) => {
+  await page.goto('/labs/gateway/');
+  await page.locator('[data-lane="host"]').click();
+  await expect(page.locator('[data-tools]')).toContainText('set_volume');
+  await page.getByRole('button', { name: 'Add a track to the queue', exact: true }).click();
+  await expect(page.locator('[data-backend-user]')).toHaveText('202');
+  await page.getByRole('button', { name: 'Try changing the volume', exact: true }).click();
+  await expect(page.locator('[data-http]')).toHaveText('HTTP 403');
+  await expect(page.locator('[data-forwarded]')).toHaveText('+0');
+  await expect(page.locator('[data-result-title]')).toHaveText('Published does not mean permitted.');
+});
+test('deep links and back navigation retain the observed attempt', async ({ page }) => {
+  await page.goto('/labs/gateway/?task=host&attempt=host-volume-policy-denied');
+  await expect(page.locator('[data-http]')).toHaveText('HTTP 403');
+  await page.locator('[data-lane="scout"]').click();
+  await expect(page.locator('[data-gateway-lab]')).toHaveAttribute('data-outcome', 'ready');
+  await page.goBack();
+  await expect(page.locator('[data-http]')).toHaveText('HTTP 403');
+});
+test('keyboard action retains focus and reaches the next attempt', async ({ page }) => {
+  await page.goto('/labs/gateway/');
+  await page.getByRole('button', { name: 'Find tracks', exact: true }).focus();
+  await page.keyboard.press('Enter');
+  await expect(page.getByRole('button', { name: 'Find tracks', exact: true })).toBeFocused();
+  await page.keyboard.press('Tab');
+  await expect(page.getByRole('button', { name: 'Try adding a track', exact: true })).toBeFocused();
+  await page.keyboard.press('Enter');
+  await expect(page.locator('[data-forwarded]')).toHaveText('+0');
+  await expect(page.getByRole('button', { name: 'Try adding a track', exact: true })).toBeFocused();
+});
+test('native profile replay discloses catalog fallback and execution failure', async ({ page }) => {
+  await page.goto('/labs/gateway/');
+  await page.locator('.gl-native summary').click();
+  await page.getByRole('button', { name: 'Scout profile', exact: true }).click();
+  await expect(page.locator('[data-native-response]')).toContainText('list_conversations');
+  await expect(page.locator('[data-native-response]')).not.toContainText('get_personal_context');
+  await page.getByRole('button', { name: 'Unknown profile', exact: true }).click();
+  await expect(page.locator('[data-native-title]')).toContainText('master catalog');
+  await expect(page.locator('[data-native-response]')).toContainText('get_personal_context');
+  await page.getByRole('button', { name: 'Call during outage', exact: true }).click();
+  await expect(page.locator('[data-native-response]')).toContainText('backend_unreachable');
+  await expect(page.locator('[data-native-response]')).toContainText('403');
+});
+for (const width of [390, 768, 1440]) test(`gateway actions and proof fit ${width}px`, async ({ page }) => {
+  await page.setViewportSize({ width, height: 960 });
+  await page.goto('/labs/gateway/');
+  await page.getByRole('button', { name: 'Try adding a track', exact: true }).click();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBeTruthy();
+  await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
+  await page.screenshot({ path: `${evidence}/gateway-${width}-denied.png`, fullPage: true });
+  const report = await new AxeBuilder({ page }).include('main').analyze();
+  expect(report.violations).toEqual([]);
+});
+test('buttons make no live tool request and receipt retains the measured boundary', async ({ page, request }) => {
+  const posts: string[] = []; page.on('request', req => { if (req.method() === 'POST') posts.push(req.url()); });
+  await page.goto('/labs/gateway/');
+  await page.getByRole('button', { name: 'Find tracks', exact: true }).click();
+  await page.getByRole('button', { name: 'Try adding a track', exact: true }).click();
+  expect(posts).toEqual([]);
+  const receipt = await (await request.get('/media/gateway/receipt.json')).json();
+  expect(receipt.results.asserted_requests).toBe(17);
+  expect(receipt.results.gateway_exit.code).toBe(0);
+  expect(receipt.records.find((r: {key: string}) => r.key === 'scout-queue-denied').upstream_delta).toBe(0);
+  expect(receipt.fixture.external_network_requests).toBe(0);
+});

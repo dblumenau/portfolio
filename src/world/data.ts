@@ -25,17 +25,19 @@ export interface WorldDistrict {
   video?: string;
   captions?: string;
   videoDescription?: string;
+  videoAction?: string;
 }
 
 export const districts: WorldDistrict[] = [
   {
-    id: 'studio', number: '01', name: 'The studio', label: 'Images → ideas', color: '#994933', position: [-10, 0, -5.5],
+    id: 'studio', number: '01', name: 'The studio', label: 'Images / ideas', color: '#994933', position: [-10, 0, -5.5],
     title: 'Give the idea somewhere to go.',
     description: 'PanelForge grew around the work after an image is made: finding it, keeping its references together, and trying another direction.',
     architecture: 'Gallery walls hold actual screenshots of PanelForge. The model is an illustrated workspace; the screens show the real product.',
     exhibits: [
-      { title: 'A place for the result', description: 'Workspaces, projects, scenes and panels give images, audio and documents a useful context.' },
-      { title: 'A reference becomes a conversation', description: 'Gallery assets can become chat references. Message branches preserve an earlier direction alongside the revision.' },
+      { title: 'A place for the result', description: 'Workspaces, projects, scenes and panels give images, audio and documents a useful context.', href: '/features/workspace-hierarchy/' },
+      { title: 'A reference becomes a conversation', description: 'Gallery assets can become chat references. The image handoff sits beside the place where its details are inspected.', href: '/features/reference-to-chat/' },
+      { title: 'Keep more than one good direction', description: 'Branch navigation, comparison and a preferred path keep revisions connected to their shared history.', href: '/features/branching-workbench/' },
     ],
     href: '/work/panelforge/', link: 'Inside PanelForge',
     image: '/media/panelforge-gallery-desktop.webp', alt: 'The real PanelForge gallery with a workspace tree and generated artwork.', caption: 'Working web application · curated gallery capture',
@@ -48,8 +50,9 @@ export const districts: WorldDistrict[] = [
     description: 'Claude, Codex and OpenCode each have their own integration. The web workspace and Apple clients read a common stream of text and tool activity.',
     architecture: 'Three racks stand for three distinct runtimes. A device dock represents the clients that read their work.',
     exhibits: [
-      { title: 'Three runtimes, one client contract', description: 'The engine adapters handle an agent SDK, app-server JSON-RPC and a typed OpenCode client. Each keeps its own session rules.' },
-      { title: 'Return after a disconnect', description: 'A stored result can reconcile a client’s partial transcript after the browser connection breaks. Runtime restart recovery has separate rules.' },
+      { title: 'Three runtimes, one client contract', description: 'The engine adapters handle an agent SDK, app-server JSON-RPC and a typed OpenCode client. Each keeps its own session rules.', href: '/features/shared-engine-surface/' },
+      { title: 'Return after a disconnect', description: 'A stored result can reconcile a client’s partial transcript after the browser connection breaks. Runtime restart recovery has separate rules.', href: '/features/disconnect-recovery/' },
+      { title: 'Give the turn a new direction', description: 'A queued correction can reach a compatible tool boundary or follow-up turn, preserving the order of the instructions.', href: '/features/steer-without-interrupt/' },
     ],
     href: '/work/connected-agents/', link: 'How the engines connect',
     image: '/media/apple-client.webp', alt: 'The Apple conversation client running in an iPhone simulator.', caption: 'Apple client · iPhone Simulator · real saved conversation',
@@ -62,11 +65,18 @@ export const districts: WorldDistrict[] = [
     description: 'A shared MCP gateway connects agents to separate tool servers. Identity, resource scopes and tool profiles each answer a different access question.',
     architecture: 'The central arch is the gateway. Branching tracks connect separate capabilities; they illustrate relationships, not live traffic.',
     exhibits: [
-      { title: 'Know who is calling', description: 'Authentication identifies the caller. Ownership rules and resource scopes govern access to capabilities.' },
-      { title: 'Choose what a conversation can see', description: 'A tool profile narrows the model-visible catalog. Engine permissions remain a separate boundary.' },
+      { title: 'Know who is calling', description: 'Authentication identifies the caller. Ownership rules and resource scopes govern access to capabilities.', href: '/features/gateway-tool-profiles/' },
+      { title: 'An executable tool boundary', description: 'A model-visible catalog and the engine’s enforced permissions have separate jobs. The native tool-profile exhibit makes that distinction tangible.', href: '/features/native-tool-boundary-profiles/' },
       { title: 'Reach a native canvas', description: 'Stateful proxy support lets InfinitySketch and Freeform retain their session requirements behind the common gateway.' },
+      { title: 'Bring the question to the person', description: 'A durable Engine question card carries the choices and returns the answer to the waiting agent.', href: '/features/focus-aware-question/' },
     ],
     href: '/work/connected-tools/', link: 'Follow the connection',
+    image: '/media/gateway/browser-replay.png',
+    alt: 'The Gateway Lab replays an actual denied request, showing zero upstream calls and the authenticated caller boundary.',
+    caption: 'Actual gateway execution · fictional local services · interactive replay',
+    video: '/media/gateway/browser-replay.mp4', captions: '/media/gateway/browser-replay.vtt',
+    videoDescription: 'Two fictional tasks replay actual allowed and denied gateway requests. The recorded UI shows the result, forwarded-call count and caller identity. Display pacing is editorial; source execution details are in the receipt.',
+    videoAction: 'Replay the gateway requests',
   },
   {
     id: 'memory', number: '04', name: 'Memory observatory', label: 'Find the reason again', color: '#796381', position: [10, 0, 6],
@@ -95,6 +105,12 @@ export const districts: WorldDistrict[] = [
       { title: 'Coordinate with evidence', description: 'Bosun controls agent panes. Helm gives Claude and Codex coordinators a shared report and handoff protocol, with a reviewed learning loop.', href: '/features/helm/' },
     ],
     href: '/work/agent-workbench/', link: 'Inside the agent workbench',
+    image: '/media/workbench/terminal-replay.webp',
+    alt: 'A browser terminal viewer replays the real metacodex manager refusing a conflicting configuration change in a fictional home.',
+    caption: 'Actual command output · controlled fictional homes · terminal-viewer replay with editorial pacing',
+    video: '/media/workbench/terminal-replay.mp4', captions: '/media/workbench/terminal-replay.vtt',
+    videoDescription: 'A terminal viewer replays eight captured manager commands and their observed results, including refusal, deliberate adoption, a shared update and preserved local-file hashes. Display timing is editorial.',
+    videoAction: 'Replay the captured commands',
   },
   {
     id: 'small-tools', number: '06', name: 'Small useful things', label: 'One job, done thoughtfully', color: '#416f69', position: [-10, 0, 6],

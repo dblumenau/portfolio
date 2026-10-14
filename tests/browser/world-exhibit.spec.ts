@@ -118,3 +118,17 @@ test('readable-map anchor navigation preserves selection and Back restores the d
   await expect(page).toHaveURL(/#memory$/);
   await expect.poll(() => page.evaluate(() => scrollY)).toBeCloseTo(priorScroll, 0);
 });
+
+test('phone guided-route controls stay in the viewport as the story advances', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/world/');
+  await expect(page.locator('[data-forge-world]')).toHaveAttribute('data-world-state', 'ready');
+  await page.locator('[data-start-tour]').click();
+  for (let index = 0; index < 3; index++) {
+    await expect.poll(async () => page.locator('[data-tour-next]').evaluate(element => { const rect = element.getBoundingClientRect(); return rect.top >= 0 && rect.bottom <= innerHeight; })).toBe(true);
+    await expect(page.locator('[data-world-tour]')).toBeVisible();
+    await page.locator('[data-tour-next]').click();
+  }
+  await page.locator('[data-tour-stop]').click();
+  await expect(page.locator('[data-world-tour]')).toBeHidden();
+});

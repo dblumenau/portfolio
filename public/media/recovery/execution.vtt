@@ -1,0 +1,21 @@
+WEBVTT
+
+00:00.000 --> 00:02.100
+A controlled local browser starts a bare subscription turn.
+The fictional task is a workshop opening checklist.
+
+00:02.100 --> 00:04.100
+The browser begins receiving the answer, then closes
+its actual response stream after 23 characters.
+
+00:04.100 --> 00:10.700
+The browser's partial answer freezes.
+The same engine process continues the turn.
+
+00:10.700 --> 00:13.600
+The engine completes the answer and stores
+all 2,632 characters in the isolated Redis instance.
+
+00:13.600 --> 00:18.150
+The browser retrieves the stored answer with HTTP 200.
+A second read returns the same result.

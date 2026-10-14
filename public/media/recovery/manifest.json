@@ -1,0 +1,37 @@
+{
+  "captured_at": "2026-10-14T21:29:28.338000+00:00",
+  "source_revision": "bf89abc1646bd12133a0f22bc2d51f3286813250",
+  "reviewed": true,
+  "files": [
+    {
+      "file": "/media/recovery/disconnected.png",
+      "sha256": "6876b48ac4bafb2aa819422397c02609733d7a0575347c096efa6efa5bdb6e24",
+      "bytes": 120921,
+      "scope": "Controlled local engine execution with fictional content; inspected screenshots and continuous recording."
+    },
+    {
+      "file": "/media/recovery/execution-receipt.json",
+      "sha256": "f7ce766e5130409cd9ce6a90bd46ac7f24abe76a7d0bc2a401acc65b2e4889b8",
+      "bytes": 44907,
+      "scope": "Controlled local engine execution with fictional content; inspected screenshots and continuous recording."
+    },
+    {
+      "file": "/media/recovery/execution.mp4",
+      "sha256": "353fa7dc922fbfabe96913b63d0d2c0bb308fa2ad0cbba78cdeeb1e6469ca737",
+      "bytes": 313262,
+      "scope": "Controlled local engine execution with fictional content; inspected screenshots and continuous recording."
+    },
+    {
+      "file": "/media/recovery/execution.vtt",
+      "sha256": "e650b111ebf9e94e16d4bcef30351d850e699daf2985e000db90527074e0dacd",
+      "bytes": 617,
+      "scope": "Controlled local engine execution with fictional content; inspected screenshots and continuous recording."
+    },
+    {
+      "file": "/media/recovery/recovered.png",
+      "sha256": "553e87555bae4a8982c45f77779279df9f452d36b5a99a8db1d87b2ef7b2187c",
+      "bytes": 158814,
+      "scope": "Controlled local engine execution with fictional content; inspected screenshots and continuous recording."
+    }
+  ]
+}

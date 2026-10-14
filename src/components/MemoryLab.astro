@@ -1,13 +1,14 @@
 ---
+import Icon from './Icon.astro';
 import { entities, relationships, typeLabel, formatRelation } from '../labs/memory/model';
 ---
 <section class="memory-lab" data-memory-lab aria-label="Interactive knowledge graph lab">
   <div class="ml-guide" aria-label="Guided exploration">
     <div class="ml-guide-intro"><span class="eyebrow">A three-minute field trip</span><p>Try the graph. Leave a small edit. Bring it back.</p></div>
     <div class="ml-guide-steps">
-      <button type="button" data-guide="find" aria-pressed="true"><span>01</span> Find a connection <i aria-hidden="true">↗</i></button>
-      <button type="button" data-guide="inspect" aria-pressed="false"><span>02</span> Inspect what it means <i aria-hidden="true">↗</i></button>
-      <button type="button" data-guide="edit" aria-pressed="false"><span>03</span> Set this connection aside <i aria-hidden="true">↙</i></button>
+      <button type="button" data-guide="find" aria-pressed="true"><span>01</span> Find a connection <i aria-hidden="true"><Icon name="arrow-up-right" /></i></button>
+      <button type="button" data-guide="inspect" aria-pressed="false"><span>02</span> Inspect what it means <i aria-hidden="true"><Icon name="arrow-up-right" /></i></button>
+      <button type="button" data-guide="edit" aria-pressed="false"><span>03</span> Set this connection aside <i aria-hidden="true"><Icon name="arrow-down-left" /></i></button>
     </div>
     <p class="ml-guide-note" data-guide-note>Start with panelforge. The lines show extracted build relationships. Choose a connected label or a connection in the list to inspect it.</p>
   </div>
@@ -28,26 +29,26 @@ import { entities, relationships, typeLabel, formatRelation } from '../labs/memo
 
     <div class="ml-map-panel">
       <label class="ml-quick-entity">Choose an entity<select data-focus-select aria-label="Choose an entity">{entities.map(entity => <option value={entity.label} selected={entity.label === 'panelforge'}>{entity.label} · {typeLabel(entity)}</option>)}</select></label>
-      <div class="ml-map-heading"><div><p class="eyebrow">02 / Follow its neighborhood</p><h2 data-focus-title>panelforge</h2><p data-focus-meta>Project · extracted historical relationships</p></div><span class="ml-map-mark" aria-hidden="true">↗</span></div>
+      <div class="ml-map-heading"><div><p class="eyebrow">02 / Follow its neighborhood</p><h2 data-focus-title>panelforge</h2><p data-focus-meta>Project · extracted historical relationships</p></div><span class="ml-map-mark" aria-hidden="true"><Icon name="arrow-up-right" /></span></div>
       <div class="ml-graph" data-graph aria-label="Focused relationships" role="group"></div>
       <div class="ml-selected-summary" data-selection-summary>
-        <span class="eyebrow">Selected connection</span><p data-selection-tuple>panelforge → built_with → inertia-js</p>
-        <div class="ml-selection-actions"><button type="button" data-map-inspect>Inspect its source <span aria-hidden="true">↗</span></button><button type="button" data-map-edit>Set aside <span aria-hidden="true">↙</span></button></div>
-        <div class="ml-inline-receipt" data-inline-receipt hidden><p data-inline-receipt-text role="status"></p><button type="button" data-inline-undo>Undo this edit <span aria-hidden="true">↶</span></button></div>
+        <span class="eyebrow">Selected connection</span><p data-selection-tuple>panelforge <Icon name="arrow-right" /> built_with <Icon name="arrow-right" /> inertia-js</p>
+        <div class="ml-selection-actions"><button type="button" data-map-inspect>Inspect its source <span aria-hidden="true"><Icon name="arrow-up-right" /></span></button><button type="button" data-map-edit>Set aside <span aria-hidden="true"><Icon name="arrow-down-left" /></span></button></div>
+        <div class="ml-inline-receipt" data-inline-receipt hidden><p data-inline-receipt-text role="status"></p><button type="button" data-inline-undo>Undo this edit <span aria-hidden="true"><Icon name="undo" /></span></button></div>
       </div>
-      <div class="ml-map-pagination"><p data-neighborhood-count aria-live="polite"></p><div><button type="button" data-neighborhood-prev aria-label="Previous connections">←</button><button type="button" data-neighborhood-next aria-label="Next connections">→</button></div></div>
+      <div class="ml-map-pagination"><p data-neighborhood-count aria-live="polite"></p><div><button type="button" data-neighborhood-prev aria-label="Previous connections"><Icon name="arrow-left" /></button><button type="button" data-neighborhood-next aria-label="Next connections"><Icon name="arrow-right" /></button></div></div>
       <p class="ml-map-hint">Arrowheads follow the stored direction. Select a connection to read it; choose an entity in the index to move the focus.</p>
       <details class="ml-connection-details" open><summary>Connections as a list <span data-relation-count></span></summary><div class="ml-connection-list" data-connection-list></div><p class="ml-empty" data-connection-empty hidden>No visible connections remain for this entity. Undo an edit, reset the sample, or choose another label.</p></details>
     </div>
 
     <aside class="ml-inspector" aria-labelledby="ml-inspector-title">
-      <p class="eyebrow">03 / Read before you edit</p><h2 id="ml-inspector-title" tabindex="-1">A connection,<br /><em>in plain sight.</em></h2><button class="ml-return-map" type="button" data-return-map>← Back to the connection</button>
-      <div class="ml-triple" data-triple><span class="ml-role">Subject</span><strong data-subject>panelforge</strong><span class="ml-predicate">↓ <code data-predicate>built_with</code></span><span class="ml-role">Object</span><strong data-object>inertia-js</strong></div>
+      <p class="eyebrow">03 / Read before you edit</p><h2 id="ml-inspector-title" tabindex="-1">A connection,<br /><em>in plain sight.</em></h2><button class="ml-return-map" type="button" data-return-map><Icon name="arrow-left" /> Back to the connection</button>
+      <div class="ml-triple" data-triple><span class="ml-role">Subject</span><strong data-subject>panelforge</strong><span class="ml-predicate"><Icon name="arrow-down" /> <code data-predicate>built_with</code></span><span class="ml-role">Object</span><strong data-object>inertia-js</strong></div>
       <p class="ml-meaning" data-meaning></p>
       <div class="ml-source" data-source hidden><span class="eyebrow">A checked source excerpt</span><blockquote data-source-quote></blockquote><p data-source-description></p><p class="ml-source-boundary">The excerpt supports reading the extracted relationship in its conversation context. It does not date every release or establish today's architecture.</p></div>
       <p class="ml-no-source" data-no-source>This tuple was exported from the real graph. An original source excerpt is not published for this connection.</p>
       <p class="ml-alias-note" data-alias-note></p>
-      <div class="ml-edit-zone"><p>Practice curation by setting this connection aside. You can restore its exact before-state.</p><button type="button" class="ml-edit-button" data-set-aside>Set aside in this demo <span aria-hidden="true">↙</span></button><p class="ml-edit-status" data-edit-status></p><button type="button" class="ml-inspector-undo" data-inspector-undo hidden>Undo the last edit ↶</button></div>
+      <div class="ml-edit-zone"><p>Practice curation by setting this connection aside. You can restore its exact before-state.</p><button type="button" class="ml-edit-button" data-set-aside>Set aside in this demo <span aria-hidden="true"><Icon name="arrow-down-left" /></span></button><p class="ml-edit-status" data-edit-status></p><button type="button" class="ml-inspector-undo" data-inspector-undo hidden>Undo the last edit <Icon name="undo" /></button></div>
     </aside>
   </div>
 

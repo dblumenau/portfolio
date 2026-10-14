@@ -122,6 +122,6 @@ test('inventory loads on demand and filtered downloads retain only safe metadata
   await expect(page.locator('[data-inventory-status]')).toContainText('60 matching tags');
   const downloadPromise=page.waitForEvent('download');await page.getByRole('button',{name:'Download filtered JSON'}).click();const download=await downloadPromise;
   const data=JSON.parse(readFileSync((await download.path())!,'utf8'));
-  expect(data.tags).toHaveLength(60);expect(data.asOf).toBe('2026-10-14');expect(data.tags.every((tag:{project:string})=>tag.project==='metaclaude')).toBe(true);
+  expect(data.tags).toHaveLength(60);expect(data.asOf).toBe(summary.asOf);expect(data.tags.every((tag:{project:string})=>tag.project==='metaclaude')).toBe(true);
   expect(Object.keys(data.tags[0]).sort()).toEqual(['commit','date','kind','project','tag','timestamp']);
 });

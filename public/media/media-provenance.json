@@ -284,6 +284,79 @@
       "height": 650
     },
     {
+      "file": "gateway/browser-replay.mp4",
+      "product": "PanelForge MCP gateway",
+      "captured": "2026-10-14",
+      "method": "Playwright Chromium browser recording of an interactive replay",
+      "content": "Two fictional music tasks replay the actual complete archived gateway: resource catalog filter, off-list denial, user-policy denial and authenticated identity overwrite. Fictional local auth/API/backend/usage endpoints. No production/provider action.",
+      "redactions": [],
+      "bytes": 305148,
+      "sha256": "0abdfd09b050cab4734c94c23d6c6da5344a6a832f626f9383115a6f90be4a42",
+      "codec_name": "h264",
+      "width": 1280,
+      "height": 960,
+      "duration_seconds": 9.04,
+      "editing": "Actual browser replay recording; initial 0.7 seconds trimmed. Controlled dwell times are editorial. Separate source execution durations are in the receipt."
+    },
+    {
+      "file": "gateway/browser-replay.png",
+      "product": "PanelForge MCP gateway",
+      "captured": "2026-10-14",
+      "method": "Frame extracted from the recorded replay",
+      "content": "Two fictional music tasks replay the actual complete archived gateway: resource catalog filter, off-list denial, user-policy denial and authenticated identity overwrite. Fictional local auth/API/backend/usage endpoints. No production/provider action.",
+      "redactions": [],
+      "bytes": 465119,
+      "sha256": "c74c8c5470afc9648f2267fbe37650002faf8ae814e3ba828ee6ea94e59c6b8b",
+      "codec_name": "png",
+      "width": 1280,
+      "height": 960
+    },
+    {
+      "file": "gateway/browser-replay.vtt",
+      "product": "PanelForge MCP gateway",
+      "captured": "2026-10-14",
+      "method": "Playwright Chromium browser recording of an interactive replay",
+      "content": "Two fictional music tasks replay the actual complete archived gateway: resource catalog filter, off-list denial, user-policy denial and authenticated identity overwrite. Fictional local auth/API/backend/usage endpoints. No production/provider action.",
+      "redactions": [],
+      "bytes": 387,
+      "sha256": "31ba3c5ae8405e9f12ef67e34973451c04954ac5e9654eff99b286958fcd3ffb"
+    },
+    {
+      "file": "gateway/gateway-boundary.png",
+      "product": "PanelForge MCP gateway",
+      "captured": "2026-10-14",
+      "method": "Playwright Chromium element screenshot of the replay exhibit",
+      "content": "Two fictional music tasks replay the actual complete archived gateway: resource catalog filter, off-list denial, user-policy denial and authenticated identity overwrite. Fictional local auth/API/backend/usage endpoints. No production/provider action.",
+      "redactions": [],
+      "bytes": 128795,
+      "sha256": "b0d60fe5d211739ad607e377d572f1e8e6dc9aa020b3f89d6fb49fda62b6910e",
+      "codec_name": "png",
+      "width": 1168,
+      "height": 1277
+    },
+    {
+      "file": "gateway/receipt.json",
+      "product": "PanelForge MCP gateway",
+      "captured": "2026-10-14",
+      "method": "Actual isolated local gateway execution",
+      "content": "Two fictional music tasks replay the actual complete archived gateway: resource catalog filter, off-list denial, user-policy denial and authenticated identity overwrite. Fictional local auth/API/backend/usage endpoints. No production/provider action.",
+      "redactions": [
+        "Ephemeral fixture origins replaced with reserved invalid domains; native catalogs summarized to observed names and raw-response hashes."
+      ],
+      "bytes": 71170,
+      "sha256": "9f95e3b402a8772dbebb44bf8cb6aa9752b51b8e3d7199bc23d5e319fbdb14c1"
+    },
+    {
+      "file": "gateway/transcript.txt",
+      "product": "PanelForge MCP gateway",
+      "captured": "2026-10-14",
+      "method": "Actual isolated local gateway execution",
+      "content": "Two fictional music tasks replay the actual complete archived gateway: resource catalog filter, off-list denial, user-policy denial and authenticated identity overwrite. Fictional local auth/API/backend/usage endpoints. No production/provider action.",
+      "redactions": [],
+      "bytes": 10744,
+      "sha256": "56fad44f630eed48870375219eebdb0dec8c26b4e965645dc39731a2404c6dc6"
+    },
+    {
       "file": "kitforge-desktop.webp",
       "product": "Kitforge",
       "captured": "2026-10-14",
@@ -534,6 +607,210 @@
       "codec_name": "png",
       "width": 1200,
       "height": 630
+    },
+    {
+      "file": "recovery/disconnected.png",
+      "product": "Claude Engine / controlled client-disconnect experiment",
+      "captured": "2026-10-14",
+      "method": "Real archived engine routes, subscription SDK turn and ephemeral Redis; actual browser transport close and later stored-result retrieval.",
+      "content": "Fictional Lantern Makers Club task. Same engine process continues after client disconnect. No tools or delivered callbacks. Recording and receipt describe the actual isolated run.",
+      "redactions": [
+        "Isolated stream/session identifiers replaced with generic labels; credentials excluded."
+      ],
+      "bytes": 120921,
+      "sha256": "6876b48ac4bafb2aa819422397c02609733d7a0575347c096efa6efa5bdb6e24",
+      "codec_name": "png",
+      "width": 1440,
+      "height": 1000
+    },
+    {
+      "file": "recovery/execution-receipt.json",
+      "product": "Claude Engine / controlled client-disconnect experiment",
+      "captured": "2026-10-14",
+      "method": "Real archived engine routes, subscription SDK turn and ephemeral Redis; actual browser transport close and later stored-result retrieval.",
+      "content": "Fictional Lantern Makers Club task. Same engine process continues after client disconnect. No tools or delivered callbacks. Recording and receipt describe the actual isolated run.",
+      "redactions": [
+        "Isolated stream/session identifiers replaced with generic labels; credentials excluded."
+      ],
+      "bytes": 44907,
+      "sha256": "f7ce766e5130409cd9ce6a90bd46ac7f24abe76a7d0bc2a401acc65b2e4889b8"
+    },
+    {
+      "file": "recovery/execution.mp4",
+      "product": "Claude Engine / controlled client-disconnect experiment",
+      "captured": "2026-10-14",
+      "method": "Real archived engine routes, subscription SDK turn and ephemeral Redis; actual browser transport close and later stored-result retrieval.",
+      "content": "Fictional Lantern Makers Club task. Same engine process continues after client disconnect. No tools or delivered callbacks. Recording and receipt describe the actual isolated run.",
+      "redactions": [
+        "Isolated stream/session identifiers replaced with generic labels; credentials excluded."
+      ],
+      "bytes": 313262,
+      "sha256": "353fa7dc922fbfabe96913b63d0d2c0bb308fa2ad0cbba78cdeeb1e6469ca737",
+      "codec_name": "h264",
+      "width": 1440,
+      "height": 1000,
+      "duration_seconds": 18.16,
+      "editing": "Continuous real browser capture re-encoded as H.264. No cut, speed change or inserted result. Descriptive captions supplied."
+    },
+    {
+      "file": "recovery/execution.vtt",
+      "product": "Claude Engine / controlled client-disconnect experiment",
+      "captured": "2026-10-14",
+      "method": "Real archived engine routes, subscription SDK turn and ephemeral Redis; actual browser transport close and later stored-result retrieval.",
+      "content": "Fictional Lantern Makers Club task. Same engine process continues after client disconnect. No tools or delivered callbacks. Recording and receipt describe the actual isolated run.",
+      "redactions": [
+        "Isolated stream/session identifiers replaced with generic labels; credentials excluded."
+      ],
+      "bytes": 617,
+      "sha256": "e650b111ebf9e94e16d4bcef30351d850e699daf2985e000db90527074e0dacd"
+    },
+    {
+      "file": "recovery/manifest.json",
+      "product": "Claude Engine / controlled client-disconnect experiment",
+      "captured": "2026-10-14",
+      "method": "Real archived engine routes, subscription SDK turn and ephemeral Redis; actual browser transport close and later stored-result retrieval.",
+      "content": "Fictional Lantern Makers Club task. Same engine process continues after client disconnect. No tools or delivered callbacks. Recording and receipt describe the actual isolated run.",
+      "redactions": [
+        "Isolated stream/session identifiers replaced with generic labels; credentials excluded."
+      ],
+      "bytes": 1616,
+      "sha256": "5ee753ff09b985aa9d3fddcff507b191223328ac13fc9ce9ede723c9c6b57f28"
+    },
+    {
+      "file": "recovery/recovered.png",
+      "product": "Claude Engine / controlled client-disconnect experiment",
+      "captured": "2026-10-14",
+      "method": "Real archived engine routes, subscription SDK turn and ephemeral Redis; actual browser transport close and later stored-result retrieval.",
+      "content": "Fictional Lantern Makers Club task. Same engine process continues after client disconnect. No tools or delivered callbacks. Recording and receipt describe the actual isolated run.",
+      "redactions": [
+        "Isolated stream/session identifiers replaced with generic labels; credentials excluded."
+      ],
+      "bytes": 158814,
+      "sha256": "553e87555bae4a8982c45f77779279df9f452d36b5a99a8db1d87b2ef7b2187c",
+      "codec_name": "png",
+      "width": 1440,
+      "height": 1000
+    },
+    {
+      "file": "studio/sample-loop.mp4",
+      "product": "Studio Lab / adapted Kitforge renderer",
+      "captured": "2026-10-14",
+      "method": "Actual browser export using the shared preview/export composition function. Fictional Sunday Studio text.",
+      "content": "A real locally rendered graphic or animated export from the working Studio Lab. PNG reflects an edited headline; the MP4 reflects the sample composition.",
+      "redactions": [],
+      "bytes": 2644198,
+      "sha256": "1434359b28763a051dae2dedb983dca7a626f7457afa0613f369c7732fdddfb9",
+      "codec_name": "h264",
+      "width": 1080,
+      "height": 1080,
+      "duration_seconds": 4.0,
+      "editing": "Original downloaded MP4 bytes, unchanged. Native H.264 export at1080square,30fps,120frames."
+    },
+    {
+      "file": "studio/sample-loop.vtt",
+      "product": "Studio Lab / adapted Kitforge renderer",
+      "captured": "2026-10-14",
+      "method": "Actual browser export using the shared preview/export composition function. Fictional Sunday Studio text.",
+      "content": "A real locally rendered graphic or animated export from the working Studio Lab. PNG reflects an edited headline; the MP4 reflects the sample composition.",
+      "redactions": [],
+      "bytes": 152,
+      "sha256": "0425c9f337ba12038d0e71cac2669bac5256c9258280b552bb10c06734206653",
+      "editing": "Descriptive captions for the silent exported graphic."
+    },
+    {
+      "file": "studio/sample-loop.webp",
+      "product": "Studio Lab / adapted Kitforge renderer",
+      "captured": "2026-10-14",
+      "method": "Actual browser export using the shared preview/export composition function. Fictional Sunday Studio text.",
+      "content": "A real locally rendered graphic or animated export from the working Studio Lab. PNG reflects an edited headline; the MP4 reflects the sample composition.",
+      "redactions": [],
+      "bytes": 65822,
+      "sha256": "26fbf8f0bc85e92b6b273619c9f2833d8b439659401d705723fc440016fc66f8",
+      "codec_name": "webp",
+      "width": 1080,
+      "height": 1080,
+      "editing": "First decoded frame of the actual MP4 export, saved as WebP for its poster."
+    },
+    {
+      "file": "studio/sample-print.png",
+      "product": "Studio Lab / adapted Kitforge renderer",
+      "captured": "2026-10-14",
+      "method": "Actual browser export using the shared preview/export composition function. Fictional Sunday Studio text.",
+      "content": "A real locally rendered graphic or animated export from the working Studio Lab. PNG reflects an edited headline; the MP4 reflects the sample composition.",
+      "redactions": [],
+      "bytes": 801855,
+      "sha256": "fd603ddc3e93133215f019a905a1996a31664c6b285db65504c1749c5b77f14a",
+      "codec_name": "png",
+      "width": 1080,
+      "height": 1080,
+      "editing": "Original downloaded PNG bytes, unchanged. Its RGB pixels were verified equal to the paused preview."
+    },
+    {
+      "file": "workbench/receipt.json",
+      "product": "metacodex configuration manager / controlled fixture",
+      "captured": "2026-10-14",
+      "method": "Unmodified committed manager executed in two disposable fictional homes; dedicated Playwright Chromium recorded a local terminal-output viewer.",
+      "content": "Public execution receipt with exact revision, manager and fixture hashes, observed command outcomes and durations, protected-file hashes, asserted configuration results and disclosed fixture substitutions. Fake credential/session contents are excluded.",
+      "redactions": [
+        "Fixture directory prefix replaced with literal $FIXTURE; only hashes of fake protected-file contents are published."
+      ],
+      "bytes": 7811,
+      "sha256": "601cc1e888f7761d2586dee0e1ef9aa5a632c6f6626d117e5ac7d87c54c9905e"
+    },
+    {
+      "file": "workbench/terminal-replay.mp4",
+      "product": "metacodex configuration manager / controlled fixture",
+      "captured": "2026-10-14",
+      "method": "Unmodified committed manager executed in two disposable fictional homes; dedicated Playwright Chromium recorded a local terminal-output viewer.",
+      "content": "Eight captured CLI invocations and asserted configuration/link/hash results. Actual output is replayed; no agent, authentication or remote synchronization is executed.",
+      "redactions": [
+        "Fixture directory prefix replaced with literal $FIXTURE; only hashes of fake protected-file contents are published."
+      ],
+      "bytes": 433681,
+      "sha256": "d63c45c1f7e4ba2337998b02dce3010c6cf99c6d7a2e0bc7041a01a3f4691bbd",
+      "codec_name": "h264",
+      "width": 1280,
+      "height": 720,
+      "duration_seconds": 40.666667,
+      "editing": "Terminal viewer replay with editorial holds, encoded as silent H.264 MP4; descriptive WebVTT supplied. This is not a live terminal-session recording."
+    },
+    {
+      "file": "workbench/terminal-replay.vtt",
+      "product": "metacodex configuration manager / controlled fixture",
+      "captured": "2026-10-14",
+      "method": "Unmodified committed manager executed in two disposable fictional homes; dedicated Playwright Chromium recorded a local terminal-output viewer.",
+      "content": "Eight captured CLI invocations and asserted configuration/link/hash results. Actual output is replayed; no agent, authentication or remote synchronization is executed.",
+      "redactions": [
+        "Fixture directory prefix replaced with literal $FIXTURE; only hashes of fake protected-file contents are published."
+      ],
+      "bytes": 1194,
+      "sha256": "4fbcf443af92b3b680269f638b741c84a9958bfe47a9f1ebcbc14f1e2ef4cfdc"
+    },
+    {
+      "file": "workbench/terminal-replay.webp",
+      "product": "metacodex configuration manager / controlled fixture",
+      "captured": "2026-10-14",
+      "method": "Unmodified committed manager executed in two disposable fictional homes; dedicated Playwright Chromium recorded a local terminal-output viewer.",
+      "content": "Actual rendered browser terminal viewer at the captured drift-refusal step; displayed text comes from the saved execution receipt.",
+      "redactions": [
+        "Fixture directory prefix replaced with literal $FIXTURE; only hashes of fake protected-file contents are published."
+      ],
+      "bytes": 39618,
+      "sha256": "49295b4984f85f64e7eb2720f8be19c1b7049dcec11ab42c74b2fbee4bc1a7ea",
+      "width": 1280,
+      "height": 720
+    },
+    {
+      "file": "workbench/transcript.txt",
+      "product": "metacodex configuration manager / controlled fixture",
+      "captured": "2026-10-14",
+      "method": "Unmodified committed manager executed in two disposable fictional homes; dedicated Playwright Chromium recorded a local terminal-output viewer.",
+      "content": "Complete actual CLI stdout/stderr and exit codes with measured execution durations. Paths replaced with $FIXTURE. Final lines summarize post-command assertions.",
+      "redactions": [
+        "Fixture directory prefix replaced with literal $FIXTURE; only hashes of fake protected-file contents are published."
+      ],
+      "bytes": 1869,
+      "sha256": "e0bc707f250f38ea1c6482811299e231e1994f0e5785a7114f55e83ee50d7b69"
     }
   ]
 }

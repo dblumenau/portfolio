@@ -1,10 +1,13 @@
 import { spawnSync } from 'node:child_process';
-import { mkdir, writeFile, readdir } from 'node:fs/promises';
+import { mkdir, writeFile, readdir, mkdtemp, cp, rm } from 'node:fs/promises';
 import { resolve, dirname, relative } from 'node:path';
+import { tmpdir } from 'node:os';
 
 const name = `portfolio-smoke-${process.pid}`;
 const image = `portfolio:${name}`;
-const report = { date: new Date().toISOString(), passed: false, checks: [], image: null, baseImage: null };
+const buildRoot = resolve(process.env.PORTFOLIO_DIST_ROOT ?? 'dist');
+const stage = await mkdtemp(resolve(tmpdir(), `${name}-`));
+const report = { date: new Date().toISOString(), buildRoot, passed: false, checks: [], image: null, baseImage: null };
 function docker(args, options = {}) {
   const result = spawnSync('docker', args, { encoding: 'utf8', ...options });
   if (result.status !== 0) throw new Error(`docker ${args[0]} failed: ${result.stderr || result.stdout}`);
@@ -14,17 +17,19 @@ function assert(condition, label) {
   if (!condition) throw new Error(label);
   report.checks.push(label);
 }
-async function builtRoutes(directory = resolve('dist')) {
+async function builtRoutes(directory = resolve(stage, 'dist')) {
   const routes = [];
   for (const entry of await readdir(directory, { withFileTypes: true })) {
     const path = resolve(directory, entry.name);
     if (entry.isDirectory()) routes.push(...await builtRoutes(path));
-    else if (entry.name === 'index.html') routes.push('/' + relative(resolve('dist'), path).replace(/index\.html$/, '').replace(/\\/g, '/'));
+    else if (entry.name === 'index.html') routes.push('/' + relative(resolve(stage, 'dist'), path).replace(/index\.html$/, '').replace(/\\/g, '/'));
   }
   return routes.sort();
 }
 try {
-  docker(['build', '-t', image, '.']);
+  await cp(buildRoot, resolve(stage, 'dist'), { recursive: true });
+  for (const file of ['Dockerfile', 'docker', '.dockerignore']) await cp(resolve(file), resolve(stage, file), { recursive: true });
+  docker(['build', '-t', image, stage]);
   report.image = docker(['image', 'inspect', '--format', '{{.Id}}', image]);
   report.baseImage = docker(['image', 'inspect', '--format', '{{json .RepoDigests}}', 'nginx:stable-alpine']);
   docker(['compose', '-p', name, '-f', 'docker-compose.prod.yml', 'config', '--quiet'], { env: { ...process.env, PORTFOLIO_IMAGE: image } });
@@ -56,6 +61,13 @@ try {
   assert(video.status === 206 && (await video.arrayBuffer()).byteLength === 1024 && video.headers.get('content-range')?.startsWith('bytes 0-1023/'), 'Video supports byte ranges for playback and seeking');
   const captions = await fetch(base + '/media/pencil-page-workflow.vtt');
   assert(captions.status === 200 && captions.headers.get('content-type')?.includes('text/vtt') && (await captions.text()).startsWith('WEBVTT'), 'Caption files serve as WebVTT');
+  for (const [file, mime] of [['workbench/receipt.json', 'application/json'], ['workbench/transcript.txt', 'text/plain'], ['recovery/execution-receipt.json', 'application/json']]) {
+    const available = await fetch(base + '/media/' + file);
+    assert(available.status === 200 && available.headers.get('content-type')?.includes(mime), `Reviewed execution evidence serves with its MIME type: ${file}`);
+    const text = await available.text();
+    assert(text.length > 100 && !/\/home\/|BEGIN .*PRIVATE KEY|\bsk-(?:proj-|ant-api\d+-)?[A-Za-z0-9_-]{20,}/.test(text), `Execution evidence remains readable and redacted: ${file}`);
+    if (file.endsWith('.json')) assert(JSON.parse(text) !== null, `Execution receipt is valid JSON: ${file}`);
+  }
   for (const [file, mime] of [['conference-notes-demo.pdf', 'application/pdf'], ['conference-notes-demo.pptx', 'application/vnd.openxmlformats-officedocument.presentationml.presentation']]) {
     const response = await fetch(base + '/sample-files/' + file, { method: 'HEAD' });
     assert(response.status === 200 && response.headers.get('content-type') === mime && Number(response.headers.get('content-length')) > 1000, `Reviewed artifact serves with its download MIME type: ${file}`);
@@ -71,6 +83,7 @@ try {
 } finally {
   spawnSync('docker', ['rm', '-f', name], { stdio: 'ignore' });
   spawnSync('docker', ['image', 'rm', image], { stdio: 'ignore' });
+  await rm(stage, { recursive: true, force: true });
   if (process.env.PORTFOLIO_DEPLOYMENT_REPORT) {
     const output = resolve(process.env.PORTFOLIO_DEPLOYMENT_REPORT);
     await mkdir(dirname(output), { recursive: true });

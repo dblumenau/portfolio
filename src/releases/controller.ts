@@ -1,3 +1,4 @@
+import { setIconLabel } from '../ui/icons';
 import stories from './milestones.json';
 import summary from './summary.json';
 import { matches, periods, position, formatDate, pageSize, type Milestone, type TagRecord, type ReleaseFilters } from './model';
@@ -152,7 +153,7 @@ export function mountReleaseExplorer(): void {
     }
   };
   window.addEventListener('hashchange',applyHash);
-  reading.addEventListener('toggle',()=>{if(reading.open)root!.querySelector<HTMLElement>('.release-reading summary span:last-child')!.textContent=`${matchingStories.length} matching changes ↑`;});
+  reading.addEventListener('toggle',()=>{if(reading.open)setIconLabel(root!.querySelector<HTMLElement>('.release-reading summary span:last-child')!, `${matchingStories.length} matching changes`, 'arrow-up');});
   let observedWidth=0;
   const resize=new ResizeObserver(entries=>{
     const width=entries[0]?.contentRect.width??0;

@@ -1,0 +1,67 @@
+---
+import Icon from '../../components/Icon.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+const labs = [
+  { id: 'studio', number: '01', label: 'A working creative tool', title: 'Make something. Take it with you.', description: 'Set some words in moving ink, choose a composition and download your own print or four-second loop.', steps: ['Set the words', 'Find a frame', 'Export'], action: 'Open the Studio Lab', detail: 'A focused adaptation of Kitforge’s real renderer. Local browser exports.' },
+  { id: 'memory', number: '02', label: 'A reviewed graph sample', title: 'Change a connection. Keep a way back.', description: 'Choose a project, follow a relationship to its source, then practice a correction you can undo.', steps: ['Inspect', 'Set aside', 'Restore'], action: 'Open the Memory Lab', detail: 'Original project knowledge. Your edits stay in this illustration.' },
+  { id: 'workbench', number: '03', label: 'An actual manager run', title: 'Move the setup. Keep the local choices.', description: 'Two fictional machines share a useful setup. See what happens when a manual change conflicts with it, and when that change is deliberately adopted.', steps: ['Choose', 'Find the conflict', 'Adopt'], action: 'Open the Workbench Lab', detail: 'A guided replay of the real configuration manager in disposable homes.' },
+  { id: 'recovery', number: '04', label: 'An actual engine run', title: 'Close the screen. Find the finished answer.', description: 'Follow a controlled turn from a broken browser connection to a stored result. The client and engine have different parts of the story.', steps: ['Disconnect', 'Keep working', 'Recover'], action: 'Open the Recovery Lab', detail: 'Recorded client-disconnect recovery. The engine process keeps running.' },
+  { id: 'gateway', number: '05', label: 'An actual gateway run', title: 'Try a tool. See what gets through.', description: 'Two fictional music tasks receive different tool catalogs. Inspect an allowed request, a denied action and a caller identity that cannot be changed by the request.', steps: ['Choose a task', 'Try an action', 'Inspect the response'], action: 'Open the Gateway Lab', detail: 'The real gateway with local fictional services. Controls replay recorded results.' },
+];
+---
+<BaseLayout title="Small experiments | David Blumenau" description="Make a graphic, try a knowledge-graph correction, or inspect real workbench, recovery and gateway experiments.">
+  <main id="main" class="wrap lab-index">
+    <header id="top"><a class="lab-index-back" href="/"><Icon name="arrow-left" /> Back to the portfolio</a><p class="eyebrow">Small experiments / useful consequences</p><h1>See what happens<br /><em>when you try it.</em></h1><p class="lab-index-intro">Make a graphic, explore a reviewed piece of the knowledge graph, or replay an experiment with the actual tools. Each starts with a small problem and leaves you with a result you can inspect.</p><nav class="lab-quick-launch" aria-label="Choose an experiment"><a href="/labs/studio/">Make a graphic <Icon name="arrow-up-right" /></a><a href="/labs/memory/">Inspect a memory <Icon name="arrow-up-right" /></a><a href="/labs/workbench/">Follow an update <Icon name="arrow-up-right" /></a><a href="/labs/recovery/">Watch recovery <Icon name="arrow-up-right" /></a><a href="/labs/gateway/">Check permissions <Icon name="arrow-up-right" /></a></nav></header>
+    <div class="lab-collection">{labs.map(lab => <article class={`lab-card lab-card-${lab.id}`}><div class="lab-card-top"><span>{lab.number}</span><p class="eyebrow">{lab.label}</p></div><div class="lab-card-illustration" aria-hidden="true">
+      {lab.id === 'studio' && <img src="/media/studio/sample-print.png" width="1080" height="1080" alt="" loading="lazy" />}
+      {lab.id === 'gateway' && <svg viewBox="0 0 320 180"><g fill="none" stroke="#879c7d" stroke-width="2"><path d="M48 90H140m40 0 66-40m-66 40 66 40"/></g><circle cx="48" cy="90" r="21" fill="#d9ee8b" stroke="#879c7d"/><rect x="132" y="62" width="56" height="56" rx="9" fill="#344d3d"/><path d="m160 73 14 5v10c0 11-14 19-14 19s-14-8-14-19V78Z" fill="none" stroke="#d9ee8b" stroke-width="2"/><circle cx="260" cy="45" r="20" fill="#e1e8d8" stroke="#879c7d"/><path d="m250 45 7 7 13-14" fill="none" stroke="#344d3d" stroke-width="2"/><circle cx="260" cy="135" r="20" fill="#eee0d4" stroke="#ad6a54"/><path d="m253 128 14 14m0-14-14 14" fill="none" stroke="#a2452d" stroke-width="2"/></svg>}
+      {lab.id === 'memory' && <svg viewBox="0 0 320 180"><g fill="none" stroke="#879c7d" stroke-width="1.5"><path d="M160 88L55 48M160 88L255 43M160 88L270 137M160 88L70 148"/><path d="M55 48Q36 140 70 148" stroke-dasharray="4 5"/></g><g fill="#ecefe2" stroke="#879c7d"><circle cx="55" cy="48" r="19"/><circle cx="255" cy="43" r="16"/><circle cx="270" cy="137" r="22"/><circle cx="70" cy="148" r="13"/></g><circle cx="160" cy="88" r="35" fill="#344d3d"/><text x="160" y="94" text-anchor="middle" fill="#d9ee8b" font-size="16" font-family="sans-serif">why?</text><path d="M148 145a21 21 0 1 0 35-17m-2 15 2-15 15 2" fill="none" stroke="#a2452d" stroke-width="2"/></svg>}
+      {lab.id === 'workbench' && <svg viewBox="0 0 320 180"><rect x="20" y="36" width="121" height="88" rx="4" fill="#344d3d"/><rect x="179" y="36" width="121" height="88" rx="4" fill="#344d3d"/><g fill="none" stroke="#a3b996" stroke-width="2"><path d="M30 55H131M189 55H290M80 125v14m160-14v14M51 141h59m101 0h59M142 80h36"/></g><g fill="#d9ee8b" font-size="14" font-family="monospace"><text x="37" y="83">shared</text><text x="197" y="83">shared</text></g><g fill="#e9dfbd" font-size="11" font-family="monospace"><text x="37" y="104">local: A</text><text x="197" y="104">local: B</text></g><circle cx="160" cy="80" r="8" fill="#a2452d"/></svg>}
+      {lab.id === 'recovery' && <svg viewBox="0 0 320 180"><g fill="none" stroke-width="2"><path d="M31 62h73m32 0h151" stroke="#879c7d" stroke-dasharray="5 6"/><path d="M31 125h256" stroke="#344d3d"/><path d="m106 52 23 20m0-20-23 20" stroke="#a2452d"/></g><g fill="#344d3d"><circle cx="31" cy="62" r="7"/><circle cx="31" cy="125" r="7"/><circle cx="151" cy="125" r="7"/><circle cx="287" cy="125" r="7"/></g><rect x="239" y="40" width="65" height="43" rx="3" fill="#d9ee8b" stroke="#879c7d"/><path d="m255 61 10 9 20-21" fill="none" stroke="#344d3d" stroke-width="3"/><g fill="#596159" font-family="sans-serif" font-size="10"><text x="24" y="36">CLIENT</text><text x="24" y="153">ENGINE</text></g></svg>}
+    </div><h2>{lab.title}</h2><p class="lab-card-description">{lab.description}</p><ol aria-label="Experiment steps">{lab.steps.map(step => <li>{step}</li>)}</ol><a href={`/labs/${lab.id}/`}>{lab.action}<span aria-hidden="true"><Icon name="arrow-up-right" /></span></a><p class="lab-card-evidence">{lab.detail}</p></article>)}</div>
+    <aside class="lab-index-further"><div><p class="eyebrow">Follow the idea further</p><h2>There is a story behind each experiment.</h2></div><div><a class="text-link" href="/features/">Browse the feature atlas <span aria-hidden="true"><Icon name="arrow-up-right" /></span></a><a class="text-link" href="/world/">Find your way through Forge World <span aria-hidden="true"><Icon name="arrow-up-right" /></span></a></div></aside>
+  </main>
+</BaseLayout>
+<style>
+  .lab-index{padding-block:30px 85px}
+  .lab-index-back{display:inline-block;font-size:.8rem;text-decoration:none;padding-block:10px;margin-bottom:35px}
+  header>.eyebrow{color:var(--rust);margin-bottom:22px}
+  h1{font-size:clamp(3.25rem,6vw,6.5rem);line-height:1.04}
+  h1 em{color:var(--forest)}
+  .lab-index-intro{max-width:700px;color:var(--muted);font-size:1.05rem;line-height:1.8;margin-top:27px}
+  .lab-quick-launch{display:flex;flex-wrap:wrap;gap:9px;margin-top:25px}
+  .lab-quick-launch a{display:inline-flex;gap:18px;align-items:center;justify-content:space-between;min-height:46px;padding:11px 15px;border:1px solid #aebba3;background:#e9eddf;text-decoration:none;font-size:.78rem;font-weight:600}
+  .lab-quick-launch a:first-child{background:var(--forest);border-color:var(--forest);color:var(--paper)}
+  .lab-quick-launch a:hover{background:var(--acid);color:var(--ink)}
+  @media(max-width:600px){.lab-quick-launch{display:grid;grid-template-columns:1fr 1fr;gap:8px}.lab-quick-launch a{font-size:.7rem;padding:10px;gap:9px}}
+  .lab-collection{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:50px 48px;margin-top:55px}
+  .lab-card{min-width:0;display:flex;flex-direction:column;align-items:stretch;border-top:1px solid var(--ink);padding-top:20px}
+  .lab-card-top{display:flex;gap:15px;align-items:center}
+  .lab-card-top>span{color:var(--rust);font-family:var(--serif);font-style:italic;font-size:1.5rem}
+  .lab-card-top .eyebrow{font-size:.58rem;color:var(--muted)}
+  .lab-card-illustration{height:190px;overflow:hidden;display:flex;align-items:center;justify-content:center;margin:17px 0 23px;background:#e6eadb;border:1px solid var(--line);border-radius:3px}
+  .lab-card-recovery .lab-card-illustration{background:#ede6d8}
+  .lab-card-workbench .lab-card-illustration{background:#e6e4d5}
+  .lab-card-illustration svg{display:block;width:100%;height:100%}
+  .lab-card-illustration img{width:100%;height:100%;object-fit:cover;object-position:center 35%}
+  .lab-card-gateway{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:0 48px}
+  .lab-card-gateway .lab-card-top{grid-column:1/-1}
+  .lab-card-gateway .lab-card-illustration{grid-column:1;grid-row:2/7;align-self:center;height:260px;margin-top:0}
+  .lab-card-gateway h2,.lab-card-gateway>.lab-card-description,.lab-card-gateway>ol,.lab-card-gateway>a,.lab-card-gateway>.lab-card-evidence{grid-column:2}
+  .lab-card-gateway h2{margin-top:17px}
+  .lab-card h2{font-size:clamp(1.8rem,2.4vw,2.6rem);max-width:390px;line-height:1.12}
+  .lab-card-description{font-size:.9rem;color:var(--muted);line-height:1.75;margin:18px 0 22px}
+  .lab-card ol{display:flex;gap:8px;flex-wrap:wrap;list-style:none;margin:auto 0 22px;padding:0}
+  .lab-card li{font-size:.62rem;background:#e6eadb;border:1px solid var(--line);padding:5px 8px;border-radius:2px}
+  .lab-card>a{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:15px 0;border-top:1px solid var(--ink);text-decoration:none;font-size:.88rem;font-weight:600}
+  .lab-card>a:hover{color:var(--rust)}
+  .lab-card>a>span{font-size:1.3rem}
+  .lab-card-evidence{font-size:.68rem;color:var(--muted);line-height:1.7;max-width:340px}
+  .lab-index-further{display:grid;grid-template-columns:1.2fr 1fr;gap:60px;border-top:1px solid var(--line);padding-top:35px;margin-top:75px;align-items:end}
+  .lab-index-further .eyebrow{color:var(--rust);margin-bottom:15px}
+  .lab-index-further h2{font-size:2rem;max-width:500px}
+  .lab-index-further>div:last-child{display:flex;flex-direction:column;align-items:start}
+  .lab-index-further .text-link{font-size:.8rem}
+  @media(max-width:900px){.lab-collection{gap:20px}.lab-card h2{font-size:1.8rem}}
+  @media(max-width:700px){.lab-card-gateway{grid-column:auto;display:flex}.lab-card-gateway .lab-card-illustration{height:190px;align-self:stretch;margin-top:17px}.lab-card-gateway h2{margin-top:0}.lab-collection{grid-template-columns:1fr;gap:45px;margin-top:40px}.lab-card-illustration{max-width:400px;width:100%}.lab-card h2{font-size:2.35rem}.lab-card ol{margin-top:0}.lab-index-further{grid-template-columns:1fr;gap:25px}.lab-index-intro{font-size:.95rem}.lab-card-top .eyebrow{font-size:.64rem}}
+</style>

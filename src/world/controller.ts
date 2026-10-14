@@ -1,3 +1,4 @@
+import { setIconLabel } from '../ui/icons';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { districts, journey, type DistrictId } from './data';
@@ -128,7 +129,7 @@ export function mountWorld(root: HTMLElement): () => void {
   }
   function revealSelection() {
     if (!window.matchMedia('(max-width: 800px)').matches) return;
-    const target = window.matchMedia('(max-width: 600px)').matches ? root.querySelector<HTMLElement>('.world-district-nav')! : stage;
+    const target = tourIndex >= 0 ? tourbar : window.matchMedia('(max-width: 600px)').matches ? root.querySelector<HTMLElement>('.world-district-nav')! : stage;
     const rect = target.getBoundingClientRect();
     window.scrollTo({ top: Math.max(0, window.scrollY + rect.top - 20), behavior: 'instant' });
   }
@@ -216,7 +217,7 @@ export function mountWorld(root: HTMLElement): () => void {
     tourTitle.textContent = step.title;
     tourDescription.textContent = step.description;
     prevButton.disabled = tourIndex === 0;
-    nextButton.textContent = tourIndex === journey.length - 1 ? 'Finish the route ↗' : 'Next district →';
+    setIconLabel(nextButton, tourIndex === journey.length - 1 ? 'Finish the route' : 'Next district', tourIndex === journey.length - 1 ? 'arrow-up-right' : 'arrow-right');
     root.querySelector<HTMLButtonElement>('[data-start-tour]')!.textContent = 'Restart the guided route';
     selectDistrict(step.id, { tour: true });
   }

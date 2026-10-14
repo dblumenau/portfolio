@@ -1,0 +1,13 @@
+WEBVTT
+
+00:00.000 --> 00:02.570
+Recorded local gateway results. The Scout can search as fictional user 101.
+
+00:02.570 --> 00:04.550
+Off-list queue tool denied. HTTP 200, protocol error, zero forwards.
+
+00:04.550 --> 00:06.400
+The Host adds a track to its own fictional queue as user 202.
+
+00:06.400 --> 00:09.040
+Volume is published, but user policy denies it. HTTP 403, zero forwards.

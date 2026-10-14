@@ -4,10 +4,20 @@ import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { chromium } from '@playwright/test';
 
-const root = resolve('dist');
+const root = resolve(process.env.PORTFOLIO_DIST_ROOT ?? 'dist');
 const errors = [];
 const external = new Set();
-const report = { date: new Date().toISOString(), routes: [], assets: [], sampleFiles: [], externalLinks: [], errors };
+const report = { date: new Date().toISOString(), buildRoot: root, routes: [], assets: [], sampleFiles: [], externalLinks: [], errors };
+const reviewedEvidenceMedia = [
+  'workbench/receipt.json', 'workbench/transcript.txt', 'workbench/terminal-replay.mp4',
+  'workbench/terminal-replay.vtt', 'workbench/terminal-replay.webp',
+  'recovery/execution.mp4', 'recovery/execution.vtt', 'recovery/disconnected.png',
+  'recovery/recovered.png', 'recovery/execution-receipt.json', 'recovery/manifest.json',
+  'gateway/browser-replay.mp4', 'gateway/browser-replay.png', 'gateway/browser-replay.vtt',
+  'gateway/gateway-boundary.png', 'gateway/receipt.json', 'gateway/transcript.txt',
+  'studio/sample-print.png', 'studio/sample-loop.mp4', 'studio/sample-loop.webp', 'studio/sample-loop.vtt',
+];
+const reviewedTextMedia = new Set(reviewedEvidenceMedia.filter(name => /\.(?:json|txt)$/.test(name)));
 const required = [
   'panelforge-gallery-desktop.webp', 'panelforge-gallery-mobile.webp',
   'panelforge-chat-desktop.webp', 'panelforge-chat-mobile.webp',
@@ -24,12 +34,28 @@ const required = [
   'conference-notes-mobile-agenda.webp', 'conference-notes-mobile.webp', 'conference-notes-offline.webp',
   'conference-notes-responses.webp', 'conference-notes-sources.webp', 'conference-notes-themes.webp',
   'conference-notes-workflow.mp4', 'conference-notes-workflow.vtt', 'conference-notes.webp',
+  ...reviewedEvidenceMedia,
 ];
 const allowed = new Set(required);
 const requiredSamples = ['conference-notes-demo.pptx', 'conference-notes-demo.pdf', 'sample-provenance.json'];
+const studioNotices = ['studio/paper-license.txt', 'studio/paper-notice.txt', 'studio/mp4-muxer-license.txt'];
 const provenanceEntries = new Map();
 const captionEnds = new Map();
 const videoDurations = new Map();
+
+function checkPublicText(value, path) {
+  if (/(?:\/(?:home|Users|root|mnt|Volumes)\/|[A-Za-z]:\\Users\\|r2:\/\/|127\.0\.0\.1|localhost)/i.test(value)) errors.push(`Private/development path in reviewed text media: ${path}`);
+  if (/(?:BEGIN (?:RSA |OPENSSH |EC )?PRIVATE KEY|\bsk-(?:proj-|ant-api\d+-)?[A-Za-z0-9_-]{20,}|\bgh[opusr]_[A-Za-z0-9]{20,}|\bAKIA[A-Z0-9]{16}\b)/.test(value)) errors.push(`Secret marker in reviewed text media: ${path}`);
+  if (/["']?(?:access_token|refresh_token|api[_-]?key)["']?\s*[:=]\s*["'][^"'\s]{8,}/i.test(value)) errors.push(`Credential value in reviewed text media: ${path}`);
+}
+function inspectJsonStrings(value, path, field) {
+  if (typeof value === 'string') {
+    // The approved gateway fixture records its local transport's loopback address.
+    if (path === 'media/gateway/receipt.json' && field === 'ip_address' && value === '127.0.0.1') return;
+    checkPublicText(value, path);
+  } else if (Array.isArray(value)) value.forEach(item => inspectJsonStrings(item, path, field));
+  else if (value && typeof value === 'object') for (const [key, item] of Object.entries(value)) { checkPublicText(key, path); inspectJsonStrings(item, path, key); }
+}
 
 async function files(directory) {
   const result = [];
@@ -63,6 +89,7 @@ for (const file of htmlFiles) {
   await page.setContent(html);
   const data = await page.evaluate(() => ({
     title: document.title,
+    authoredText: (() => { const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT); const parts = []; while (walker.nextNode()) { const node = walker.currentNode; if (!node.parentElement?.closest('script,style')) parts.push(node.textContent ?? ''); } return parts.join(' '); })(),
     ids: [...document.querySelectorAll('[id]')].map(item => item.id),
     routeHashes: document.querySelector('[data-forge-world]') ? [...document.querySelectorAll('[data-select-district]')].map(item => item.getAttribute('data-select-district')) : [],
     refs: [
@@ -74,7 +101,7 @@ for (const file of htmlFiles) {
     placeholders: document.querySelectorAll('.missing-media').length,
     embeds: document.querySelectorAll('iframe,script[src^="http"]').length,
     forms: [...document.querySelectorAll('form')].map(form => ({
-      approved: (form.matches('[data-feature-atlas] form.atlas-controls') && form.getAttribute('role') === 'search') || (form.matches('[data-release-explorer] form.release-filter-form') && form.getAttribute('aria-label') === 'Filter release history'),
+      approved: (form.matches('[data-feature-atlas] form.atlas-controls') && form.getAttribute('role') === 'search') || (form.matches('[data-release-explorer] form.release-filter-form') && form.getAttribute('aria-label') === 'Filter release history') || form.matches('[data-studio] form.studio-controls[data-controls]'),
       action: form.getAttribute('action'), method: form.getAttribute('method'), target: form.getAttribute('target'),
       mutationControls: form.querySelectorAll('input[type="file"],input[type="password"],button[formaction],input[formaction],button[formmethod],input[formmethod]').length,
     })),
@@ -82,6 +109,8 @@ for (const file of htmlFiles) {
     social: { image: document.querySelector('meta[property="og:image"]')?.getAttribute('content'), width: document.querySelector('meta[property="og:image:width"]')?.getAttribute('content'), height: document.querySelector('meta[property="og:image:height"]')?.getAttribute('content'), alt: document.querySelector('meta[property="og:image:alt"]')?.getAttribute('content'), card: document.querySelector('meta[name="twitter:card"]')?.getAttribute('content') },
   }));
   if (!data.title) errors.push(`Missing title: ${route}`);
+  const emojiCharacters = [...data.authoredText].filter(character => /[\p{Emoji_Presentation}\p{Extended_Pictographic}\uFE0F]/u.test(character) && !/[©®™]/u.test(character));
+  if (emojiCharacters.length) errors.push(`Emoji in authored page text: ${route} (${[...new Set(emojiCharacters.map(character => `U+${character.codePointAt(0).toString(16).toUpperCase()}`))].join(', ')})`);
   if (new Set(data.ids).size !== data.ids.length) errors.push(`Duplicate IDs: ${route}`);
   if (data.placeholders) errors.push(`Unfinished capture placeholder: ${route}`);
   if (data.embeds) errors.push(`Unexpected embedded page or remote script: ${route}`);
@@ -96,6 +125,14 @@ for (const file of htmlFiles) {
   await page.close();
 }
 await browser.close();
+if (pages.has('/labs/studio/')) for (const name of studioNotices) if (!all.includes(resolve(root, 'notices', name))) errors.push(`Missing distributed Studio license notice: ${name}`);
+for (const file of all.filter(path => path.startsWith(resolve(root, 'notices') + '/'))) {
+  const name = relative(resolve(root, 'notices'), file).replace(/\\/g, '/');
+  if (!studioNotices.includes(name)) errors.push(`Unreviewed public license notice: ${name}`);
+  if (name === 'studio/paper-notice.txt') {
+    if (!(await readFile(file)).equals(await readFile(resolve('src/labs/studio/vendor/paper/NOTICE')))) errors.push(`Distributed Paper notice differs from its vendored original: ${name}`);
+  } else if ((await readFile(file, 'utf8')).length < 100) errors.push(`Empty or truncated license notice: ${name}`);
+}
 if (!all.includes(resolve(root, 'sitemap.xml')) || !all.includes(resolve(root, 'robots.txt'))) errors.push('Missing sitemap or robots discovery endpoint.');
 else {
   const sitemap = await readFile(resolve(root, 'sitemap.xml'), 'utf8');
@@ -143,13 +180,24 @@ for (const file of all) {
       const data = JSON.parse(provenance);
       if (!data || !Array.isArray(data.assets) || data.assets.length === 0) errors.push('Public media provenance has no asset records.');
       else for (const entry of data.assets) {
-        if (typeof entry.file !== 'string' || !/^[a-z0-9-]+\.(?:webp|mp4|vtt|png)$/.test(entry.file) || provenanceEntries.has(entry.file)) { errors.push(`Invalid or duplicate provenance filename: ${entry.file}`); continue; }
+        if (typeof entry.file !== 'string' || (!/^[a-z0-9-]+\.(?:webp|mp4|vtt|png)$/.test(entry.file) && !reviewedEvidenceMedia.includes(entry.file)) || provenanceEntries.has(entry.file)) { errors.push(`Invalid or duplicate provenance filename: ${entry.file}`); continue; }
         if (!allowed.has(entry.file)) errors.push(`Unreviewed provenance asset: ${entry.file}`);
         if (!Number.isSafeInteger(entry.bytes) || entry.bytes < 1 || !/^[a-f0-9]{64}$/.test(entry.sha256 ?? '') || !/^\d{4}-\d{2}-\d{2}$/.test(entry.captured ?? '') || !entry.product || !entry.method || !entry.content || !Array.isArray(entry.redactions)) errors.push(`Incomplete provenance record: ${entry.file}`);
         provenanceEntries.set(entry.file, entry);
       }
     } catch { errors.push('Public media provenance is not valid JSON.'); }
     if (/(?:\/home\/|r2:\/\/|127\.0\.0\.1|localhost|BEGIN .*PRIVATE KEY|sk-[a-zA-Z0-9]{20,}|ghp_[a-zA-Z0-9]{20,})/.test(provenance)) errors.push('Public media provenance contains a private/development reference.');
+  }
+  if (reviewedTextMedia.has(name.slice(6))) {
+    const content = await readFile(file, 'utf8');
+    if (content.includes('\ufffd') || content.includes('\0')) errors.push(`Invalid UTF-8 text media: ${name}`);
+    if (extname(file) === '.json') {
+      try {
+        const data = JSON.parse(content);
+        if (!data || typeof data !== 'object') errors.push(`Receipt must contain a JSON object: ${name}`);
+        inspectJsonStrings(data, name);
+      } catch { errors.push(`Invalid execution receipt JSON: ${name}`); }
+    } else checkPublicText(content, name);
   }
   if (extname(file) === '.vtt') {
     const captions = await readFile(file, 'utf8');

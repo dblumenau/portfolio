@@ -1,4 +1,5 @@
 ---
+import Icon from './Icon.astro';
 import { imageDimensions } from '../data/media';
 import { existsSync } from 'node:fs';
 import { resolve } from 'node:path';
@@ -13,13 +14,13 @@ const mobileAvailable = mobile && available(mobile);
   <div class="screen-stage" data-stage>
     <figure data-screen="desktop" class="screen-figure">
       <div class="browser-frame"><div class="browser-bar" aria-hidden="true"><span></span><span></span><span></span><i> {label.toLowerCase()} / workspace </i></div>
-        {desktopAvailable ? <a class="image-zoom" href={desktop} data-zoom aria-label={`Enlarge screenshot: ${desktopAlt}`}><img src={desktop} alt={desktopAlt} {...imageDimensions(desktop)} loading={eager ? 'eager' : 'lazy'} decoding="async" fetchpriority={eager ? 'high' : 'auto'} /><span class="zoom-hint" aria-hidden="true">View full screen ↗</span></a> : <div class="missing-media"><p>Product capture</p><span>This authentic screenshot is being prepared.</span></div>}
+        {desktopAvailable ? <a class="image-zoom" href={desktop} data-zoom aria-label={`Enlarge screenshot: ${desktopAlt}`}><img src={desktop} alt={desktopAlt} {...imageDimensions(desktop)} loading={eager ? 'eager' : 'lazy'} decoding="async" fetchpriority={eager ? 'high' : 'auto'} /><span class="zoom-hint" aria-hidden="true">View full screen <Icon name="arrow-up-right" /></span></a> : <div class="missing-media"><p>Product capture</p><span>This authentic screenshot is being prepared.</span></div>}
       </div>
     </figure>
-    {mobileAvailable && <figure data-screen="mobile" class="screen-figure mobile-figure" hidden><div class="phone-frame"><a class="image-zoom" href={mobile} data-zoom aria-label={`Enlarge phone screenshot: ${mobileAlt}`}><img src={mobile} alt={mobileAlt ?? desktopAlt} {...imageDimensions(mobile)} loading="lazy" decoding="async" /><span class="zoom-hint" aria-hidden="true">Enlarge ↗</span></a></div></figure>}
+    {mobileAvailable && <figure data-screen="mobile" class="screen-figure mobile-figure" hidden><div class="phone-frame"><a class="image-zoom" href={mobile} data-zoom aria-label={`Enlarge phone screenshot: ${mobileAlt}`}><img src={mobile} alt={mobileAlt ?? desktopAlt} {...imageDimensions(mobile)} loading="lazy" decoding="async" /><span class="zoom-hint" aria-hidden="true">Enlarge <Icon name="arrow-up-right" /></span></a></div></figure>}
   </div>
-  <p class="media-caption"><span class="caption-marker" aria-hidden="true">↳</span>{caption}{desktopAvailable && <span class="caption-action">Select the image to explore the details.</span>}</p>
-  <dialog id={`${id}-dialog`} class="image-dialog" aria-label={`${label} enlarged screenshot`}><div class="dialog-toolbar"><span>{label}</span><button type="button" data-close aria-label="Close enlarged screenshot">Close <span aria-hidden="true">×</span></button></div><div class="dialog-content"><img data-dialog-image alt="" /></div><div class="dialog-caption"><p>{caption}</p><a href={desktop} data-original target="_blank" rel="noopener">Open full-resolution image <span aria-hidden="true">↗</span></a></div></dialog>
+  <p class="media-caption"><span class="caption-marker" aria-hidden="true"><Icon name="turn-down-right" /></span>{caption}{desktopAvailable && <span class="caption-action">Select the image to explore the details.</span>}</p>
+  <dialog id={`${id}-dialog`} class="image-dialog" aria-label={`${label} enlarged screenshot`}><div class="dialog-toolbar"><span>{label}</span><button type="button" data-close aria-label="Close enlarged screenshot">Close <span aria-hidden="true"><Icon name="close" /></span></button></div><div class="dialog-content"><img data-dialog-image alt="" /></div><div class="dialog-caption"><p>{caption}</p><a href={desktop} data-original target="_blank" rel="noopener">Open full-resolution image <span aria-hidden="true"><Icon name="arrow-up-right" /></span></a></div></dialog>
 </section>
 <script>
   document.querySelectorAll<HTMLElement>('[data-showcase]').forEach((showcase) => {

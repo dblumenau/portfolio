@@ -1,0 +1,172 @@
+{
+  "testedAt": "2026-10-14T21:19:00.045791+00:00",
+  "revision": "f034947811e9227f3c50f41f0aa8c0d410293b0a",
+  "managerSha256": "ed4fce0fddfaba59d668c376c651ebb0e43fe9f6bd0fa6d2c866414f3faa2bcc",
+  "sourceArchiveSha256": "0ff803ff83a40c8ff29533958b1a9ab2ab0a0181f9a647ced23c51abb9ed032a",
+  "originalBaseSha256": "b949d04597ba496e184a3ff8554f1c921ac7b4690f8171463fc4209a2d7eac2f",
+  "originalHooksSha256": "4373a8f8ba401864f849dab92f08a37b29c6fc5baaa108a99e70ce6d21fb4b51",
+  "harness": [
+    "Actual unmodified bin/metacodex from git archive of the committed revision.",
+    "Tracked config.base.toml replaced with two fictional settings; model_catalog_json omitted, so the catalog helper is never invoked.",
+    "hooks.json replaced with an empty hook object. The doctor check therefore verifies this controlled fixture, not installed hook prerequisites.",
+    "Original skills, managed resource links and helper executables retained. Helpers and skills are not executed.",
+    "Task-specific METACODEX_USER_HOME, METACODEX_HOME and METACODEX_BIN_HOME select two disposable homes. HOME and CODEX_HOME are not reassigned. Inherited CODEX_HOME and AGENTS_HOME are required to be unset.",
+    "No update, sync, remote command, agent runtime, network request or real account used."
+  ],
+  "steps": [
+    {
+      "desk": "desk-a",
+      "title": "Assemble base + local overlays",
+      "command": "metacodex install",
+      "startedAt": "2026-10-14T21:19:00.050363+00:00",
+      "durationMs": 64.768,
+      "exitCode": 0,
+      "output": "link: installed $FIXTURE/desk-a/.agents/skills\nlink: installed $FIXTURE/desk-a/.codex/hooks.json\nlink: installed $FIXTURE/desk-a/.codex/AGENTS.md\nlink: installed $FIXTURE/desk-a/.codex/rules/metacodex.rules\nlink: installed $FIXTURE/desk-a/bin/codex-digest\nlink: installed $FIXTURE/desk-a/bin/codex-trust-everything\napply: generated config (values redacted)\n"
+    },
+    {
+      "desk": "desk-b",
+      "title": "Assemble base + local overlays",
+      "command": "metacodex install",
+      "startedAt": "2026-10-14T21:19:00.115233+00:00",
+      "durationMs": 54.446,
+      "exitCode": 0,
+      "output": "link: installed $FIXTURE/desk-b/.agents/skills\nlink: installed $FIXTURE/desk-b/.codex/hooks.json\nlink: installed $FIXTURE/desk-b/.codex/AGENTS.md\nlink: installed $FIXTURE/desk-b/.codex/rules/metacodex.rules\nlink: installed $FIXTURE/desk-b/bin/codex-digest\nlink: installed $FIXTURE/desk-b/bin/codex-trust-everything\napply: generated config (values redacted)\n"
+    },
+    {
+      "desk": "desk-a",
+      "title": "Refuse conflicting manual drift",
+      "command": "metacodex apply",
+      "startedAt": "2026-10-14T21:19:00.169968+00:00",
+      "durationMs": 47.514,
+      "exitCode": 1,
+      "output": "metacodex: error: live config has non-runtime drift; run 'metacodex apply --adopt' to preserve it or '--force' to discard it\n"
+    },
+    {
+      "desk": "desk-a",
+      "title": "Explicitly adopt the local change",
+      "command": "metacodex apply --adopt",
+      "startedAt": "2026-10-14T21:19:00.217665+00:00",
+      "durationMs": 55.419,
+      "exitCode": 0,
+      "output": "apply: generated config (values redacted)\n"
+    },
+    {
+      "desk": "desk-a",
+      "title": "Apply a second portable base revision",
+      "command": "metacodex apply",
+      "startedAt": "2026-10-14T21:19:00.273412+00:00",
+      "durationMs": 76.236,
+      "exitCode": 0,
+      "output": "apply: generated config (values redacted)\n"
+    },
+    {
+      "desk": "desk-b",
+      "title": "Apply a second portable base revision",
+      "command": "metacodex apply",
+      "startedAt": "2026-10-14T21:19:00.349819+00:00",
+      "durationMs": 77.538,
+      "exitCode": 0,
+      "output": "apply: generated config (values redacted)\n"
+    },
+    {
+      "desk": "desk-a",
+      "title": "Check fixture health",
+      "command": "metacodex doctor",
+      "startedAt": "2026-10-14T21:19:00.427635+00:00",
+      "durationMs": 69.99,
+      "exitCode": 0,
+      "output": "doctor: ok (configuration values redacted)\n"
+    },
+    {
+      "desk": "desk-b",
+      "title": "Check fixture health",
+      "command": "metacodex doctor",
+      "startedAt": "2026-10-14T21:19:00.498153+00:00",
+      "durationMs": 73.497,
+      "exitCode": 0,
+      "output": "doctor: ok (configuration values redacted)\n"
+    }
+  ],
+  "refusal": {
+    "activeSha256Before": "6773add3d17f3dfeb4005d4d8387737cb8bb0489e1b3d2588e096177d55cfbc2",
+    "activeSha256After": "6773add3d17f3dfeb4005d4d8387737cb8bb0489e1b3d2588e096177d55cfbc2",
+    "snapshotSha256Before": "8643261b4ae7a78f0b4d951dd86b4e14c0a4648317f97030f6dbdc8c09027311",
+    "snapshotSha256After": "8643261b4ae7a78f0b4d951dd86b4e14c0a4648317f97030f6dbdc8c09027311",
+    "unchanged": true
+  },
+  "desks": {
+    "desk-a": {
+      "model": "demo-model-v2",
+      "reasoningEffort": "high",
+      "statusLine": [
+        "model",
+        "current-dir"
+      ],
+      "sharedSkill": "same-page",
+      "skillSha256": "43b075e66915c4108940b0f8bef3b929250ac5455f8661c6ad5a46f1b517395d",
+      "skillLink": "$FIXTURE/fixture-source/skills",
+      "protectedFiles": [
+        {
+          "path": ".codex/auth.json",
+          "sha256Before": "7a7e2046385715873a2d0f5a1b397c04037c1b7dbff62bc9f82985585962b701",
+          "sha256After": "7a7e2046385715873a2d0f5a1b397c04037c1b7dbff62bc9f82985585962b701",
+          "unchanged": true
+        },
+        {
+          "path": ".codex/sessions/demo.jsonl",
+          "sha256Before": "2c412ea2f4c5d77ad650d9a46893980c90c09db4d12e049a130e1fad3160b16a",
+          "sha256After": "2c412ea2f4c5d77ad650d9a46893980c90c09db4d12e049a130e1fad3160b16a",
+          "unchanged": true
+        },
+        {
+          "path": ".codex/config.secrets.toml",
+          "sha256Before": "c1ec09356c8648afc182b27787a483be0a3043f2b893d5e9c881ba0520cc6a9a",
+          "sha256After": "c1ec09356c8648afc182b27787a483be0a3043f2b893d5e9c881ba0520cc6a9a",
+          "unchanged": true
+        }
+      ],
+      "authIsRegularFile": true,
+      "sessionIsRegularFile": true
+    },
+    "desk-b": {
+      "model": "demo-model-v2",
+      "reasoningEffort": "low",
+      "statusLine": [
+        "model",
+        "context-window"
+      ],
+      "sharedSkill": "same-page",
+      "skillSha256": "43b075e66915c4108940b0f8bef3b929250ac5455f8661c6ad5a46f1b517395d",
+      "skillLink": "$FIXTURE/fixture-source/skills",
+      "protectedFiles": [
+        {
+          "path": ".codex/auth.json",
+          "sha256Before": "d08dc9f5d783c6b3a25fd9fd2fb156c305231334fcc4e40e26d7d4dbb2146275",
+          "sha256After": "d08dc9f5d783c6b3a25fd9fd2fb156c305231334fcc4e40e26d7d4dbb2146275",
+          "unchanged": true
+        },
+        {
+          "path": ".codex/sessions/demo.jsonl",
+          "sha256Before": "a967365169f3407f2a9cac44273d7451b8453060de55df0bd26cbcb6b78791b9",
+          "sha256After": "a967365169f3407f2a9cac44273d7451b8453060de55df0bd26cbcb6b78791b9",
+          "unchanged": true
+        },
+        {
+          "path": ".codex/config.secrets.toml",
+          "sha256Before": "6deac5654cd41c2d0afe49649aceaceab11aee837760ced50885844ba4c3a801",
+          "sha256After": "6deac5654cd41c2d0afe49649aceaceab11aee837760ced50885844ba4c3a801",
+          "unchanged": true
+        }
+      ],
+      "authIsRegularFile": true,
+      "sessionIsRegularFile": true
+    }
+  },
+  "allAssertionsPassed": true,
+  "fixtureBaseSha256": "32c20d6c330192b32da26611d41535371817cb688b5d3f0c903fe639e4c18851",
+  "limitations": [
+    "Runs the configuration manager only; it does not launch a Codex session or execute the shared skill.",
+    "No fleet synchronization, authentication or production installation is exercised.",
+    "The terminal view replays these captured commands and outputs; display pacing is editorial, not measured execution time."
+  ]
+}

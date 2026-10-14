@@ -6,7 +6,7 @@ export const entities: Entity[] = sample.nodes;
 export const relationships: Relationship[] = sample.relationships;
 export const relationKey = (relation: Relationship) => JSON.stringify([relation.subject, relation.predicate, relation.object]);
 export const typeLabel = (entity: Entity) => entity.type ?? 'unknown';
-export const formatRelation = (relation: Relationship) => `${relation.subject} → ${relation.predicate} → ${relation.object}`;
+export const formatRelation = (relation: Relationship) => `${relation.subject} / ${relation.predicate} / ${relation.object}`;
 export const sourceExcerpts: Record<string, { quote: string; source: string }> = {
   [relationKey({ subject: 'panelforge', predicate: 'built_with', object: 'laravel' })]: {
     quote: "I'll search the panel-forge Laravel codebase for these specific details.",

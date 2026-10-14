@@ -1,4 +1,5 @@
 ---
+import Icon from '../../components/Icon.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ScreenShowcase from '../../components/ScreenShowcase.astro';
 import VideoDemo from '../../components/VideoDemo.astro';
@@ -9,25 +10,32 @@ import NativeClientDemo from '../../components/NativeClientDemo.astro';
 import WorkbenchMap from '../../components/WorkbenchMap.astro';
 import ConferenceOutput from '../../components/ConferenceOutput.astro';
 import { features } from '../../data/features';
-import { memoryCaseFeatureSlugs } from '../../data/memory-case-studies';
+import { caseFeatureSlugs } from '../../data/case-feature-links';
 import { caseStudies } from '../../data/projects';
 export function getStaticPaths() { return caseStudies.map((project) => ({ params: { slug: project.slug }, props: { project } })); }
 const { project } = Astro.props;
 const related = caseStudies.filter((item) => item.slug !== project.slug);
-const featureSlugs = memoryCaseFeatureSlugs[project.slug] ?? [];
+const featureSlugs = caseFeatureSlugs[project.slug] ?? [];
 const caseFeatures = featureSlugs.map(slug => features.find(feature => feature.slug === slug)).filter(Boolean);
+const caseLabs: Record<string, { title: string; description: string; href: string; action: string }> = {
+  'connected-tools': { title: 'Try the boundary. Inspect the response.', description: 'Two fictional tasks replay actual allowed and denied requests through the gateway. See what reached the local backend and how the gateway handled a request claiming another user’s identity.', href: '/labs/gateway/', action: 'Enter the Gateway Lab' },
+  'knowledge-graph': { title: 'A small memory you can inspect.', description: 'Follow a real project relationship to its source, set a connection aside, then undo the change. This self-contained sample uses reviewed technical knowledge from the archive.', href: '/labs/memory/', action: 'Enter the Memory Lab' },
+  'agent-workbench': { title: 'A setup that survives a deliberate mistake.', description: 'Two fictional machines share a portable setup. Replay the actual manager refusing a conflicting edit, adopting it deliberately and preserving each machine’s local state.', href: '/labs/workbench/', action: 'Enter the Workbench Lab' },
+  'connected-agents': { title: 'Close the screen. Recover the answer.', description: 'Follow an actual controlled turn through a browser disconnect, continued engine work and retrieval of the stored result. The engine process keeps running throughout the experiment.', href: '/labs/recovery/', action: 'Enter the Recovery Lab' },
+};
+const caseLab = caseLabs[project.slug];
 const mobileImage = project.slug === 'conference-notes' ? '/media/conference-notes-mobile.webp' : project.slug === 'connected-agents' ? '/media/panelforge-chat-mobile.webp' : project.slug === 'panelforge' ? '/media/panelforge-gallery-mobile.webp' : undefined;
 ---
 <BaseLayout title={`${project.name} | David Blumenau`} description={project.intro}>
   <main id="main">
-    <section class="case-hero" id="top"><div class="wrap"><a class="case-back" href="/#work"><span aria-hidden="true">←</span> Selected work</a><div class="case-hero-grid"><div><p class="eyebrow">Case study {project.number} / {project.name}</p><h1>{project.title}</h1></div><div class="case-hero-copy"><p>{project.intro}</p><div class="stack-list" aria-label="Technologies">{project.stack.map((technology) => <span>{technology}</span>)}</div></div></div><div class="case-category"><span>{project.category}</span><span>{project.context ?? 'A personal engineering project'}</span></div></div></section>
+    <section class="case-hero" id="top"><div class="wrap"><a class="case-back" href="/#work"><span aria-hidden="true"><Icon name="arrow-left" /></span> Selected work</a><div class="case-hero-grid"><div><p class="eyebrow">Case study {project.number} / {project.name}</p><h1>{project.title}</h1></div><div class="case-hero-copy"><p>{project.intro}</p><div class="stack-list" aria-label="Technologies">{project.stack.map((technology) => <span>{technology}</span>)}</div></div></div><div class="case-category"><span>{project.category}</span><span>{project.context ?? 'A personal engineering project'}</span></div></div></section>
     <nav class="case-nav wrap" aria-label="Case study sections"><a href="#the-problem">The starting point</a><a href="#the-workflow">The workflow</a><a href="#the-decisions">The decisions</a><a href="#the-evolution">The evolution</a></nav>
     <section class="case-problem wrap" id="the-problem"><p class="eyebrow"><span class="section-number">01</span>The starting point</p><div class="case-text-grid"><h2>{project.premise}</h2><div>{project.problem.map((paragraph) => <p>{paragraph}</p>)}</div></div></section>
     <section class="case-showcase wrap" aria-label={`${project.name} product view`}>
       {project.slug === 'connected-tools' ? <Architecture compact /> : project.slug === 'agent-workbench' ? <WorkbenchMap /> : <ScreenShowcase id={`case-${project.slug}`} desktop={project.image} desktopAlt={project.imageAlt} mobile={mobileImage} mobileAlt={project.slug === 'conference-notes' ? 'A finalised fictional attendee note in the mobile conference notebook.' : project.slug === 'connected-agents' ? 'The PanelForge conversation interface at a phone viewport.' : 'PanelForge gallery at a phone viewport.'} caption={project.imageCaption} label={project.slug === 'connected-agents' ? 'Responsive web client' : project.name} />}
     </section>
-    {project.slug === 'knowledge-graph' && <section class="case-lab-invitation wrap"><div><p class="eyebrow">Try it for yourself</p><h2>A small memory you can inspect.</h2><p>Follow a real project relationship to its source, set a connection aside, then undo the change. This self-contained sample uses reviewed technical knowledge from the archive.</p></div><a class="button button-dark" href="/labs/memory/">Enter the Memory Lab <span aria-hidden="true">↗</span></a></section>}
-    {caseFeatures.length > 0 && <section class="case-feature-index wrap" aria-labelledby="case-feature-title"><p class="eyebrow">Explore the individual features</p><h2 id="case-feature-title">The smaller pieces of this story.</h2><div>{caseFeatures.map(feature => feature && <a href={`/features/${feature.slug}/`}><span>{feature.name}</span><strong>{feature.title}</strong><span aria-hidden="true">↗</span></a>)}</div></section>}
+    {caseLab && <section class="case-lab-invitation wrap"><div><p class="eyebrow">Try it for yourself</p><h2>{caseLab.title}</h2><p>{caseLab.description}</p></div><a class="button button-dark" href={caseLab.href}>{caseLab.action} <span aria-hidden="true"><Icon name="arrow-up-right" /></span></a></section>}
+    {caseFeatures.length > 0 && <section class="case-feature-index wrap" aria-labelledby="case-feature-title"><p class="eyebrow">Explore the individual features</p><h2 id="case-feature-title">The smaller pieces of this story.</h2><div>{caseFeatures.map(feature => feature && <a href={`/features/${feature.slug}/`}><span>{feature.name}</span><strong>{feature.title}</strong><span aria-hidden="true"><Icon name="arrow-up-right" /></span></a>)}</div></section>}
     <section class="case-workflow wrap" id="the-workflow"><SectionHeading number="02" label="What the workflow looks like" title="A useful path through the product." /><ol class:list={['workflow-steps', { 'workflow-steps-four': project.workflow.length === 4 }]}>{project.workflow.map((step, index) => <li><span class="workflow-index">0{index + 1}</span><div><h3>{step.title}</h3><p>{step.description}</p></div></li>)}</ol>{project.video && <VideoDemo src={project.video} poster={project.image} title={`A walk through ${project.name}`} description={project.videoDescription ?? project.imageCaption} captions={project.captions} mediaCaption={project.mediaCaption} />}
       {project.slug === 'connected-agents' && <NativeClientDemo />}
       {project.slug === 'conference-notes' && <ConferenceOutput />}
@@ -36,6 +44,6 @@ const mobileImage = project.slug === 'conference-notes' ? '/media/conference-not
     <section class="case-decisions" id="the-decisions"><div class="wrap"><SectionHeading number="03" label="Design + engineering" title="The decisions underneath." /><div class="decision-grid">{project.decisions.map((decision, index) => <article><span class="decision-index">0{index + 1} /</span><h3>{decision.title}</h3><p>{decision.description}</p></article>)}</div></div></section>
     <section class="case-evolution wrap" id="the-evolution"><SectionHeading number="04" label="Selected release history" title="It got here one decision at a time." intro="These are historical changes recorded in repository tags. The capture and current-state notes below describe what is being shown here." /><ReleaseCards stories={project.releases} /></section>
     <section class="evidence-section wrap" aria-labelledby="evidence-title"><p class="eyebrow">About the material shown here</p><div class="evidence-grid"><div><h2 id="evidence-title">Product views.<br />Release notes.</h2><p>Selected screenshots and edited recordings accompany changes checked against repository history through October 2026.</p></div><div><details open><summary>Current product and capture</summary><p>{project.current}</p></details><details><summary>Source and historical evidence</summary><p>{project.evidence}</p></details><details><summary>About the demonstrations</summary><p>Product imagery uses selected material prepared for this portfolio. Recordings show the interface in use. Architecture graphics describe system relationships and do not show live service availability.</p></details></div></div></section>
-    <section class="related-work wrap" aria-label="More case studies"><p class="eyebrow">Keep exploring</p><div>{related.map((item) => <a href={`/work/${item.slug}/`}><span>{item.category}</span><h3>{item.name}</h3><span aria-hidden="true">↗</span></a>)}</div></section>
+    <section class="related-work wrap" aria-label="More case studies"><p class="eyebrow">Keep exploring</p><div>{related.map((item) => <a href={`/work/${item.slug}/`}><span>{item.category}</span><h3>{item.name}</h3><span aria-hidden="true"><Icon name="arrow-up-right" /></span></a>)}</div></section>
   </main>
 </BaseLayout>

@@ -580,3 +580,5 @@
  .conference-home-link .text-link { font-size:.8rem;margin-top:12px; }
 }
 @layer responsive { @media(max-width:700px) { .conference-home-link { grid-template-columns:1fr;gap:25px; } } }
+
+.ui-icon { display:inline-block; width:1em; height:1em; flex-shrink:0; vertical-align:-.15em; pointer-events:none; }

@@ -1,0 +1,28 @@
+WEBVTT
+
+00:00.000 --> 00:04.500
+Actual manager output, displayed in a recorded replay. Desk A receives shared links and generated local configuration.
+
+00:04.500 --> 00:09.000
+Desk B receives the same portable base and skill. Its status-line overlay differs.
+
+00:09.000 --> 00:13.000
+A deliberate manual change sets Desk A’s reasoning to high. Apply refuses with exit 1; the config and snapshot hashes remain unchanged.
+
+00:13.000 --> 00:17.000
+Explicit adoption preserves the high setting in Desk A’s machine overlay. Exit 0.
+
+00:17.000 --> 00:21.000
+The fixture’s portable base changes to demo-model-v2 with low default reasoning. Desk A keeps its adopted high preference.
+
+00:21.000 --> 00:25.000
+Desk B receives the new shared model and low default. Its local status line remains.
+
+00:25.000 --> 00:29.000
+Desk A’s doctor check passes for this controlled fixture. Empty hooks are a disclosed substitution.
+
+00:29.000 --> 00:33.000
+Desk B’s doctor check also passes. No agent or real authentication is exercised.
+
+00:33.000 --> 00:40.650
+Both desks share a readable skill. All six fake auth, session and secret-overlay hashes match their before state. Display pacing is editorial.

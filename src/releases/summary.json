@@ -1,5 +1,5 @@
 {
-  "asOf": "2026-10-14",
+  "asOf": "2026-10-15",
   "projects": [
     {
       "id": "panel-forge",
@@ -278,6 +278,6 @@
   "tagCount": 3666,
   "dateBasis": "Git tag creator date; lightweight tags use commit date. Calendar days retain the source offset.",
   "firstCommitBasis": "Earliest committer timestamp reachable from the inspected HEAD; not a product launch.",
-  "cacheNote": "19 repository inventories cached on 14 October 2026; metaclaude and metacodex tags refreshed from origin on that date. No full remote completeness claim.",
+  "cacheNote": "All 21 scoped repositories were refreshed from their origin remotes with git fetch --tags on 15 October 2026. The 3,666 inspected tags and their commit/date metadata matched the preceding inventory.",
   "errors": []
 }

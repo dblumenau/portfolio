@@ -1,7 +1,9 @@
-export type FeatureArea = 'Memory' | 'Workbench';
+import { coreFeatures } from './core-features';
+export type FeatureArea = 'Memory' | 'Workbench' | 'Studio' | 'Engine' | 'Connections';
 export type FeatureEvidence = 'source-current' | 'historical-shipped' | 'current-archive-contract';
 
 export interface Feature {
+  presentation?: string;
   id: string;
   slug: string;
   name: string;
@@ -14,7 +16,7 @@ export interface Feature {
   built: string[];
   use: { title: string; description: string }[];
   evolution: { date: string; title: string }[];
-  sources: { repo: string; files: string[]; status: FeatureEvidence; note: string };
+  sources: { repo: string; files: string[]; status: FeatureEvidence; release?: string; note: string };
   related: string[];
   exhibit: {
     title: string;
@@ -37,7 +39,7 @@ const stories: Story[] = [
     built: ['The analysis pipeline stores structured relationships as knowledge triples. Entity and event information gives those relationships a shared vocabulary and a place in time.', 'I added graph views and entity details alongside the archive. Following a connection can lead to the supporting conversation, where the original wording and context are still available.'],
     use: [step('Begin with an entity', 'Choose a project or idea in the graph, then inspect its relationships.'), step('Follow the evidence', 'Open a linked conversation to check what was actually said. An extracted relationship is a useful lead that still needs its source.')],
     related: ['graph-exploration', 'grounded-analysis', 'graph-curation'],
-    exhibit: { title: 'Three conversations, one project', caption: 'Illustrated extraction with invented records. These are explanatory examples, not product output.', steps: [node('Conversation', '“We chose SQLite for the Lantern prototype.”'), node('Relationship', 'Lantern → uses → SQLite'), node('Entity', 'Lantern keeps a link to that source')], choices: [choice('Follow the project', 'Lantern → SQLite', 'A project node joins mentions from separate conversations. The relationship retains its source.'), choice('Check the source', 'Read the original statement', 'The invented sentence supports the prototype decision. It does not establish that every later release used SQLite.')] },
+    exhibit: { title: 'Three conversations, one project', caption: 'Illustrated extraction with invented records. These are explanatory examples, not product output.', steps: [node('Conversation', '“We chose SQLite for the Lantern prototype.”'), node('Relationship', 'Lantern / uses / SQLite'), node('Entity', 'Lantern keeps a link to that source')], choices: [choice('Follow the project', 'Lantern / SQLite', 'A project node joins mentions from separate conversations. The relationship retains its source.'), choice('Check the source', 'Read the original statement', 'The invented sentence supports the prototype decision. It does not establish that every later release used SQLite.')] },
   },
   {
     id: 'memory-02', slug: 'graph-exploration', name: 'Graph exploration', title: 'Make a large graph readable.', topics: ['Knowledge graph', 'Interface'],
@@ -64,7 +66,7 @@ const stories: Story[] = [
     built: ['The curation service records actions such as rewriting, retyping and canonicalizing relationships. Action rows and before-state snapshots preserve what changed and why.', 'Supported actions can be inverted through another recorded action. The October implementation work also addressed preserving reviewed records during re-analysis. The exact set of controls exposed in the interface still needs a separate live check.'],
     use: [step('Read the action', 'Inspect the original state, the new state and the recorded reason in a review run.'), step('Check or reverse it', 'Use the source to decide whether the correction was justified. Where inversion is supported, restoring the earlier state creates another action in the trail.')],
     related: ['personal-relevance', 'grounded-analysis'],
-    exhibit: { title: 'An edit that stays inspectable', caption: 'Invented relationship and review reason. The examples explain a correction and its inverse; they do not edit a real graph.', steps: [node('Before', 'Lantern → uses → PostgreSQL'), node('Correction', 'Source says SQLite; record the reason'), node('After', 'Lantern → uses → SQLite')], choices: [choice('Inspect the correction', 'PostgreSQL → SQLite', 'The before-state and the source-based reason remain available with the action.'), choice('Inspect an inverse action', 'Restore the recorded before-state', 'A supported inverse action writes its own history. A reversal is itself something to review.')] },
+    exhibit: { title: 'An edit that stays inspectable', caption: 'Invented relationship and review reason. The examples explain a correction and its inverse; they do not edit a real graph.', steps: [node('Before', 'Lantern / uses / PostgreSQL'), node('Correction', 'Source says SQLite; record the reason'), node('After', 'Lantern / uses / SQLite')], choices: [choice('Inspect the correction', 'PostgreSQL / SQLite', 'The before-state and the source-based reason remain available with the action.'), choice('Inspect an inverse action', 'Restore the recorded before-state', 'A supported inverse action writes its own history. A reversal is itself something to review.')] },
   },
   {
     id: 'memory-05', slug: 'grounded-analysis', name: 'Grounded analysis', title: 'Look up a name before creating another one.', topics: ['Knowledge graph', 'Analysis'],
@@ -73,7 +75,7 @@ const stories: Story[] = [
     built: ['Analysis starts from an immutable conversation snapshot and a user-scoped catalog of existing tags and entities. Candidate lookup and resolution give the model a route to canonical reuse.', 'The August work added a grounded agentic loop and batch candidate resolution. It was prompted by observed failures, so the design keeps resolution explicit rather than assuming the model will always follow instructions.'],
     use: [step('Compare the candidates', 'Check whether an extracted name or alias already refers to an entity in the catalog.'), step('Resolve with evidence', 'Reuse the canonical record when the match is supported. Create a separate entity when the meanings differ.')],
     related: ['knowledge-graph', 'graph-curation'],
-    exhibit: { title: 'One project, two ways to name it', caption: 'A synthetic candidate lookup explains canonical reuse. No search against a private catalog occurs here.', steps: [node('Mention', '“Lantern app” in a conversation'), node('Lookup', 'Catalog candidate: Lantern'), node('Resolve', 'Reuse the existing project entity')], choices: [choice('Matching alias', 'Lantern app → Lantern', 'Evidence that the names refer to the same project supports reusing its canonical entity.'), choice('Different project', 'Keep a separate entity', 'Similar wording alone is insufficient. Resolution should preserve a meaningful distinction.')] },
+    exhibit: { title: 'One project, two ways to name it', caption: 'A synthetic candidate lookup explains canonical reuse. No search against a private catalog occurs here.', steps: [node('Mention', '“Lantern app” in a conversation'), node('Lookup', 'Catalog candidate: Lantern'), node('Resolve', 'Reuse the existing project entity')], choices: [choice('Matching alias', 'Lantern app / Lantern', 'Evidence that the names refer to the same project supports reusing its canonical entity.'), choice('Different project', 'Keep a separate entity', 'Similar wording alone is insufficient. Resolution should preserve a meaningful distinction.')] },
   },
   {
     id: 'memory-06', slug: 'maintained-profile', name: 'Maintained profile', title: 'Keep a working brief with a restore path.', topics: ['Context', 'Curation'],
@@ -645,11 +647,11 @@ export const featureEvidenceLabels: Record<FeatureEvidence, string> = {
   'current-archive-contract': 'Workflow inspected',
 };
 
-export const features: Feature[] = stories.map((story) => {
+export const features: Feature[] = [...stories.map((story) => {
   const proof = metadata[story.id];
   if (!proof) throw new Error(`Feature ${story.id} needs source metadata before publication.`);
-  return { ...story, area: story.id.startsWith('memory') ? 'Memory' : 'Workbench', ...proof };
-});
+  return { ...story, area: (story.id.startsWith('memory') ? 'Memory' : 'Workbench') as FeatureArea, ...proof };
+}), ...coreFeatures];
 
 export const featureBySlug = (slug: string) => features.find((feature) => feature.slug === slug);
 export const formatFeatureDate = (date: string) => new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' }).format(new Date(`${date}T12:00:00Z`));

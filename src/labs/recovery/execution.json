@@ -1,0 +1,1638 @@
+{
+  "title": "Close the connection. Keep the answer.",
+  "captured_at": "2026-10-14T21:29:28.338000+00:00",
+  "source_revision": "bf89abc1646bd12133a0f22bc2d51f3286813250",
+  "source_archive_sha256": "84659e6ca2684195bd510f40de0567c7dab4c89605b0063edd938277f4537381",
+  "runtime": {
+    "engine": "Claude Engine",
+    "sdk": "0.2.164",
+    "model": "Sonnet 5.5",
+    "redis": "7.0.15",
+    "browser": "Playwright Chromium",
+    "http_port": 18089,
+    "redis_port": 16479
+  },
+  "task": "Opening checklist for the fictional Lantern Makers Club. Bare text turn, no tools.",
+  "client_events": [
+    {
+      "action": "start",
+      "client_at": 1792013368.338,
+      "seconds": 0.0
+    },
+    {
+      "action": "stream_http",
+      "client_at": 1792013368.355,
+      "status": 200,
+      "seconds": 0.017
+    },
+    {
+      "action": "stream_initialized",
+      "client_at": 1792013368.361,
+      "seconds": 0.023
+    },
+    {
+      "action": "disconnect",
+      "client_at": 1792013369.586,
+      "received_characters": 23,
+      "elapsed_ms": 1248,
+      "seconds": 1.248
+    },
+    {
+      "action": "running_result_check",
+      "client_at": 1792013370.337,
+      "status": 202,
+      "result_status": "running",
+      "seconds": 1.999
+    },
+    {
+      "action": "retrieve_requested",
+      "client_at": 1792013379.818,
+      "seconds": 11.48
+    },
+    {
+      "action": "retrieve_response",
+      "client_at": 1792013379.836,
+      "status": 200,
+      "result_status": "completed",
+      "characters": 2632,
+      "final_text_matches": true,
+      "seconds": 11.498
+    },
+    {
+      "action": "idempotent_result_check",
+      "client_at": 1792013379.854,
+      "status": 200,
+      "same_result": true,
+      "seconds": 11.516
+    }
+  ],
+  "engine_events": [
+    {
+      "seconds": 0.017,
+      "kind": "invocation_started",
+      "mode": "subscription SDK; bare; no tools or MCP"
+    },
+    {
+      "seconds": 0.297,
+      "kind": "sdk_event",
+      "event_type": "system"
+    },
+    {
+      "seconds": 0.299,
+      "kind": "sdk_event",
+      "event_type": "system"
+    },
+    {
+      "seconds": 1.158,
+      "kind": "sdk_event",
+      "event_type": "turn_start"
+    },
+    {
+      "seconds": 1.159,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 11
+    },
+    {
+      "seconds": 1.185,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 23
+    },
+    {
+      "seconds": 1.502,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 42
+    },
+    {
+      "seconds": 1.502,
+      "kind": "engine_log",
+      "message": "Client disconnected during emit_sse (stream [isolated stream])"
+    },
+    {
+      "seconds": 1.503,
+      "kind": "engine_log",
+      "message": "Stream [isolated stream] entering background mode (on_disconnect=hold)"
+    },
+    {
+      "seconds": 1.504,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 54
+    },
+    {
+      "seconds": 1.504,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 77
+    },
+    {
+      "seconds": 1.504,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 88
+    },
+    {
+      "seconds": 1.504,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 96
+    },
+    {
+      "seconds": 1.504,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 102
+    },
+    {
+      "seconds": 1.504,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 126
+    },
+    {
+      "seconds": 1.505,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 131
+    },
+    {
+      "seconds": 1.505,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 134
+    },
+    {
+      "seconds": 1.527,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 139
+    },
+    {
+      "seconds": 1.558,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 142
+    },
+    {
+      "seconds": 1.908,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 150
+    },
+    {
+      "seconds": 1.908,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 153
+    },
+    {
+      "seconds": 1.909,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 164
+    },
+    {
+      "seconds": 1.909,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 185
+    },
+    {
+      "seconds": 1.909,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 197
+    },
+    {
+      "seconds": 1.909,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 219
+    },
+    {
+      "seconds": 1.909,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 226
+    },
+    {
+      "seconds": 1.909,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 228
+    },
+    {
+      "seconds": 1.909,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 234
+    },
+    {
+      "seconds": 1.909,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 248
+    },
+    {
+      "seconds": 1.916,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 250
+    },
+    {
+      "seconds": 1.952,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 259
+    },
+    {
+      "seconds": 2.25,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 266
+    },
+    {
+      "seconds": 2.251,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 280
+    },
+    {
+      "seconds": 2.251,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 286
+    },
+    {
+      "seconds": 2.251,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 301
+    },
+    {
+      "seconds": 2.251,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 302
+    },
+    {
+      "seconds": 2.251,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 315
+    },
+    {
+      "seconds": 2.251,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 320
+    },
+    {
+      "seconds": 2.252,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 322
+    },
+    {
+      "seconds": 2.252,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 331
+    },
+    {
+      "seconds": 2.278,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 340
+    },
+    {
+      "seconds": 2.311,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 344
+    },
+    {
+      "seconds": 2.346,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 356
+    },
+    {
+      "seconds": 2.605,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 375
+    },
+    {
+      "seconds": 2.606,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 381
+    },
+    {
+      "seconds": 2.606,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 384
+    },
+    {
+      "seconds": 2.606,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 395
+    },
+    {
+      "seconds": 2.606,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 404
+    },
+    {
+      "seconds": 2.606,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 413
+    },
+    {
+      "seconds": 2.606,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 415
+    },
+    {
+      "seconds": 2.615,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 428
+    },
+    {
+      "seconds": 2.647,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 439
+    },
+    {
+      "seconds": 2.685,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 451
+    },
+    {
+      "seconds": 2.713,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 458
+    },
+    {
+      "seconds": 2.747,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 464
+    },
+    {
+      "seconds": 2.95,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 468
+    },
+    {
+      "seconds": 2.95,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 495
+    },
+    {
+      "seconds": 2.95,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 497
+    },
+    {
+      "seconds": 2.95,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 503
+    },
+    {
+      "seconds": 2.951,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 510
+    },
+    {
+      "seconds": 2.951,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 514
+    },
+    {
+      "seconds": 2.977,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 518
+    },
+    {
+      "seconds": 3.009,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 531
+    },
+    {
+      "seconds": 3.043,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 538
+    },
+    {
+      "seconds": 3.075,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 556
+    },
+    {
+      "seconds": 3.11,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 577
+    },
+    {
+      "seconds": 3.144,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 598
+    },
+    {
+      "seconds": 3.331,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 602
+    },
+    {
+      "seconds": 3.331,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 605
+    },
+    {
+      "seconds": 3.331,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 621
+    },
+    {
+      "seconds": 3.331,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 639
+    },
+    {
+      "seconds": 3.331,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 648
+    },
+    {
+      "seconds": 3.343,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 653
+    },
+    {
+      "seconds": 3.376,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 660
+    },
+    {
+      "seconds": 3.41,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 675
+    },
+    {
+      "seconds": 3.445,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 696
+    },
+    {
+      "seconds": 3.479,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 710
+    },
+    {
+      "seconds": 3.513,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 734
+    },
+    {
+      "seconds": 3.546,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 749
+    },
+    {
+      "seconds": 3.65,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 761
+    },
+    {
+      "seconds": 3.651,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 765
+    },
+    {
+      "seconds": 3.651,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 775
+    },
+    {
+      "seconds": 3.679,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 783
+    },
+    {
+      "seconds": 3.712,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 792
+    },
+    {
+      "seconds": 3.746,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 798
+    },
+    {
+      "seconds": 3.778,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 808
+    },
+    {
+      "seconds": 3.812,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 811
+    },
+    {
+      "seconds": 3.845,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 833
+    },
+    {
+      "seconds": 3.882,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 847
+    },
+    {
+      "seconds": 3.913,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 857
+    },
+    {
+      "seconds": 3.947,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 864
+    },
+    {
+      "seconds": 4.003,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 874
+    },
+    {
+      "seconds": 4.013,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 896
+    },
+    {
+      "seconds": 4.046,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 906
+    },
+    {
+      "seconds": 4.082,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 929
+    },
+    {
+      "seconds": 4.113,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 935
+    },
+    {
+      "seconds": 4.145,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 936
+    },
+    {
+      "seconds": 4.179,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 943
+    },
+    {
+      "seconds": 4.212,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 955
+    },
+    {
+      "seconds": 4.245,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 962
+    },
+    {
+      "seconds": 4.28,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 971
+    },
+    {
+      "seconds": 4.313,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 981
+    },
+    {
+      "seconds": 4.349,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 997
+    },
+    {
+      "seconds": 4.38,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1016
+    },
+    {
+      "seconds": 4.413,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1024
+    },
+    {
+      "seconds": 4.454,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1046
+    },
+    {
+      "seconds": 4.48,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1049
+    },
+    {
+      "seconds": 4.514,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1058
+    },
+    {
+      "seconds": 4.548,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1064
+    },
+    {
+      "seconds": 4.58,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1079
+    },
+    {
+      "seconds": 4.613,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1091
+    },
+    {
+      "seconds": 4.646,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1097
+    },
+    {
+      "seconds": 4.679,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1107
+    },
+    {
+      "seconds": 4.713,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1121
+    },
+    {
+      "seconds": 4.746,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1139
+    },
+    {
+      "seconds": 4.779,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1147
+    },
+    {
+      "seconds": 4.813,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1160
+    },
+    {
+      "seconds": 4.845,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1165
+    },
+    {
+      "seconds": 4.88,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1192
+    },
+    {
+      "seconds": 4.913,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1208
+    },
+    {
+      "seconds": 4.947,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1217
+    },
+    {
+      "seconds": 4.98,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1226
+    },
+    {
+      "seconds": 5.013,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1235
+    },
+    {
+      "seconds": 5.047,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1243
+    },
+    {
+      "seconds": 5.08,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1253
+    },
+    {
+      "seconds": 5.118,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1262
+    },
+    {
+      "seconds": 5.147,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1265
+    },
+    {
+      "seconds": 5.178,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1275
+    },
+    {
+      "seconds": 5.213,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1293
+    },
+    {
+      "seconds": 5.245,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1298
+    },
+    {
+      "seconds": 5.28,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1313
+    },
+    {
+      "seconds": 5.312,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1317
+    },
+    {
+      "seconds": 5.346,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1329
+    },
+    {
+      "seconds": 5.379,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1331
+    },
+    {
+      "seconds": 5.412,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1345
+    },
+    {
+      "seconds": 5.447,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1369
+    },
+    {
+      "seconds": 5.48,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1378
+    },
+    {
+      "seconds": 5.513,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1395
+    },
+    {
+      "seconds": 5.547,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1415
+    },
+    {
+      "seconds": 5.579,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1418
+    },
+    {
+      "seconds": 5.612,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1431
+    },
+    {
+      "seconds": 5.647,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1454
+    },
+    {
+      "seconds": 5.68,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1467
+    },
+    {
+      "seconds": 5.714,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1478
+    },
+    {
+      "seconds": 5.75,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1493
+    },
+    {
+      "seconds": 5.78,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1501
+    },
+    {
+      "seconds": 5.813,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1508
+    },
+    {
+      "seconds": 5.847,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1529
+    },
+    {
+      "seconds": 5.88,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1538
+    },
+    {
+      "seconds": 5.913,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1540
+    },
+    {
+      "seconds": 5.95,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1563
+    },
+    {
+      "seconds": 5.98,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1568
+    },
+    {
+      "seconds": 6.013,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1581
+    },
+    {
+      "seconds": 6.046,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1584
+    },
+    {
+      "seconds": 6.08,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1606
+    },
+    {
+      "seconds": 6.113,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1608
+    },
+    {
+      "seconds": 6.147,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1622
+    },
+    {
+      "seconds": 6.18,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1637
+    },
+    {
+      "seconds": 6.214,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1655
+    },
+    {
+      "seconds": 6.247,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1661
+    },
+    {
+      "seconds": 6.28,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1665
+    },
+    {
+      "seconds": 6.314,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1680
+    },
+    {
+      "seconds": 6.347,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1694
+    },
+    {
+      "seconds": 6.382,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1714
+    },
+    {
+      "seconds": 6.415,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1716
+    },
+    {
+      "seconds": 6.448,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1728
+    },
+    {
+      "seconds": 6.482,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1740
+    },
+    {
+      "seconds": 6.515,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1742
+    },
+    {
+      "seconds": 6.547,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1768
+    },
+    {
+      "seconds": 6.581,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1778
+    },
+    {
+      "seconds": 6.614,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1783
+    },
+    {
+      "seconds": 6.648,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1796
+    },
+    {
+      "seconds": 6.681,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1799
+    },
+    {
+      "seconds": 6.714,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1805
+    },
+    {
+      "seconds": 6.748,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1815
+    },
+    {
+      "seconds": 6.78,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1822
+    },
+    {
+      "seconds": 6.815,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1831
+    },
+    {
+      "seconds": 6.847,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1845
+    },
+    {
+      "seconds": 6.881,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1863
+    },
+    {
+      "seconds": 6.914,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1877
+    },
+    {
+      "seconds": 6.947,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1886
+    },
+    {
+      "seconds": 6.98,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1889
+    },
+    {
+      "seconds": 7.015,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1897
+    },
+    {
+      "seconds": 7.047,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1902
+    },
+    {
+      "seconds": 7.08,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1906
+    },
+    {
+      "seconds": 7.113,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1915
+    },
+    {
+      "seconds": 7.147,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1927
+    },
+    {
+      "seconds": 7.18,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1933
+    },
+    {
+      "seconds": 7.213,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1938
+    },
+    {
+      "seconds": 7.247,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1950
+    },
+    {
+      "seconds": 7.28,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1956
+    },
+    {
+      "seconds": 7.313,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1962
+    },
+    {
+      "seconds": 7.347,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1976
+    },
+    {
+      "seconds": 7.38,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1987
+    },
+    {
+      "seconds": 7.415,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1992
+    },
+    {
+      "seconds": 7.448,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 1998
+    },
+    {
+      "seconds": 7.48,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 2005
+    },
+    {
+      "seconds": 7.513,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 2018
+    },
+    {
+      "seconds": 7.546,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 2023
+    },
+    {
+      "seconds": 7.579,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 2031
+    },
+    {
+      "seconds": 7.612,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 2033
+    },
+    {
+      "seconds": 7.645,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 2041
+    },
+    {
+      "seconds": 7.679,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 2049
+    },
+    {
+      "seconds": 7.712,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 2063
+    },
+    {
+      "seconds": 7.745,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 2065
+    },
+    {
+      "seconds": 7.779,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 2081
+    },
+    {
+      "seconds": 7.812,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 2089
+    },
+    {
+      "seconds": 7.845,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 2094
+    },
+    {
+      "seconds": 7.879,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 2117
+    },
+    {
+      "seconds": 7.912,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 2134
+    },
+    {
+      "seconds": 7.945,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 2143
+    },
+    {
+      "seconds": 7.979,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 2162
+    },
+    {
+      "seconds": 8.012,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 2172
+    },
+    {
+      "seconds": 8.046,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 2206
+    },
+    {
+      "seconds": 8.08,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 2210
+    },
+    {
+      "seconds": 8.113,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 2220
+    },
+    {
+      "seconds": 8.147,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 2234
+    },
+    {
+      "seconds": 8.179,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 2243
+    },
+    {
+      "seconds": 8.213,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 2259
+    },
+    {
+      "seconds": 8.247,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 2276
+    },
+    {
+      "seconds": 8.28,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 2281
+    },
+    {
+      "seconds": 8.314,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 2301
+    },
+    {
+      "seconds": 8.347,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 2319
+    },
+    {
+      "seconds": 8.38,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 2330
+    },
+    {
+      "seconds": 8.413,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 2335
+    },
+    {
+      "seconds": 8.447,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 2344
+    },
+    {
+      "seconds": 8.48,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 2371
+    },
+    {
+      "seconds": 8.513,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 2375
+    },
+    {
+      "seconds": 8.547,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 2382
+    },
+    {
+      "seconds": 8.58,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 2392
+    },
+    {
+      "seconds": 8.614,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 2396
+    },
+    {
+      "seconds": 8.647,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 2431
+    },
+    {
+      "seconds": 8.68,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 2439
+    },
+    {
+      "seconds": 8.713,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 2445
+    },
+    {
+      "seconds": 8.747,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 2447
+    },
+    {
+      "seconds": 8.78,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 2465
+    },
+    {
+      "seconds": 8.813,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 2468
+    },
+    {
+      "seconds": 8.847,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 2476
+    },
+    {
+      "seconds": 8.879,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 2484
+    },
+    {
+      "seconds": 8.913,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 2501
+    },
+    {
+      "seconds": 8.947,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 2512
+    },
+    {
+      "seconds": 8.979,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 2529
+    },
+    {
+      "seconds": 9.013,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 2552
+    },
+    {
+      "seconds": 9.047,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 2567
+    },
+    {
+      "seconds": 9.081,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 2587
+    },
+    {
+      "seconds": 9.113,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 2616
+    },
+    {
+      "seconds": 9.148,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 2630
+    },
+    {
+      "seconds": 9.189,
+      "kind": "sdk_event",
+      "event_type": "text",
+      "characters": 2632
+    },
+    {
+      "seconds": 9.192,
+      "kind": "sdk_event",
+      "event_type": "turn_meta"
+    },
+    {
+      "seconds": 9.201,
+      "kind": "sdk_event",
+      "event_type": "turn_delta"
+    },
+    {
+      "seconds": 9.201,
+      "kind": "sdk_event",
+      "event_type": "turn_stop"
+    },
+    {
+      "seconds": 9.202,
+      "kind": "sdk_event",
+      "event_type": "rate_limit"
+    },
+    {
+      "seconds": 9.426,
+      "kind": "sdk_event",
+      "event_type": "done",
+      "is_error": false
+    },
+    {
+      "seconds": 9.427,
+      "kind": "engine_log",
+      "message": "Background stream [isolated stream] result stored in Redis (2632 chars)"
+    }
+  ],
+  "partial_answer": "LANTERN MAKERS CLUB\n\n**",
+  "final_answer": "LANTERN MAKERS CLUB\n\n**Opening Checklist**\n\n1. **Greet Everyone at the Door**\nStand near the entrance ten minutes before start time so each arrival is noticed right away. Offer a name tag and a marker, and invite people to add a favorite color or a pronoun if they wish. Point out the kettle, the restrooms, and the coat hooks so nobody has to ask.\n\n2. **Lay Out the Supplies**\nSet paper, glue sticks, scissors, rulers, and bone folders in clearly labeled trays at the center of each table. Keep sharp tools in one marked container so you can count them at the start and end of the session. Place a few spare sheets of scrap paper at every seat for testing folds and cuts.\n\n3. **Check the Battery Lights**\nTest every battery tea light before members arrive, and set aside any that flicker, feel warm, or have loose covers. Use only LED lights, and never allow real flames anywhere in the workshop. Store spare batteries in a closed box, and keep a small bag handy for any worn-out ones.\n\n4. **Show a Simple Example**\nDisplay one finished lantern, plus a half-built one, so people can see how the pieces come together. Walk through the main steps aloud in under five minutes, including scoring, folding, and gluing the seam. Leave the sample on a central table so anyone can pick it up and look closely.\n\n5. **Help the Newcomers**\nPair each first-time visitor with a friendly regular who can answer questions without taking over the project. Suggest a basic cylinder lantern as a starter, since it builds confidence quickly. Check in after fifteen minutes, because that is when many beginners feel stuck but hesitate to say so.\n\n6. **Make Room for Mistakes**\nSay out loud that crooked folds, torn paper, and glue smudges are normal and often lead to interesting results. Keep extra paper and a damp cloth nearby so fixes feel easy rather than embarrassing. Share a story of your own best blunder to help the room relax.\n\n7. **Plan the Tidy-Up**\nAnnounce a gentle ten-minute warning before closing so people can finish a step without rushing. Ask everyone to return tools to their trays, sweep paper scraps into the recycling bin, and wipe the tables. Count the scissors and craft knives one last time before locking the cabinet.\n\n8. **Share the Finished Work**\nClear a shelf or windowsill where completed lanterns can glow together once the battery lights are switched on. Invite makers to say a sentence or two about what they made, though never pressure anyone who prefers to stay quiet. Take a group photo only with permission, and remind people they can take their lanterns home or leave them for the next display.\n\nREADY TO OPEN",
+  "payload": {
+    "result": "LANTERN MAKERS CLUB\n\n**Opening Checklist**\n\n1. **Greet Everyone at the Door**\nStand near the entrance ten minutes before start time so each arrival is noticed right away. Offer a name tag and a marker, and invite people to add a favorite color or a pronoun if they wish. Point out the kettle, the restrooms, and the coat hooks so nobody has to ask.\n\n2. **Lay Out the Supplies**\nSet paper, glue sticks, scissors, rulers, and bone folders in clearly labeled trays at the center of each table. Keep sharp tools in one marked container so you can count them at the start and end of the session. Place a few spare sheets of scrap paper at every seat for testing folds and cuts.\n\n3. **Check the Battery Lights**\nTest every battery tea light before members arrive, and set aside any that flicker, feel warm, or have loose covers. Use only LED lights, and never allow real flames anywhere in the workshop. Store spare batteries in a closed box, and keep a small bag handy for any worn-out ones.\n\n4. **Show a Simple Example**\nDisplay one finished lantern, plus a half-built one, so people can see how the pieces come together. Walk through the main steps aloud in under five minutes, including scoring, folding, and gluing the seam. Leave the sample on a central table so anyone can pick it up and look closely.\n\n5. **Help the Newcomers**\nPair each first-time visitor with a friendly regular who can answer questions without taking over the project. Suggest a basic cylinder lantern as a starter, since it builds confidence quickly. Check in after fifteen minutes, because that is when many beginners feel stuck but hesitate to say so.\n\n6. **Make Room for Mistakes**\nSay out loud that crooked folds, torn paper, and glue smudges are normal and often lead to interesting results. Keep extra paper and a damp cloth nearby so fixes feel easy rather than embarrassing. Share a story of your own best blunder to help the room relax.\n\n7. **Plan the Tidy-Up**\nAnnounce a gentle ten-minute warning before closing so people can finish a step without rushing. Ask everyone to return tools to their trays, sweep paper scraps into the recycling bin, and wipe the tables. Count the scissors and craft knives one last time before locking the cabinet.\n\n8. **Share the Finished Work**\nClear a shelf or windowsill where completed lanterns can glow together once the battery lights are switched on. Invite makers to say a sentence or two about what they made, though never pressure anyone who prefers to stay quiet. Take a group photo only with permission, and remind people they can take their lanterns home or leave them for the next display.\n\nREADY TO OPEN",
+    "final_text": "LANTERN MAKERS CLUB\n\n**Opening Checklist**\n\n1. **Greet Everyone at the Door**\nStand near the entrance ten minutes before start time so each arrival is noticed right away. Offer a name tag and a marker, and invite people to add a favorite color or a pronoun if they wish. Point out the kettle, the restrooms, and the coat hooks so nobody has to ask.\n\n2. **Lay Out the Supplies**\nSet paper, glue sticks, scissors, rulers, and bone folders in clearly labeled trays at the center of each table. Keep sharp tools in one marked container so you can count them at the start and end of the session. Place a few spare sheets of scrap paper at every seat for testing folds and cuts.\n\n3. **Check the Battery Lights**\nTest every battery tea light before members arrive, and set aside any that flicker, feel warm, or have loose covers. Use only LED lights, and never allow real flames anywhere in the workshop. Store spare batteries in a closed box, and keep a small bag handy for any worn-out ones.\n\n4. **Show a Simple Example**\nDisplay one finished lantern, plus a half-built one, so people can see how the pieces come together. Walk through the main steps aloud in under five minutes, including scoring, folding, and gluing the seam. Leave the sample on a central table so anyone can pick it up and look closely.\n\n5. **Help the Newcomers**\nPair each first-time visitor with a friendly regular who can answer questions without taking over the project. Suggest a basic cylinder lantern as a starter, since it builds confidence quickly. Check in after fifteen minutes, because that is when many beginners feel stuck but hesitate to say so.\n\n6. **Make Room for Mistakes**\nSay out loud that crooked folds, torn paper, and glue smudges are normal and often lead to interesting results. Keep extra paper and a damp cloth nearby so fixes feel easy rather than embarrassing. Share a story of your own best blunder to help the room relax.\n\n7. **Plan the Tidy-Up**\nAnnounce a gentle ten-minute warning before closing so people can finish a step without rushing. Ask everyone to return tools to their trays, sweep paper scraps into the recycling bin, and wipe the tables. Count the scissors and craft knives one last time before locking the cabinet.\n\n8. **Share the Finished Work**\nClear a shelf or windowsill where completed lanterns can glow together once the battery lights are switched on. Invite makers to say a sentence or two about what they made, though never pressure anyone who prefers to stay quiet. Take a group photo only with permission, and remind people they can take their lanterns home or leave them for the next display.\n\nREADY TO OPEN",
+    "is_error": false,
+    "duration_ms": 8931,
+    "num_turns": 1,
+    "tool_calls": [],
+    "events": [
+      {
+        "type": "text",
+        "content": "LANTERN MAKERS CLUB\n\n**Opening Checklist**\n\n1. **Greet Everyone at the Door**\nStand near the entrance ten minutes before start time so each arrival is noticed right away. Offer a name tag and a marker, and invite people to add a favorite color or a pronoun if they wish. Point out the kettle, the restrooms, and the coat hooks so nobody has to ask.\n\n2. **Lay Out the Supplies**\nSet paper, glue sticks, scissors, rulers, and bone folders in clearly labeled trays at the center of each table. Keep sharp tools in one marked container so you can count them at the start and end of the session. Place a few spare sheets of scrap paper at every seat for testing folds and cuts.\n\n3. **Check the Battery Lights**\nTest every battery tea light before members arrive, and set aside any that flicker, feel warm, or have loose covers. Use only LED lights, and never allow real flames anywhere in the workshop. Store spare batteries in a closed box, and keep a small bag handy for any worn-out ones.\n\n4. **Show a Simple Example**\nDisplay one finished lantern, plus a half-built one, so people can see how the pieces come together. Walk through the main steps aloud in under five minutes, including scoring, folding, and gluing the seam. Leave the sample on a central table so anyone can pick it up and look closely.\n\n5. **Help the Newcomers**\nPair each first-time visitor with a friendly regular who can answer questions without taking over the project. Suggest a basic cylinder lantern as a starter, since it builds confidence quickly. Check in after fifteen minutes, because that is when many beginners feel stuck but hesitate to say so.\n\n6. **Make Room for Mistakes**\nSay out loud that crooked folds, torn paper, and glue smudges are normal and often lead to interesting results. Keep extra paper and a damp cloth nearby so fixes feel easy rather than embarrassing. Share a story of your own best blunder to help the room relax.\n\n7. **Plan the Tidy-Up**\nAnnounce a gentle ten-minute warning before closing so people can finish a step without rushing. Ask everyone to return tools to their trays, sweep paper scraps into the recycling bin, and wipe the tables. Count the scissors and craft knives one last time before locking the cabinet.\n\n8. **Share the Finished Work**\nClear a shelf or windowsill where completed lanterns can glow together once the battery lights are switched on. Invite makers to say a sentence or two about what they made, though never pressure anyone who prefers to stay quiet. Take a group photo only with permission, and remind people they can take their lanterns home or leave them for the next display.\n\nREADY TO OPEN",
+        "parent_tool_use_id": null
+      }
+    ]
+  },
+  "result_sha256": "a37db1de68db9f5d1375332b2e159c385d7c9ca6f05911fe4896ef42a6cb34d2",
+  "checks": {
+    "browser_transport_aborted": true,
+    "running_http_status": 202,
+    "recovered_http_status": 200,
+    "second_read_http_status": 200,
+    "second_read_identical": true,
+    "final_text_matches_result": true,
+    "partial_characters": 23,
+    "recovered_characters": 2632,
+    "tools": 0,
+    "browser_errors": [],
+    "outbox_enqueued": true,
+    "delivery_worker_started": false
+  },
+  "harness_scope": [
+    "Committed source archive; original /stream and /stream/{id}/result routes, actual invocation and ClientPool, bundled CLI subscription auth, real ephemeral Redis.",
+    "Manual service initialization omits MCP schema, health-check network session, cleanup worker, armed-session restore and outbox delivery worker.",
+    "MCP registry cleared before consumer imports; bare:true, setting_sources:[], enabled_mcps:[], explicit empty allowed/disallowed tools, enforced tool policy, on_disconnect:hold.",
+    "SessionManager projects directory redirected into isolated CLAUDE_CONFIG_DIR; HOME retained. Copied subscription credential stayed private and is removed after execution.",
+    "Workflow shipping explicitly replaced with a fail-closed function. Outbox enqueue is original code and persisted locally; callbacks never delivered.",
+    "Invocation wrapper records actual events without replacing the SDK generator. Browser uses actual fetch AbortController transport close; no synthetic ConnectionResetError.",
+    "Environment allowlist excludes paid API keys and existing engine/MCP/notification configuration. dotenv loading disabled."
+  ],
+  "limits": [
+    "A client connection closed while the same engine process continued; process-restart recovery was not exercised.",
+    "No conversation migration, tool execution, pending approval or production UI reconciliation was tested.",
+    "This is a controlled local execution and static replay; visitors do not start an inference or contact a live engine."
+  ],
+  "captures": {
+    "01-ready.png": "1848fa375c24e28ec5cdcbfa0200fe38c453ae1680020b1b27d7cf93726cee8b",
+    "04-stored.png": "6233f49caa3a1b57a4a47bd40b03ff138a2f3cebfb793010e9e8035bc3d314cd",
+    "03-disconnected.png": "6876b48ac4bafb2aa819422397c02609733d7a0575347c096efa6efa5bdb6e24",
+    "05-recovered.png": "553e87555bae4a8982c45f77779279df9f452d36b5a99a8db1d87b2ef7b2187c",
+    "recovery-execution.mp4": "353fa7dc922fbfabe96913b63d0d2c0bb308fa2ad0cbba78cdeeb1e6469ca737",
+    "02-connected.png": "281a6e6b9cdde540100dcffc20ba20a9ade86920fa48a618e20a7bbc078e61f5"
+  }
+}

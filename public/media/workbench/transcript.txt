@@ -1,0 +1,51 @@
+METACODEX / CONTROLLED EXECUTION
+Source f034947811e9227f3c50f41f0aa8c0d410293b0a
+
+[desk-a] $ metacodex install
+link: installed $FIXTURE/desk-a/.agents/skills
+link: installed $FIXTURE/desk-a/.codex/hooks.json
+link: installed $FIXTURE/desk-a/.codex/AGENTS.md
+link: installed $FIXTURE/desk-a/.codex/rules/metacodex.rules
+link: installed $FIXTURE/desk-a/bin/codex-digest
+link: installed $FIXTURE/desk-a/bin/codex-trust-everything
+apply: generated config (values redacted)
+[exit 0; 64.768 ms observed]
+
+[desk-b] $ metacodex install
+link: installed $FIXTURE/desk-b/.agents/skills
+link: installed $FIXTURE/desk-b/.codex/hooks.json
+link: installed $FIXTURE/desk-b/.codex/AGENTS.md
+link: installed $FIXTURE/desk-b/.codex/rules/metacodex.rules
+link: installed $FIXTURE/desk-b/bin/codex-digest
+link: installed $FIXTURE/desk-b/bin/codex-trust-everything
+apply: generated config (values redacted)
+[exit 0; 54.446 ms observed]
+
+[desk-a] $ metacodex apply
+metacodex: error: live config has non-runtime drift; run 'metacodex apply --adopt' to preserve it or '--force' to discard it
+[exit 1; 47.514 ms observed]
+
+[desk-a] $ metacodex apply --adopt
+apply: generated config (values redacted)
+[exit 0; 55.419 ms observed]
+
+[desk-a] $ metacodex apply
+apply: generated config (values redacted)
+[exit 0; 76.236 ms observed]
+
+[desk-b] $ metacodex apply
+apply: generated config (values redacted)
+[exit 0; 77.538 ms observed]
+
+[desk-a] $ metacodex doctor
+doctor: ok (configuration values redacted)
+[exit 0; 69.99 ms observed]
+
+[desk-b] $ metacodex doctor
+doctor: ok (configuration values redacted)
+[exit 0; 73.497 ms observed]
+
+VERIFIED: both desks share demo-model-v2; A retains high reasoning; B uses low.
+VERIFIED: different local status lines survive.
+VERIFIED: shared same-page skill hash matches on both desks.
+VERIFIED: fake auth, session and secret-overlay SHA-256 hashes are unchanged.

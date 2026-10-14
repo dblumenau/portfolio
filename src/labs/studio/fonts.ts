@@ -1,0 +1,1 @@
+export async function fontsReady():Promise<void> { await Promise.all([document.fonts.load('700 48px "DM Sans Variable"'),document.fonts.load('700 48px "Fraunces Variable"')]); await document.fonts.ready; }

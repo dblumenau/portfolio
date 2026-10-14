@@ -1,14 +1,15 @@
 ---
+import Icon from './Icon.astro';
 const paths = [
-  { number: '01', label: 'Try a small experiment', title: 'Follow a memory back to its source.', description: 'Explore a real sample of the knowledge graph. Inspect a connection, set it aside, then undo the change.', href: '/labs/memory/', link: 'Open the Memory Lab' },
+  { number: '01', label: 'Try a small experiment', title: 'Make a change. See what it keeps.', description: 'Try a graph correction, follow a configuration conflict, or recover an answer after the browser disconnects.', href: '/labs/', link: 'Choose a small experiment' },
   { number: '02', label: 'Find a particular idea', title: 'The features have their own stories.', description: 'From portable agent setup to a correction with a history. Browse the decisions that shaped the work.', href: '/features/', link: 'Browse the feature atlas' },
   { number: '03', label: 'See the work accumulate', title: 'Follow the changes over time.', description: 'A release map connects selected turning points with the major, minor and patch tags behind them.', href: '/releases/', link: 'Explore the release history' },
 ];
 ---
 <section class="explore-workbench wrap" aria-labelledby="explore-title">
   <div class="explore-heading"><div><p class="eyebrow">Another way into the work</p><h2 id="explore-title">A place you can<br /><em>look around.</em></h2></div><p>Walk through the connected projects, try a small part for yourself, or follow an idea back to the change that made it work.</p></div>
-  <a class="world-invitation" href="/world/" aria-label="Enter Forge World, an interactive illustrated map of six project districts"><img src="/media/forge-world-overview.webp" width="1377" height="650" alt="A miniature world with a gallery, engine room, tool gateway, memory observatory, workbench and small workshop." loading="lazy" decoding="async" /><div class="world-invitation-caption"><div><span class="eyebrow">An interactive illustrated map</span><strong>Enter Forge World</strong></div><span class="world-invitation-arrow" aria-hidden="true">↗</span></div></a>
-  <div class="explore-paths">{paths.map(path => <a href={path.href}><span class="explore-path-number">{path.number} / {path.label}</span><h3>{path.title}</h3><p>{path.description}</p><span class="explore-path-link">{path.link}<span aria-hidden="true">↗</span></span></a>)}</div>
+  <a class="world-invitation" href="/world/" aria-label="Enter Forge World, an interactive illustrated map of six project districts"><img src="/media/forge-world-overview.webp" width="1377" height="650" alt="A miniature world with a gallery, engine room, tool gateway, memory observatory, workbench and small workshop." loading="lazy" decoding="async" /><div class="world-invitation-caption"><div><span class="eyebrow">An interactive illustrated map</span><strong>Enter Forge World</strong></div><span class="world-invitation-arrow" aria-hidden="true"><Icon name="arrow-up-right" /></span></div></a>
+  <div class="explore-paths">{paths.map(path => <a href={path.href}><span class="explore-path-number">{path.number} / {path.label}</span><h3>{path.title}</h3><p>{path.description}</p><span class="explore-path-link">{path.link}<span aria-hidden="true"><Icon name="arrow-up-right" /></span></span></a>)}</div>
 </section>
 
 <style>

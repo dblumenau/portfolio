@@ -5,6 +5,7 @@ import { resolve, join } from 'node:path';
 import { createHash } from 'node:crypto';
 
 const output = resolve(process.argv[2] ?? 'artifacts');
+if (process.env.PORTFOLIO_DIST_ROOT && resolve(process.env.PORTFOLIO_DIST_ROOT) !== resolve('dist')) throw new Error('Release packaging verifies the default dist directory. Unset PORTFOLIO_DIST_ROOT before packaging.');
 if (output === resolve('dist') || output.startsWith(resolve('dist') + '/')) throw new Error('Release artifacts must stay outside the web root.');
 const check = spawnSync('npm', ['run', 'verify'], { stdio: 'inherit' });
 if (check.status !== 0) process.exit(check.status ?? 1);

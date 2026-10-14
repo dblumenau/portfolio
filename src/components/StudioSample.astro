@@ -1,0 +1,20 @@
+---
+import Icon from './Icon.astro';
+---
+<details class="studio-sample">
+  <summary><span>Take a look at an exported example</span><Icon name="plus" /></summary>
+  <div class="studio-sample-body"><figure><video controls loop playsinline preload="none" poster="/media/studio/sample-loop.webp" aria-label="Actual four-second Studio Lab export"><source src="/media/studio/sample-loop.mp4" type="video/mp4" /><track kind="captions" src="/media/studio/sample-loop.vtt" srclang="en" label="English" default />Your browser does not support video playback.</video><figcaption>Original four-second MP4 export. Fictional Sunday Studio wording.</figcaption></figure><div><p class="eyebrow">Made with this workshop</p><h2>A print.<br /><em>A little motion.</em></h2><p>These files came from the working editor. The PNG has an edited headline; the MP4 uses the sample composition. You can download either example or make your own above.</p><a href="/media/studio/sample-print.png" download="studio-example.png">Download the sample PNG <Icon name="arrow-down" /></a><a href="/media/studio/sample-loop.mp4" download="studio-example.mp4">Download the sample MP4 <Icon name="arrow-down" /></a></div></div>
+</details>
+<style>
+  .studio-sample{border-bottom:1px solid var(--line);margin-top:20px}
+  summary{display:flex;align-items:center;justify-content:space-between;gap:20px;font-size:.86rem;font-weight:600;padding:20px 0;list-style:none}
+  summary::-webkit-details-marker{display:none}
+  .studio-sample-body{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:50px;align-items:center;padding:10px 0 35px}
+  video{width:100%;max-width:420px;aspect-ratio:1;background:#263c2e;border:1px solid var(--line);border-radius:3px}
+  figcaption{font-size:.66rem;color:var(--muted);margin-top:10px}
+  .eyebrow{color:var(--rust);margin-bottom:15px}
+  h2{font-size:2.3rem;margin-bottom:18px}
+  p:not(.eyebrow){font-size:.9rem;color:var(--muted);line-height:1.75;max-width:440px;margin-bottom:15px}
+  a{display:flex;align-items:center;gap:20px;padding-block:10px;width:fit-content;font-size:.8rem;font-weight:550}
+  @media(max-width:700px){.studio-sample-body{grid-template-columns:1fr;gap:25px}summary{font-size:.78rem}h2{font-size:2rem}}
+</style>

@@ -1,0 +1,6 @@
+---
+interface Props { name?: 'arrow' | 'external' | 'download' | 'back' | 'music' | 'shield' | 'expand'; }
+const { name = 'arrow' } = Astro.props;
+const paths = { arrow: 'M4 12h15m-6-6 6 6-6 6', external: 'M6 18 18 6M7 6h11v11', download: 'M12 3v13m-5-5 5 5 5-5M5 20h14', back: 'M20 12H5m6-6-6 6 6 6', music: 'M9 17V5l11-2v12M9 7l11-2M9 17c0 2-6 4-6 1s6-4 6-1Zm11-2c0 2-6 4-6 1s6-4 6-1Z', shield: 'M12 3 4 6v6c0 5 8 9 8 9s8-4 8-9V6l-8-3Zm-4 9 3 3 5-6', expand: 'M5 12h14' };
+---
+<svg class="gl-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d={paths[name]} />{name === 'expand' && <path class="gl-plus-vertical" d="M12 5v14" />}</svg>

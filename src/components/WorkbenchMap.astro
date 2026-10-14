@@ -1,4 +1,5 @@
 ---
+import Icon from './Icon.astro';
 const flows = [
   { id: 'setup', label: 'Set up a session', title: 'Shared practice. Local boundaries.', intro: 'A portable workbench brings the useful setup with it. The things that belong to one machine stay local.', steps: [
     { name: 'Shared source', detail: 'Instructions, skills and hooks live in versioned repositories.', token: 'metaclaude / metacodex' },
@@ -18,7 +19,7 @@ const flows = [
   </div>
   {flows.map((flow, index) => <section id={`bench-${flow.id}`} role="tabpanel" aria-labelledby={`bench-${flow.id}-tab`} data-bench-panel={flow.id} hidden={index !== 0}>
     <div class="workbench-map-intro"><p class="eyebrow">An illustrated workflow</p><h3>{flow.title}</h3><p>{flow.intro}</p></div>
-    <ol class="workbench-steps">{flow.steps.map((step, i) => <li><span class="bench-number">0{i + 1}</span><h4>{step.name}</h4><p>{step.detail}</p><span class="bench-token">{step.token}</span></li>)}</ol>
+    <ol class="workbench-steps">{flow.steps.map((step, i) => <li>{i > 0 && <span class="bench-step-arrow"><Icon name="arrow-right" /></span>}<span class="bench-number">0{i + 1}</span><h4>{step.name}</h4><p>{step.detail}</p><span class="bench-token">{step.token}</span></li>)}</ol>
   </section>)}
   <p class="workbench-footnote">A map of the working practice. It does not read or change a machine’s configuration.</p>
 </section>
@@ -30,10 +31,10 @@ const flows = [
   .workbench-map-intro{max-width:680px}.workbench-map-intro h3{font-size:clamp(1.6rem,3vw,2.5rem);letter-spacing:-.035em;margin:12px 0}.workbench-map-intro>p:last-child{max-width:580px;color:#485347;line-height:1.7}
   .workbench-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;margin:32px 0 0;padding:0;list-style:none}
   .workbench-steps li{position:relative;background:#f8f6ef;border:1px solid #c6cdbf;padding:24px;min-width:0}
-  .workbench-steps li+li::before{content:'→';position:absolute;left:-23px;top:45%;color:#46664d;font-size:22px}
+  .bench-step-arrow{position:absolute;left:-25px;top:45%;color:#46664d;font-size:20px}
   .bench-number{font:12px monospace;color:#8a422c}.workbench-steps h4{font-size:1.2rem;margin:18px 0 12px}.workbench-steps p{font-size:.95rem;line-height:1.65;margin:0 0 24px;color:#4b554a}.bench-token{display:block;border-top:1px solid #d4d8cc;padding-top:12px;font-size:.75rem;color:#344d3d}
   .workbench-footnote{font-size:.75rem;color:#54614f;margin:24px 0 0}
-  @media(max-width:660px){.workbench-steps{grid-template-columns:1fr;gap:22px}.workbench-steps li+li::before{content:'↓';left:50%;top:-24px}.workbench-tabs button{flex:1;min-width:130px}}
+  @media(max-width:660px){.workbench-steps{grid-template-columns:1fr;gap:22px}.bench-step-arrow{left:50%;top:-24px;transform:rotate(90deg)}.workbench-tabs button{flex:1;min-width:130px}}
 </style>
 <script>
   document.querySelectorAll<HTMLElement>('[data-workbench-map]').forEach(root=>{

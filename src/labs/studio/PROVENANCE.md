@@ -1,0 +1,5 @@
+# Studio Lab rendering provenance
+
+Kitforge code copied from committed revision `809d559d8c54e1f44385100ab336d2e988b4a84a` (David Blumenau, user-authorized reuse). Core render/text/layout/templates/frames/shader-baking/native H264 export are adapted into an isolated portfolio module. Changes: local DM Sans/Fraunces fonts, three type compositions, headline scale, no photos/logos or uploads, three curated original shader presets, bounded 512px/16fps background bake, cancellation and resource cleanup, PNG alongside JPG. Preview and download call the same render function; animated export resamples the same baked background frame list. Kitforge itself was not edited.
+
+Paper Shaders 0.0.80: minimal original distribution files, unmodified, Apache-2.0, LICENSE and NOTICE retained in vendor/paper and public notices. Presets Amber Pulse, Cyber Teal, Forest Mist use Kitforge's original parameters. mp4-muxer 5.2.2: original ESM distribution, MIT, license retained. Optional exporter is lazy loaded. No runtime fetch, API or upload is used by the workshop. Font files are supplied by the portfolio's existing Fontsource packages.

@@ -1,6 +1,6 @@
 # David Blumenau’s portfolio
 
-A static Astro site with six case studies, a Three.js world, a feature atlas, an interactive memory lab and a release explorer. Product screenshots, captioned recordings and downloadable samples accompany the stories. nginx serves the production build; browser interactions run without an application server.
+A static Astro site with six case studies, a Three.js world, 30 feature stories, five interactive labs and a release explorer. The labs explore memory, configuration, recovery, browser graphics and gateway boundaries. Product screenshots, captioned recordings and inspectable execution receipts accompany the stories. nginx serves the production build; browser interactions run without an application server.
 
 Use Node 22.12 or newer, npm, ffprobe and exiftool for the media audit.
 
@@ -18,6 +18,8 @@ npm run verify
 
 This runs Astro diagnostics, builds static routes, audits links/assets/public media and runs Playwright at phone, tablet and desktop sizes. The browser suite includes WCAG checks through axe, keyboard navigation, architecture tabs, image dialogs and real video playback/captions. It starts its own preview on port 4322. Use `PORTFOLIO_TEST_URL` to test another local server instead.
 
+For concurrent verification, build to a private directory with `npm run build -- --outDir /private/build`, then set `PORTFOLIO_DIST_ROOT=/private/build` for the audit, browser preview and Docker smoke scripts. `PORTFOLIO_PREVIEW_PORT` selects an available local preview port. Default behavior remains `dist/` on port 4322.
+
 Create a reviewed deployment bundle with:
 
 ```sh
@@ -29,3 +31,5 @@ The command repeats verification and produces a compressed static package with a
 The release command also requires Docker and runs `npm run test:deployment`: an isolated read-only nginx container checks static routes, redirects, 404s, headers, image permissions, video ranges and captions. The test removes its own container and temporary image afterward.
 
 [Publishing and rollback](docs/publishing.md) describes the Docker package and the existing Hetzner routing. [Verification and media review](docs/verification.md) describes the local release gate.
+
+Interface icons are SVGs from `src/components/Icon.astro` and `src/ui/icons.ts`. Use those for arrows, controls and decorative marks; do not add emoji or text glyphs as interface icons.

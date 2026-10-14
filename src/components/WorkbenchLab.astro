@@ -1,0 +1,35 @@
+---
+import Icon from './Icon.astro';
+import { phases, receipt } from '../labs/workbench/model';
+---
+<section class="wb-lab" data-workbench-lab aria-labelledby="wb-stage-title">
+  <div class="wb-guide"><p class="eyebrow">Your experiment / about a minute</p><span data-wb-progress>01 / 06</span></div>
+  <div class="wb-phase-list" aria-label="Experiment stages">{phases.map((phase, index) => <span data-wb-phase={index} aria-current={index === 0 ? 'step' : undefined}><b>{String(index + 1).padStart(2,'0')}</b>{phase.name}</span>)}</div>
+  <div class="wb-scene">
+    <div class="wb-shelf"><span class="wb-shelf-symbol" aria-hidden="true"><Icon name="arrow-both" /></span><div><span class="eyebrow">Portable workbench</span><strong>One maintained skill. One shared base.</strong></div><span class="wb-shelf-revision" data-wb-base>base 01</span></div>
+    <div class="wb-desks">
+      {['a', 'b'].map((desk, index) => <article class:list={['wb-desk', `wb-desk-${desk}`]} aria-label={`Fictional desk ${desk.toUpperCase()}`}>
+        <header><span class="wb-desk-letter">{desk.toUpperCase()}</span><div><strong class="wb-desk-name">{index === 0 ? 'The studio desk' : 'The travel desk'}</strong><p>Fictional home / real manager</p></div><span class="wb-desk-lamp" aria-hidden="true"></span></header>
+        <div class="wb-monitor"><div class="wb-monitor-top"><span aria-hidden="true"><Icon name="dot" /> <Icon name="dot" /> <Icon name="dot" /></span><span>generated configuration</span></div><dl><div><dt>Shared model</dt><dd data-wb-model>demo-model</dd></div><div class="wb-reason-row"><dt>Reasoning</dt><dd data-wb-reason={desk}>medium</dd></div><div><dt>Local status line</dt><dd>{index === 0 ? 'model + current folder' : 'model + context window'}</dd></div></dl><div class="wb-monitor-foot"><span data-wb-status={desk}>Ready to assemble</span><span class="wb-monitor-cursor" aria-hidden="true"><Icon name="cursor" /></span></div></div>
+        <div class="wb-monitor-stand" aria-hidden="true"></div><div class="wb-table" aria-hidden="true"><span class="wb-keyboard"></span><span class="wb-coffee"></span></div>
+        <div class="wb-locker"><span aria-hidden="true"><Icon name="archive" /></span><p>Local auth & session files <strong data-wb-locker>Stay at this desk</strong></p><span data-wb-seal aria-label="Local files protected"><Icon name="corner-box" /></span></div>
+      </article>)}
+    </div>
+    <div class="wb-shared-skill"><span aria-hidden="true"><Icon name="asterisk" /></span><span><b>same-page</b> / a shared skill</span><span data-wb-skill>One source, two desks</span></div>
+  </div>
+  <div class="wb-action-area"><div><p class="eyebrow" data-wb-phase-name>Pack the useful parts</p><h2 id="wb-stage-title" tabindex="-1">Two desks.<br /><em>One useful setup.</em></h2><p class="wb-stage-copy" data-wb-copy>{phases[0].copy}</p></div>
+    <div class="wb-controls">
+      <div class="wb-choices" data-wb-choices><fieldset><legend>A maintained skill should…</legend><label><input type="radio" name="skill" value="shared" /> Travel with the shared setup</label><label><input type="radio" name="skill" value="local" /> Stay on one desk</label></fieldset><fieldset><legend>A desk’s status line should…</legend><label><input type="radio" name="preference" value="local" /> Follow that desk’s preference</label><label><input type="radio" name="preference" value="shared" /> Be identical everywhere</label></fieldset></div>
+      <p class="wb-choice-result" data-wb-choice-result hidden></p><p class="wb-state-note" data-wb-state-note hidden></p>
+      <div class="wb-buttons"><button type="button" class="wb-primary" data-wb-next disabled>{phases[0].action}<span aria-hidden="true"><Icon name="arrow-right" /></span></button><button type="button" class="wb-back" data-wb-back hidden>Previous</button></div>
+      <p class="wb-interaction-boundary">Interactive illustration of the recorded run. Your choices stay in this page; these buttons replay observed results.</p>
+      <p class="wb-interaction-boundary" data-wb-fallback>JavaScript is off. Read the full execution receipt and transcript below; the experiment needs JavaScript.</p>
+    </div>
+  </div>
+  <details class="wb-command" data-wb-command><summary><span class="wb-command-label"><Icon name="plus" class="wb-command-plus" /><Icon name="minus" class="wb-command-minus" />Inspect the actual command output</span> <span data-wb-command-label>install / exit 0</span></summary><div class="wb-command-meta"><span>Captured CLI output · paths replaced with $FIXTURE</span><span data-wb-exit>exit 0</span></div><pre data-wb-output>{receipt.steps.slice(0, 2).map(step => `[${step.desk}] $ ${step.command}\n${step.output}[exit ${step.exitCode}; ${step.durationMs} ms observed]\n`).join('\n')}</pre><a href="/media/workbench/transcript.txt">Download the complete transcript <Icon name="arrow-up-right" /></a></details>
+  <p class="wb-live-status sr-only" role="status" aria-live="polite" data-wb-announcement></p>
+</section>
+<script>
+  import { initWorkbench } from '../labs/workbench/controller';
+  document.querySelectorAll<HTMLElement>('[data-workbench-lab]').forEach(initWorkbench);
+</script>

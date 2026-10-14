@@ -28,7 +28,7 @@ test('all original labels are searchable, including unknown types and versions',
 test('a curation action changes both representations and undo restores the previous view', async ({ page }) => {
   await page.goto('/labs/memory/');
   await page.locator('[data-entity="panelforge-mcp"]').click();
-  const relation = 'Inspect panelforge-mcp → built_with → typescript';
+  const relation = 'Inspect panelforge-mcp / built_with / typescript';
   const connection = page.locator('[data-connection-list]').getByRole('button', { name: relation, exact: true });
   await connection.click();
   await expect(page.locator('[data-subject]')).toHaveText('panelforge-mcp');
@@ -40,7 +40,7 @@ test('a curation action changes both representations and undo restores the previ
   await expect(page.locator('[data-sample-count]')).toHaveText('32 of 33 connections visible');
   await expect(connection).toHaveCount(0);
   await expect(page.locator('[data-graph]').getByRole('button', { name: relation, exact: true })).toHaveCount(0);
-  await expect(page.locator('[data-receipt-list]')).toContainText('panelforge-mcp → built_with → typescript');
+  await expect(page.locator('[data-receipt-list]')).toContainText('panelforge-mcp / built_with / typescript');
   await expect(page.locator('[data-receipt-list]')).toContainText('Reason: visitor practice');
   await page.getByRole('button', { name: 'Clear filters', exact: true }).click();
   await page.locator('[data-entity="vue"]').click();
@@ -142,9 +142,9 @@ test('phone selection, inspection and undo stay beside the chosen relationship',
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/labs/memory/');
   await page.getByLabel('Choose an entity', { exact: true }).selectOption('laravel');
-  const relation = page.locator('[data-graph]').getByRole('button', { name: 'Inspect panelforge → built_with → laravel', exact: true });
+  const relation = page.locator('[data-graph]').getByRole('button', { name: 'Inspect panelforge / built_with / laravel', exact: true });
   await relation.click();
-  await expect(page.locator('[data-selection-tuple]')).toHaveText('panelforge → built_with → laravel');
+  await expect(page.locator('[data-selection-tuple]')).toHaveText('panelforge / built_with / laravel');
   await expect(page.locator('.ml-connection-details')).not.toHaveAttribute('open');
   await expect.poll(async () => page.locator('.ml-selection-actions').evaluate(element => { const box = element.getBoundingClientRect(); return box.top >= 0 && box.bottom <= innerHeight; })).toBe(true);
   await page.locator('[data-map-inspect]').click();
@@ -154,13 +154,13 @@ test('phone selection, inspection and undo stay beside the chosen relationship',
   await page.locator('[data-return-map]').click();
   await expect(page.locator('[data-map-inspect]')).toBeFocused();
   await page.locator('[data-map-edit]').click();
-  await expect(page.locator('[data-inline-receipt]')).toContainText('Set aside: panelforge → built_with → laravel');
+  await expect(page.locator('[data-inline-receipt]')).toContainText('Set aside: panelforge / built_with / laravel');
   await expect(page.locator('[data-inline-undo]')).toBeFocused();
   await expect.poll(async () => page.locator('[data-inline-undo]').evaluate(element => { const box = element.getBoundingClientRect(); return box.top >= 0 && box.bottom <= innerHeight; })).toBe(true);
   await page.locator('[data-inline-undo]').click();
   await expect(page.locator('[data-focus-select]')).toHaveValue('laravel');
   await expect(page.locator('[data-sample-count]')).toHaveText('33 of 33 connections visible');
-  await expect(page.locator('[data-inline-receipt]')).toContainText('Restored: panelforge → built_with → laravel');
+  await expect(page.locator('[data-inline-receipt]')).toContainText('Restored: panelforge / built_with / laravel');
   await expect(page.locator('[data-map-edit]')).toBeFocused();
 });
 

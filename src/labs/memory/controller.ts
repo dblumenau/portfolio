@@ -1,3 +1,4 @@
+import { createIcon, setIconLabel } from '../../ui/icons';
 import { entities, relationships, relationKey, typeLabel, formatRelation, sourceExcerpts, type Relationship } from './model';
 
 type Guide = 'find' | 'inspect' | 'edit';
@@ -200,7 +201,9 @@ export function mountMemoryLab(root: HTMLElement) {
       button.dataset.listRelation = relationKey(relation);
       button.setAttribute('aria-pressed', String(relationKey(relation) === selected));
       button.setAttribute('aria-label', `Inspect ${formatRelation(relation)}`);
-      button.append(make('span', '', relation.subject), make('small', '', `→ ${relation.predicate} →`), make('strong', '', relation.object));
+      const predicate = make('small', '');
+      predicate.append(createIcon('arrow-right'), document.createTextNode(` ${relation.predicate} `), createIcon('arrow-right'));
+      button.append(make('span', '', relation.subject), predicate, make('strong', '', relation.object));
       list.append(button);
     });
     get('[data-relation-count]').textContent = String(nearby.length);
@@ -226,7 +229,7 @@ export function mountMemoryLab(root: HTMLElement) {
     const removed = hidden.has(selected);
     get<HTMLButtonElement>('[data-set-aside]').disabled = removed;
     get<HTMLButtonElement>('[data-map-edit]').disabled = removed;
-    get<HTMLButtonElement>('[data-map-inspect]').textContent = excerpt ? 'Inspect its source ↗' : 'Inspect this connection ↗';
+    setIconLabel(get('[data-map-inspect]'), excerpt ? 'Inspect its source' : 'Inspect this connection', 'arrow-up-right');
     get('[data-edit-status]').textContent = removed ? 'Set aside in this demo. The original tuple is preserved in your receipt.' : '';
     root.classList.toggle('ml-has-edit', hidden.size > 0);
   }

@@ -10,11 +10,11 @@ export const periods = [
   { id: 'october', label: 'October 2026 · The small details', from: '2026-10-01', to: '2026-10-31', caption: 'A quiet turn, a useful preview, a transcript with room to breathe.' },
 ] as const;
 export const areas = [
-  { id: 'studio', label: 'Creative workspace', note: 'Make → organise → revise' },
-  { id: 'engines', label: 'Connected agents', note: 'Run → interrupt → recover' },
-  { id: 'connections', label: 'Shared tools', note: 'Discover → connect → constrain' },
-  { id: 'memory', label: 'Memory & history', note: 'Find → ground → understand' },
-  { id: 'workbench', label: 'Portable workbench', note: 'Repeat → share → review' },
+  { id: 'studio', label: 'Creative workspace', note: 'Make / organise / revise' },
+  { id: 'engines', label: 'Connected agents', note: 'Run / interrupt / recover' },
+  { id: 'connections', label: 'Shared tools', note: 'Discover / connect / constrain' },
+  { id: 'memory', label: 'Memory & history', note: 'Find / ground / understand' },
+  { id: 'workbench', label: 'Portable workbench', note: 'Repeat / share / review' },
   { id: 'small', label: 'Small useful things', note: 'One problem, a useful tool' },
 ];
 export function matches(record: TagRecord | Milestone, filter: ReleaseFilters, label = ''): boolean {
