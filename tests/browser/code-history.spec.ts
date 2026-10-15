@@ -16,14 +16,14 @@ async function expectFrame(page: import('@playwright/test').Page, id: string) {
   await expect.poll(() => image.evaluate((element: HTMLImageElement) => element.complete && element.naturalWidth === 1440)).toBe(true);
 }
 
-test('native choices reveal actual captures and sit between workflow and decisions', async ({ page }) => {
+test('native choices reveal actual captures and follow the decisions and feature index before release history', async ({ page }) => {
   await page.goto(route);
   const section = page.locator('[data-code-history-showcase]');
   expect(await section.evaluate(element => {
     const sections = [...element.parentElement!.querySelectorAll(':scope > section')];
     const index = sections.indexOf(element);
-    return { before: sections[index - 1]?.id, after: sections[index + 1]?.id };
-  })).toEqual({ before: 'the-workflow', after: 'the-decisions' });
+    return { before: sections[index - 1]?.className, after: sections[index + 1]?.id };
+  })).toEqual({ before: 'case-feature-index wrap', after: 'the-evolution' });
   await expect(section.getByRole('heading', { name: /Find the work.*behind a change/ })).toBeVisible();
   await expectFrame(page, 'week');
   await section.getByRole('radio', { name: 'Week', exact: true }).focus();
