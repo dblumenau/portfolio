@@ -273,39 +273,74 @@ test('older BFCache documents reopen the current tab workspace instead of overwr
 
 for (const outcome of ['resolve', 'reject'] as const) test(`reset during restored PNG decode ignores a late ${outcome} and keeps new work`, async ({ page }, info) => {
   await page.addInitScript(() => {
-    const original = window.createImageBitmap, createURL = URL.createObjectURL, revokeURL = URL.revokeObjectURL;
-    const urls = new Set<string>(); let decoded = 0;
-    Object.assign(window, { restoredPNGURLs: () => [...urls] });
-    URL.createObjectURL = function(object) { const url = createURL.call(this, object); if (object instanceof Blob && object.type === 'image/png') urls.add(url); return url; };
-    URL.revokeObjectURL = function(url) { urls.delete(url); return revokeURL.call(this, url); };
-    window.createImageBitmap = (async (...args: Parameters<typeof original>) => {
-      const image = await Reflect.apply(original, window, args);
-      if (args[0] instanceof Blob && args[0].type === 'image/png' && sessionStorage.getItem('hold-restored-PNG-decode') && ++decoded === 2) {
-        Object.assign(window, { heldRestoreBitmap: image });
-        try { await new Promise<void>((resolve, reject) => Object.assign(window, { finishRestoreDecode: (outcome: string) => outcome === 'resolve' ? resolve() : reject(new Error('Held decode failed')) })); }
-        catch (error) { image.close(); throw error; }
+    const original = HTMLImageElement.prototype.decode, createURL = URL.createObjectURL, revokeURL = URL.revokeObjectURL;
+    const urls = new Set<string>(), revoked = new Map<string, number>(); let decoded = 0;
+    Object.assign(window, { restoredPNGURLs: () => [...urls], restoredPNGRevokeCounts: () => Object.fromEntries(revoked) });
+    URL.createObjectURL = function(object) { const url = createURL.call(this, object); if (object instanceof Blob && object.type === 'image/png') { urls.add(url); revoked.set(url, 0); } return url; };
+    URL.revokeObjectURL = function(url) { if (revoked.has(url)) revoked.set(url, revoked.get(url)! + 1); urls.delete(url); return revokeURL.call(this, url); };
+    HTMLImageElement.prototype.decode = async function() {
+      const source = this.src; await original.call(this);
+      if (source.startsWith('blob:') && sessionStorage.getItem('hold-restored-PNG-decode') && ++decoded === 2) {
+        Object.assign(window, { heldRestoreImage: this });
+        await new Promise<void>((resolve, reject) => Object.assign(window, { finishRestoreDecode: (outcome: string) => outcome === 'resolve' ? resolve() : reject(new Error('Held decode failed')) }));
       }
-      return image;
-    }) as typeof createImageBitmap;
+    };
   });
   await world(page); await page.locator('[data-shop-field="headline"]').fill('First print explicitly cleared'); await pull(page);
   await page.locator('[data-shop-field="headline"]').fill('Second print explicitly cleared'); await pull(page, 2);
   await page.evaluate(() => sessionStorage.setItem('hold-restored-PNG-decode', 'yes')); await page.reload();
   await page.waitForFunction(() => typeof (window as unknown as { finishRestoreDecode?: unknown }).finishRestoreDecode === 'function');
   const liveURLs = () => page.evaluate(() => (window as unknown as { restoredPNGURLs: () => string[] }).restoredPNGURLs());
-  expect(await liveURLs()).toHaveLength(1);
+  const revokeCounts = () => page.evaluate(() => (window as unknown as { restoredPNGRevokeCounts: () => Record<string, number> }).restoredPNGRevokeCounts());
+  const oldURLs = await liveURLs(); expect(oldURLs).toHaveLength(2);
   await page.locator('[data-shop-reset-confirm] summary').click(); await page.locator('[data-shop-reset]').click();
   await expect(page.locator('[data-forge-world]')).toHaveAttribute('data-shop-prints', '0'); expect(await liveURLs()).toHaveLength(0);
+  for (const url of oldURLs) expect((await revokeCounts())[url]).toBe(1);
   await expect(page.locator('[data-forge-world]')).toHaveAttribute('data-shop-preparation', 'ready'); await expect(page.locator('.world-shop-pull')).toBeEnabled();
   await page.locator('[data-shop-field="headline"]').fill('New work after the reset'); await pull(page);
   const newHash = await hash(page), before = await page.evaluate(key => ({ workspace: sessionStorage.getItem(key), status: document.querySelector('[data-shop-status]')!.textContent, storage: document.querySelector('[data-shop-storage]')!.textContent }), workspaceKey);
   const newURLs = await liveURLs(); expect(newURLs).toHaveLength(1);
   await page.evaluate(outcome => { sessionStorage.removeItem('hold-restored-PNG-decode'); (window as unknown as { finishRestoreDecode: (outcome: string) => void }).finishRestoreDecode(outcome); }, outcome);
-  await expect.poll(() => page.evaluate(() => (window as unknown as { heldRestoreBitmap: ImageBitmap }).heldRestoreBitmap.width)).toBe(0);
+  await expect.poll(() => page.evaluate(() => (window as unknown as { heldRestoreImage: HTMLImageElement }).heldRestoreImage.getAttribute('src'))).toBe(null);
   await expect(page.locator('[data-forge-world]')).toHaveAttribute('data-shop-prints', '1'); await expect(page.locator('[data-forge-world]')).toHaveAttribute('data-shop-saved', 'true'); await expect(page.locator('.world-shop-pull')).toBeEnabled();
   const after = await page.evaluate(key => ({ workspace: sessionStorage.getItem(key), status: document.querySelector('[data-shop-status]')!.textContent, storage: document.querySelector('[data-shop-storage]')!.textContent }), workspaceKey);
   expect(after).toEqual(before); expect(await liveURLs()).toEqual(newURLs); expect(await hash(page)).toBe(newHash);
+  for (const url of oldURLs) expect((await revokeCounts())[url]).toBe(1);
+  for (const url of newURLs) expect((await revokeCounts())[url]).toBe(0);
   await page.reload(); await expect(page.locator('[data-forge-world]')).toHaveAttribute('data-shop-prints', '1'); expect(await hash(page)).toBe(newHash);
   await expect(page.locator('[data-shop-summary="0"]')).toContainText('New work after the reset'); await expect(page.locator('[data-shop-slot="1"]')).toBeHidden();
-  await info.attach('restore-reset-race', { body: JSON.stringify({ outcome, newHash, before, after, discardedBitmapWidth: 0, oldURLsReleased: true }), contentType: 'application/json' });
+  await info.attach('restore-reset-race', { body: JSON.stringify({ outcome, newHash, before, after, discardedImageSourceCleared: true, oldURLsReleased: true }), contentType: 'application/json' });
+});
+
+test('kept PNG restores when the Blob bitmap reader is unusable, preserving original bytes', async ({ page }) => {
+  await page.addInitScript(() => {
+    const original = window.createImageBitmap; let blobBitmapReads = 0;
+    Object.assign(window, { blobBitmapReads: () => blobBitmapReads });
+    window.createImageBitmap = (async (...args: Parameters<typeof original>) => {
+      if (args[0] instanceof Blob) { blobBitmapReads++; throw new DOMException('An error occured reading the Blob argument to createImageBitmap', 'InvalidStateError'); }
+      return Reflect.apply(original, window, args);
+    }) as typeof createImageBitmap;
+  });
+  await world(page); await page.locator('[data-shop-field="headline"]').fill('Keep the original PNG bytes'); await pull(page); const original = await hash(page);
+  await page.reload(); await expect(page.locator('[data-forge-world]')).toHaveAttribute('data-shop-prints', '1'); await expect(page.locator('[data-forge-world]')).toHaveAttribute('data-shop-saved', 'true'); expect(await hash(page)).toBe(original);
+  expect(await page.evaluate(() => (window as unknown as { blobBitmapReads: () => number }).blobBitmapReads())).toBe(0);
+  const [download] = await Promise.all([page.waitForEvent('download'), page.locator('[data-shop-slot="0"] [data-shop-download]').click()]); expect(download.suggestedFilename()).toBe('small-edition-print-1.png');
+  await page.locator('[data-shop-continue="0"]').click(); await studioReady(page); await page.locator('[data-back-prints]').click();
+  await expect(page.locator('[data-forge-world]')).toHaveAttribute('data-shop-prints', '1'); expect(await hash(page)).toBe(original);
+});
+
+test('an actually corrupt stored PNG stays a restore failure and cannot be regenerated from its recipe', async ({ page }) => {
+  await world(page); await page.locator('[data-shop-field="headline"]').fill('The recipe is not the original PNG'); await pull(page);
+  const metadata = await page.evaluate(key => sessionStorage.getItem(key), workspaceKey);
+  await page.evaluate(async key => {
+    const workspace = JSON.parse(sessionStorage.getItem(key)!); const blobKey = workspace.world.prints[0].blobKey;
+    const db = await new Promise<IDBDatabase>((resolve, reject) => { const request = indexedDB.open('portfolio-creative-v1', 1); request.onsuccess = () => resolve(request.result); request.onerror = () => reject(request.error); });
+    await new Promise<void>((resolve, reject) => {
+      const tx = db.transaction('pngs', 'readwrite'), store = tx.objectStore('pngs'), request = store.get(blobKey);
+      request.onsuccess = () => store.put({ ...request.result, blob: new Blob(['not an encoded PNG'], { type: 'image/png' }) }); tx.oncomplete = () => resolve(); tx.onerror = tx.onabort = () => reject(tx.error);
+    }); db.close();
+  }, workspaceKey);
+  await page.reload(); await expect(page.locator('[data-forge-world]')).toHaveAttribute('data-shop-preparation', 'ready'); await expect(page.locator('[data-forge-world]')).toHaveAttribute('data-shop-prints', '0'); await expect(page.locator('[data-forge-world]')).toHaveAttribute('data-shop-saved', 'false');
+  await expect(page.locator('[data-shop-storage]')).toContainText('Your rack could not be restored'); await expect(page.locator('.world-shop-pull')).toBeDisabled(); await expect(page.locator('[data-shop-slot="0"]')).toBeHidden();
+  expect(await page.evaluate(key => sessionStorage.getItem(key), workspaceKey)).toBe(metadata);
 });

@@ -31,6 +31,7 @@ export function mountPrintshop(root: HTMLElement, bridge: ExperienceBridge): Wor
   const prints: [FinishedPrint | null, FinishedPrint | null] = [null, null];
   let restoring = true, restorationFailed = false, saved = true, pinnedFallback = false, workspaceEpoch = 0;
   let pngWrite: Promise<string> | undefined;
+  let restoreCancellation: AbortController | undefined;
   let savedSnapshot: string | undefined;
   let returnFocus: 'draft' | '0' | '1' | undefined;
   const storageStatus = root.querySelector<HTMLElement>('[data-shop-storage]')!;
@@ -59,6 +60,7 @@ export function mountPrintshop(root: HTMLElement, bridge: ExperienceBridge): Wor
     storageStatus.textContent = storageMessage(saved); root.dataset.shopSaved = String(saved); return saved;
   };
   async function restore() {
+    const cancellation = new AbortController(); restoreCancellation = cancellation;
     const epoch = workspaceEpoch;
     const current = () => !disposed && epoch === workspaceEpoch;
     try {
@@ -68,18 +70,20 @@ export function mountPrintshop(root: HTMLElement, bridge: ExperienceBridge): Wor
         field('headline').value = state.draft.headline; field('smallLine').value = state.draft.smallLine;
         for (const slot of [0, 1] as const) {
           const kept = work.prints[slot]; if (!kept) continue;
-          let image: ImageBitmap | undefined, surface: ExportSurface | undefined, url: string | undefined;
+          let image: HTMLImageElement | undefined, surface: ExportSurface | undefined, url: string | undefined;
+          const releasePendingImage = () => { image?.removeAttribute('src'); if (url) { URL.revokeObjectURL(url); url = undefined; } };
+          cancellation.signal.addEventListener('abort', releasePendingImage, { once: true });
           try {
             const blob = await restorePNG(kept.blobKey);
             if (!current()) return;
-            image = await createImageBitmap(blob);
+            url = URL.createObjectURL(blob); const printURL = url;
+            image = new Image(); image.src = printURL; await image.decode();
             if (!current()) return;
-            surface = createExportCanvas(); surface.ctx.drawImage(image, 0, 0); image.close(); image = undefined;
-            url = URL.createObjectURL(blob);
-            prints[slot] = { ...kept, surface, blob, url }; surface = undefined; url = undefined;
+            surface = createExportCanvas(); surface.ctx.drawImage(image, 0, 0); image.removeAttribute('src'); image = undefined;
+            prints[slot] = { ...kept, surface, blob, url: printURL }; surface = undefined; url = undefined;
             state.prints[slot] = kept.record; serial = Math.max(serial, kept.record.id);
           } catch { if (!current()) return; saved = false; restorationFailed = true; }
-          finally { image?.close(); if (surface) releaseSurface(surface); if (url) URL.revokeObjectURL(url); }
+          finally { cancellation.signal.removeEventListener('abort', releasePendingImage); releasePendingImage(); if (surface) releaseSurface(surface); }
         }
         if (!current()) return;
         say(saved ? 'Your draft and kept PNGs are restored.' : 'Some kept PNGs could not be restored. Your editable draft is here.');
@@ -87,6 +91,7 @@ export function mountPrintshop(root: HTMLElement, bridge: ExperienceBridge): Wor
       storageStatus.textContent = storageMessage(saved);
     } catch { if (current()) { saved = false; storageStatus.textContent = storageMessage(false); } }
     finally {
+      if (restoreCancellation === cancellation) restoreCancellation = undefined;
       if (current()) {
         restoring = false; root.dataset.shopSaved = String(saved); updateUI(); scene?.sync(artwork());
         if (active) {
@@ -259,7 +264,7 @@ export function mountPrintshop(root: HTMLElement, bridge: ExperienceBridge): Wor
     if (button.dataset.shopReplaceSlot !== undefined) { dispatch({ type: 'REPLACE_SLOT', slot: Number(button.dataset.shopReplaceSlot) as 0 | 1 }); say(`The next pull will replace Print ${Number(button.dataset.shopReplaceSlot) + 1}. The other print will stay.`); return; }
     if (button.hasAttribute('data-shop-replace-cancel')) { dispatch({ type: 'REPLACE_SLOT', slot: null }); return; }
     if (button.hasAttribute('data-shop-reset')) {
-      workspaceEpoch++; restoring = false; returnFocus = undefined; discardPending(); closeInspector(false);
+      workspaceEpoch++; restoreCancellation?.abort(); restoreCancellation = undefined; restoring = false; returnFocus = undefined; discardPending(); closeInspector(false);
       for (const slot of [0, 1] as const) { const print = prints[slot]; if (print) { URL.revokeObjectURL(print.url); releaseSurface(print.surface); } prints[slot] = null; }
       state = initialPrintshop(); pinnedFallback = false; restorationFailed = false; field('headline').value = state.draft.headline; field('smallLine').value = state.draft.smallLine;
       releaseBackground(background); background = null; preparedLook = null;
@@ -305,6 +310,6 @@ export function mountPrintshop(root: HTMLElement, bridge: ExperienceBridge): Wor
     suspend(reason: Suspension) { if (reason === 'offscreen') sceneVisible = false; else if (reason === 'hidden' || reason === 'persisted') discardPending(); else if (reason === 'context-lost') gpu = false; settle(); },
     resume() { sceneVisible = true; if (active && !disposed && !reloadIfStale()) { if (fonts) void prepareLook(); else enableFonts(); scene?.refresh(); bridge.invalidate(); } },
     escape() { if (!dialog.open) return false; closeInspector(); return true; },
-    dispose() { disposed = true; active = false; clearInterval(refreshPNGs); discardPending(); scope.abort(); if (dialog.open) dialog.close(); scene?.dispose(); releaseBackground(background); background = null; for (const slot of [0, 1] as const) { const print = prints[slot]; if (print) { URL.revokeObjectURL(print.url); releaseSurface(print.surface); } prints[slot] = null; } dialog.querySelectorAll('img').forEach(image => image.removeAttribute('src')); draft.width = draft.height = 0; },
+    dispose() { disposed = true; active = false; restoreCancellation?.abort(); restoreCancellation = undefined; clearInterval(refreshPNGs); discardPending(); scope.abort(); if (dialog.open) dialog.close(); scene?.dispose(); releaseBackground(background); background = null; for (const slot of [0, 1] as const) { const print = prints[slot]; if (print) { URL.revokeObjectURL(print.url); releaseSurface(print.surface); } prints[slot] = null; } dialog.querySelectorAll('img').forEach(image => image.removeAttribute('src')); draft.width = draft.height = 0; },
   };
 }
