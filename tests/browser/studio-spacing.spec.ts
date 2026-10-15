@@ -7,6 +7,7 @@ import sharp from 'sharp';
 test.use({ launchOptions: { args: ['--enable-unsafe-swiftshader'] } });
 test.setTimeout(120_000);
 const evidence = resolve(process.env.SPACING_EVIDENCE_DIR ?? '../spacing-fix-evidence');
+const baselineURL = process.env.SPACING_BASELINE_URL;
 type Glyph = { text: string; x: number; y: number; font: string; top: number; bottom: number };
 async function instrument(page: Page, missingMetrics = false) {
   await page.addInitScript(({ missingMetrics }) => {
@@ -58,23 +59,23 @@ const cases = [
   { id: 'danish-60', headline: 'Åbne øer, ærlige idéer og glæde i vores fælles lille værksted. '.repeat(2).slice(0, 60), smallLine: 'Æbletræer, blå himmel og små øjeblikke vi gerne vil beholde. '.repeat(2).slice(0, 60) },
   { id: 'empty-line', headline: 'Something worth keeping', smallLine: '' },
 ];
-async function shop(page: Page, url: string, words: typeof cases[number], arrangement: string) {
+async function shop(page: Page, url: string, words: typeof cases[number], arrangement: string, artifactRole = 'current') {
   await page.goto(url); await expect(page.locator('[data-forge-world]')).toHaveAttribute('data-shop-preparation', 'ready');
   await page.locator('[data-shop-field="headline"]').fill(words.headline); await page.locator('[data-shop-field="smallLine"]').fill(words.smallLine);
   await page.locator('[data-shop-look="amber-pulse"]').click(); await expect(page.locator('[data-shop-draft-look]')).toContainText('Amber');
   await page.locator(`[data-shop-arrangement="${arrangement}"]`).click();
   const glyphs = await trace(page, '[data-shop-draft]'); await page.locator('.world-shop-pull').click();
   await expect(page.locator('[data-forge-world]')).toHaveAttribute('data-shop-prints', '1');
-  return { glyphs, artifact: await saveAndCompare(page, '[data-shop-draft]', '[data-shop-slot="0"] [data-shop-download]', `shop-${words.id}-${arrangement}-${url.includes(':4702') ? 'before' : 'after'}`) };
+  return { glyphs, artifact: await saveAndCompare(page, '[data-shop-draft]', '[data-shop-slot="0"] [data-shop-download]', `shop-${words.id}-${arrangement}-${artifactRole}`) };
 }
-for (const arrangement of ['poster', 'center']) for (const words of cases) test(`actual ${arrangement} PNG clears its ${words.id} headline and retains the existing composition`, async ({ page }, info) => {
+for (const arrangement of ['poster', 'center']) for (const words of cases) test(`actual ${arrangement} PNG clears its ${words.id} headline and matches its canvas`, async ({ page }, info) => {
   await instrument(page); const after = await shop(page, '/world/#printshop', words, arrangement), measured = bounds(after.glyphs);
   expect(measured.headline.length).toBeGreaterThan(0);
   if (words.smallLine) expect(measured.gap).toBeGreaterThanOrEqual(24 - .01); else expect(measured.metadata).toEqual([]);
   expect(after.glyphs.every(glyph => glyph.top >= 0 && glyph.bottom < 1080)).toBe(true);
   let comparison;
-  if (words.id === 'default' || words.id === 'wrapped') {
-    const before = await shop(page, 'http://127.0.0.1:4702/world/#printshop', words, arrangement), old = bounds(before.glyphs);
+  if (baselineURL && (words.id === 'default' || words.id === 'wrapped')) {
+    const before = await shop(page, new URL('/world/#printshop', baselineURL).href, words, arrangement, 'baseline'), old = bounds(before.glyphs);
     expect(measured.headline).toEqual(old.headline);
     const unchanged = Buffer.compare(before.artifact.rgb, after.artifact.rgb) === 0;
     if (words.id === 'default') { expect(unchanged).toBe(true); expect(measured.metadata).toEqual(old.metadata); }
