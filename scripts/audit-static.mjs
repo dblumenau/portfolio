@@ -9,6 +9,13 @@ const errors = [];
 const external = new Set();
 const report = { date: new Date().toISOString(), buildRoot: root, routes: [], assets: [], sampleFiles: [], externalLinks: [], errors };
 const reviewedEvidenceMedia = [
+  'grounded-analysis/entity.png',
+  'grounded-analysis/phone-source.png',
+  'grounded-analysis/receipt.json',
+  'grounded-analysis/source-navigation.mp4',
+  'grounded-analysis/source-navigation.vtt',
+  'grounded-analysis/source.png',
+
   'workspace-hierarchy/execution.mp4',
   'workspace-hierarchy/execution.vtt',
   'workspace-hierarchy/before.png',

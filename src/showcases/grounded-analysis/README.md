@@ -1,0 +1,11 @@
+# Grounded Analysis source selection
+
+The existing feature presents an actual isolated PanelForge extraction from two field-authored fictional exchanges. One job and worker attempt made three real OpenRouter requests using the unchanged registered GPT-OSS120B/Cerebras profile: candidate resolution, a coverage-rejected submission, then accepted model repair. Seven triples persisted. The public receipt explicitly selects two unchanged triples and source quotations; it omits the other output. Editorial assessment follows the run and does not alter saved output.
+
+The catalog started empty. This proves coverage checks for reviewed names, not existing alias reuse. The preference triple drops “for this project”; structural validation did not catch that semantic overgeneralization. Neither this run nor its two examples form an accuracy benchmark.
+
+The source-navigation film is actual post-analysis UI. Its opening 4.48 seconds of search/dashboard are omitted; the remaining 7 seconds are continuous at original 25fps. Opaque deterministic masks hide the source sidebar and message footer metadata; the source still uses the same footer masks and a sidebar crop. Source prose is unchanged. Native VTT cues and ordinary HTML carry scope. The default still is the entity profile, not dashboard counters. The optional phone still was reached through the real entity event button; its bottom conversation-list button was occluded.
+
+The source conversation’s notebook implementation report and Codex/CLI labels are fictional. The real analyzer was GPT-OSS120B via OpenRouter/Cerebras. Returned routing evidence does not independently establish provider retention. The captured source viewer has enabled edit controls despite a read-only badge; none were used. The isolated app used empty local font CSS and fallback fonts. No live service runs from the static portfolio.
+
+The six public files are declared in the provenance fragment and checked by the existing shared audit. Browser tests cover editorial distinctions, selected receipt semantics, native controls/captions, keyboard/no-JavaScript access, responsive layouts and same-origin static requests. No new source/hash checker or dependency is added.

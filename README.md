@@ -37,3 +37,5 @@ The release command also requires Docker and runs `npm run test:deployment`: an 
 [Publishing and rollback](docs/publishing.md) describes the Docker package and the existing Hetzner routing. [Verification and media review](docs/verification.md) describes the local release gate.
 
 Interface icons are SVGs from `src/components/Icon.astro` and `src/ui/icons.ts`. Use those for arrows, controls and decorative marks; do not add emoji or text glyphs as interface icons.
+
+The existing Grounded Analysis feature presents actual saved extraction from an authored fictional transcript. `src/showcases/grounded-analysis/` records the selection, source-navigation edit and limits; semantic review is editorial and saved output is unchanged.

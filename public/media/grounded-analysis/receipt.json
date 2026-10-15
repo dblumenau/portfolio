@@ -1,0 +1,129 @@
+{
+  "operation": "Actual analysis of an authored fictional conversation",
+  "application": {
+    "name": "PanelForge",
+    "sourceVersion": "web-v10.20.97",
+    "sourceModified": false
+  },
+  "source": {
+    "fictional": true,
+    "person": "Mira Vale",
+    "project": "Harbor Notebook",
+    "exchanges": 2,
+    "messages": 4,
+    "notebookImplementation": "Fictional assistant report, not a real notebook implementation test",
+    "sessionMetadata": {
+      "fictional": true,
+      "model": "gpt-6.1-sol",
+      "cliVersion": "0.144.1"
+    },
+    "selectedExactUserWording": [
+      "Keep IndexedDB as the primary store for Harbor Notebook.",
+      "I prefer manual file exports over cloud sync for this project: I want to choose when a copy leaves the tablet."
+    ]
+  },
+  "analyzer": {
+    "actualModel": "openai/gpt-oss-120b",
+    "transport": "OpenRouter HTTP",
+    "returnedProvider": "Cerebras",
+    "servedModel": "openai/gpt-oss-120b",
+    "routeVerified": true,
+    "requestControls": {
+      "providerOrder": [
+        "cerebras"
+      ],
+      "allowFallbacks": false,
+      "dataCollection": "deny",
+      "zdr": true,
+      "quantizations": [
+        "fp16"
+      ]
+    },
+    "retentionScope": "Requested routing controls and returned provider metadata only; no independent retention guarantee"
+  },
+  "execution": {
+    "analysisJobs": 1,
+    "workerAttempts": 1,
+    "providerRequests": 3,
+    "initialCatalog": {
+      "tags": 0,
+      "entities": 0
+    },
+    "savedTriples": 7,
+    "savedTags": 3,
+    "fullTranscriptIncluded": true,
+    "readMessagesCalls": 0,
+    "providerReportedUsage": {
+      "inputTokens": 13890,
+      "outputTokens": 6198,
+      "cachedInputTokens": 4480,
+      "reasoningTokens": 3947,
+      "usd": 0.00951,
+      "invoice": false
+    }
+  },
+  "selectedRecordedValidation": {
+    "selection": "Compact excerpts from real calls; not a live replay",
+    "resolvedNames": [
+      "Mira Vale",
+      "Harbor Notebook",
+      "IndexedDB"
+    ],
+    "firstSubmittedForms": [
+      "mira",
+      "harbor notebook",
+      "indexeddb"
+    ],
+    "coverageViolations": 9,
+    "finalAcceptedSpellings": [
+      "Mira Vale",
+      "Harbor Notebook",
+      "IndexedDB"
+    ],
+    "sameJob": true
+  },
+  "selectedActualSavedTriples": [
+    {
+      "subject": "Harbor Notebook",
+      "predicate": "uses",
+      "object": "IndexedDB",
+      "subject_type": "project",
+      "object_type": "technology"
+    },
+    {
+      "subject": "Mira Vale",
+      "predicate": "prefers",
+      "object": "manual file export",
+      "subject_type": "person",
+      "object_type": "activity"
+    }
+  ],
+  "selection": "Two of seven actual accepted triples, reproduced unchanged. Other model output is omitted, not corrected.",
+  "editorialReviewAfterRun": [
+    {
+      "statement": "Harbor Notebook / uses / IndexedDB",
+      "assessment": "Supported in the fictional transcript"
+    },
+    {
+      "statement": "Mira Vale / prefers / manual file export",
+      "assessment": "The stored statement drops for this project and can overgeneralize. Output was not changed; validation did not catch this meaning error."
+    }
+  ],
+  "provenance": "Conversation-level source access; no exact-message citation",
+  "media": {
+    "recordedAfterAnalysis": true,
+    "desktop": "Existing entity conversation-list source button",
+    "phone": "Existing entity event source button; bottom conversation-list button is covered by navigation",
+    "editing": "Desktop opening 4.48 seconds omitted; remaining 7 seconds continuous at original speed. Sidebar and message metadata masked; desktop source still additionally cropped.",
+    "fonts": "External font CSS fulfilled locally with empty stylesheet; system fallback fonts",
+    "sourceViewer": "Read-only badge accompanies enabled edit controls; none invoked; private harness blocked writes",
+    "dashboard": "Question/event counters are not used as evidence for accepted array counts"
+  },
+  "scope": {
+    "productionAccess": false,
+    "liveApiFromPortfolio": false,
+    "existingAliasReuseProven": false,
+    "semanticAccuracyBenchmark": false,
+    "automaticSemanticCorrection": false
+  }
+}

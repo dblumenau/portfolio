@@ -27,6 +27,7 @@ const groups = {
   'engine-contract': ['engine-contract'],
   'session-cron': ['session-cron'],
   'workspace-hierarchy': ['workspace-hierarchy'],
+  'grounded-analysis': ['grounded-analysis'],
   'world-task': ['world-attention'],
   'world-memory': ['world-memory', 'world-presentation'],
   world: ['world', 'world-exhibit', 'world-lifecycle'],

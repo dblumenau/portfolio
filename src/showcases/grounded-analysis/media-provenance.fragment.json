@@ -1,0 +1,79 @@
+{
+  "assets": [
+    {
+      "file": "grounded-analysis/entity.png",
+      "product": "PanelForge Grounded Analysis",
+      "captured": "2026-10-15",
+      "method": "Actual isolated application after one real GPT-OSS120B HTTP analysis of authored fictional transcript; unchanged app source",
+      "content": "Actual entity profile before source navigation",
+      "redactions": [],
+      "bytes": 99168,
+      "sha256": "7a3d345d0aea33cedbc9a24b78d2beca0888673158e7e41c714a6ae7ed9a9e76",
+      "width": 1440,
+      "height": 1000
+    },
+    {
+      "file": "grounded-analysis/phone-source.png",
+      "product": "PanelForge Grounded Analysis",
+      "captured": "2026-10-15",
+      "method": "Actual isolated application after one real GPT-OSS120B HTTP analysis of authored fictional transcript; unchanged app source",
+      "content": "Actual phone source view reached through entity event button",
+      "redactions": [],
+      "bytes": 79294,
+      "sha256": "4a5074fc0a2ca9edf8139dacefdb43ce5fdf3dd2b993b1d55844a623671c1c9e",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "file": "grounded-analysis/receipt.json",
+      "product": "PanelForge Grounded Analysis",
+      "captured": "2026-10-15",
+      "method": "Actual isolated application after one real GPT-OSS120B HTTP analysis of authored fictional transcript; unchanged app source",
+      "content": "Explicit selection of actual saved output, source wording and observed checks; editorial assessment separate",
+      "redactions": [],
+      "bytes": 4155,
+      "sha256": "b1208b226012e40aa3438f07131c466ad4accc4c1f90bcaed9d4ccab0f9ca90f"
+    },
+    {
+      "file": "grounded-analysis/source-navigation.mp4",
+      "product": "PanelForge Grounded Analysis",
+      "captured": "2026-10-15",
+      "method": "Actual isolated application after one real GPT-OSS120B HTTP analysis of authored fictional transcript; unchanged app source",
+      "content": "Continuous original-speed entity-to-source UI flow after analysis; opening search omitted",
+      "redactions": [
+        "Source sidebar and message metadata masked; source still cropped"
+      ],
+      "bytes": 818993,
+      "sha256": "98b613915c5a6fc70ef9b694d5b5aaf55b5b13cc999d4513419f9991257b2b89",
+      "codec_name": "h264",
+      "width": 1440,
+      "height": 1000,
+      "duration_seconds": 7.0,
+      "editing": "Opening 4.48 seconds omitted. Remaining 7 seconds continuous at original 25fps, with conservative timed opaque source metadata masks. No loading wait or navigation removed."
+    },
+    {
+      "file": "grounded-analysis/source-navigation.vtt",
+      "product": "PanelForge Grounded Analysis",
+      "captured": "2026-10-15",
+      "method": "Actual isolated application after one real GPT-OSS120B HTTP analysis of authored fictional transcript; unchanged app source",
+      "content": "Native English action captions",
+      "redactions": [],
+      "bytes": 232,
+      "sha256": "c8ce7f287e3bc231eecdf1236ca736b78171d4fe976ede4c9053e53490819c98"
+    },
+    {
+      "file": "grounded-analysis/source.png",
+      "product": "PanelForge Grounded Analysis",
+      "captured": "2026-10-15",
+      "method": "Actual isolated application after one real GPT-OSS120B HTTP analysis of authored fictional transcript; unchanged app source",
+      "content": "Actual fictional source conversation with unchanged wording; cropped desktop view",
+      "redactions": [
+        "Source sidebar and message metadata masked; source still cropped"
+      ],
+      "bytes": 377560,
+      "sha256": "9ca63b88c8fff06ebc3d62b7d0be92173e6b13480c2cf6c5b61f8ea76c10f3d1",
+      "width": 1080,
+      "height": 1000
+    }
+  ]
+}

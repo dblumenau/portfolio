@@ -69,13 +69,13 @@ const stories: Story[] = [
     exhibit: { title: 'An edit that stays inspectable', caption: 'Invented relationship and review reason. The examples explain a correction and its inverse; they do not edit a real graph.', steps: [node('Before', 'Lantern / uses / PostgreSQL'), node('Correction', 'Source says SQLite; record the reason'), node('After', 'Lantern / uses / SQLite')], choices: [choice('Inspect the correction', 'PostgreSQL / SQLite', 'The before-state and the source-based reason remain available with the action.'), choice('Inspect an inverse action', 'Restore the recorded before-state', 'A supported inverse action writes its own history. A reversal is itself something to review.')] },
   },
   {
-    id: 'memory-05', slug: 'grounded-analysis', name: 'Grounded analysis', title: 'Look up a name before creating another one.', topics: ['Knowledge graph', 'Analysis'],
-    intro: 'I rebuilt analysis around a scoped candidate catalog and explicit resolution, after skipped lookups and duplicate entities showed the limits of prompting alone.',
-    problem: 'A model can understand a conversation and still treat an alias as a new entity. Similar names then split evidence that belongs together.',
-    built: ['Analysis starts from an immutable conversation snapshot and a user-scoped catalog of existing tags and entities. Candidate lookup and resolution give the model a route to canonical reuse.', 'The August work added a grounded agentic loop and batch candidate resolution. It was prompted by observed failures, so the design keeps resolution explicit rather than assuming the model will always follow instructions.'],
-    use: [step('Compare the candidates', 'Check whether an extracted name or alias already refers to an entity in the catalog.'), step('Resolve with evidence', 'Reuse the canonical record when the match is supported. Create a separate entity when the meanings differ.')],
+    id: 'memory-05', slug: 'grounded-analysis', name: 'Grounded analysis', title: 'Resolve the names. Keep the source close.', topics: ['Knowledge graph', 'Analysis'],
+    intro: 'Name checks can stop an unresolved spelling from being saved. The source conversation is still needed to check whether a statement keeps its meaning.',
+    problem: 'A model can save a neatly structured statement and lose a qualification. Names and source links help inspect the result; they do not make every claim correct.',
+    built: ['Analysis starts from an immutable conversation snapshot and a user-scoped catalog of existing tags and entities. Batch candidate resolution must cover the names in the terminal submission before it can be saved.', 'The recorded run starts from an empty catalog. It demonstrates required resolution coverage, not reuse of an existing alias. A project-specific preference survived the validator as a general statement; the source comparison makes that limit visible.'],
+    use: [step('Resolve the proposed names', 'The runtime requires a candidate-resolution receipt and rejects uncovered names before accepting a submission.'), step('Read the source conversation', 'Open the linked conversation to check the original wording. A name that passes validation can still appear in an overgeneralized statement.')],
     related: ['knowledge-graph', 'graph-curation'],
-    exhibit: { title: 'One project, two ways to name it', caption: 'A synthetic candidate lookup explains canonical reuse. No search against a private catalog occurs here.', steps: [node('Mention', '“Lantern app” in a conversation'), node('Lookup', 'Catalog candidate: Lantern'), node('Resolve', 'Reuse the existing project entity')], choices: [choice('Matching alias', 'Lantern app / Lantern', 'Evidence that the names refer to the same project supports reusing its canonical entity.'), choice('Different project', 'Keep a separate entity', 'Similar wording alone is insufficient. Resolution should preserve a meaningful distinction.')] },
+    exhibit: { title: 'Names checked, meaning still reviewed', caption: 'Actual extraction from an authored fictional conversation. Selected saved statements are unchanged; source comparisons are editorial review after the run.', steps: [node('Resolve', 'Mira Vale / Harbor Notebook / IndexedDB'), node('Reject', 'Nine coverage violations in the first submission'), node('Accept', 'The model repairs the names in the same job')], choices: [] },
   },
   {
     id: 'memory-06', slug: 'maintained-profile', name: 'Maintained profile', title: 'Keep a working brief with a restore path.', topics: ['Context', 'Curation'],
@@ -312,10 +312,13 @@ const metadata: Record<string, Pick<Feature, 'date' | 'evolution' | 'sources'>> 
         "app/Services/ConversationAnalysisGroundingService.php",
         "app/Services/AnalysisCandidateCatalog.php",
         "app/Services/ConversationAnalysisCandidateResolutionService.php",
-        "app/Services/ConversationAnalysisService.php"
+        "app/Services/ConversationAnalysisService.php",
+        "app/Services/ConversationAnalysisToolRuntime.php",
+        "app/Services/ConversationAnalysisHttpToolLoop.php",
+        "app/Jobs/AnalyzeConversationJob.php"
       ],
       "status": "source-current",
-      "note": "Grounding and resolution source inspected. The redesign addresses documented model failures; it does not guarantee canonical reuse on every run."
+      "note": "Grounding and resolution source inspected. A 15 October isolated run used an authored fictional transcript and the registered GPT-OSS 120B HTTP profile. It proves name-resolution coverage and conversation-level source access, not general semantic accuracy or reuse of a populated alias catalog."
     }
   },
   "memory-06": {
