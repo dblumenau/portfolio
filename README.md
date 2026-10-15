@@ -2,6 +2,8 @@
 
 A static Astro site with six case studies, a Three.js world, 30 feature stories, twelve interactive labs and a release explorer. The labs explore memory, configuration, recovery, browser graphics, gateway boundaries, preserved conversation branches, native questions, terminal-to-Mac Attention, notebook timing, Danish listening, archive reconstruction and audited graph edits. Inside the World, visitors can carry a recorded Attention answer, make two real PNG prints in the Small Edition Press, or compare three historical names and download a source evidence card. The voice feature also runs PanelForge’s retained ordered audio queue behind an explicit Listen action. A 78-second homepage film introduces the work. Product screenshots, captioned recordings and inspectable execution receipts accompany the stories. nginx serves the production build; browser interactions run without an application server.
 
+The Workspace feature shows a real isolated move and reload with fictional data and a disclosed unreleased destination-dialog fix. Its public derivatives hide the image identifier; native captions, an HTML text alternative and an after-move phone tree keep the story readable. The concise receipt separates persisted-row/file checks from mocked client UI tests.
+
 The footer offers a six-page selected-work PDF. It is a curated artifact from source checkpoint `a75d722`, with reviewed product captures, embedded fonts and links back to the site. Site builds retain its exact bytes; a revised edition needs a new review and updated `public/sample-files/sample-provenance.json`.
 
 Use Node 22.12 or newer, npm, ffprobe and exiftool for the media audit.

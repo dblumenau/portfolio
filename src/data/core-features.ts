@@ -761,7 +761,7 @@ export const coreFeatures: Feature[] = [
     "topics": [
       "Organization"
     ],
-    "intro": "A per-user Workspace root sits above Project, Scene and Panel and supports moving projects while preserving hierarchy-aware gallery and API assignment.",
+    "intro": "A project can change workspace while its scenes, panels and assigned media stay together. The recorded local example checks that the saved hierarchy survives a reload.",
     "problem": "A growing gallery needs a stable way to group projects, scenes and panels without flattening every asset into one long list.",
     "built": [
       "A per-user Workspace root sits above Project, Scene and Panel and supports moving projects while preserving hierarchy-aware gallery and API assignment.",
@@ -788,7 +788,7 @@ export const coreFeatures: Feature[] = [
         "database/migrations/"
       ],
       "status": "source-current",
-      "note": "Source and release record inspected; no current product execution is claimed for this illustration.",
+      "note": "Source and release record inspected. The recorded isolated move and reload use fictional data and one unreleased destination-dialog watcher option. Saved-row and file checks verify this fixture; mocked client tests are separate. No production availability is claimed.",
       "release": "web-v10.0.0"
     },
     "related": [
@@ -797,27 +797,27 @@ export const coreFeatures: Feature[] = [
       "workspace-hierarchy"
     ],
     "exhibit": {
-      "title": "Follow the panel through the move",
-      "caption": "Local explanatory exhibit · invented records · no live service or agent call",
+      "title": "Follow the saved project move",
+      "caption": "Actual isolated application · fictional local data · unreleased destination-dialog fix",
       "steps": [
         {
           "name": "Before the move",
-          "detail": "Studio / Lantern / Evening / Poster"
+          "detail": "Studio / Pocket Gardens / Window Garden / Afternoon light"
         },
         {
           "name": "After the move",
-          "detail": "Archive / Lantern / Evening / Poster"
+          "detail": "Archive / Pocket Gardens / Window Garden / Afternoon light"
         }
       ],
       "choices": [
         {
           "label": "Before the move",
-          "result": "Studio / Lantern / Evening / Poster",
+          "result": "Studio / Pocket Gardens / Window Garden / Afternoon light",
           "explanation": "The panel is nested inside a scene, project and workspace."
         },
         {
           "label": "After the move",
-          "result": "Archive / Lantern / Evening / Poster",
+          "result": "Archive / Pocket Gardens / Window Garden / Afternoon light",
           "explanation": "The project changes workspace; its scene and panel stay in the hierarchy."
         }
       ]

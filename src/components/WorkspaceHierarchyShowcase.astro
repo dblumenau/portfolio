@@ -1,0 +1,63 @@
+---
+import Icon from './Icon.astro';
+import { workspaceMedia as media, workspaceCaptures as captures } from '../showcases/workspace-hierarchy/content';
+---
+<section class="workspace-showcase wrap" id="workspace-in-motion" aria-labelledby="workspace-showcase-heading" data-workspace-showcase>
+  <div class="workspace-intro">
+    <div><p class="eyebrow">A recorded project move</p><h2 id="workspace-showcase-heading">A new home.<br /><em>The same contents.</em></h2></div>
+    <p>Move Pocket Gardens from Studio into Archive. Its two scenes, panel and uploaded image stay together, ready to find again.</p>
+  </div>
+  <ol class="workspace-story" aria-label="The move in three steps">
+    <li><span class="workspace-step">01</span><div><h3>Studio <span aria-hidden="true"><Icon name="arrow-right" /></span> Archive</h3><p>Change the project’s workspace.</p></div></li>
+    <li><span class="workspace-step">02</span><div><h3>Keep its contents together</h3><p>Two scenes, one panel and one image remain.</p></div></li>
+    <li><span class="workspace-step">03</span><div><h3>Reload and find it there</h3><p>The saved move appears in the gallery.</p></div></li>
+  </ol>
+  <figure class="workspace-film">
+    <video controls playsinline preload="none" poster={`${media}/before.png`} width="1280" height="920" aria-label="Pocket Gardens moves from Studio to Archive in the actual isolated application, with fictional data and an unreleased destination-dialog fix" aria-describedby="workspace-film-scope">
+      <source src={`${media}/execution.mp4`} type="video/mp4" />
+      <track kind="captions" src={`${media}/execution.vtt`} srclang="en" label="English action captions" default />
+      <p><a href={`${media}/execution.mp4`}>Open the project move film</a></p>
+    </video>
+    <figcaption id="workspace-film-scope"><strong>Actual PanelForge UI with fictional data.</strong> Includes an unreleased fix that loads the workspace destinations. This continuous, silent recording retains the real reload wait; a small mask hides the image identifier.</figcaption>
+  </figure>
+  <div class="workspace-film-links"><a href={`${media}/execution.mp4`}>Open the 28-second film full size <Icon name="arrow-up-right" /></a><a href={`${media}/execution.vtt`}>Read the action captions <Icon name="arrow-up-right" /></a></div>
+  <fieldset class="workspace-captures">
+    <legend>Inspect the saved views</legend>
+    <div class="workspace-choices">{captures.map(capture => <label><input type="radio" name="workspace-capture" value={capture.id} checked={capture.id === 'after'} /><span>{capture.label}</span></label>)}</div>
+    <div class="workspace-frames">{captures.map(capture => <figure data-workspace-frame={capture.id}>
+      <a class:list={['workspace-image-link', {'workspace-phone': capture.id === 'phone'}]} href={`${media}/${capture.file}`} aria-label={`Open full-size ${capture.label} capture`}><img src={`${media}/${capture.file}`} alt={capture.alt} width={capture.width} height={capture.height} loading="lazy" /><span>Open full size <Icon name="arrow-up-right" /></span></a>
+      <figcaption><strong>{capture.title}</strong><span>{capture.caption}</span></figcaption>
+    </figure>)}</div>
+  </fieldset>
+  <div class="workspace-evidence">
+    <div><p class="eyebrow">What the checks confirmed</p><h3>Same records.<br />Unchanged image bytes.</h3></div>
+    <p>The captured view shows the retained names, tree and image. Separate checks of the saved fixture confirmed the same project, scenes, panel, image and file records, with their relationships intact and the media bytes unchanged.</p>
+  </div>
+  <details class="workspace-method"><summary>Source, checks and the unreleased fix <Icon name="plus" /></summary><div>
+    <p>A workspace is the parent above Project, Scene and Panel. The move changes that parent while retaining the project’s existing contents. This example ran the real interface and server against a disposable database containing only fictional records.</p>
+    <p>The canonical destination picker did not load its choices on first mount. This recording uses one private watcher option, <code>immediate: true</code>, to load them when the dialog opens. That correction is unreleased; this is not a production capture or a claim that the unmodified picker works.</p>
+    <p>The actual move request and page reload supplied the persistence check for this fixture. Seventeen separate client UI tests passed with mocked requests; those tests do not establish server persistence or every hierarchy write path.</p>
+    <p>The observed saved changes were the project’s workspace and update timestamp, plus the image assignment’s workspace. The assignment timestamp remained unchanged. The scenes, panel, image and file records remained unchanged.</p>
+    <p>The uploaded still life uses procedural geometry. No image generation, live provider or production account was involved. The top-center icon is static Forge branding, supplied by <code>HeaderBranding.vue</code> and <code>ForgeMascot.vue</code>.</p>
+    <a href={`${media}/receipt.json`}>Read the concise proof receipt <Icon name="arrow-up-right" /></a>
+    <a href="/work/panelforge/">See the PanelForge case study <Icon name="arrow-up-right" /></a>
+  </div></details>
+</section>
+<script>
+  document.querySelectorAll<HTMLElement>('[data-workspace-showcase]').forEach(section => {
+    const video = section.querySelector('video');
+    window.addEventListener('pagehide', () => video?.pause());
+  });
+</script>
+<style>
+  .workspace-showcase{padding-block:22px 60px;border-bottom:1px solid var(--line);scroll-margin-top:28px}
+  .workspace-intro{display:grid;grid-template-columns:1.1fr 1fr;gap:28px 64px;align-items:end;margin-bottom:30px}.workspace-intro .eyebrow{font-size:14px;margin-bottom:14px;color:var(--rust)}.workspace-intro h2{font-size:clamp(2.2rem,4.5vw,4.2rem);line-height:1.08}.workspace-intro h2 em{color:var(--forest)}.workspace-intro>p{max-width:460px;color:var(--muted);font-size:18px;line-height:1.8}
+  .workspace-story{list-style:none;padding:0;margin:0 0 26px;display:grid;grid-template-columns:repeat(3,1fr);background:#e8ecdf;border:1px solid #c6cebb}.workspace-story li{display:flex;gap:16px;padding:23px 22px}.workspace-story li+li{border-left:1px solid #c6cebb}.workspace-step{font-size:14px;color:#5f6d57;padding-top:4px}.workspace-story h3{font-family:inherit;font-size:17px;font-weight:650;line-height:1.5}.workspace-story p{font-size:15px;line-height:1.7;color:#495543;margin-top:6px}.workspace-story h3>span{display:inline-flex;vertical-align:middle;padding-inline:3px}
+  .workspace-film{margin:0}.workspace-film video{display:block;width:100%;height:auto;aspect-ratio:1280/920;background:#10151b;border:1px solid #899281;border-radius:4px}.workspace-film video::cue{font-size:clamp(14px,1.6vw,24px);color:#fff;background:#10151b}.workspace-film figcaption{font-size:16px;line-height:1.8;max-width:900px;padding-top:16px;color:var(--muted)}.workspace-film figcaption strong{color:var(--ink);font-weight:650}.workspace-film-links{display:flex;flex-wrap:wrap;gap:4px 30px;padding:8px 0 30px}.workspace-film-links a,.workspace-method a{display:inline-flex;align-items:center;gap:12px;min-height:46px;font-size:15px}
+  .workspace-captures{min-width:0;padding:24px 0 0;border:0;border-top:1px solid var(--line);margin:0}.workspace-captures legend{float:left;width:100%;font-size:17px;font-weight:650;padding:0;margin:0 0 14px}.workspace-choices{display:flex;clear:both;flex-wrap:wrap;gap:9px;margin-bottom:18px}.workspace-choices label{display:flex;align-items:center;gap:9px;min-height:46px;padding:10px 18px;border:1px solid #899281;border-radius:3px;cursor:pointer;font-size:15px}.workspace-choices input{width:17px;height:17px;margin:0;accent-color:var(--forest);flex-shrink:0}.workspace-choices label:has(:checked){color:var(--paper);background:var(--forest-dark);border-color:var(--forest-dark)}.workspace-choices label:has(:checked) input{accent-color:var(--paper)}.workspace-choices label:has(:focus-visible){outline:3px solid var(--rust);outline-offset:4px}
+  .workspace-frames figure{margin:0;min-width:0}.workspace-image-link{display:block;background:#10151b;border:1px solid var(--line);border-radius:4px;overflow:hidden;text-decoration:none}.workspace-image-link img{display:block;width:100%;height:auto}.workspace-image-link>span{display:flex;align-items:center;justify-content:flex-end;gap:12px;min-height:46px;padding:10px 16px;color:#e5e9ec;font-size:14px;border-top:1px solid #39444c}.workspace-phone{max-width:390px;margin-inline:auto}.workspace-frames figcaption{display:grid;grid-template-columns:1fr 1.7fr;gap:12px 38px;padding-block:17px 26px;font-size:15px;line-height:1.8}.workspace-frames figcaption strong{font-size:17px;font-weight:650}.workspace-frames figcaption>span{color:var(--muted)}
+  .workspace-captures:has([value=before]:checked) [data-workspace-frame]:not([data-workspace-frame=before]),.workspace-captures:has([value=after]:checked) [data-workspace-frame]:not([data-workspace-frame=after]),.workspace-captures:has([value=phone]:checked) [data-workspace-frame]:not([data-workspace-frame=phone]){display:none}
+  .workspace-evidence{display:grid;grid-template-columns:1fr 1.7fr;gap:24px 38px;padding:26px 0 30px;border-top:1px solid var(--line)}.workspace-evidence .eyebrow{font-size:14px;margin-bottom:12px}.workspace-evidence h3{font-size:27px;line-height:1.25}.workspace-evidence>p{font-size:16px;line-height:1.9;color:var(--muted);max-width:670px}
+  .workspace-method{border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.workspace-method>summary{display:flex;justify-content:space-between;align-items:center;gap:14px;min-height:56px;padding:13px 8px;font-size:16px;font-weight:650;cursor:pointer}.workspace-method>summary>.ui-icon{flex-shrink:0}.workspace-method[open]>summary>.ui-icon{transform:rotate(45deg)}.workspace-method>div{padding:10px 0 24px;max-width:850px}.workspace-method p{font-size:15px;line-height:1.9;margin-bottom:14px;color:var(--muted)}.workspace-method code{font-size:14px;overflow-wrap:anywhere}.workspace-method a{margin-right:30px}
+  @media(max-width:760px){.workspace-showcase{padding-block:8px 40px}.workspace-intro{grid-template-columns:1fr;gap:18px;margin-bottom:24px}.workspace-intro h2{font-size:clamp(2.1rem,8vw,3.3rem)}.workspace-intro>p{font-size:17px}.workspace-story{grid-template-columns:1fr}.workspace-story li{padding:18px}.workspace-story li+li{border-left:0;border-top:1px solid #c6cebb}.workspace-story p{margin-top:3px}.workspace-film video:not(:fullscreen)::cue{font-size:14px}.workspace-film figcaption{font-size:16px}.workspace-film-links{padding-bottom:24px}.workspace-choices label{padding-inline:13px}.workspace-frames figcaption{grid-template-columns:1fr;gap:5px}.workspace-evidence{grid-template-columns:1fr;gap:16px}.workspace-evidence h3 br{display:none}.workspace-method>summary{font-size:15px}.workspace-method a{margin-right:0;display:flex;width:fit-content}}
+</style>

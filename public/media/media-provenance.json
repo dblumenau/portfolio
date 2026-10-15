@@ -1467,7 +1467,7 @@
       "height": 1080,
       "duration_seconds": 78.2,
       "fps": 30,
-      "editing": "Silent. Original-speed moving footage, hard cuts and contained scaling in authored typographic framing. Attention source excerpts are 5–19s and 35.5–38.5s; the latter is a later actual generated-page render. The separate post-upgrade build128 persisted-card observation is excluded. Recovery source 2–18s shows one continuing engine process, not process-restart recovery. World is an illustration with a fixed recorded choice; original participant automated Computer Use.",
+      "editing": "Silent. Original-speed moving footage, hard cuts and contained scaling in authored typographic framing. Attention source excerpts are 5\u201319s and 35.5\u201338.5s; the latter is a later actual generated-page render. The separate post-upgrade build128 persisted-card observation is excluded. Recovery source 2\u201318s shows one continuing engine process, not process-restart recovery. World is an illustration with a fixed recorded choice; original participant automated Computer Use.",
       "bytes": 3107388,
       "sha256": "323da5988a2c6c680d1b979a2b1df59262f123ef23549746ec183b0cbde5cd87"
     },
@@ -1963,6 +1963,83 @@
       ],
       "bytes": 4474,
       "sha256": "4af7d57e0f84d2bd7e2ea57fafbfc93451eb38c4b1f18123624b5bcce668b407"
+    },
+    {
+      "file": "workspace-hierarchy/execution.mp4",
+      "product": "PanelForge Workspace hierarchy",
+      "captured": "2026-10-15",
+      "method": "Actual isolated application, fictional fixture, private unreleased dialog initialization fix; no inference",
+      "content": "Continuous actual app move and reload, with badge redaction and original disclosure footer",
+      "redactions": [
+        "Opaque mask over fictional image identifier"
+      ],
+      "bytes": 743692,
+      "sha256": "509bd1c6e451e90213522c5d23a28c3deb43d151e94944760c499c2bf4c94bf0",
+      "codec_name": "h264",
+      "width": 1280,
+      "height": 920,
+      "duration_seconds": 27.6,
+      "editing": "Original continuous span and reload retained; one timed opaque identifier mask; disclosure footer retained"
+    },
+    {
+      "file": "workspace-hierarchy/execution.vtt",
+      "product": "PanelForge Workspace hierarchy",
+      "captured": "2026-10-15",
+      "method": "Actual isolated application, fictional fixture, private unreleased dialog initialization fix; no inference",
+      "content": "Native English action captions",
+      "redactions": [],
+      "bytes": 357,
+      "sha256": "71804dbd718b3950ac061a966a894d9b95f53a06e3a005dcfa582e7b0cdb7b57"
+    },
+    {
+      "file": "workspace-hierarchy/before.png",
+      "product": "PanelForge Workspace hierarchy",
+      "captured": "2026-10-15",
+      "method": "Actual isolated application, fictional fixture, private unreleased dialog initialization fix; no inference",
+      "content": "Actual desktop tree in Studio before the move; image badge redacted",
+      "redactions": [
+        "Opaque mask over fictional image identifier"
+      ],
+      "bytes": 70328,
+      "sha256": "bc5cd03ef8ddaa4d522e96e6f3083d32e73aa2731f6dc2fc170df83d3da164d1",
+      "width": 1280,
+      "height": 800
+    },
+    {
+      "file": "workspace-hierarchy/after.png",
+      "product": "PanelForge Workspace hierarchy",
+      "captured": "2026-10-15",
+      "method": "Actual isolated application, fictional fixture, private unreleased dialog initialization fix; no inference",
+      "content": "Actual desktop tree in Archive after move and reload; image badge redacted",
+      "redactions": [
+        "Opaque mask over fictional image identifier"
+      ],
+      "bytes": 70527,
+      "sha256": "aaf11b2836de7b80737bb1cd2a879918533d8b1ae0a85ee543c585a6c199867b",
+      "width": 1280,
+      "height": 800
+    },
+    {
+      "file": "workspace-hierarchy/phone-after.png",
+      "product": "PanelForge Workspace hierarchy",
+      "captured": "2026-10-15",
+      "method": "Actual isolated application, fictional fixture, private unreleased dialog initialization fix; no inference",
+      "content": "Actual after-move phone hierarchy; no identifier present",
+      "redactions": [],
+      "bytes": 29290,
+      "sha256": "bb374da0201e1a6f0d14c61e2b205a8a362b9ede6fb98b381b818156eb4114f9",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "file": "workspace-hierarchy/receipt.json",
+      "product": "PanelForge Workspace hierarchy",
+      "captured": "2026-10-15",
+      "method": "Actual isolated application, fictional fixture, private unreleased dialog initialization fix; no inference",
+      "content": "Safe projection of reviewed fixture proof; excludes technical fixture identifiers and private evidence",
+      "redactions": [],
+      "bytes": 2346,
+      "sha256": "7f8c942667ad75dfb18f387195fab9eaadf2d1586d53551d04fa5282f41faa23"
     }
   ]
 }

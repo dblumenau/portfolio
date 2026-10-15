@@ -1,0 +1,69 @@
+{
+  "schema": "workspace-hierarchy-public-proof-v1",
+  "demonstration": "Actual isolated PanelForge UI with fictional data and an unreleased destination-dialog fix",
+  "source": {
+    "repository": "panel-forge",
+    "revision": "93881d2eca613fde498e0933405cee3a07220a4c",
+    "releaseAnchor": "web-v10.0.0",
+    "unreleasedFix": {
+      "component": "MoveProjectToWorkspaceDialog.vue",
+      "change": "Run the open-prop watcher immediately on mount",
+      "option": "immediate: true",
+      "baseline": "The canonical destination picker mounts without loading its choices",
+      "deployed": false
+    }
+  },
+  "fixture": {
+    "workspaces": 2,
+    "projects": 1,
+    "scenes": 2,
+    "panels": 1,
+    "images": 1,
+    "fileAssets": 1,
+    "imagery": "Uploaded geometric still life authored procedurally; no model generation"
+  },
+  "observed": {
+    "destinationListLoaded": true,
+    "moveRequestSucceeded": true,
+    "pageReloaded": true,
+    "newParentVisibleAfterReload": true,
+    "sameProjectScenePanelImageAndFileRecords": true,
+    "sameHierarchyRelations": true,
+    "mediaFileBytesUnchanged": true,
+    "projectFieldsChanged": [
+      "workspace_id",
+      "updated_at"
+    ],
+    "imageAssignmentFieldsChanged": [
+      "workspace_id"
+    ],
+    "imageAssignmentTimestampUnchanged": true
+  },
+  "validation": {
+    "persistence": "Actual UI requests and before/after persisted-row and file checks for this one fixture",
+    "uiTests": {
+      "passed": 17,
+      "kind": "Mocked client tree and action tests; separate from persistence proof"
+    },
+    "baselineAndPatchedFrontendBuildsPassed": true
+  },
+  "capture": {
+    "seconds": 27.6,
+    "continuousApplicationSpan": true,
+    "originalSpeed": true,
+    "reloadWaitRetained": true,
+    "phoneView": "After-move tree only; no phone move was filmed",
+    "disclosure": "Includes a private, unreleased dialog initialization fix"
+  },
+  "publicRedaction": {
+    "method": "Opaque rectangle over the fictional image identifier; ordinary item counts retained",
+    "applicationPixelsOtherwisePreserved": true,
+    "branding": "Top-center icon is static Forge branding, retained from HeaderBranding.vue and ForgeMascot.vue"
+  },
+  "scope": {
+    "productionAccess": false,
+    "providerCalls": false,
+    "productionAvailabilityClaim": false,
+    "allWritePathsClaim": false
+  }
+}

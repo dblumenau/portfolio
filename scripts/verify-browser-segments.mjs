@@ -26,6 +26,7 @@ const groups = {
   'audio-intent': ['audio-intent'],
   'engine-contract': ['engine-contract'],
   'session-cron': ['session-cron'],
+  'workspace-hierarchy': ['workspace-hierarchy'],
   'world-task': ['world-attention'],
   'world-memory': ['world-memory', 'world-presentation'],
   world: ['world', 'world-exhibit', 'world-lifecycle'],

@@ -9,6 +9,13 @@ const errors = [];
 const external = new Set();
 const report = { date: new Date().toISOString(), buildRoot: root, routes: [], assets: [], sampleFiles: [], externalLinks: [], errors };
 const reviewedEvidenceMedia = [
+  'workspace-hierarchy/execution.mp4',
+  'workspace-hierarchy/execution.vtt',
+  'workspace-hierarchy/before.png',
+  'workspace-hierarchy/after.png',
+  'workspace-hierarchy/phone-after.png',
+  'workspace-hierarchy/receipt.json',
+
   'workbench/receipt.json', 'workbench/transcript.txt', 'workbench/terminal-replay.mp4',
   'workbench/terminal-replay.vtt', 'workbench/terminal-replay.webp',
   'recovery/execution.mp4', 'recovery/execution.vtt', 'recovery/disconnected.png',
