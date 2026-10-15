@@ -1,0 +1,130 @@
+{
+  "schema": 1,
+  "title": "One session cron, resumed without another prompt",
+  "recorded_date": "2026-10-15",
+  "projection": {
+    "method": "Deterministic field selection and derived booleans from a captured real CLI test; no transcript or response text is reproduced. Retained numeric/source values are unchanged.",
+    "omitted": [
+      "session, job, account and process identifiers",
+      "host metadata and private paths",
+      "prompt and fixed response text",
+      "auth, usage and cost metadata",
+      "absolute live timestamps"
+    ],
+    "derived": [
+      "same-session and different-process comparisons",
+      "fixed-response match",
+      "unique passing test count",
+      "synthetic result counts"
+    ]
+  },
+  "live_cli": {
+    "one_cron_created": true,
+    "recurring": false,
+    "durable": false,
+    "same_session": true,
+    "first_cli_closed_before_resume": true,
+    "different_cli_process": true,
+    "explicit_arming_queries": 1,
+    "explicit_queries_after_resume": 0,
+    "fixed_response_matched": true,
+    "sdk_product_interactions": 2,
+    "sdk_num_turns": {
+      "arming": 2,
+      "autonomous": 1
+    },
+    "result_offset_from_mirror_seconds": 2.3964736461639404,
+    "arming_tools": [
+      "CronCreate"
+    ],
+    "resumed_tools": [],
+    "mcp_servers": []
+  },
+  "timeline": [
+    "one_shot_armed",
+    "first_cli_closed",
+    "same_session_resumed_without_query",
+    "fixed_response_returned"
+  ],
+  "synthetic_classifier": {
+    "case_count": 16,
+    "timezone": "Europe/Copenhagen",
+    "description": "Fixed, invented transcript inputs processed by the unchanged engine classifier; separate from the real CLI test.",
+    "selected_cases": [
+      {
+        "case": "eligible",
+        "restorable_count": 1,
+        "fixed_now": 1792052400.0,
+        "age_seconds": 1200.0,
+        "fixture_sha256": "411f528777dcf5b8fdbd17d924bfb4bc28d360f4d8a6a4dc104d1a5865f0284a"
+      },
+      {
+        "case": "missed",
+        "restorable_count": 0,
+        "fixed_now": 1792052400.0,
+        "age_seconds": 1200.0,
+        "fixture_sha256": "6d6451db3b0017026d1bf2f3b90d97e6559a8ed0b772cb6d88461e108aef97ae"
+      },
+      {
+        "case": "recurring_equal_expiry",
+        "restorable_count": 0,
+        "fixed_now": 1792656000.0,
+        "age_seconds": 604800.0,
+        "fixture_sha256": "cb7988caaa42fe1ae6241a9add8ce89823f0988094846812c93a255d0d83ce7a"
+      }
+    ]
+  },
+  "original_source_tests": {
+    "unique_passed": 49,
+    "reports": [
+      {
+        "kind": "classifier",
+        "tests": 25,
+        "passed": 25,
+        "failed": 0
+      },
+      {
+        "kind": "mocked_components_initial",
+        "tests": 24,
+        "passed": 18,
+        "failed": 6
+      },
+      {
+        "kind": "mocked_warm_routes_loopback_only",
+        "tests": 6,
+        "passed": 6,
+        "failed": 0
+      }
+    ],
+    "note": "Six route tests failed with namespace loopback down; those same six passed after enabling only namespace-local loopback. They are counted once. Component tests use mocked SDK/Redis/HTTP."
+  },
+  "source": {
+    "revision": "bf89abc1646bd12133a0f22bc2d51f3286813250",
+    "tag": "v6.17.0",
+    "sdk_version": "0.2.164",
+    "cli_version": "2.1.292",
+    "files": [
+      {
+        "file": "claude_engine/cron_restore.py",
+        "sha256": "05c8cb8f849608270cc8cb3441a3bd279ecbce21c27efe7f714c58c7d486b2f7"
+      },
+      {
+        "file": "scripts/check_cron_resurrection.py",
+        "sha256": "f58e9329bc3ad4bb725179c951a6f36522a8cc263d8c209c7e72a9d4666a199d"
+      }
+    ]
+  },
+  "private_capture_sha256": {
+    "event_log": "4c48c2ae51f480135edd59331d5d603fdc1854a2c8d99df636e9e9fd23cde80b",
+    "transcript_armed": "16fc6ecc93b0f880da2356d4bc5748f67fd4f6cfbbd3f72a8206f1204c8cc129",
+    "transcript_final": "5df5d3c65903332ddc2c4bb1b0d8abc232c15124dda654f37cadda8a603f8f21",
+    "offline_output": "d624474ad5e3df7057868b73ca7d8dacac45e0ca323499e4b7b7fd55df0b2cb6",
+    "live_state": "7c0d478a658a086c7da6811959b9c37f2e8614bec994610482fb17b7a61dbbf2"
+  },
+  "boundaries": [
+    "One observed CLI one-shot resume/fire, not a timing benchmark or SLA.",
+    "No real Claude Engine restart, armed record, Redis outbox, PanelForge callback, HTTP warm or production health check.",
+    "Synthetic boundary cases establish classifier output, not all native CLI scheduling behavior.",
+    "Two SDK product interactions are distinct from SDK num_turns and provider inference or billing counts."
+  ]
+}

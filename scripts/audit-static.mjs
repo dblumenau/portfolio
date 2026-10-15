@@ -57,6 +57,7 @@ const reviewedEvidenceMedia = [
   'image-revision/revision-preview-960.webp',
   'image-revision/revision-preview-1264.webp',
   'engine-contract/receipt.json',
+  'session-cron/receipt.json',
   'audio-intent/tone-0.wav', 'audio-intent/tone-1.wav', 'audio-intent/tone-2.wav',
   'audio-intent/receipt.json', 'audio-intent/licenses.txt',
   'code-history/week.png', 'code-history/peek.png', 'code-history/transcript.png',

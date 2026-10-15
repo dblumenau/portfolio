@@ -1,0 +1,16 @@
+{
+  "assets": [
+    {
+      "file": "session-cron/receipt.json",
+      "product": "Claude CLI session cron",
+      "captured": "2026-10-15",
+      "method": "Deterministic projection of one actual isolated CLI resume/fire capture, with separate synthetic classifier and original test receipts.",
+      "content": "Four recorded lifecycle stages, exact retained source/version/numeric values and derived match/process/query booleans; no transcript text.",
+      "redactions": [
+        "Omitted private prompt/response, session/job/account/process identifiers, host paths, auth, costs, usage and absolute live timestamps. Retained values are unchanged; derived fields are declared."
+      ],
+      "bytes": 4474,
+      "sha256": "4af7d57e0f84d2bd7e2ea57fafbfc93451eb38c4b1f18123624b5bcce668b407"
+    }
+  ]
+}

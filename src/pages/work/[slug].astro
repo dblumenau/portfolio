@@ -14,6 +14,7 @@ import AttentionPreview from '../../components/AttentionPreview.astro';
 import ImageRevisionShowcase from '../../components/ImageRevisionShowcase.astro';
 import TransitShowcase from '../../components/TransitShowcase.astro';
 import CodeHistoryShowcase from '../../components/CodeHistoryShowcase.astro';
+import SessionCronShowcase from '../../components/SessionCronShowcase.astro';
 import { features } from '../../data/features';
 import { caseFeatureSlugs } from '../../data/case-feature-links';
 import { caseStudies } from '../../data/projects';
@@ -48,6 +49,7 @@ const mobileImage = project.slug === 'conference-notes' ? '/media/conference-not
       {project.slug === 'conference-notes' && <ConferenceOutput />}
       {project.slug === 'connected-tools' && <div class="tool-run-showcase"><div class="tool-run-heading"><p class="eyebrow">One request, visible tool activity</p><h3>From a conversation to playing a track.</h3><p>This saved showcase turn transfers Spotify playback, sets the volume and plays the requested song. The conversation records the tool calls and their result.</p></div><ScreenShowcase id="case-tool-run" desktop="/media/panelforge-chat-desktop.webp" desktopAlt="A saved PanelForge conversation showing Spotify transfer, volume and playback tool calls with their result." label="A tool run in the web client" caption="A saved Spotify showcase conversation in the current web interface. Device identifier redacted." /></div>}
     </section>
+    {project.slug === 'connected-agents' && <SessionCronShowcase />}
     {project.slug === 'panelforge' && <CodeHistoryShowcase />}
     <section class="case-decisions" id="the-decisions"><div class="wrap"><SectionHeading number="03" label="Design + engineering" title="The decisions underneath." /><div class="decision-grid">{project.decisions.map((decision, index) => <article><span class="decision-index">0{index + 1} /</span><h3>{decision.title}</h3><p>{decision.description}</p></article>)}</div></div></section>
     <section class="case-evolution wrap" id="the-evolution"><SectionHeading number="04" label="Selected release history" title="It got here one decision at a time." intro="These are historical changes recorded in repository tags. The capture and current-state notes below describe what is being shown here." /><ReleaseCards stories={project.releases} /></section>

@@ -25,6 +25,7 @@ const groups = {
   'selected-work': ['selected-work'],
   'audio-intent': ['audio-intent'],
   'engine-contract': ['engine-contract'],
+  'session-cron': ['session-cron'],
   'world-task': ['world-attention'],
   world: ['world', 'world-exhibit', 'world-lifecycle'],
 };
