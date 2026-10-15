@@ -2,6 +2,8 @@
 
 The release package serves prebuilt static files through nginx on container port 8080. Production Compose binds `127.0.0.1:8091`, matching the host nginx upstream for `danishdave.com`. `/en`, `/en/`, `/da` and `/da/` return relative 301 redirects to `/`. Missing routes return the custom page with HTTP404. Media supports byte ranges; hashed Astro assets have immutable caching and media has a one-hour cache.
 
+Production has used the static runtime since `v-2.0.0`. For a subsequent release, preserve the immediately preceding static container, image and package directory. Its tmpfs directories are temporary nginx runtime state, not persistent application data. Older Laravel recovery material remains a separate retained checkpoint; restore releases in reverse order using the matching release records. Do not run an older rollback executor against a newer deployment.
+
 Publication requires David's authorization. Building and checking a package does not publish it. An existing authorization covers the requested release; these instructions add no further approval step. Commands below use Bash with `set -euo pipefail` so a failed check stops the sequence. Remote steps share one shell's recorded variables; save the release record before closing it.
 
 ## Verify and package the final commit
@@ -17,17 +19,18 @@ This checks retained source, runs Astro diagnostics, builds the default `dist/`,
 
 Set `PORTFOLIO_AUDIT_REPORT`, `PORTFOLIO_DEPLOYMENT_REPORT`, `PORTFOLIO_BROWSER_REPORT` and `PORTFOLIO_TEST_ARTIFACTS` to private report paths as needed. Inspect the exact generated archive and SHA-256 sidecar, rather than selecting an unrelated artifact by wildcard. Verify its checksum and `release.json`: the revision must identify the final commit, `workingTree` must be false, and `verified` must include retained source, Astro check, build, static audit, Docker smoke and the production nginx browser suite. Keep the full Git revision with the release record; metadata uses its 12-character abbreviation.
 
-Use an annotated release tag with the established `v-` prefix, such as `v-2.0.0`, and an immutable corresponding image tag. Fetch/check tags immediately before creating the tag. Discover and recheck the remote default branch and ancestry before promoting the reviewed commit. For default branch `master`, the non-force flow is:
+Use an annotated release tag with the established `v-` prefix, such as `v-2.1.0`, and an immutable corresponding image tag. Fetch/check tags immediately before creating the tag. Discover and recheck the remote default branch and ancestry before promoting the reviewed commit. For default branch `master`, the non-force flow is:
 
 ```sh
 set -euo pipefail
 git fetch origin --tags
-git merge-base --is-ancestor origin/master HEAD
+release_commit=$(git rev-parse HEAD)
+git merge-base --is-ancestor origin/master "$release_commit"
 git status --short
 # After reviewing the complete replacement scope and final verification:
-git push origin HEAD:refs/heads/master
-git tag -a v-2.0.0 -m 'Release v-2.0.0: portfolio rebuild'
-git push origin refs/tags/v-2.0.0
+git push origin "$release_commit":refs/heads/master
+git tag -a v-2.1.0 "$release_commit" -m 'Release v-2.1.0: creative continuity and recorded Scratch Pad'
+git push origin refs/tags/v-2.1.0
 ```
 
 Substitute the reviewed release version and current default branch. A normal push rejects an incompatible concurrent remote change; do not force it. Recheck the resulting remote branch/tag targets. GitHub [selects workflow definitions from the event's commit/ref](https://docs.github.com/en/actions/concepts/workflows-and-actions/workflows#workflow-triggers); a [tag push](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#push) uses that tag's commit tree. This static source contains no hosted workflow files. A [`workflow_run`](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#workflow_run) requires its definition on the default branch and a predecessor run. Check the exact release tree and queued/running jobs before and after pushing. There is no configured portfolio Hetzner webhook or deploy ledger: publishing uses the reviewed package manually. Do not dispatch a hosted deployment workflow.
@@ -39,7 +42,7 @@ Transfer the exact archive and checksum to a new release directory. Never extrac
 ```sh
 set -euo pipefail
 umask 077
-release_tag=v-2.0.0
+release_tag=v-2.1.0
 image_name="portfolio:$release_tag"
 compose_project="portfolio-static-${release_tag//./-}"
 stage_container="portfolio-stage-$release_tag"
@@ -98,7 +101,7 @@ docker exec "$stage_container" nginx -t
 
 Docker assigns an unused loopback port. Port 8097 belongs to the ECC sandbox; preserve it. Do not stage on production 8091. Wait up to 100 seconds for stage health `healthy`, failing on `unhealthy`, `exited` or `dead`; the image checks every 30 seconds with a five-second start period and three retries. HTTP200 alone is insufficient.
 
-Verify the stage using the HTTP/byte checks below. For browser checks, forward a free local port, such as 4399, to the discovered remote port with an owned `ssh -N -L 127.0.0.1:4399:127.0.0.1:REMOTE_PORT hetzner` session. Keep local 4321 untouched. From the source checkout:
+Verify the stage using the HTTP/byte checks below. For browser checks, forward a free local port, such as 4399, to the discovered remote port with an owned `ssh -N -o ControlMaster=no -o ControlPath=none -L 127.0.0.1:4399:127.0.0.1:REMOTE_PORT hetzner` session. Keep local 4321 untouched. From the source checkout:
 
 ```sh
 PORTFOLIO_TEST_URL=http://127.0.0.1:4399 \
@@ -152,7 +155,7 @@ PORTFOLIO_IMAGE="$image_name" \
   docker compose -p "$compose_project" -f docker-compose.prod.yml up -d
 ```
 
-The directory copy is cold, after the old application stops, so its SQLite file is coherent if that container is its only writer. The original files and mounts remain in place. The saved container's restart policy is set to `no` so a Docker/host restart cannot reactivate its port 8091 listener; its exact original policy is recorded for rollback. Keep its ports, environment, mounts and startup command. No migrations or application-data changes are part of this release.
+For the current static runtime, this copies retained package material after the old container stops; the served files remain baked into its preserved image. If replacing an older mutable application, a coherent cold database copy additionally requires every writer to be stopped. The original files and mounts remain in place. The saved container's restart policy is set to `no` so a Docker/host restart cannot reactivate its port 8091 listener; its exact original policy is recorded for rollback. Keep its ports, environment, mounts and startup command. No migrations or application-data changes are part of this release.
 
 On any failure after stopping the old application, run the state-aware rollback below immediately. Leave host nginx unchanged. Wait for the new container to become healthy within the bounded health window; record its ID/image and verify the built image ID matches the staged one and its published port is only `127.0.0.1:8091`.
 
