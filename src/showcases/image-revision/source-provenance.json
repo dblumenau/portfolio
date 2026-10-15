@@ -20,5 +20,21 @@
     "Soft shading and texture; not strictly flat vector fills.",
     "No pixel-perfect preservation claim.",
     "Two source conversations linked through image lineage."
-  ]
+  ],
+  "motion_study": {
+    "execution_date": "2026-10-15",
+    "source_version": "PanelForge web-v10.20.97 at 93881d2eca613fde498e0933405cee3a07220a4c",
+    "run": "One actual WAN 2.7 timeline render in isolated disposable state, using the two existing public JPEGs as first/last anchors; actual save, linked assets, poster and browser download verified.",
+    "fixture_infrastructure": "Exact two-path local storage URL adapter for immutable public input locations; all generated output local; canonical jobs/client unchanged. Broadcasts/notifications intercepted; status observed through actual reads and page reloads.",
+    "public_derivative": "Map only original video stream; copy H.264 packets into new MP4; omit AAC; preserve full original AIGC value using custom-metadata-capable MP4 muxing. No video encoding, crop, upscale, frame or timing change.",
+    "provenance_limit": "Keeping the original AIGC value does not establish signature validity after container/audio changes.",
+    "poster": "Frame59 at 59/30 seconds, lossless WebP from native 1172x786 decoded RGB.",
+    "verification": "Private original/public packet hashes, timestamps, extradata, decoded framemd5 and AIGC equality; public static manifest pins three selected additions.",
+    "public_media": [
+      "image-revision/motion-study.mp4",
+      "image-revision/motion-study.webp",
+      "image-revision/motion-receipt.json"
+    ],
+    "private_evidence": "Full execution receipts, provider identifiers and signed links remain private. No raw receipt is copied into the public set."
+  }
 }

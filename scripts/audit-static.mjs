@@ -70,6 +70,7 @@ const reviewedEvidenceMedia = [
   'archive/transcript.txt',
   'curation/receipt.json', 'curation/recorded-merge.png',
   'image-revision/original.jpg', 'image-revision/revision.jpg',
+  'image-revision/motion-study.mp4', 'image-revision/motion-study.webp', 'image-revision/motion-receipt.json',
   'image-revision/gallery-detail.png', 'image-revision/completed-chat.png', 'image-revision/receipt.json',
   'studio/sample-print-preview-480.webp',
   'studio/sample-print-preview-960.webp',
@@ -170,7 +171,7 @@ for (const file of htmlFiles) {
       ...[...document.querySelectorAll('[srcset]')].flatMap(item => (item.getAttribute('srcset') ?? '').split(',').map(candidate => ({ tag: item.tagName, value: candidate.trim().split(/\s+/)[0] }))),
       ...[...document.querySelectorAll('meta[property="og:image"]')].map(item => ({ tag: 'META', value: item.getAttribute('content') })),
     ],
-    videos: [...document.querySelectorAll('video')].map(video => ({ source: video.querySelector('source')?.getAttribute('src') ?? video.getAttribute('src') ?? video.getAttribute('data-src'), captions: video.querySelector('track[kind="captions"]')?.getAttribute('src') ?? video.querySelector('track[kind="captions"]')?.getAttribute('data-src'), controls: video.controls, autoplay: video.autoplay })),
+    videos: [...document.querySelectorAll('video')].map(video => ({ source: video.querySelector('source')?.getAttribute('src') ?? video.getAttribute('src') ?? video.getAttribute('data-src'), captions: video.querySelector('track[kind="captions"]')?.getAttribute('src') ?? video.querySelector('track[kind="captions"]')?.getAttribute('data-src'), controls: video.controls, autoplay: video.autoplay, videoOnlyAlternative: video.getAttribute('aria-describedby')?.split(/\s+/).includes('teapot-motion-alternative') ? document.getElementById('teapot-motion-alternative')?.textContent?.trim() : null })),
     placeholders: document.querySelectorAll('.missing-media').length,
     embeds: document.querySelectorAll('iframe,script[src^="http"]').length,
     forms: [...document.querySelectorAll('form')].map(form => ({
@@ -191,7 +192,8 @@ for (const file of htmlFiles) {
   if (!data.canonical?.startsWith('https://danishdave.com/')) errors.push(`Invalid canonical: ${route}`);
   if (data.social.image !== 'https://danishdave.com/media/portfolio-social-card.png' || data.social.width !== '1200' || data.social.height !== '630' || !data.social.alt || data.social.card !== 'summary_large_image') errors.push(`Incomplete social preview metadata: ${route}`);
   for (const video of data.videos) {
-    if (!video.source || !video.captions || !video.controls || video.autoplay) errors.push(`Recording lacks controlled playback/captions: ${route} ${video.source}`);
+    const reviewedVideoOnly = video.source === '/media/image-revision/motion-study.mp4' && (video.videoOnlyAlternative?.length ?? 0) >= 40;
+    if (!video.source || !(video.captions || reviewedVideoOnly) || !video.controls || video.autoplay) errors.push(`Recording lacks controlled playback/captions: ${route} ${video.source}`);
   }
   pages.set(route, data);
   report.routes.push({ route, title: data.title, videos: data.videos });
@@ -292,6 +294,7 @@ for (const file of all) {
       info.duration = Number(metadata.format.duration);
       videoDurations.set(name, info.duration);
       info.streams = metadata.streams;
+      if (name === 'media/image-revision/motion-study.mp4' && (metadata.streams.length !== 1 || metadata.streams[0].codec_type !== 'video')) errors.push(`Reviewed video-only study contains additional streams: ${name}`);
       if (!(info.duration > 1) || !metadata.streams.some(stream => stream.codec_type === 'video' && stream.codec_name === 'h264')) errors.push(`Invalid browser MP4: ${name}`);
     }
   }

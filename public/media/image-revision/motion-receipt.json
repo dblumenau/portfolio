@@ -1,0 +1,97 @@
+{
+  "record_type": "Selected checks from one actual PanelForge timeline render, followed by a silent presentation derivative",
+  "execution_date": "2026-10-15",
+  "source_version": {
+    "product": "PanelForge",
+    "tag": "web-v10.20.97",
+    "commit": "93881d2eca613fde498e0933405cee3a07220a4c",
+    "canonical_source_unchanged": true
+  },
+  "input_checks": {
+    "original_sha256": "30a1dc254b749affc24493d9ed9ddef9ea55da983287db274a39f7386b406fb4",
+    "revision_sha256": "0a88b6ca8c77d834a580d289a95024f246258149054a9e47e33a99cae1eb9ea6",
+    "same_two_images_as_comparison": true,
+    "anchors": [
+      "original as first frame",
+      "revision as last frame"
+    ],
+    "middle_images": 0,
+    "public_input_bytes_rechecked": true
+  },
+  "actual_execution": {
+    "model": "alibaba/wan-2.7",
+    "render_attempts": 1,
+    "poster_attempts": 1,
+    "completed": true,
+    "provider_saved_and_browser_download_bytes_equal": true,
+    "linked_file_asset_video_asset_and_panel_ownership_verified": true,
+    "source_local_placeholder_used": false,
+    "provider_original_sha256": "4aea19cc3e10462b156f8b9fc4678974f0ebe8c1e5a8f7223dc053945f487443",
+    "provider_original_bytes": 598553
+  },
+  "requested": {
+    "duration_seconds": 4,
+    "resolution": "720p",
+    "aspect_ratio": "16:9",
+    "audio_ui": false,
+    "audio_wire_field": "omitted"
+  },
+  "returned": {
+    "width": 1172,
+    "height": 786,
+    "video_duration_seconds": 4,
+    "video_frames": 120,
+    "fps": 30,
+    "video_codec": "h264",
+    "original_audio_streams": 1,
+    "original_audio_codec": "aac",
+    "original_container_duration_seconds": 4.062993
+  },
+  "public_derivative": {
+    "operation": "Video-only packet-copy MP4 remux; returned AAC track omitted. No video re-encode, crop, resize, frame-rate conversion or timing edit.",
+    "sha256": "02862cb8c4143c35a3f15d1301c51908a479c681358afd01f018700c0c680915",
+    "bytes": 529766,
+    "video_frames": 120,
+    "width": 1172,
+    "height": 786,
+    "duration_seconds": 4,
+    "audio_streams": 0,
+    "video_packets_and_timestamps_unchanged": true,
+    "video_extradata_unchanged": true,
+    "decoded_frames_and_timing_unchanged": true,
+    "full_original_AIGC_tag_unchanged": true,
+    "embedded_signature_validation_claimed": false,
+    "AIGC_value_sha256": "d76cf1070da6ca1fe22ea9033b47a2ee2118db977a04c389b98717b59475690c"
+  },
+  "poster": {
+    "frameIndexZeroBased": 59,
+    "timeSeconds": 1.9666666666666666,
+    "encoding": "Lossless WebP from decoded RGB; no crop/resize/upscale",
+    "width": 1172,
+    "height": 786,
+    "sha256": "ccecbac785ef945a63214aa41271fb072fa1174c4fe85f2023ffd1320b09d4e4",
+    "bytes": 87954,
+    "decodedRgbUnchanged": true
+  },
+  "reported_cost_usd": {
+    "estimated": 0.4,
+    "provider_reported": 0.5,
+    "invoice_independently_reconciled": false
+  },
+  "method": {
+    "runtime": "Isolated workspace and disposable state; actual canonical render, save, poster and download behavior.",
+    "input_adapter": "Fixture storage URL adapter mapped only the two existing public input images to immutable public locations; all generated output stayed local.",
+    "side_effects": "Broadcasts, notifications and unrelated jobs were intercepted.",
+    "status_capture": "Real local status reads and actual page reloads; no live websocket claim.",
+    "private_material": "Raw records, provider identifiers, output links, account data and filesystem locations are omitted."
+  },
+  "visual_review": {
+    "all_120_frames_inspected": true,
+    "sfw_no_unwanted_text_or_subjects_observed": true,
+    "gross_geometry_break_observed": false,
+    "exact_interpolation_claimed": false,
+    "prompt_beat_timing_exact": false,
+    "repeatability_tested": false,
+    "limits": "Steam becomes larger and extends beyond the upper frame; colour change starts earlier than the requested beat. Small generated edge and shading variation remains."
+  }
+}

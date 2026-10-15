@@ -32,6 +32,30 @@ const previewSizes = 'auto, (max-width: 600px) calc(100vw - 36px), (max-width: 8
     <p><strong>The original file is unchanged.</strong> PanelForge’s gallery links the revision back to it.</p>
     <p><strong>The edit keeps the composition recognisable.</strong> This is a generative result judged by inspection; it does not establish pixel-perfect preservation.</p>
   </div>
+  <details class="revision-motion" data-motion-study>
+    <summary>Watch a 4-second motion study</summary>
+    <div class="revision-motion-content">
+      <figure>
+        <video controls preload="none" playsinline width="1172" height="786" poster={`${media}/motion-study.webp`} aria-label="Silent teapot motion study" aria-describedby="teapot-motion-caption teapot-motion-alternative">
+          <source src={`${media}/motion-study.mp4`} type="video/mp4" />
+          Your browser does not support this video. The silent MP4 is available below.
+        </video>
+        <figcaption id="teapot-motion-caption">AI-generated with WAN 2.7 from these two images, through PanelForge. Silent preview: the returned audio track is omitted; the video frames are unchanged.</figcaption>
+      </figure>
+      <p class="revision-motion-dimensions">Returned video: 1172 × 786, four seconds.</p>
+      <p id="teapot-motion-alternative"><strong>What happens:</strong> The blue teapot stays in place as steam rises and clears. Its red lid and handle gradually turn mustard yellow.</p>
+      <a class="revision-receipt" href={`${media}/motion-study.mp4`} download="teapot-motion-silent.mp4">Download the silent motion study <Icon name="arrow-down" /></a>
+      <details class="revision-motion-method">
+        <summary>How this clip was made</summary>
+        <div>
+          <p>PanelForge used the original as the start frame and the revision as the end frame in one WAN 2.7 render. The actual render, save, poster and download paths were checked in an isolated workspace.</p>
+          <p>Requested: four seconds, 720p and 16:9. Returned: 120 frames at 1172 × 786, plus audio. This preview removes that audio without changing the video frames or timing.</p>
+          <p>The steam and colour timing differ from the prompt. This is a generative result; repeatability was not tested. Provider-reported usage was $0.50 against a $0.40 estimate, without an independent invoice check.</p>
+          <a class="revision-receipt" href={`${media}/motion-receipt.json`}>Read the motion study checks <Icon name="arrow-up-right" /></a>
+        </div>
+      </details>
+    </div>
+  </details>
   <details class="revision-evidence">
     <summary>See the actual reference and result</summary>
     <div class="revision-evidence-content">
@@ -48,6 +72,14 @@ const previewSizes = 'auto, (max-width: 600px) calc(100vw - 36px), (max-width: 8
       <a class="revision-receipt" href={`${media}/receipt.json`}>Read the file and reference checks <span aria-hidden="true"><Icon name="arrow-up-right" /></span></a>
     </div>
   </details>
+<script>
+  document.querySelectorAll<HTMLDetailsElement>('[data-motion-study]').forEach(disclosure => {
+    const video = disclosure.querySelector('video');
+    if (!video) return;
+    disclosure.addEventListener('toggle', () => { if (!disclosure.open) video.pause(); });
+    window.addEventListener('pagehide', () => video.pause());
+  });
+</script>
 </section>
 <style>
   .image-revision{padding-block:52px 64px;border-bottom:1px solid var(--line);scroll-margin-top:32px}
@@ -75,6 +107,13 @@ const previewSizes = 'auto, (max-width: 600px) calc(100vw - 36px), (max-width: 8
   .revision-comparison:has([value=original]:checked) .revision-images,.revision-comparison:has([value=revision]:checked) .revision-images{grid-template-columns:1fr;max-width:860px;margin-inline:auto}
   .revision-outcome{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:22px}
   .revision-outcome p{font-size:14px;line-height:1.75;color:var(--muted)}.revision-outcome strong{color:var(--ink)}
+  .revision-motion{margin-top:28px;border-block:1px solid var(--line)}
+  .revision-motion>summary,.revision-motion-method>summary{font-size:15px;font-weight:650;min-height:52px;padding:14px 8px}
+  .revision-motion-content{max-width:860px;margin-inline:auto;padding:12px 0 22px}
+  .revision-motion video{display:block;width:100%;height:auto;aspect-ratio:1172/786;object-fit:contain;background:#f4eedc;border-radius:4px}
+  .revision-motion figcaption,.revision-motion-content>p,.revision-motion-method p{font-size:14px;line-height:1.75;color:var(--muted)}
+  .revision-motion figcaption{margin-top:14px}.revision-motion-content>p{margin-top:12px}.revision-motion-dimensions{color:var(--ink)!important}
+  .revision-motion-method{border-top:1px solid var(--line);margin-top:8px}.revision-motion-method>div{padding:0 8px 10px}.revision-motion-method p+p{margin-top:14px}
   .revision-evidence{margin-top:28px;border-block:1px solid var(--line)}
   .revision-evidence summary{font-size:15px;font-weight:650;min-height:52px;padding:14px 8px}
   .revision-evidence-content{padding:12px 0 24px;max-width:1000px}.revision-evidence-content>p{font-size:15px;line-height:1.8;margin-bottom:22px;max-width:760px;color:var(--muted)}

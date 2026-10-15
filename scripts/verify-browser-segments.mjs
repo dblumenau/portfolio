@@ -19,7 +19,7 @@ const groups = {
   'listening-plan': ['listening-plan'],
   archive: ['archive'],
   curation: ['curation'],
-  'image-revision': ['image-revision'],
+  'image-revision': ['image-revision', 'motion-study'],
   overview: ['overview'],
   transit: ['transit'],
   'code-history': ['code-history'],

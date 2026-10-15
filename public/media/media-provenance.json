@@ -2260,6 +2260,43 @@
       "bytes": 1968,
       "sha256": "427f26d1e7186aabe08bbd37dcddee12c81c0c5a420b3bd0e5d745c55f473acc",
       "editing": "Saved static receipt; original output decisions unchanged. No Codex, agent, model or provider execution."
+    },
+    {
+      "file": "image-revision/motion-study.mp4",
+      "product": "PanelForge",
+      "captured": "2026-10-15",
+      "method": "One actual canonical PanelForge timeline WAN 2.7 render; video-only H.264 packet-copy remux with full AIGC tag retained",
+      "content": "Silent AI-generated teapot motion study from the existing original and revision. Returned 1172x786 frames retained; AAC omitted.",
+      "redactions": [],
+      "bytes": 529766,
+      "sha256": "02862cb8c4143c35a3f15d1301c51908a479c681358afd01f018700c0c680915",
+      "width": 1172,
+      "height": 786,
+      "duration_seconds": 4,
+      "codec_name": "h264",
+      "editing": "Returned AAC omitted; video packets, extradata, decoded frames, timing and full AIGC tag unchanged. No embedded-signature validation claim."
+    },
+    {
+      "file": "image-revision/motion-study.webp",
+      "product": "PanelForge",
+      "captured": "2026-10-15",
+      "method": "Lossless WebP encoding of one decoded RGB video frame; no crop, resize or upscale",
+      "content": "Actual decoded frame 59 from the generated clip, at native 1172x786; steam and amber accents.",
+      "redactions": [],
+      "bytes": 87954,
+      "sha256": "ccecbac785ef945a63214aa41271fb072fa1174c4fe85f2023ffd1320b09d4e4",
+      "width": 1172,
+      "height": 786
+    },
+    {
+      "file": "image-revision/motion-receipt.json",
+      "product": "PanelForge",
+      "captured": "2026-10-15",
+      "method": "Selected actual execution facts plus verified packet/extradata/frame/timing and AIGC retention checks",
+      "content": "Positive-allowlist input/source/execution/derivative checks; raw provider, app and account identifiers omitted.",
+      "redactions": [],
+      "bytes": 3905,
+      "sha256": "3be240e8598fb836e0c9afb1ee0f6d99143f97f28e35c357263cba6601251eca"
     }
   ]
 }

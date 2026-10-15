@@ -35,9 +35,9 @@ test('the real comparison sits before the case prose and changes images with nat
   expect(await section.getByRole('radio', { name: 'Original', exact: true }).evaluate(element => getComputedStyle(element.closest('label')!).outlineStyle)).toBe('solid');
   await page.keyboard.press('ArrowRight');
   await expectView(page, 'revision');
-  await section.locator('summary').focus();
+  await section.locator('.revision-evidence > summary').focus();
   await page.keyboard.press('Enter');
-  await expect(section.locator('details')).toHaveAttribute('open', '');
+  await expect(section.locator('.revision-evidence')).toHaveAttribute('open', '');
   await page.keyboard.press('Tab');
   await expect(section.getByRole('link', { name: 'Open the full gallery detail capture' })).toBeFocused();
 });
@@ -55,12 +55,12 @@ for (const width of [390, 768, 1440]) {
       await image.evaluate((element: HTMLImageElement) => element.decode());
       expect(await image.evaluate((element: HTMLImageElement) => element.complete && element.naturalWidth > 0 && /-preview-(480|960|1264)\.webp$/.test(element.currentSrc))).toBe(true);
     }
-    await section.locator('summary').click();
+    await section.locator('.revision-evidence > summary').click();
     await section.locator('.revision-evidence img').evaluateAll(async images => { await Promise.all(images.map(image => (image as HTMLImageElement).decode())); });
     const geometry = await section.evaluate(element => ({
       overflow: document.documentElement.scrollWidth > innerWidth,
       smallText: [...element.querySelectorAll('p, figcaption, label, legend, summary, a')].filter(item => Number.parseFloat(getComputedStyle(item).fontSize) < 14).map(item => item.textContent),
-      smallTargets: [...element.querySelectorAll('label, summary, a')].filter(item => item.getBoundingClientRect().height < 44).map(item => item.textContent),
+      smallTargets: [...element.querySelectorAll('label, summary, a')].filter(item => item.getClientRects().length > 0 && item.getBoundingClientRect().height < 44).map(item => item.textContent),
     }));
     expect(geometry).toEqual({ overflow: false, smallText: [], smallTargets: [] });
     const axe = await new AxeBuilder({ page }).include('[data-image-revision]').withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze();
@@ -120,7 +120,7 @@ test('published JPEG bytes and explicit equality checks match the actual control
   const text = await response.text();
   expect(text).not.toMatch(/(?:https?:|\/home\/|localhost|source_conversation_id|job_id|message_id|\b4337[23]\b|\b2073[78]\b|\b3808621\b)/);
   const fragment = JSON.parse(await readFile(new URL('../../src/showcases/image-revision/media-provenance.fragment.json', import.meta.url), 'utf8'));
-  expect(fragment.assets).toHaveLength(5);
+  expect(fragment.assets).toHaveLength(8);
   for (const entry of fragment.assets) {
     const asset = await request.get(`/media/${entry.file}`);
     expect(asset.status(), entry.file).toBe(200);
@@ -134,7 +134,7 @@ test('review interactions use only local static GET assets and no account or gen
   await page.goto(route);
   const section = page.locator('[data-image-revision]');
   for (const name of ['Original', 'Revision', 'Both images']) await section.getByRole('radio', { name, exact: true }).check();
-  await section.locator('summary').click();
+  await section.locator('.revision-evidence > summary').click();
   await section.locator('.revision-evidence img').evaluateAll(async images => { await Promise.all(images.map(image => (image as HTMLImageElement).decode())); });
   await section.getByRole('link', { name: 'Read the file and reference checks' }).click();
   await expect(page).toHaveURL(new RegExp(`${media}receipt.json$`));
