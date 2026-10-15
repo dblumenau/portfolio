@@ -13,3 +13,5 @@
 
 .at-intro > .button { margin-top: 20px; font-size: .82rem; }
 .at-film { scroll-margin-top: 24px; }
+
+.at-film video { scroll-margin-top: 24px; }

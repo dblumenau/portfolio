@@ -36,6 +36,10 @@ export function initAttentionLab(root: HTMLElement) {
       status.textContent = `Recorded moment: ${chapters[index].description} These controls only seek the film.`;
       if (video.readyState >= 1) seek(pendingSeek);
       else video.load();
+      const bounds = video.getBoundingClientRect();
+      if (bounds.top < 24 || bounds.bottom > window.innerHeight - 24) {
+        video.scrollIntoView({ block: 'start', behavior: 'instant' });
+      }
     });
   });
   root.dataset.ready = 'true';

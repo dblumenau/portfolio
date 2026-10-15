@@ -24,7 +24,7 @@ const caseEntrances: Record<string, { label: string; title: string; scope: strin
   'connected-tools': { label: 'One request allowed. Another stopped.', title: 'Try the gateway boundary.', scope: 'Actual gateway responses with fictional local services.', href: '/labs/gateway/' },
   'knowledge-graph': { label: 'Follow a connection back to its source.', title: 'Explore a small, inspectable memory.', scope: 'A self-contained sample of reviewed technical knowledge.', href: '/labs/memory/' },
   'agent-workbench': { label: 'A conflicting edit. A safe stop.', title: 'Watch the refusal and adoption.', scope: 'The actual manager in two fictional setups, preserving local settings.', href: '/labs/workbench/' },
-  'conference-notes': { label: '25 slides. Editable tables and charts.', title: 'Open the generated presentation.', scope: 'A PDF from the actual app, using fictional conference notes.', href: '/sample-files/conference-notes-demo.pdf' },
+  'conference-notes': { label: '25 slides. Editable tables and charts.', title: 'Preview the 25-slide PDF.', scope: 'A PDF from the actual app, using fictional conference notes.', href: '/sample-files/conference-notes-demo.pdf' },
 };
 const caseEntrance = caseEntrances[project.slug];
 const mobileImage = project.slug === 'conference-notes' ? '/media/conference-notes-mobile.webp' : project.slug === 'connected-agents' ? '/media/panelforge-chat-mobile.webp' : project.slug === 'panelforge' ? '/media/panelforge-gallery-mobile.webp' : undefined;

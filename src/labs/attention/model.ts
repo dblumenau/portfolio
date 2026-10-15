@@ -9,7 +9,7 @@ export const chapters = [
   { time: 7, label: 'The native choice', description: 'Intel Computer Helper selects Session cards and submits the actual native card.' },
   { time: 14, label: 'The same call returns', description: 'Attention returns the selected option to the original waiting call. Codex acknowledges it.' },
   { time: 28, label: 'The file is built', description: 'The same terminal task writes and validates the chosen workshop page.' },
-  { time: 35, label: 'The actual page', description: 'A still browser render shows the real generated page for six seconds.' },
+  { time: 35.5, label: 'The actual page', description: 'A still browser render shows the real generated page for six seconds.' },
   { time: 41, label: 'The updated Mac app', description: 'A separate five-second recording shows the same answered card after the Mac app update.' },
 ] as const;
 

@@ -26,7 +26,7 @@ test('chapters seek the actual film while the complete same-task narrative remai
   await expect(page.locator('.at-sequence li')).toHaveCount(4);
   await expect(page.locator('.at-sequence')).toContainText('That same task creates index.html');
   await expect(page.locator('#at-participant')).toContainText('layout selection is automated');
-  for (const [index, time] of [0, 7, 14, 28, 35, 41].entries()) {
+  for (const [index, time] of [0, 7, 14, 28, 35.5, 41].entries()) {
     await lab.locator(`[data-attention-chapter="${index}"]`).click();
     await expect.poll(() => video.evaluate((element: HTMLVideoElement) => element.currentTime)).toBeCloseTo(time, 1);
     expect(await video.evaluate((element: HTMLVideoElement) => element.paused)).toBe(true);
@@ -56,6 +56,12 @@ for (const width of [390, 821, 1440]) {
     await expect(page.locator('.at-output')).toContainText('The same file at 390 px');
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     if (width === 390) expect(await page.locator('.at-sequence li p').first().evaluate(element => parseFloat(getComputedStyle(element).fontSize))).toBeGreaterThanOrEqual(14);
+    await page.locator('[data-attention-chapter="4"]').click();
+    const video = page.locator('.at-film video');
+    await expect.poll(() => video.evaluate((element: HTMLVideoElement) => element.currentTime)).toBeCloseTo(35.5, 1);
+    const frame = (await video.boundingBox())!;
+    expect(frame.y).toBeGreaterThanOrEqual(0);
+    expect(frame.y + frame.height).toBeLessThanOrEqual(page.viewportSize()!.height);
     const result = await new AxeBuilder({ page }).include('#main').analyze();
     expect(result.violations).toEqual([]);
     for (const file of ['question.png', 'answered.png', 'workshop-desktop.png', 'workshop-phone.png']) {
