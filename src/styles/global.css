@@ -120,6 +120,7 @@
   .vignette-strip h3 { font-size: 1.2rem; margin-bottom: 13px; }
   .vignette-strip article p { font-size: .88rem; color: var(--muted); line-height: 1.65; }
   .vignette-strip article > span { display: block; margin-top: 15px; font-size: .65rem; color: var(--rust); font-weight: 550; }
+  .vignette-strip .vignette-link { margin-top: 9px; min-height: 44px; font-size: .88rem; }
   .iteration-section { background: #e9ecdf; padding: 78px 0 65px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
   .history-note { margin-top: 23px; font-size: .72rem; color: var(--muted); }
   .approach-section { padding-block: 100px 105px; display: grid; grid-template-columns: 1.2fr 1fr; gap: 7rem; }

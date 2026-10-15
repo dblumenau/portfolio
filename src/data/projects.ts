@@ -203,6 +203,6 @@ export const supportingProjects: SupportingProject[] = [
 
 export const supportingVignettes = [
   { name: 'Legobro', title: 'A selfie becomes a figure.', description: 'An iPad photobooth takes a selfie, generates a collectible-figure style and shows a before-and-after preview. Email and printing paths complete the flow.', tag: 'SwiftUI + camera' },
-  { name: 'Photo Archive', title: 'Keep the original. Rebuild the index.', description: 'An archive separates original files from rebuildable search and enrichment data. Hash-checked manifests and curation receipts make the changes traceable.', tag: 'Archiving + data care' },
-  { name: 'Danish listening', title: 'Return to the difficult passage.', description: 'A local study tool combines aligned audio, subtitles and a waveform. Select and loop a passage, then revisit it on a phone or tablet.', tag: 'Local study tool' },
+  { name: 'Photo Archive', title: 'Keep the original. Rebuild the index.', description: 'An archive separates original files from rebuildable search and enrichment data. Hash-checked manifests and curation receipts make the changes traceable.', tag: 'Archiving + data care', href: '/labs/archive/', link: 'Inspect the index rebuild' },
+  { name: 'Danish listening', title: 'Return to the difficult passage.', description: 'A local study tool combines aligned audio, subtitles and a waveform. Select and loop a passage, then revisit it on a phone or tablet.', tag: 'Local study tool', href: '/labs/listening/', link: 'Try the listening interface' },
 ];
