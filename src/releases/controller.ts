@@ -1,4 +1,5 @@
 import { setIconLabel } from '../ui/icons';
+import { readReleaseView, releaseViewUrl, isFilteredView, type ReleaseView } from './view-state';
 import stories from './milestones.json';
 import summary from './summary.json';
 import { matches, periods, position, formatDate, pageSize, type Milestone, type TagRecord, type ReleaseFilters } from './model';
@@ -19,19 +20,40 @@ export function mountReleaseExplorer(): void {
   const tagPrev = root.querySelector<HTMLButtonElement>('[data-tags-prev]')!;
   const tagNext = root.querySelector<HTMLButtonElement>('[data-tags-next]')!;
   const download = root.querySelector<HTMLButtonElement>('[data-tags-download]')!;
+  const copy = root.querySelector<HTMLButtonElement>('[data-release-copy]')!;
+  const copyStatus = root.querySelector<HTMLElement>('[data-release-copy-status]')!;
+  const copyFallback = root.querySelector<HTMLElement>('[data-release-link-fallback]')!;
+  const copyInput = copyFallback.querySelector<HTMLInputElement>('input')!;
   const storyPrev = root.querySelector<HTMLButtonElement>('[data-story-prev]')!;
   const storyNext = root.querySelector<HTMLButtonElement>('[data-story-next]')!;
   const markers = [...root.querySelectorAll<HTMLAnchorElement>('[data-milestone]')];
   const storyItems = [...root.querySelectorAll<HTMLLIElement>('[data-story]')];
   const labels = new Map(summary.projects.map(project => [project.id,project.label]));
   let selected = 'session-peek';
+  let linkSelection = false;
+  let restoredSearch: string | null = null;
+  let copyAttempt = 0;
   let matchingStories: Milestone[] = stories;
   let allTags: TagRecord[] | null = null;
   let loadingTags: Promise<void> | null = null;
   let matchingTags: TagRecord[] = [];
   let page = 0;
   const filters = (): ReleaseFilters => ({project:control('project').value,kind:control('kind').value,query:control('query').value,from:control('from').value,to:control('to').value});
-  const setHash = (id: string) => history.replaceState(null,'',`${location.pathname}${location.search}#milestone-${id}`);
+  const view = (): ReleaseView => ({...filters(), period: control('period').value});
+  function syncUrl(includeSelection = false): string {
+    const hasPageAnchor = Boolean(location.hash && !location.hash.startsWith('#milestone-'));
+    const milestone = (!hasPageAnchor || includeSelection) && matchingStories.some(story => story.id === selected) && (linkSelection || isFilteredView(view())) ? selected : undefined;
+    const next = releaseViewUrl(new URL(location.href), view(), milestone);
+    history.replaceState(history.state, '', next);
+    restoredSearch = next.search;
+    if (!copyFallback.hidden) copyInput.value = next.href;
+    return next.href;
+  }
+  function clearCopyFeedback(): void {
+    copyAttempt++;
+    copyStatus.textContent = '';
+    copyFallback.hidden = true;
+  }
   function select(id: string, updateUrl = true): void {
     const item = storyItems.find(item => item.dataset.story === id);
     if (!item || !matchingStories.some(story => story.id === id)) return;
@@ -52,7 +74,7 @@ export function mountReleaseExplorer(): void {
     const index = matchingStories.findIndex(story => story.id === id);
     storyPrev.disabled = index <= 0;
     storyNext.disabled = index >= matchingStories.length - 1;
-    if (updateUrl) setHash(id);
+    if (updateUrl) {linkSelection = true;clearCopyFeedback();syncUrl(true);}
     focus.animate?.([{opacity:0.35,transform:'translateY(7px)'},{opacity:1,transform:'translateY(0)'}],{duration:280,easing:'ease-out'});
   }
   function renderTags(): void {
@@ -114,6 +136,7 @@ export function mountReleaseExplorer(): void {
     if(matchingStories.length) select(ids.has(selected)?selected:matchingStories[0].id,false);
     else {focusWrap.hidden=true;storyPrev.disabled=true;storyNext.disabled=true;markers.forEach(marker=>{marker.classList.remove('is-selected');marker.removeAttribute('aria-current');});}
     renderTags();
+    syncUrl();
   }
   async function loadTags(): Promise<void> {
     if (allTags) {renderTags();return;}
@@ -130,9 +153,33 @@ export function mountReleaseExplorer(): void {
       const period=periods.find(period=>period.id===target.value);
       if(period){control('from').value=period.from;control('to').value=period.to;}
     } else if (target.name==='from'||target.name==='to') control('period').value='custom';
-    page=0;render();
+    clearCopyFeedback();page=0;render();
   });
-  form.addEventListener('reset',()=>{setTimeout(()=>{page=0;selected='session-peek';render();history.replaceState(null,'',location.pathname);},0);});
+  form.addEventListener('change',event=>{
+    const target=event.target as HTMLInputElement;
+    if ((target.name==='from'||target.name==='to') && target.value && !target.validity.valid) {
+      target.value=periods[0][target.name];
+      clearCopyFeedback();page=0;render();
+    }
+  });
+  form.addEventListener('reset',()=>{setTimeout(()=>{page=0;selected='session-peek';linkSelection=false;clearCopyFeedback();render();},0);});
+  copy.addEventListener('click', async () => {
+    linkSelection = true;
+    const url = syncUrl(true);
+    const attempt = ++copyAttempt;
+    copyStatus.textContent = '';
+    copyFallback.hidden = true;
+    try {
+      await navigator.clipboard.writeText(url);
+      if (attempt === copyAttempt) copyStatus.textContent = 'View link copied.';
+    } catch {
+      if (attempt !== copyAttempt) return;
+      copyInput.value = url;
+      copyFallback.hidden = false;
+      copyStatus.textContent = 'Copy this link.';
+      copyInput.focus();copyInput.select();
+    }
+  });
   markers.forEach(marker=>marker.addEventListener('click',event=>{event.preventDefault();select(marker.dataset.milestone!);if(matchMedia('(max-width: 620px)').matches){focusWrap.scrollIntoView({behavior:'smooth',block:'start'});focus.focus({preventScroll:true});}}));
   root.querySelector<HTMLButtonElement>('[data-map-return]')!.addEventListener('click',()=>{const marker=markers.find(item=>item.dataset.milestone===selected);root.querySelector<HTMLElement>('.release-map')!.scrollIntoView({behavior:'smooth',block:'start'});marker?.focus({preventScroll:true});});
   storyPrev.addEventListener('click',()=>{const index=matchingStories.findIndex(story=>story.id===selected);if(index>0)select(matchingStories[index-1].id);});
@@ -145,14 +192,20 @@ export function mountReleaseExplorer(): void {
     const url=URL.createObjectURL(new Blob([JSON.stringify(contents,null,2)],{type:'application/json'}));
     const link=document.createElement('a');link.href=url;link.download='forge-release-checkpoints.json';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
   });
-  const applyHash=()=>{
-    const id=location.hash.replace(/^#milestone-/,'');
-    if(stories.some(story=>story.id===id)) {
-      if(!matchingStories.some(story=>story.id===id)){control('period').value='all';control('project').value='';control('kind').value='';control('query').value='';control('from').value=periods[0].from;control('to').value=periods[0].to;render();}
-      select(id,false);
-    }
-  };
-  window.addEventListener('hashchange',applyHash);
+  function restoreView(): void {
+    const url = new URL(location.href);
+    const milestoneHash = url.hash.startsWith('#milestone-');
+    if (url.search === restoredSearch && !milestoneHash) return;
+    const state = readReleaseView(url);
+    for (const [name, value] of Object.entries(state)) control(name).value = value;
+    const id = url.hash.replace(/^#milestone-/, '');
+    const knownStory = stories.some(story => story.id === id);
+    if (milestoneHash) selected = knownStory ? id : 'session-peek';
+    linkSelection = knownStory || isFilteredView(state);
+    page = 0;clearCopyFeedback();render();
+  }
+  window.addEventListener('popstate',restoreView);
+  window.addEventListener('hashchange',restoreView);
   reading.addEventListener('toggle',()=>{if(reading.open)setIconLabel(root!.querySelector<HTMLElement>('.release-reading summary span:last-child')!, `${matchingStories.length} matching changes`, 'arrow-up');});
   let observedWidth=0;
   const resize=new ResizeObserver(entries=>{
@@ -160,5 +213,5 @@ export function mountReleaseExplorer(): void {
     if(Math.abs(width-observedWidth)>1){observedWidth=width;const f=filters();arrangeMarkers(f.from||periods[0].from,f.to||periods[0].to);}
   });
   resize.observe(root.querySelector<HTMLElement>('.release-map')!);
-  render();applyHash();
+  restoreView();
 }

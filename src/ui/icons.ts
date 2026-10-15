@@ -20,6 +20,7 @@ export const iconPaths = {
   'cursor': ['M10 4h4v16h-4V4Z'],
   'archive': ['M4 4h16v16H4V4ZM8 8h8v8H8V8Z'],
   'corner-box': ['M4 4q8 4 16 0q-4 8 0 16q-8-4-16 0q4-8 0-16Z'],
+  'link': ['m10 13 4-4M8 16l-1 1a3.5 3.5 0 0 1-5-5l5-5a3.5 3.5 0 0 1 5 0M16 8l1-1a3.5 3.5 0 0 1 5 5l-5 5a3.5 3.5 0 0 1-5 0'],
   'image': ['M3 4h18v16H3V4ZM3 15l6-6 7 7 3-3 2 2M15 8h.01'],
 } as const;
 
