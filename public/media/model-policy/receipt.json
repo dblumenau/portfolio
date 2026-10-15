@@ -1,0 +1,55 @@
+{
+  "schema": 1,
+  "kind": "saved-standalone-hook-output",
+  "recorded": "2026-10-15",
+  "source": {
+    "project": "metacodex",
+    "tag": "v1.0.6",
+    "hookSha256": "f90583560b45cbcf494e547d09c4726dee6103fe7b5c4837965b16c1f573674d",
+    "adjacentPolicySha256": "54b803df319f59b74f8860895c5601a17481c6ba24294fa24716faec11c47100"
+  },
+  "request": {
+    "toolName": "collaborationspawn_agent",
+    "activeModel": "gpt-6.1-sol",
+    "model": "gpt-6.1-sol",
+    "reasoningEffort": "low",
+    "forkTurns": "none"
+  },
+  "comparison": {
+    "sameInputBytes": true,
+    "noDefaultRole": {
+      "configuration": "empty isolated configuration",
+      "stdout": "",
+      "outcome": "no denial emitted",
+      "exit": 0,
+      "stderr": ""
+    },
+    "defaultRoleOverride": {
+      "role": {
+        "model": "gpt-6-luna",
+        "reasoningEffort": "low"
+      },
+      "hookEventName": "PreToolUse",
+      "permissionDecision": "deny",
+      "reasonPrefix": "Model policy: A configured default agent role overrides the requested model/effort. Correct that role before retrying.",
+      "exit": 0,
+      "stderr": ""
+    }
+  },
+  "secondary": {
+    "requestedModelData": "unknown",
+    "hookEventName": "PreToolUse",
+    "permissionDecision": "deny",
+    "reasonPrefix": "Model policy: Choose an allowed explicit model and reasoning_effort pair.",
+    "exit": 0,
+    "stderr": ""
+  },
+  "method": "Unchanged tagged Python hook executed offline with synthetic JSON and fictional configuration. Real user configuration and network were hidden. No Codex, child agent, model or provider process.",
+  "scope": [
+    "No explicit allow JSON is emitted for the empty-output case.",
+    "Both denials returned normally with exit 0; the decision is in stdout JSON.",
+    "Installed, enabled and trusted Codex integration was not tested.",
+    "The original 15-test suite result is historical; that suite was not rerun.",
+    "The separate Metaclaude guard was not exercised."
+  ]
+}

@@ -132,13 +132,13 @@ const stories: Story[] = [
     exhibit: { title: 'Three layers make one local configuration', caption: 'An explanatory layer model with no live settings, secrets or machine names.', steps: [node('Portable base', 'Shared instructions and defaults'), node('Local overlays', 'Machine choices and secret values'), node('Runtime config', 'Generated for this machine')], choices: [choice('Update shared instructions', 'Change the portable base', 'A reusable instruction belongs in the versioned configuration that enrolled machines share.'), choice('Keep a machine-specific preference', 'Use the local overlay', 'A legitimate local choice can survive synchronization without becoming a global default.')] },
   },
   {
-    id: 'workbench-03', slug: 'model-policy', name: 'Model policy guard', title: 'Check the policy where an agent starts.', topics: ['Configuration', 'Coordination'],
-    intro: 'I added a pre-spawn guard for approved model, effort and fork combinations, alongside checks for trusted local configuration.',
-    problem: 'Written guidance alone cannot establish that a proposed agent launch uses the permitted configuration.',
-    built: ['A configured hook checks proposed agent-spawn arguments before execution. It can block combinations outside the approved policy and explain the rejected parameters.', 'Trust tooling and doctor checks help inspect the installed setup. The guard depends on its hook being installed and trusted; it does not govern a model picker or inference described only in text.'],
-    use: [step('Check the installed hook', 'Inspect configuration and trust before depending on the execution guard.'), step('Validate the proposed launch', 'Use permitted arguments. If a combination is rejected, correct it and preserve the intended task.')],
+    id: 'workbench-03', slug: 'model-policy', name: 'Model policy guard', title: 'Check what an agent launch would use.', topics: ['Configuration', 'Coordination'],
+    intro: 'I built a Codex pre-tool guard that checks explicit spawn arguments and rejects a default role that would change the requested model or effort.',
+    problem: 'A valid model and effort on the request can still be overridden by a configured default role.',
+    built: ['The Python hook checks the model, effort and fork arguments on a proposed Codex spawn. It also reads relevant default-role configuration to detect a different effective model or effort.', 'The saved offline check executes the unchanged tagged hook against fictional configuration. A Codex installation must load, enable and trust its hook; this source check does not establish that runtime integration or filter text-only inference.'],
+    use: [step('Inspect the explicit request', 'Compare the requested model, reasoning effort and fork setting with the policy.'), step('Check the effective configuration', 'A default role can override otherwise valid parameters. Correct the role before retrying the intended task.')],
     related: ['metacodex', 'helm'],
-    exhibit: { title: 'A policy decision at the execution boundary', caption: 'A simplified decision flow. The controls explain outcomes without launching agents or reading local policy.', steps: [node('Spawn request', 'Model · effort · fork parameters'), node('Installed hook', 'Compare the request with policy'), node('Decision', 'Allow execution or return a reason')], choices: [choice('Parameters meet policy', 'Allow the request', 'The configured execution guard permits a combination that satisfies its policy checks.'), choice('Parameters violate policy', 'Reject with a reason', 'The caller can correct the arguments and retry the same task.'), choice('Hook is not active', 'No guard at this boundary', 'Installation and trust are prerequisites. Written guidance remains distinct from runtime enforcement.')] },
+    exhibit: { title: 'Same request, different default role', caption: 'Saved actual Python hook output with synthetic JSON and fictional configuration. No Codex or provider process.', steps: [], choices: [] },
   },
   {
     id: 'workbench-04', slug: 'browser-handoff', name: 'Browser handoff', title: 'Send the page to the session that owns it.', topics: ['Browser', 'Coordination'],
@@ -468,6 +468,10 @@ const metadata: Record<string, Pick<Feature, 'date' | 'evolution' | 'sources'>> 
       {
         "date": "2026-10-08",
         "title": "Porting model routing guidance to Codex"
+      },
+      {
+        "date": "2026-10-15",
+        "title": "Standalone tagged hook checked with synthetic requests and default-role configuration"
       }
     ],
     "sources": {
@@ -479,7 +483,7 @@ const metadata: Record<string, Pick<Feature, 'date' | 'evolution' | 'sources'>> 
         "config/AGENTS.md"
       ],
       "status": "source-current",
-      "note": "Guard and trust source inspected. Enforcement requires the corresponding installed and trusted hook."
+      "note": "Metacodex v1.0.6 hook and adjacent policy matched the tagged source. The unchanged Python entry point ran offline against three synthetic inputs; saved stdout distinguishes no denial from two JSON denials. Installed Codex integration and the separate Metaclaude guard were not exercised."
     }
   },
   "workbench-04": {

@@ -29,6 +29,7 @@ const groups = {
   'find-that': ['find-that'],
   'native-tool-boundary': ['native-tool-boundary'],
   steering: ['steering'],
+  'model-policy': ['model-policy'],
   'engine-contract': ['engine-contract'],
   'session-cron': ['session-cron'],
   'workspace-hierarchy': ['workspace-hierarchy'],

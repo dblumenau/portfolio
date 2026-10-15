@@ -14,6 +14,7 @@ const reviewedEvidenceMedia = [
   'listening-plan/next-plan.png',
   'listening-plan/receipt.json',
   'steering/receipt.json',
+  'model-policy/receipt.json',
   'native-tool-boundary/receipt.json',
   'voice-turn/recorded-request.wav', 'voice-turn/reply.wav', 'voice-turn/component-flow.mp4',
   'voice-turn/component-flow.vtt', 'voice-turn/component-flow.webp', 'voice-turn/receipt.json',

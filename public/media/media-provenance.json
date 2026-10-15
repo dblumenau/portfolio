@@ -2247,6 +2247,19 @@
       "redactions": [],
       "bytes": 2222,
       "sha256": "111e294fb00a892513892a990ced3e188663f427c63433bd16dcae8e7dcccf51"
+    },
+    {
+      "file": "model-policy/receipt.json",
+      "product": "Metacodex model-policy hook",
+      "captured": "2026-10-15",
+      "method": "Standalone unchanged tagged Python hook executed offline with synthetic JSON and fictional configuration",
+      "content": "Selected actual request fields, empty-output result, exact denial reason prefixes, synthetic default-role model and effort, source hashes and bounded method facts.",
+      "redactions": [
+        "Private cwd, environment identities and full adjacent policy text omitted by positive field selection."
+      ],
+      "bytes": 1968,
+      "sha256": "427f26d1e7186aabe08bbd37dcddee12c81c0c5a420b3bd0e5d745c55f473acc",
+      "editing": "Saved static receipt; original output decisions unchanged. No Codex, agent, model or provider execution."
     }
   ]
 }

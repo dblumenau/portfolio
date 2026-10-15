@@ -43,3 +43,5 @@ The existing Grounded Analysis feature presents actual saved extraction from an 
 The native tool-boundary feature presents recorded execution in the patched Codex app-server: a protected shell read, the same grant after restart/resume, an excluded patch and a separate granted control. Synthetic upstream messages drive these checks; the shell remains a broad tool grant.
 
 The steering feature presents a static record of one real Claude Engine correction during a deliberately delayed fictional-file read. Its receipt retains selected observed events, the preserved result and exact code-only answer; private command restrictions and engine-only scope are disclosed. No runtime starts from the exhibit.
+
+The existing Model Policy feature compares actual standalone output from the unchanged Metacodex v1.0.6 Python hook: the same explicit request with empty isolated configuration and with a fictional default role selecting a different model. Its static receipt distinguishes empty stdout from JSON denial. No Codex, agent, model, provider or installed-hook runtime is exercised by the exhibit.
