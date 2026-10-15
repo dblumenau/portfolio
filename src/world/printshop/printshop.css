@@ -1,0 +1,140 @@
+.forge-world .world-shop-readable { padding:20px 25px; margin-top:12px; border:1px solid var(--world-border); background:#f3f0e5; font-size:.76rem; line-height:1.8; }
+.forge-world .world-shop-readable summary { font-weight:650; cursor:pointer; }
+.forge-world .world-shop-readable p,.forge-world .world-shop-readable ol { margin-top:14px; }
+.forge-world .world-stage[data-experience="printshop"][data-selected][data-exhibit] { position:relative; grid-template-columns:minmax(0,1.85fr) minmax(350px,1fr); }
+.forge-world .world-stage[data-experience="printshop"][data-selected][data-exhibit] .world-viewport { grid-area:1/1; height:min(76vh,780px); min-height:550px; }
+.forge-world .world-stage[data-experience="printshop"] .world-inspector,.forge-world .world-stage[data-experience="printshop"] .world-exhibit-bar,.forge-world .world-stage[data-experience="printshop"] .world-view-controls,.forge-world .world-stage[data-experience="printshop"] .world-labels,.forge-world .world-stage[data-experience="printshop"] .world-view-meta { display:none; }
+.forge-world[data-experience] .world-tour { display:none; }
+.forge-world .world-stage[data-experience="printshop"] .world-canvas { touch-action:pan-y; cursor:default; }
+.forge-world .world-shop-card { grid-area:1/2; min-width:0; height:min(76vh,780px); min-height:550px; overflow:auto; padding:18px 23px 25px; border-left:1px solid var(--world-border); background:#faf6eb; scrollbar-width:thin; }
+.forge-world .world-shop-card-top { position:sticky; top:-18px; z-index:3; display:flex; align-items:center; justify-content:space-between; gap:10px; background:#faf6eb; padding-block:5px; border-bottom:1px solid #d4d7c5; }
+.forge-world .world-shop-card-top > span { font-size:.48rem; letter-spacing:.08em; color:#61704f; }
+.forge-world .world-shop-card-top button { display:flex; align-items:center; gap:7px; font-size:.62rem; flex-shrink:0; }
+.forge-world .world-shop-card h2 { font-family:var(--serif); font-size:2.8rem; letter-spacing:-.05em; line-height:.98; margin:20px 0 12px; }
+.forge-world .world-shop-card h2 em { color:#687145; font-weight:450; }
+.forge-world .world-shop-scope { font-size:.76rem; line-height:1.55; }
+.forge-world .world-shop-private { font-size:.61rem; color:#57634d; margin-top:5px; }
+.forge-world .world-shop-form { margin-top:20px; }
+.forge-world .world-shop-compose { display:grid; grid-template-columns:minmax(0,1fr) 112px; gap:13px; align-items:center; }
+.forge-world .world-shop-fields label { display:block; font-size:.64rem; font-weight:600; margin-bottom:11px; }
+.forge-world .world-shop-fields label > span { color:#69715c; font-weight:400; font-size:.55rem; }
+.forge-world .world-shop-fields input { display:block; width:100%; min-height:44px; border:1px solid #aab69b; border-radius:2px; padding:9px 10px; margin-top:5px; background:#fffdf6; color:#283b2b; font:inherit; font-size:.73rem; }
+.forge-world .world-shop-draft canvas { display:block; width:112px; height:112px; border:5px solid #fffaf0; box-shadow:0 4px 15px #263a3526; background:#354834; }
+.forge-world .world-shop-draft figcaption { font-size:.45rem; font-weight:650; margin-top:8px; letter-spacing:.08em; line-height:1.5; }
+.forge-world .world-shop-draft figcaption span { display:block; font-size:.48rem; font-weight:400; letter-spacing:0; color:#667058; }
+.forge-world .world-shop-form fieldset { border:0; padding:0; margin:13px 0 0; min-width:0; }
+.forge-world .world-shop-form legend { font-size:.59rem; font-weight:600; margin-bottom:7px; }
+.forge-world .world-shop-looks,.forge-world .world-shop-arrangements { display:flex; gap:7px; }
+.forge-world .world-shop-looks button,.forge-world .world-shop-arrangements button { display:flex; align-items:center; justify-content:center; flex:1; min-height:44px; padding:8px; gap:7px; border:1px solid #b3bda5; border-radius:2px; background:#f4f1e4; color:#354a34; font-size:.66rem; }
+.forge-world .world-shop-looks button > span { width:10px; height:10px; background:var(--shop-ink); border-radius:50%; border:1px solid #57634d; }
+.forge-world .world-shop-looks [aria-pressed="true"],.forge-world .world-shop-arrangements [aria-pressed="true"] { border-color:#435a36; background:#e0e7c9; box-shadow:inset 0 0 0 1px #435a36; }
+.forge-world .world-shop-look-note { font-size:.58rem; color:#667058; line-height:1.5; margin:12px 0; min-height:1.5em; }
+.forge-world .world-shop-pull { width:100%; font-size:.78rem; }
+.forge-world .world-shop-done { display:none; }
+.forge-world .world-shop-status { font-size:.65rem; line-height:1.65; margin-top:11px; min-height:2.6em; color:#435c3c; }
+.forge-world .world-shop-kept { margin-top:19px; border-top:1px solid #bcc6aa; padding-top:14px; }
+.forge-world .world-shop-kept-title { display:flex; align-items:baseline; justify-content:space-between; gap:12px; }
+.forge-world .world-shop-kept-title h3 { font-family:var(--serif); font-size:1.18rem; }
+.forge-world .world-shop-kept-title > span { font-size:.5rem; color:#667058; }
+.forge-world [data-shop-empty] { font-size:.67rem; padding:13px 0 2px; color:#667058; }
+.forge-world .world-shop-slot { padding:13px 0; border-bottom:1px solid #d5d9c7; }
+.forge-world .world-shop-slot strong { font-size:.78rem; }
+.forge-world .world-shop-slot p { font-size:.62rem; color:#5b694f; margin-top:4px; overflow-wrap:anywhere; }
+.forge-world .world-shop-slot-actions { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:7px; }
+.forge-world .world-shop-slot-actions a { font-size:.59rem; padding:8px 10px; gap:8px; text-decoration:none; }
+.forge-world .world-shop-slot-actions button { font-size:.62rem; }
+.forge-world .world-shop-next { display:flex; justify-content:space-between; gap:10px; margin-top:6px; }
+.forge-world .world-shop-next button { font-size:.63rem; }
+.forge-world .world-shop-replace { padding:12px; margin:10px 0; background:#e8eada; border:1px solid #bec7aa; }
+.forge-world .world-shop-replace p { font-size:.64rem; line-height:1.6; margin-bottom:8px; }
+.forge-world .world-shop-replace > div { display:flex; gap:8px; flex-wrap:wrap; }
+.forge-world .world-shop-replace .world-button { font-size:.61rem; padding:8px 10px; }
+.forge-world .world-shop-replace [aria-pressed="true"] { background:#d9e2bb; box-shadow:inset 0 0 0 1px #435a36; }
+.forge-world .world-shop-studio-link { display:block; font-size:.64rem; line-height:1.7; margin-top:20px; color:#3e573a; }
+.forge-world .world-shop-method { margin-top:16px; font-size:.63rem; line-height:1.8; color:#5a684e; }
+.forge-world .world-shop-method summary { min-height:44px; display:flex; align-items:center; cursor:pointer; text-decoration:underline; text-underline-offset:4px; }
+.forge-world .world-shop-method p { margin-top:8px; }
+.forge-world .world-shop-overlay { position:relative; grid-area:1/1; pointer-events:none; z-index:3; overflow:hidden; }
+.forge-world .world-shop-scene-kicker { position:absolute; left:23px; top:23px; font-size:.55rem; letter-spacing:.12em; color:#43563b; font-weight:650; }
+.forge-world [data-shop-anchor] { position:absolute; transform:translate(-50%,-50%); }
+.forge-world .world-shop-draft-pin { font-size:.56rem; font-weight:650; letter-spacing:.07em; white-space:nowrap; color:#334b31; }
+.forge-world .world-shop-draft-pin small { display:block; font-size:.5rem; font-weight:400; letter-spacing:0; margin-top:4px; text-align:center; }
+.forge-world .world-shop-lever { display:flex; align-items:center; gap:7px; min-height:44px; border:1px solid #425738; background:#e2e9b8; padding:8px 11px; color:#31472e; font-size:.62rem; font-weight:600; border-radius:2px; pointer-events:auto; box-shadow:0 4px 11px #233a2b20; }
+.forge-world .world-shop-rack-label { font-size:.5rem; letter-spacing:.1em; color:#43563b; font-weight:650; white-space:nowrap; }
+.forge-world .world-shop-rack-pin { pointer-events:auto; min-height:44px; width:110px; background:#faf4e5ed; border:1px solid #aab69b; box-shadow:0 2px 8px #263c2a1c; padding:7px 8px; font-size:.62rem; color:#31472e; text-align:center; }
+.forge-world .world-shop-rack-pin > span { display:block; font-size:.46rem; margin-top:3px; line-height:1.4; }
+.forge-world .world-shop-proof { margin:auto; padding:22px; width:min(1160px,calc(100vw - 32px)); max-height:calc(100dvh - 32px); overflow:auto; border:1px solid #a4b08e; background:#faf6eb; color:var(--ink); }
+.forge-world .world-shop-proof::backdrop { background:#1c3428bd; }
+.forge-world .world-shop-proof-top { position:sticky; top:-22px; z-index:3; background:#faf6eb; display:flex; justify-content:space-between; gap:15px; align-items:center; padding:9px 0 16px; border-bottom:1px solid #cbd2bd; margin-bottom:18px; }
+.forge-world .world-shop-proof-top p { font-size:.55rem; letter-spacing:.08em; color:#637052; }
+.forge-world .world-shop-proof-top h2 { font-size:1.9rem; margin-top:6px; }
+.forge-world .world-shop-proof-grid { display:grid; grid-template-columns:minmax(0,1fr); gap:20px; }
+.forge-world .world-shop-proof-grid[data-compare="true"] { grid-template-columns:repeat(2,minmax(0,1fr)); }
+.forge-world .world-shop-proof img { display:block; width:100%; height:auto; max-height:70dvh; object-fit:contain; background:#e2e6d5; }
+.forge-world .world-shop-proof figcaption { display:flex; flex-wrap:wrap; gap:8px 14px; justify-content:space-between; align-items:center; margin-top:12px; }
+.forge-world .world-shop-proof figcaption > span { flex-basis:100%; font-size:.67rem; color:#5c684f; overflow-wrap:anywhere; }
+.forge-world .world-shop-proof figcaption .world-button { font-size:.68rem; text-decoration:none; }
+.forge-world .world-shop-proof-note { font-size:.67rem; line-height:1.8; margin-top:20px; color:#5c684f; }
+@media(min-width:1001px) and (max-height:800px) {
+ .forge-world .world-shop-card { padding:12px 20px 20px; }
+ .forge-world .world-shop-card-top { top:-12px; }
+ .forge-world .world-shop-card h2 { font-size:2rem; line-height:1; margin:14px 0 9px; }
+ .forge-world .world-shop-card h2 br { display:none; }
+ .forge-world .world-shop-card h2 em { margin-left:.15em; }
+ .forge-world .world-shop-scope { font-size:.7rem; }
+ .forge-world .world-shop-form { margin-top:14px; }
+ .forge-world .world-shop-fields label { margin-bottom:8px; }
+ .forge-world .world-shop-form fieldset { margin-top:9px; }
+ .forge-world .world-shop-look-note { margin:8px 0; }
+}
+@media(max-width:1000px) {
+ .forge-world .world-stage[data-experience="printshop"][data-selected][data-exhibit] { grid-template-columns:minmax(0,1fr); }
+ .forge-world .world-stage[data-experience="printshop"][data-selected][data-exhibit] .world-viewport { height:280px; min-height:0; }
+ .forge-world .world-shop-card { grid-area:2/1; height:auto; min-height:0; overflow:visible; border-left:0; border-top:1px solid var(--world-border); }
+ .forge-world .world-shop-card h2 { font-size:2.1rem; margin-top:14px; }
+ .forge-world .world-shop-card h2 br { display:none; }
+ .forge-world .world-shop-card h2 em { margin-left:.15em; }
+ .forge-world .world-shop-form { margin-top:16px; }
+ .forge-world .world-shop-draft-pin { font-size:.46rem; }
+ .forge-world .world-shop-draft-pin small { font-size:.44rem; }
+ .forge-world .world-shop-rack-label { font-size:.43rem; }
+ .forge-world .world-shop-rack-pin { width:96px; font-size:.55rem; padding:6px; }
+ .forge-world .world-shop-rack-pin > span { font-size:.43rem; }
+ .forge-world .world-shop-scene-kicker { font-size:.46rem; top:14px; left:14px; }
+}
+@media(max-width:600px) {
+ .forge-world .world-stage[data-experience="printshop"][data-selected][data-exhibit] .world-viewport { height:220px; }
+ .forge-world .world-shop-card { padding:10px 16px 22px; }
+ .forge-world .world-shop-card-top { top:-10px; }
+ .forge-world .world-shop-card-top > span { font-size:.43rem; }
+ .forge-world .world-shop-card-top button { font-size:.58rem; }
+ .forge-world .world-shop-card h2 { font-size:1.9rem; margin:13px 0 9px; }
+ .forge-world .world-shop-scope { font-size:.7rem; }
+ .forge-world .world-shop-private { font-size:.56rem; }
+ .forge-world .world-shop-compose { grid-template-columns:minmax(0,1fr) 100px; gap:10px; }
+ .forge-world .world-shop-draft canvas { width:100px; height:100px; }
+ .forge-world .world-shop-fields input { font-size:16px; padding:8px; }
+ .forge-world .world-shop-form fieldset { margin-top:9px; }
+ .forge-world .world-shop-look-note { margin:8px 0; }
+ .forge-world .world-shop-status { font-size:.61rem; }
+ .forge-world .world-shop-lever { padding:8px; font-size:.55rem; }
+ .forge-world .world-shop-rack-pin { width:84px; font-size:.52rem; }
+ .forge-world .world-shop-proof { padding:14px; }
+ .forge-world .world-shop-proof-top { top:-14px; }
+ .forge-world .world-shop-proof-top h2 { font-size:1.5rem; }
+ .forge-world .world-shop-proof-grid[data-compare="true"] { grid-template-columns:minmax(0,1fr); }
+ .forge-world [data-shop-compare] { display:none; }
+ .forge-world[data-shop-keyboard="open"] .world-stage[data-experience="printshop"][data-selected][data-exhibit] .world-viewport { height:100px; }
+ .forge-world[data-shop-keyboard="open"] .world-shop-card h2,.forge-world[data-shop-keyboard="open"] .world-shop-scope,.forge-world[data-shop-keyboard="open"] .world-shop-private { display:none; }
+ .forge-world[data-shop-keyboard="open"] .world-shop-done { display:flex; align-items:center; justify-content:center; gap:10px; width:100%; }
+}
+.forge-world[data-world-state="fallback"] .world-shop-overlay { display:none; }
+.forge-world[data-world-state="fallback"] .world-stage[data-experience="printshop"][data-selected][data-exhibit] .world-viewport { height:120px; min-height:120px; }
+
+.forge-world .world-stage[data-experience-loading="true"] .world-canvas,.forge-world .world-stage[data-experience-loading="true"] .world-shop-overlay { visibility:hidden; }
+.forge-world[data-shop-scene="unavailable"] .world-shop-overlay { display:none; }
+
+.forge-world .world-shop-missing { font-size:.7rem; padding:12px; border-left:3px solid #7b8054; background:#e9ebd9; margin-top:15px; line-height:1.7; }
+@media(max-width:600px) { .forge-world .world-shop-lever { max-width:100px; } }
+
+@media(max-width:600px) { .forge-world[data-shop-keyboard="open"] .world-shop-overlay { display:none; } }

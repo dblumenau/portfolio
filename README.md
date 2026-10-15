@@ -1,6 +1,6 @@
 # David Blumenau’s portfolio
 
-A static Astro site with six case studies, a Three.js world, 30 feature stories, twelve interactive labs and a release explorer. The labs explore memory, configuration, recovery, browser graphics, gateway boundaries, preserved conversation branches, native questions, terminal-to-Mac Attention, notebook timing, Danish listening, archive reconstruction and audited graph edits. A 78-second homepage film introduces the work. Product screenshots, captioned recordings and inspectable execution receipts accompany the stories. nginx serves the production build; browser interactions run without an application server.
+A static Astro site with six case studies, a Three.js world, 30 feature stories, twelve interactive labs and a release explorer. The labs explore memory, configuration, recovery, browser graphics, gateway boundaries, preserved conversation branches, native questions, terminal-to-Mac Attention, notebook timing, Danish listening, archive reconstruction and audited graph edits. Inside the World, visitors can carry a recorded Attention answer or make two real PNG prints in the Small Edition Press. The voice feature also runs PanelForge’s retained ordered audio queue behind an explicit Listen action. A 78-second homepage film introduces the work. Product screenshots, captioned recordings and inspectable execution receipts accompany the stories. nginx serves the production build; browser interactions run without an application server.
 
 The footer offers a six-page selected-work PDF. It is a curated artifact from source checkpoint `a75d722`, with reviewed product captures, embedded fonts and links back to the site. Site builds retain its exact bytes; a revised edition needs a new review and updated `public/sample-files/sample-provenance.json`.
 
@@ -18,7 +18,7 @@ The development site runs on port 4321. To check the complete production build:
 npm run verify
 ```
 
-This checks the retained Listening source against its deterministic compiled output, runs Astro diagnostics, builds static routes, audits links/assets/public media and runs Playwright at phone, tablet and desktop sizes. The browser suite includes WCAG checks through axe, keyboard navigation, architecture tabs, image dialogs and real video playback/captions. It starts its own preview on port 4322. Use `PORTFOLIO_TEST_URL` to test another local server instead.
+This checks the retained Listening and Audio Intent source against their deterministic compiled outputs, runs Astro diagnostics, builds static routes, audits links/assets/public media and runs Playwright at phone, tablet and desktop sizes. The browser suite includes WCAG checks through axe, keyboard navigation, architecture tabs, image dialogs and real video playback/captions. It starts its own preview on port 4322. Use `PORTFOLIO_TEST_URL` to test another local server instead.
 
 For concurrent verification, build to a private directory with `npm run build -- --outDir /private/build`, then set `PORTFOLIO_DIST_ROOT=/private/build` for the audit, browser preview and Docker smoke scripts. `PORTFOLIO_PREVIEW_PORT` selects an available local preview port. Default behavior remains `dist/` on port 4322.
 

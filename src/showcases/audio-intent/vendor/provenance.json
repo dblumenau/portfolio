@@ -1,0 +1,18 @@
+{
+  "sourceCommit": "93881d2eca613fde498e0933405cee3a07220a4c",
+  "status": "Unmodified retained source; ordered queue controls only",
+  "sourceSha256": {
+    "audioRuntime.ts.txt": "768a72c288fd11807d64d2302798486cf5c020fa3760ce19bb0d7863e1dbf3b0",
+    "useWebAudioPlayer.ts.txt": "3b85ffbb132973703b23cc298cd32d059939c5576f2be891e042702fa0b74752"
+  },
+  "compiler": "esbuild 0.27.1; browser ESM ES2022; TypeScript loader; import aliases; production dependency flags and syntax folding",
+  "runtimeModuleSha256": "50c611eff5d1bf6bd329085164407593565963dbd108bfd1db4491e522667716",
+  "bundledDependencies": [
+    "@vue/reactivity",
+    "@vue/runtime-core",
+    "@vue/shared",
+    "howler",
+    "vue"
+  ],
+  "dependencyLicenseSha256": "736e4b7f1a670ea93727f8ebb7a33bd51fa3d494611bff44ab6c0ba59af4c915"
+}

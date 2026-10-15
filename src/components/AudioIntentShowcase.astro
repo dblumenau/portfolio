@@ -1,0 +1,49 @@
+---
+import Icon from './Icon.astro';
+---
+<section class="audio-intent-showcase wrap" id="sound-when-you-choose" aria-labelledby="audio-intent-title" data-audio-intent>
+  <div class="audio-intent-intro">
+    <div><p class="audio-eyebrow">A small working example</p><h2 id="audio-intent-title">Sound when<br /> <em>you choose it.</em></h2></div>
+    <p>An incoming reply should not be what turns audio on. Try a sample reply, then choose Listen to enable this page.</p>
+  </div>
+  <div class="audio-sample">
+    <div class="audio-sample-story">
+      <p class="audio-scope">Synthetic tones · actual PanelForge playback code</p>
+      <h3>Three pieces. One queue.</h3>
+      <p>The last piece can arrive first. Playback waits for the earlier pieces and keeps their order.</p>
+      <ol class="audio-tones" aria-label="Synthetic sample pieces in playback order">
+        <li><span>1</span><strong>Low</strong></li><li><span>2</span><strong>Middle</strong></li><li><span>3</span><strong>High</strong></li>
+      </ol>
+      <p class="audio-fixture-note">Three short synthetic notes.</p>
+      <button type="button" class="audio-incoming" data-audio-incoming disabled>Receive sample reply <Icon name="arrow-down" /></button>
+      <p class="audio-reply" data-audio-reply hidden>Sample reply: “Three short pieces, kept in order.” Its audio events arrived while sound was off.</p>
+    </div>
+    <div class="audio-sample-controls">
+      <span class="audio-badge" data-audio-badge>Audio off</span>
+      <label class="audio-delivery">Sample delivery<select data-audio-delivery disabled><option value="reordered">Final piece first: 3, 1, 2</option><option value="ordered">In order: 1, 2, 3</option></select></label>
+      <div class="audio-buttons"><button type="button" class="audio-listen" data-audio-listen disabled><Icon name="play" />Listen to sample</button><button type="button" data-audio-stop disabled>Stop</button></div>
+      <p class="audio-message" data-audio-message role="status" aria-live="polite">Preparing audio controls. JavaScript is needed for this example.</p>
+      <p class="audio-arrival" data-audio-arrival>Playback order: 1 → 2 → 3.</p>
+      <p class="audio-page-state">Stop clears playback. Once enabled, this page stays enabled.</p>
+      <button type="button" class="audio-reload" data-audio-reload hidden>Reload for a quiet start <Icon name="rotate" /></button>
+    </div>
+  </div>
+  <noscript><p class="audio-nojs">The working queue needs JavaScript. Nothing starts automatically; you can open a sample file from the links below.</p></noscript>
+  <details class="audio-method"><summary>About the sample and what was checked <Icon name="plus" /></summary><div class="audio-method-content">
+    <p>The three notes are 330, 440 and 550 Hz, each 0.36 seconds long with a peak amplitude of 3.5% of full scale.</p><p>The page uses unmodified retained audio code from PanelForge, with authored WAV tones in place of speech. Incoming sample events are dropped until Listen enables audio. No microphone or speech service is connected.</p>
+    <p>Private desktop Chromium tests captured digital output and verified intent, ordering and Stop. They do not establish physical audibility, Safari or iPad behavior, or how another app’s music behaves.</p>
+    <p>The wider source proof passed 33 of 34 checks: a separate PCM restart race failed. A private correction passed 45 of 45 expanded checks. This example uses the unmodified source and exposes only the ordered file queue; the PCM correction is unreleased.</p>
+    <div class="audio-file-links"><a href="/media/audio-intent/tone-0.wav">Open tone 1 · 330 Hz</a><a href="/media/audio-intent/tone-1.wav">Open tone 2 · 440 Hz</a><a href="/media/audio-intent/tone-2.wav">Open tone 3 · 550 Hz</a></div>
+    <div class="audio-receipts"><a href="/media/audio-intent/receipt.json">Read the concise source receipt <Icon name="arrow-up-right" /></a><a href="/media/audio-intent/licenses.txt">Dependency licenses <Icon name="arrow-up-right" /></a></div>
+  </div></details>
+</section>
+<script>
+  import { mountAudioIntent } from '../showcases/audio-intent/controller';
+  document.querySelectorAll<HTMLElement>('[data-audio-intent]').forEach(mountAudioIntent);
+</script>
+<style>
+.audio-intent-showcase{padding-block:44px 50px;border-bottom:1px solid var(--line);scroll-margin-top:24px}.audio-intent-intro{display:grid;grid-template-columns:1.15fr 1fr;align-items:end;gap:24px 48px;margin-bottom:26px}.audio-eyebrow{font-size:14px;font-weight:650;letter-spacing:.06em;text-transform:uppercase;color:var(--rust);margin-bottom:14px}.audio-intent-intro h2{font-size:clamp(2.3rem,4.4vw,4.1rem);line-height:1.08}.audio-intent-intro h2 em{color:var(--forest)}.audio-intent-intro>p{font-size:17px;line-height:1.75;color:var(--muted);max-width:470px}.audio-sample{display:grid;grid-template-columns:1.15fr 1fr;border:1px solid #a9b49e;border-radius:5px;overflow:hidden;background:#faf8f1}.audio-sample-story{padding:28px 32px}.audio-scope{font-size:14px;color:var(--forest);margin-bottom:14px}.audio-sample h3{font-size:26px;line-height:1.25;margin-bottom:12px}.audio-sample-story>p:not(.audio-scope){font-size:15px;line-height:1.75;max-width:500px}.audio-tones{display:flex;gap:12px;list-style:none;margin:24px 0 12px;padding:0}.audio-tones li{flex:1;display:flex;align-items:center;gap:12px;padding:12px;border:1px solid #bcc6b2;border-radius:3px;min-width:0}.audio-tones li>span{font-family:var(--serif);font-size:26px;color:var(--rust);font-style:italic}.audio-tones strong{font-size:15px;font-weight:550;white-space:nowrap}.audio-sample-story>.audio-fixture-note{font-size:14px!important;color:var(--muted)}.audio-intent-showcase button{font:inherit;font-size:15px;min-height:46px;padding:10px 16px;border:1px solid var(--forest);border-radius:3px;background:transparent;color:var(--forest-dark);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:10px;touch-action:manipulation}.audio-intent-showcase button:disabled{opacity:.5;cursor:default}.audio-intent-showcase :is(button,a,summary,select):focus-visible{outline:3px solid var(--rust);outline-offset:4px}.audio-intent-showcase .audio-incoming{margin-top:20px;padding-inline:14px}.audio-intent-showcase .audio-reply{margin-top:14px;padding:12px 14px;border-left:2px solid var(--forest);background:#e9eddf;font-size:14px!important}.audio-sample-controls{padding:28px 32px;background:#e9eddf;border-left:1px solid #bcc6b2}.audio-badge{display:inline-block;font-size:14px;font-weight:650;padding:3px 10px;border:1px solid #829577;border-radius:20px;margin-bottom:20px;background:#f8f8ed}.audio-delivery{display:grid;gap:8px;font-size:14px;font-weight:550}.audio-delivery select{font:inherit;font-size:15px;color:var(--ink);background:#fbfaf3;border:1px solid #8a9a81;border-radius:3px;min-height:46px;width:100%;max-width:100%;padding:10px 12px}.audio-buttons{display:flex;gap:10px;margin-top:16px}.audio-intent-showcase .audio-listen{background:var(--forest-dark);color:var(--paper);border-color:var(--forest-dark)}.audio-message{font-size:15px;line-height:1.65;margin:18px 0 10px;min-height:50px;font-weight:550}.audio-arrival,.audio-page-state{font-size:14px;line-height:1.7;color:#465443;margin-top:10px}.audio-intent-showcase .audio-reload{font-size:14px;min-height:44px;padding:8px 0;border:0;text-decoration:underline;text-underline-offset:4px;margin-top:6px}.audio-intent-showcase [hidden]{display:none!important}.audio-method{border-block:1px solid var(--line);margin-top:24px}.audio-method>summary{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:52px;padding:13px 8px;font-size:15px;font-weight:550;cursor:pointer}.audio-method>summary>.ui-icon{flex-shrink:0}.audio-method[open]>summary>.ui-icon{transform:rotate(45deg)}.audio-method-content{padding:8px 8px 20px}.audio-method-content>p{font-size:14px;line-height:1.8;color:var(--muted);max-width:870px;margin-bottom:14px}.audio-file-links,.audio-receipts{display:flex;flex-wrap:wrap;gap:4px 26px}.audio-file-links a,.audio-receipts a{display:inline-flex;align-items:center;gap:10px;min-height:46px;font-size:14px;padding-block:10px}.audio-nojs{font-size:15px;margin-top:18px}.audio-intent-showcase :global(.ui-icon){width:18px;height:18px;flex-shrink:0}
+@media(max-width:900px){.audio-tones{gap:8px}.audio-tones li{gap:8px;padding:10px}.audio-sample-story,.audio-sample-controls{padding:24px}.audio-tones strong{font-size:14px}}
+@media(max-width:760px){.audio-intent-showcase{padding-block:32px 38px}.audio-intent-intro{grid-template-columns:1fr;gap:16px}.audio-intent-intro h2{font-size:clamp(2.2rem,8vw,3rem)}.audio-intent-intro>p{font-size:16px}.audio-sample{grid-template-columns:1fr}.audio-sample-controls{border-left:0;border-top:1px solid #bcc6b2}.audio-tones li{padding:10px 12px}.audio-message{min-height:0}.audio-method>summary{font-size:14px}.audio-sample-story,.audio-sample-controls{padding:22px}.audio-sample h3{font-size:25px}}
+@media(max-width:380px){.audio-sample-story,.audio-sample-controls{padding:18px}.audio-tones li{padding:9px 7px;gap:6px}.audio-tones li>span{font-size:23px}.audio-buttons{gap:8px}.audio-intent-showcase button{padding-inline:12px}}
+</style>

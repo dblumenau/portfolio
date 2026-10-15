@@ -16,15 +16,17 @@
     "verify": "npm run check:source && npm run check && npm run build && npm run audit && npm run test:browser",
     "package:release": "node scripts/package-release.mjs",
     "test:deployment": "node scripts/smoke-deployment.mjs",
-    "check:source": "node src/labs/listening/vendor/compile.mjs --check"
+    "check:source": "node src/labs/listening/vendor/compile.mjs --check && node src/showcases/audio-intent/vendor/compile.mjs --check"
   },
   "dependencies": {
     "@fontsource-variable/dm-sans": "^5.2.8",
     "@fontsource-variable/fraunces": "^5.2.8",
     "astro": "7.3.8",
+    "howler": "2.2.4",
     "react": "19.2.5",
     "react-dom": "19.2.5",
-    "three": "^0.186.1"
+    "three": "^0.186.1",
+    "vue": "3.5.40"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.4",
@@ -34,6 +36,7 @@
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
     "@types/three": "^0.186.0",
+    "esbuild": "0.27.1",
     "typescript": "^5.9.3"
   }
 }

@@ -1,0 +1,22 @@
+AUDIO INTENT SHOWCASE
+
+The ordered-queue example augments /features/voice-conversation-loop/. AudioIntentShowcase.astro is an Astro component with a plain prepared browser module, not a global Vue renderer.
+
+Retained source is byte-identical to PanelForge 93881d2eca613fde498e0933405cee3a07220a4c:
+  vendor/retained/audioRuntime.ts.txt
+  vendor/retained/useWebAudioPlayer.ts.txt
+The compiler rejects any different source hash, including the separate unreleased PCM guard patch. The .txt suffix keeps the original application's @/ imports out of Astro's type checker. esbuild's explicit import aliases resolve only the retained runtime and local telemetry. Retained source bytes are unchanged. Production dependency flags remove Vue development hooks; no fake Howl is involved. runtime.d.ts types the controller's queue-only surface.
+
+Compilation: node src/showcases/audio-intent/vendor/compile.mjs
+Verification: node src/showcases/audio-intent/vendor/compile.mjs --check
+Exact dependencies: Vue 3.5.40, Howler 2.2.4; compiler esbuild 0.27.1. The compiler derives every bundled package owner from its metafile and retains its license in public/media/audio-intent/licenses.txt. No account/backend/provider/microphone is used. Telemetry is a bounded local-memory array with no network or storage writes.
+
+The preloaded module enables Listen only after it is prepared. Listen calls armAudio synchronously in the actual click, before timers or asynchronous work. Incoming sample reply events exercise the real unarmed drop. Two delivery modes call the real ordered buffer. Visible arrival order describes delivery, never fabricated playback progress. Native Howler play/error events and actual player refs drive playback status; completion says the queue finished and does not claim human audibility or that every file sounded.
+
+Stop clears outer timers, event bindings, the bounded observer, deadline and actual player. Visibility hidden and pagehide also stop; pagehide destroys the player queue. A 15-second deadline bounds stalled loads. The armed flag persists. Quiet-start retry reloads the actual page. The test-only runtime reset is neither exported by the entry module nor called by the controller.
+
+The wider unmodified-source private proof remains 33 passing checks / 34, including a disclosed PCM restart failure. The two-line private correction is separate and unreleased, with 45/45 expanded checks. The public example demonstrates the ordered queue. It does not incorporate that correction or verify all stream and device behavior.
+
+media-provenance.fragment.json records this showcase’s media entries; public/media/media-provenance.json is the complete public manifest. The feature route, dependency pins, source check and static audit are integrated with the site.
+
+Private browser tests cover trusted playback, both delivery modes, unarmed events/no API traffic, Stop/timers/replay/reload, actual navigation cleanup, failed media disclosure, unsupported/no-JS operation, 390/834/1440 geometry and axe checks. verification/capture.mjs and analyze.py are optional scoped private digital-output reproduction helpers. They require explicit output directory, local URL and private Pulse socket; no production or frozen-build defaults exist. Original failure traces are retained in the private workspace.

@@ -31,6 +31,8 @@ const TEXT_SHADOW = 'rgba(0, 0, 0, 0.45)'
 const TEXT_SHADOW_BLUR = 18
 const TEXT_SHADOW_OFFSET_Y = 3
 const TITLE_ALPHA = 0.85
+/** Portfolio adaptation: clear headline descenders before the metadata stack begins. */
+const HEADLINE_METADATA_GAP = 24
 
 /**
  * The only drawing code in the app. Preview and export both call it, which is what makes
@@ -176,14 +178,20 @@ function drawText(ctx: RenderContext, doc: KitDoc, layout: Layout): void {
     maxWidth: headlineWidth,
   })
   let lastHeadlineBaseline = layout.headline.y + band
+  let headlineBottom = lastHeadlineBaseline
+  const drawHeadline = (line: string, baseline: number) => {
+    const metrics = ctx.measureText(line)
+    headlineBottom = Math.max(headlineBottom, baseline + glyphExtent(metrics.actualBoundingBoxDescent, headlineSize * 0.25))
+    ctx.fillText(line, layout.headline.x, baseline)
+  }
   if (ctx.measureText(template.headline).width <= headlineWidth) {
-    ctx.fillText(template.headline, layout.headline.x, lastHeadlineBaseline)
+    drawHeadline(template.headline, lastHeadlineBaseline)
   } else {
     const lines = wrapLines(ctx, template.headline, headlineWidth, 2)
     for (let index = 0; index < lines.length; index += 1) {
       lastHeadlineBaseline =
         layout.headline.y + band + index * headlineSize * layout.headline.lineHeight
-      ctx.fillText(lines[index] ?? '', layout.headline.x, lastHeadlineBaseline)
+      drawHeadline(lines[index] ?? '', lastHeadlineBaseline)
     }
   }
 
@@ -224,19 +232,21 @@ function drawText(ctx: RenderContext, doc: KitDoc, layout: Layout): void {
     },
   ]
 
+  let firstVisible = true
   for (const { field, row, weight, alpha, step } of rows) {
     const text = field.text.replace(/\s+/g, ' ').trim()
     if (!field.visible || !text) continue
     ctx.globalAlpha = alpha
-    const extra = drawRow(ctx, text, row, weight, rowWidth(row), baseline, fontFamily)
+    const drawn = drawRow(ctx, text, row, weight, rowWidth(row), baseline, fontFamily, firstVisible ? headlineBottom + HEADLINE_METADATA_GAP : undefined)
     ctx.globalAlpha = 1
-    baseline += step + extra
+    baseline = drawn.baseline + step + drawn.extra
+    firstVisible = false
   }
 }
 
 /**
  * One text row: shrinks towards `row.minSize` to stay on a line, then wraps to `row.maxLines`
- * at that floor. Returns the height the extra lines took, for the rows under it.
+ * at that floor. Returns its drawn baseline and extra line height for the rows under it.
  */
 function drawRow(
   ctx: RenderContext,
@@ -246,7 +256,8 @@ function drawRow(
   maxWidth: number,
   baseline: number,
   fontFamily: string,
-): number {
+  minimumTop?: number,
+): { baseline: number; extra: number } {
   const size = fitFontSize(ctx, text, {
     weight,
     family: fontFamily,
@@ -255,12 +266,20 @@ function drawRow(
     maxWidth,
   })
   const lines = wrapLines(ctx, text, maxWidth, row.maxLines)
+  // Fit first, then use the actual drawn glyphs. Keep the nominal baseline if already clear.
+  if (minimumTop !== undefined) {
+    const ascent = Math.max(...lines.map(line => glyphExtent(ctx.measureText(line).actualBoundingBoxAscent, size)), 0)
+    baseline = Math.max(baseline, minimumTop + ascent)
+  }
   const lineStep = size * row.lineHeight
   for (let index = 0; index < lines.length; index += 1) {
     ctx.fillText(lines[index] ?? '', row.x, baseline + index * lineStep)
   }
-  return (lines.length - 1) * lineStep
+  return { baseline, extra: (lines.length - 1) * lineStep }
 }
+
+/** Older canvas implementations may not expose glyph bounds; keep a conservative font-size floor. */
+function glyphExtent(value: number, fallback: number): number { return Number.isFinite(value) && value >= 0 ? value : fallback }
 
 /** Relative luminance over 0.5 on a `#rrggbb` string; anything unparseable counts as light. */
 function isLight(hex: string): boolean {

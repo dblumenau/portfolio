@@ -20,7 +20,7 @@ async function enter(page: Page) { await page.locator('[data-open-task]').click(
 async function state(page: Page, stage: string) { await expect(page.locator('[data-forge-world]')).toHaveAttribute('data-task-stage', stage); await expect(page).toHaveURL(new RegExp(`#task/attention/${stage}$`)); }
 async function build(page: Page) { for (const stage of ['chosen', 'returned', 'built']) { await primary(page).click(); await state(page, stage); } }
 function sceneModuleURL() {
-  const name = readdirSync(resolve(process.env.PORTFOLIO_DIST_ROOT ?? 'dist', '_astro')).find(name => /^scene\..*\.js$/.test(name));
+  const name = readdirSync(resolve(process.env.PORTFOLIO_DIST_ROOT ?? 'dist', '_astro')).find(name => /^scene\..*\.js$/.test(name) && readFileSync(resolve(process.env.PORTFOLIO_DIST_ROOT ?? 'dist', '_astro', name), 'utf8').includes('attention-output'));
   if (!name) throw new Error('The private build must contain the lazy task scene.');
   return `/_astro/${name}`;
 }

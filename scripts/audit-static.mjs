@@ -48,6 +48,8 @@ const reviewedEvidenceMedia = [
   'curation/receipt.json', 'curation/recorded-merge.png',
   'image-revision/original.jpg', 'image-revision/revision.jpg',
   'image-revision/gallery-detail.png', 'image-revision/completed-chat.png', 'image-revision/receipt.json',
+  'audio-intent/tone-0.wav', 'audio-intent/tone-1.wav', 'audio-intent/tone-2.wav',
+  'audio-intent/receipt.json', 'audio-intent/licenses.txt',
   'code-history/week.png', 'code-history/peek.png', 'code-history/transcript.png',
   'code-history/execution.mp4', 'code-history/execution.vtt', 'code-history/receipt.json',
   'transit/receipt.json', 'transit/transcript.txt',
@@ -128,7 +130,7 @@ for (const file of htmlFiles) {
     title: document.title,
     authoredText: (() => { const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT); const parts = []; while (walker.nextNode()) { const node = walker.currentNode; if (!node.parentElement?.closest('script,style')) parts.push(node.textContent ?? ''); } return parts.join(' '); })(),
     ids: [...document.querySelectorAll('[id]')].map(item => item.id),
-    routeHashes: document.querySelector('[data-forge-world]') ? [...document.querySelectorAll('[data-select-district]')].map(item => item.getAttribute('data-select-district')) : [],
+    routeHashes: document.querySelector('[data-forge-world]') ? [...document.querySelectorAll('[data-select-district]')].map(item => item.getAttribute('data-select-district')).concat(document.querySelector('[data-shop-card]') ? ['printshop', 'printshop/print-1', 'printshop/print-2'] : []) : [],
     refs: [
       ...[...document.querySelectorAll('a[href],link[href],img[src],script[src],source[src],track[src],track[data-src],audio[src],video[poster],video[data-src]')].filter(item => item.getAttribute('rel') !== 'canonical').map(item => ({ tag: item.tagName, value: item.getAttribute(item.tagName === 'VIDEO' ? item.hasAttribute('poster') ? 'poster' : 'data-src' : item.hasAttribute('href') ? 'href' : 'src') ?? item.getAttribute('data-src') })),
       ...[...document.querySelectorAll('video[data-poster]')].map(item => ({ tag: 'VIDEO', value: item.getAttribute('data-poster') })),
@@ -139,7 +141,7 @@ for (const file of htmlFiles) {
     placeholders: document.querySelectorAll('.missing-media').length,
     embeds: document.querySelectorAll('iframe,script[src^="http"]').length,
     forms: [...document.querySelectorAll('form')].map(form => ({
-      approved: (form.matches('[data-feature-atlas] form.atlas-controls') && form.getAttribute('role') === 'search') || (form.matches('[data-release-explorer] form.release-filter-form') && form.getAttribute('aria-label') === 'Filter release history') || form.matches('[data-studio] form.studio-controls[data-controls]'),
+      approved: (form.matches('[data-feature-atlas] form.atlas-controls') && form.getAttribute('role') === 'search') || (form.matches('[data-release-explorer] form.release-filter-form') && form.getAttribute('aria-label') === 'Filter release history') || form.matches('[data-studio] form.studio-controls[data-controls]') || form.matches('[data-forge-world] form.world-shop-form[data-shop-form]'),
       action: form.getAttribute('action'), method: form.getAttribute('method'), target: form.getAttribute('target'),
       mutationControls: form.querySelectorAll('input[type="file"],input[type="password"],button[formaction],input[formaction],button[formmethod],input[formmethod]').length,
     })),

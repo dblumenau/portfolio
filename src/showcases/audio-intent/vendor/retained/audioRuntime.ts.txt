@@ -1,0 +1,83 @@
+import { Howl, Howler } from 'howler';
+
+/**
+ * Page-wide audio activation. Every Howler import goes through this module so
+ * the configuration below is applied before any Howl exists.
+ *
+ * On iOS, an audible media element that starts playing moves the page into the
+ * MediaPlayback audio-session category, which pauses other apps (Spotify). So
+ * the page activates audio only from an explicit audio gesture — `armAudio()`
+ * — never from Howler's page-wide first-touch listeners or from stream events.
+ */
+
+// Howler's auto-unlock attaches capture listeners to the whole document the
+// moment any Howl is constructed, turning an unrelated tap into audio activation.
+Howler.autoUnlock = false;
+
+// Sequential TTS chunks recycle one or two elements; ten covers overlap from
+// iOS Safari's slow release of unloaded elements.
+Howler.html5PoolSize = 10;
+
+/** Howler internals used to seed its HTML5 pool with gesture-unlocked elements. */
+interface HowlerHtml5Pool {
+  _html5AudioPool?: HTMLAudioElement[];
+  _releaseHtml5Audio?: (audio: HTMLAudioElement & { _unlocked?: boolean }) => void;
+}
+
+let armed = false;
+let pcmContext: AudioContext | null = null;
+
+/**
+ * Activate audio for this page. Call synchronously inside the user gesture that
+ * asks for audio (send-with-audio, narrate, voice-mode enable, push-to-talk)
+ * and before any `await`, or iOS rejects the unlock.
+ *
+ * - Seeds Howler's HTML5 pool with elements loaded inside the gesture, so
+ *   `html5: true` Howls created later (TTS chunks, narration autoplay) may play.
+ * - Creates or resumes the Web Audio context used for scheduled PCM streams.
+ *
+ * Repeat calls re-run the unlock, so a failed or interrupted activation recovers
+ * on the next gesture.
+ */
+export function armAudio(): void {
+  armed = true;
+
+  const pool = Howler as unknown as HowlerHtml5Pool;
+  if (typeof pool._releaseHtml5Audio === 'function' && Array.isArray(pool._html5AudioPool)) {
+    while (pool._html5AudioPool.length < Howler.html5PoolSize) {
+      const audio = new Audio() as HTMLAudioElement & { _unlocked?: boolean };
+      audio.load();
+      audio._unlocked = true;
+      pool._releaseHtml5Audio(audio);
+    }
+  }
+
+  try {
+    pcmContext ??= new AudioContext();
+    if (pcmContext.state !== 'running') {
+      pcmContext.resume().catch(() => {
+        // Retried on the next armAudio() gesture.
+      });
+    }
+  } catch {
+    pcmContext = null;
+  }
+}
+
+/** Whether this page has been armed by an audio gesture. */
+export function isAudioArmed(): boolean {
+  return armed;
+}
+
+/** The Web Audio context for scheduled PCM playback; null until armed. */
+export function getPcmContext(): AudioContext | null {
+  return pcmContext;
+}
+
+/** Test-only: return to the unarmed state. */
+export function resetAudioRuntimeForTests(): void {
+  armed = false;
+  pcmContext = null;
+}
+
+export { Howl, Howler };

@@ -3,7 +3,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { districts, journey, type DistrictId } from './data';
 import { buildWorld } from './scene';
-import type { AttentionTask } from './attention-task/controller';
+import type { ExperienceHost } from './experience-host';
 
 interface CameraMove {
   started: number;
@@ -14,7 +14,7 @@ interface CameraMove {
   toTarget: THREE.Vector3;
 }
 
-export function mountWorld(root: HTMLElement, task: AttentionTask): () => void {
+export function mountWorld(root: HTMLElement, task: ExperienceHost): () => void {
   const viewport = root.querySelector<HTMLElement>('[data-world-viewport]')!;
   const canvas = root.querySelector<HTMLCanvasElement>('[data-world-canvas]')!;
   const stage = root.querySelector<HTMLElement>('[data-world-stage]')!;
@@ -89,12 +89,13 @@ export function mountWorld(root: HTMLElement, task: AttentionTask): () => void {
       const originId = districts.find(item => item.id === rawId)?.id ?? null;
       const originExhibit = mode === 'exhibit' && Boolean(districts.find(item => item.id === originId)?.image);
       if ((!rawId || districts.some(item => item.id === rawId)) && (selected !== originId || exhibit !== originExhibit)) {
-        const taskMode = stage.dataset.task;
-        delete stage.dataset.task;
+        const taskMode = stage.dataset.task, experienceMode = stage.dataset.experience;
+        delete stage.dataset.task; delete stage.dataset.experience;
         selectDistrict(originId, { history: false, reveal: false });
         if (originExhibit) setExhibit(true, false);
         if (move) { camera.position.copy(move.toPosition); controls.target.copy(move.toTarget); controls.update(); }
         if (taskMode) stage.dataset.task = taskMode;
+        if (experienceMode) stage.dataset.experience = experienceMode;
       }
       if (origin.pose) {
         camera.position.fromArray(origin.pose.position); camera.quaternion.fromArray(origin.pose.quaternion); controls.target.fromArray(origin.pose.target);
@@ -294,7 +295,7 @@ export function mountWorld(root: HTMLElement, task: AttentionTask): () => void {
     return (hit?.object.userData.district as DistrictId | undefined) ?? null;
   }
   function fromHash() {
-    if (window.location.hash.startsWith('#task/')) return;
+    if (task.ownsHash(window.location.hash)) return;
     if (task.active) task.exit(false);
     const [rawId, mode] = window.location.hash.slice(1).split('/');
     if (rawId && !districts.some(district => district.id === rawId)) return;
@@ -394,7 +395,7 @@ export function mountWorld(root: HTMLElement, task: AttentionTask): () => void {
   resizeObserver.observe(viewport);
   const intersection = new IntersectionObserver(([entry]) => {
     visible = entry?.isIntersecting ?? true;
-    if (visible) requestRender();
+    if (visible) { task.resume(); requestRender(); }
     else { task.suspend(); stopRendering(); }
   }, { rootMargin: '160px' });
   intersection.observe(viewport);

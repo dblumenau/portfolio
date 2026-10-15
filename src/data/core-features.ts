@@ -684,7 +684,7 @@ export const coreFeatures: Feature[] = [
     "problem": "Hands-free conversation needs a clear path through listening, transcription, response and spoken playback, rather than a hidden recording control.",
     "built": [
       "The web voice mode provides a voice-to-voice loop for Claude Engine; PanelForge routes transcript and audio state through a session adapter.",
-      "Make the active voice phase visible and keep audio/TTS settings close to the session controls."
+      "The active phase remains visible, with audio settings close to the controls. A later correction makes audio activation an explicit choice, keeping incoming chunks quiet until the page has been enabled for sound."
     ],
     "use": [
       {
@@ -696,6 +696,10 @@ export const coreFeatures: Feature[] = [
       {
         "date": "2026-02-12",
         "title": "web-v6.20.0"
+      },
+      {
+        "date": "2026-09-30",
+        "title": "web-v10.20.5 — audio waits for an explicit gesture"
       }
     ],
     "sources": {
@@ -703,10 +707,12 @@ export const coreFeatures: Feature[] = [
       "files": [
         "resources/js/composables/voice/useVoiceSession.ts",
         "resources/js/composables/voice/claudeEngineVoiceAdapter.ts",
-        "resources/js/components/chat/ChatInputVoiceMode.vue"
+        "resources/js/components/chat/ChatInputVoiceMode.vue",
+        "resources/js/lib/audioRuntime.ts",
+        "resources/js/composables/useWebAudioPlayer.ts"
       ],
       "status": "source-current",
-      "note": "Source and release record inspected; no current product execution is claimed for this illustration.",
+      "note": "The voice-state diagram is explanatory. The working sound example uses unmodified retained audio code with synthetic WAV notes and captured desktop output; it is not a complete live voice session or device-routing demonstration. The separate PCM restart limitation remains disclosed.",
       "release": "web-v6.20.0"
     },
     "related": [

@@ -2,11 +2,9 @@ import type * as THREE from 'three';
 import { answer, chapters, execution, presentation } from './data';
 import { initialView, reduceTask, stages, taskHash, type TaskAction } from './model';
 import type { AttentionScene } from './scene';
+import type { ExperienceBridge, Suspension } from '../experience-host';
 
-type WorldPose = { worldHash?: string; position: [number, number, number]; target: [number, number, number]; quaternion: [number, number, number, number] };
-type TaskOrigin = { hash: string; state: Record<string, unknown>; scroll: number; inspectorScroll: number; pose?: WorldPose };
-type Hooks = { capture: () => WorldPose; open: (origin: TaskOrigin) => void; close: () => void; invalidate: () => void };
-export function mountAttentionTask(root: HTMLElement) {
+export function mountAttentionTask(root: HTMLElement, bridge: ExperienceBridge) {
   const stage = root.querySelector<HTMLElement>('[data-world-stage]')!;
   const viewport = root.querySelector<HTMLElement>('[data-world-viewport]')!;
   const card = root.querySelector<HTMLElement>('[data-task-card]')!;
@@ -21,8 +19,8 @@ export function mountAttentionTask(root: HTMLElement) {
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const listeners: (() => void)[] = [];
   let view = initialView(), active = false, disposed = false;
-  let hooks: Hooks | undefined, scene: AttentionScene | undefined, scenePromise: Promise<void> | undefined;
-  let previous: TaskOrigin & { focus: HTMLElement | null } = { hash: '', state: {}, scroll: 0, focus: null, inspectorScroll: 0 };
+  let gpuReady = false;
+  let scene: AttentionScene | undefined, scenePromise: Promise<void> | undefined;
   let proofFocus: HTMLElement | null = null;
   let drag: { id: number; x: number; y: number; start: { x: number; y: number }; end: { x: number; y: number } } | undefined;
   let compared = false;
@@ -32,10 +30,10 @@ export function mountAttentionTask(root: HTMLElement) {
   let currentChapter = -1;
   function listen(element: EventTarget, name: string, callback: EventListener) { element.addEventListener(name, callback); listeners.push(() => element.removeEventListener(name, callback)); }
   function loadScene() {
-    if (!hooks || scenePromise) return;
+    if (!gpuReady || scenePromise) return;
     scenePromise = import('./scene').then(({ buildAttentionTask }) => {
       if (disposed) return;
-      scene = buildAttentionTask(() => hooks?.invalidate()); hooks?.invalidate();
+      scene = buildAttentionTask(() => bridge.invalidate()); bridge.invalidate();
     }).catch(() => { root.dataset.taskScene = 'unavailable'; });
   }
   function updateHTML(announce = false) {
@@ -54,13 +52,13 @@ export function mountAttentionTask(root: HTMLElement) {
     root.querySelector<HTMLElement>('[data-task-docked]')!.hidden = view.stage !== 'returned' && view.stage !== 'built';
     target.hidden = !active || view.stage !== 'chosen' || view.evidenceOpen;
     if (announce) announcement.textContent = `${copy.title} ${copy.description} Recorded outcome: ${answer}.`;
-    hooks?.invalidate();
+    bridge.invalidate();
   }
   function dispatch(action: TaskAction, historyEntry = true) {
     const before = view.stage;
     view = reduceTask(view, action);
     if (stages.indexOf(view.stage) < stages.indexOf(before)) resetPresentation();
-    if (before !== view.stage && historyEntry) history.pushState(taskHistory(), '', `#task/attention/${view.stage}`);
+    if (before !== view.stage && historyEntry) bridge.pushHash(`#task/attention/${view.stage}`);
     updateHTML(before !== view.stage);
   }
   function cancelDrag() {
@@ -73,53 +71,18 @@ export function mountAttentionTask(root: HTMLElement) {
     stage.dataset.taskPresentation = 'pending';
     scene?.update(view, performance.now(), true);
   }
-  function cleanState(state: unknown): Record<string, unknown> {
-    const copy = state && typeof state === 'object' ? { ...state } as Record<string, unknown> : {};
-    delete copy.worldTask; delete copy.worldTaskOrigin;
-    return copy;
-  }
-  function taskHistory() {
-    const { focus: _focus, ...origin } = previous;
-    return { ...origin.state, worldTask: true, worldTaskOrigin: origin };
-  }
-  function readOrigin(): TaskOrigin | null {
-    const origin = history.state?.worldTaskOrigin as TaskOrigin | undefined;
-    if (!origin || typeof origin.hash !== 'string' || origin.hash.startsWith('#task') || (origin.hash && !origin.hash.startsWith('#')) || !Number.isFinite(origin.scroll) || !Number.isFinite(origin.inspectorScroll)) return null;
-    const pose = origin.pose;
-    const validPose = pose && (pose.worldHash === undefined || typeof pose.worldHash === 'string') && [pose.position, pose.target, pose.quaternion].every((values, index) => Array.isArray(values) && values.length === (index === 2 ? 4 : 3) && values.every(Number.isFinite));
-    return { hash: origin.hash, state: cleanState(origin.state), scroll: origin.scroll, inspectorScroll: origin.inspectorScroll, ...(validPose ? { pose } : {}) };
-  }
-  function activateWorldHooks() {
-    const wasActive = active;
-    active = false;
-    hooks?.open(previous);
-    active = wasActive;
-  }
-  function open(push = true) {
-    if (active) return;
-    if (push) {
-      previous = { hash: location.hash, state: cleanState(history.state), scroll: window.scrollY, focus: document.activeElement as HTMLElement, inspectorScroll: root.querySelector<HTMLElement>('[data-world-inspector]')!.scrollTop, pose: hooks?.capture() };
-      view = initialView(); compared = false;
-    } else {
-      const origin = readOrigin();
-      if (origin) previous = { ...origin, focus: origin.hash === previous.hash && previous.focus?.isConnected ? previous.focus : root.querySelector<HTMLElement>('[data-open-task]') };
-      else {
-        const selected = root.dataset.selected;
-        previous = { hash: selected ? `#${selected}${stage.dataset.exhibit ? '/exhibit' : ''}` : '', state: cleanState(history.state), scroll: window.scrollY, inspectorScroll: root.querySelector<HTMLElement>('[data-world-inspector]')!.scrollTop, focus: root.querySelector<HTMLElement>('[data-open-task]'), pose: hooks?.capture() };
-      }
+  function enter(hash: string, fresh: boolean) {
+    const value = taskHash(hash) ?? 'waiting';
+    if (active) {
+      if (view.stage !== value) { closeProof(false); cancelDrag(); dispatch({ type: 'STAGE', stage: value }, false); }
+      return;
     }
-    activateWorldHooks();
+    if (fresh) { view = initialView(); compared = false; }
+    else view = reduceTask(view, { type: 'STAGE', stage: value });
     active = true;
     stage.dataset.task = 'attention'; root.dataset.task = 'attention';
-    resetPresentation();
-    card.hidden = overlay.hidden = false;
-    root.querySelector<HTMLVideoElement>('video:not([data-task-video])')?.pause();
-    if (push) {
-      history.pushState(taskHistory(), '', '#task/attention/waiting');
-    }
-    updateHTML(true); loadScene();
-    window.scrollTo({ top: Math.max(0, window.scrollY + stage.getBoundingClientRect().top - 12), behavior: 'instant' });
-    primary.focus({ preventScroll: true });
+    resetPresentation(); card.hidden = overlay.hidden = false;
+    updateHTML(true); loadScene(); primary.focus({ preventScroll: true });
   }
   function closeProof(restoreFocus = true) {
     video.pause();
@@ -127,22 +90,10 @@ export function mountAttentionTask(root: HTMLElement) {
     dispatch({ type: 'EVIDENCE', open: false }, false);
     if (restoreFocus) proofFocus?.focus({ preventScroll: true });
   }
-  function exit(push = true, restoreFocus = true) {
-    if (!active) return;
+  function leave() {
     closeProof(false); cancelDrag(); active = false;
     card.hidden = overlay.hidden = true;
     delete stage.dataset.task; delete root.dataset.task;
-    if (push) history.pushState(previous.state, '', `${location.pathname}${location.search}${previous.hash}`);
-    hooks?.close();
-    root.querySelector<HTMLElement>('[data-world-inspector]')!.scrollTop = previous.inspectorScroll;
-    window.scrollTo({ top: previous.scroll, behavior: 'instant' });
-    if (restoreFocus && previous.focus?.isConnected) previous.focus.focus({ preventScroll: true });
-  }
-  function fromHash() {
-    const value = taskHash(location.hash);
-    if (value === null) { exit(false); return; }
-    if (!active) open(false);
-    if (view.stage !== value) { closeProof(false); cancelDrag(); dispatch({ type: 'STAGE', stage: value }, false); }
   }
   function resultImage() {
     const phone = view.resultViewport === 'phone';
@@ -216,13 +167,11 @@ export function mountAttentionTask(root: HTMLElement) {
     }
     overlay.querySelectorAll<HTMLElement>('[data-task-anchor]').forEach(element => { if (!element.hidden) clamp(element); });
   }
-  root.querySelectorAll('[data-open-task]').forEach(button => listen(button, 'click', event => { event.preventDefault(); open(); }));
   listen(primary, 'click', () => {
     cancelDrag();
     if (view.stage === 'built') showProof('result');
     else dispatch({ type: view.stage === 'waiting' ? 'REVEAL_CHOICE' : view.stage === 'chosen' ? 'RETURN_ANSWER' : 'UNFOLD_RESULT' });
   });
-  listen(root.querySelector('[data-task-exit]')!, 'click', () => exit());
   listen(root.querySelector('[data-task-prev]')!, 'click', () => { cancelDrag(); dispatch({ type: 'PREVIOUS' }); });
   listen(root.querySelector('[data-task-replay]')!, 'click', () => { cancelDrag(); compared = false; dispatch({ type: 'REPLAY' }); primary.focus({ preventScroll: true }); });
   listen(root.querySelector('[data-task-watch]')!, 'click', () => showProof('film'));
@@ -260,23 +209,17 @@ export function mountAttentionTask(root: HTMLElement) {
   listen(slip, 'lostpointercapture', cancelDrag);
   listen(slip, 'click', event => { if ((event as MouseEvent).detail === 0) { cancelDrag(); dispatch({ type: 'RETURN_ANSWER' }); } });
   listen(window, 'pointerdown', event => { if (drag && (event as PointerEvent).pointerId !== drag.id) cancelDrag(); });
-  listen(window, 'keydown', event => {
-    const key = event as KeyboardEvent;
-    if (key.key !== 'Escape' || !active) return;
-    key.preventDefault(); key.stopImmediatePropagation();
-    if (view.evidenceOpen) closeProof(); else exit();
-  });
   listen(window, 'resize', cancelDrag);
   listen(window, 'pagehide', () => { cancelDrag(); video.pause(); });
   listen(document, 'visibilitychange', () => { if (document.hidden) { cancelDrag(); video.pause(); } });
   listen(root.querySelector('[data-world-canvas]')!, 'webglcontextlost', cancelDrag);
-  listen(window, 'popstate', fromHash); listen(window, 'hashchange', fromHash);
-  fromHash();
   return {
     get active() { return active; },
-    connect(value: Hooks) { hooks = value; if (active) { activateWorldHooks(); loadScene(); hooks.invalidate(); } },
-    exit,
-    suspend() { cancelDrag(); },
+    enter, leave,
+    attachGPU(available: boolean) { gpuReady = available; if (active && available) { loadScene(); bridge.invalidate(); } },
+    suspend(_reason: Suspension) { cancelDrag(); video.pause(); },
+    resume() { if (active) bridge.invalidate(); },
+    escape() { if (!view.evidenceOpen) return false; closeProof(); return true; },
     render(renderer: THREE.WebGLRenderer, now: number) {
       if (!active || !scene) return false;
       const width = viewport.clientWidth, height = viewport.clientHeight;
@@ -296,6 +239,7 @@ export function mountAttentionTask(root: HTMLElement) {
         element.style.left = `${point.x}px`; element.style.top = `${point.y}px`;
       });
       positionLabels(width, height);
+      delete stage.dataset.experienceLoading;
       return moving && !view.evidenceOpen;
     },
     dispose() { disposed = true; cancelDrag(); video.pause(); if (proof.open) proof.close(); listeners.forEach(remove => remove()); scene?.dispose(); },

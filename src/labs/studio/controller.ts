@@ -3,7 +3,7 @@ import { createDoc, backgrounds, rolePresets } from './model';
 import type { DecodedBackground } from './types';
 import { render } from './render';
 import { frameIndexAt } from './frames';
-import { bakeShaderBackground } from './shaderBackground';
+import { bakeShaderBackground, fallbackBackground, releaseBackground as release } from './shaderBackground';
 import { createExportCanvas, canvasToBlob } from './canvas';
 import { fontsReady } from './fonts';
 
@@ -30,13 +30,12 @@ export function initializeStudio(root:HTMLElement):void {
  const videoCapable=typeof VideoEncoder!=='undefined'&&typeof VideoFrame!=='undefined'&&!!brands?.some(b=>b.brand==='Chromium');
  capability.textContent=videoCapable?'MP4 is encoded on this device. A 4-second silent loop.':'PNG and JPG work here. A 4-second MP4 needs a compatible Chrome or Edge encoder.';
  function say(message:string){if(!disposed)status.textContent=message;}
- function release(bg:DecodedBackground|null){bg?.frames.forEach(f=>{if('close'in f.image)f.image.close();else{f.image.width=0;f.image.height=0;}});}
  function draw(){if(disposed)return;render(ctx!,doc,time);miniCtx?.drawImage(canvas,0,0,216,216);lastFrame=frameIndexAt(doc.background,time);root.dataset.frame=String(lastFrame);root.dataset.time=String(time);timeInput.value=String(Math.floor(time));root.querySelector('output[data-time]')!.textContent=`${(time/1000).toFixed(2)} s`;}
  function tick(stamp:number){raf=0;if(disposed)return;if(playing&&ready&&visible&&!document.hidden&&!clip){if(lastStamp)time=(time+Math.min(stamp-lastStamp,100))%4000;if(frameIndexAt(doc.background,time)!==lastFrame)draw();}lastStamp=stamp;if(visible&&!document.hidden)raf=requestAnimationFrame(tick);}
  function wake(){lastStamp=0;if(!raf&&!disposed&&visible&&!document.hidden)raf=requestAnimationFrame(tick);}
  function setPlay(value:boolean){playing=value;play.replaceChildren(createIcon(value?'pause':'play'));play.setAttribute('aria-pressed',String(value));play.setAttribute('aria-label',value?'Pause animation':'Play animation');wake();}
  function controls(){const busy=baking||!!clip||!ready;root.querySelectorAll<HTMLButtonElement>('[data-action="png"],[data-action="jpg"]').forEach(b=>b.disabled=busy);mp4.disabled=busy||!videoCapable||!doc.background?.animated;form.querySelectorAll<HTMLInputElement|HTMLSelectElement|HTMLButtonElement>('input,select,button').forEach(e=>e.disabled=!!clip);root.setAttribute('aria-busy',String(baking||!!clip));}
- function still(id:string):DecodedBackground {const preset=backgrounds.find(b=>b.id===id)!;const image=document.createElement('canvas');image.width=image.height=512;const c=image.getContext('2d')!;const g=c.createLinearGradient(0,0,512,512);g.addColorStop(0,preset.colorBack);g.addColorStop(1,preset.colorTint);c.fillStyle=g;c.fillRect(0,0,512,512);return {id,width:512,height:512,frames:[{image,delayMs:4000}],totalMs:4000,animated:false};}
+ function still(id:string):DecodedBackground {return fallbackBackground(backgrounds.find(b=>b.id===id)!);}
  async function chooseBackground(id:string){requested=id;bake?.abort();if(baking)return;baking=true;controls();
   while(!disposed){const wanted=requested;const controller=new AbortController();bake=controller;say('Mixing the animated ink…');let next:DecodedBackground|null=null;
    try {next=await bakeShaderBackground(backgrounds.find(b=>b.id===wanted)!,{size:512,fps:16,durationMs:4000,blendMs:1000,signal:controller.signal});}

@@ -1,0 +1,75 @@
+{
+  "example": "Sound when you choose it",
+  "scope": "Ordered file queue using unmodified retained PanelForge source; synthetic fixtures; no backend, microphone, account or speech provider.",
+  "source": {
+    "sourceCommit": "93881d2eca613fde498e0933405cee3a07220a4c",
+    "status": "Unmodified retained source; ordered queue controls only",
+    "sourceSha256": {
+      "audioRuntime.ts.txt": "768a72c288fd11807d64d2302798486cf5c020fa3760ce19bb0d7863e1dbf3b0",
+      "useWebAudioPlayer.ts.txt": "3b85ffbb132973703b23cc298cd32d059939c5576f2be891e042702fa0b74752"
+    },
+    "compiler": "esbuild 0.27.1; browser ESM ES2022; TypeScript loader; import aliases; production dependency flags and syntax folding",
+    "runtimeModuleSha256": "50c611eff5d1bf6bd329085164407593565963dbd108bfd1db4491e522667716",
+    "bundledDependencies": [
+      "@vue/reactivity",
+      "@vue/runtime-core",
+      "@vue/shared",
+      "howler",
+      "vue"
+    ],
+    "dependencyLicenseSha256": "736e4b7f1a670ea93727f8ebb7a33bd51fa3d494611bff44ab6c0ba59af4c915"
+  },
+  "fixtures": [
+    {
+      "index": 0,
+      "frequencyHz": 330,
+      "sampleRate": 24000,
+      "samples": 8640,
+      "durationSeconds": 0.36,
+      "peakAmplitude": 0.035003662109375,
+      "sha256": "9b0249c018b7d9019e38d4632c9cde184027df14c89e908139171932e44b9936",
+      "bytes": 17324
+    },
+    {
+      "index": 1,
+      "frequencyHz": 440,
+      "sampleRate": 24000,
+      "samples": 8640,
+      "durationSeconds": 0.36,
+      "peakAmplitude": 0.035003662109375,
+      "sha256": "fad4ff00e96b084420eab227fcfd56490d6398e3f3f54ce04af4afb5a6f1a552",
+      "bytes": 17324
+    },
+    {
+      "index": 2,
+      "frequencyHz": 550,
+      "sampleRate": 24000,
+      "samples": 8640,
+      "durationSeconds": 0.36,
+      "peakAmplitude": 0.035003662109375,
+      "sha256": "639937ea0d7561a7dfcc5329e64e5613e57f23e601772670e6322aeb31cd299d",
+      "bytes": 17324
+    }
+  ],
+  "privateVerification": {
+    "environment": "Desktop Chromium 156; actual browser media/Web Audio playback captured through an isolated PulseAudio null sink. Output-signal evidence only.",
+    "baseline": {
+      "passingChecks": 33,
+      "totalChecks": 34,
+      "failure": "A delayed PCM response can enter a new stream after Stop. This example does not expose PCM controls."
+    },
+    "separateUnreleasedCorrection": {
+      "passingChecks": 45,
+      "totalChecks": 45,
+      "change": "Two generation/context guards after response and body awaits. Separate private source copy; not used in this example."
+    }
+  },
+  "activation": "Listen calls armAudio synchronously in the explicit gesture, after the module is prepared. Incoming sample events are dropped on a fresh unarmed page.",
+  "stop": "Stop cancels sample delivery and clears playback. The page remains armed; a real reload is the quiet-start baseline.",
+  "historicalContext": "The activation correction is anchored to web-v10.20.5. Historical device feedback is context, not fresh device verification.",
+  "limits": [
+    "No claim of human audibility or physical output routing.",
+    "No native Safari/iPad, Bluetooth, background music or universal device result.",
+    "No speech/provider quality, live provider timing, gapless output or complete stream-safety claim."
+  ]
+}

@@ -1605,6 +1605,76 @@
       "bytes": 7389,
       "sha256": "148d81607b8eadd9dfa4608444d2c9ea7bbfadf19b615b51585c63ae29fe2934",
       "releaseScope": "Tagged baseline Week/Peek; stable transcript and film contain the private unreleased two-line UI fix."
+    },
+    {
+      "file": "audio-intent/tone-0.wav",
+      "product": "PanelForge audio intent and ordered queue",
+      "captured": "2026-10-15",
+      "method": "Authored deterministic WAV tones and unmodified retained source; private actual Chromium output capture; no inference",
+      "content": "Mono PCM16 synthetic tone tone-0.wav",
+      "redactions": [],
+      "bytes": 17324,
+      "sha256": "9b0249c018b7d9019e38d4632c9cde184027df14c89e908139171932e44b9936",
+      "releaseScope": "Unmodified retained source at 93881d2; queue-only public candidate. Separate PCM correction remains private and unreleased.",
+      "durationSeconds": 0.36,
+      "sampleRate": 24000,
+      "channels": 1,
+      "sampleFormat": "PCM16 little endian",
+      "peakAmplitude": 0.035003662109375
+    },
+    {
+      "file": "audio-intent/tone-1.wav",
+      "product": "PanelForge audio intent and ordered queue",
+      "captured": "2026-10-15",
+      "method": "Authored deterministic WAV tones and unmodified retained source; private actual Chromium output capture; no inference",
+      "content": "Mono PCM16 synthetic tone tone-1.wav",
+      "redactions": [],
+      "bytes": 17324,
+      "sha256": "fad4ff00e96b084420eab227fcfd56490d6398e3f3f54ce04af4afb5a6f1a552",
+      "releaseScope": "Unmodified retained source at 93881d2; queue-only public candidate. Separate PCM correction remains private and unreleased.",
+      "durationSeconds": 0.36,
+      "sampleRate": 24000,
+      "channels": 1,
+      "sampleFormat": "PCM16 little endian",
+      "peakAmplitude": 0.035003662109375
+    },
+    {
+      "file": "audio-intent/tone-2.wav",
+      "product": "PanelForge audio intent and ordered queue",
+      "captured": "2026-10-15",
+      "method": "Authored deterministic WAV tones and unmodified retained source; private actual Chromium output capture; no inference",
+      "content": "Mono PCM16 synthetic tone tone-2.wav",
+      "redactions": [],
+      "bytes": 17324,
+      "sha256": "639937ea0d7561a7dfcc5329e64e5613e57f23e601772670e6322aeb31cd299d",
+      "releaseScope": "Unmodified retained source at 93881d2; queue-only public candidate. Separate PCM correction remains private and unreleased.",
+      "durationSeconds": 0.36,
+      "sampleRate": 24000,
+      "channels": 1,
+      "sampleFormat": "PCM16 little endian",
+      "peakAmplitude": 0.035003662109375
+    },
+    {
+      "file": "audio-intent/receipt.json",
+      "product": "PanelForge audio intent and ordered queue",
+      "captured": "2026-10-15",
+      "method": "Authored deterministic WAV tones and unmodified retained source; private actual Chromium output capture; no inference",
+      "content": "Concise source/scope receipt",
+      "redactions": [],
+      "bytes": 3268,
+      "sha256": "a000a7a39a5ee38fbd01ffa1d8d3afe67ef5652f2429e32e1c68a8e08d96b889",
+      "releaseScope": "Unmodified retained source at 93881d2; queue-only public candidate. Separate PCM correction remains private and unreleased."
+    },
+    {
+      "file": "audio-intent/licenses.txt",
+      "product": "PanelForge audio intent and ordered queue",
+      "captured": "2026-10-15",
+      "method": "Authored deterministic WAV tones and unmodified retained source; private actual Chromium output capture; no inference",
+      "content": "Licenses for every bundled runtime dependency",
+      "redactions": [],
+      "bytes": 5604,
+      "sha256": "736e4b7f1a670ea93727f8ebb7a33bd51fa3d494611bff44ab6c0ba59af4c915",
+      "releaseScope": "Unmodified retained source at 93881d2; queue-only public candidate. Separate PCM correction remains private and unreleased."
     }
   ]
 }

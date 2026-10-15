@@ -1,6 +1,8 @@
 ---
 import Icon from './Icon.astro';
 import WorldAttentionTask from './WorldAttentionTask.astro';
+import WorldPrintshop from './WorldPrintshop.astro';
+import '../world/printshop/printshop.css';
 import { districts } from '../world/data';
 import { imageDimensions } from '../data/media';
 import '../world/world.css';
@@ -32,6 +34,7 @@ import '../world/world.css';
         <h2 tabindex="-1">{district.title}</h2>
         <p class="world-detail-intro">{district.description}</p>
         <div class="world-detail-actions">
+          {district.id === 'small-tools' && <a class="world-button world-button-solid" href="#printshop-readable" data-open-printshop>Make a print <Icon name="arrow-right" /></a>}
           {district.image && <button class="world-button world-button-solid" type="button" data-open-exhibit={district.id}>Open the exhibit <span aria-hidden="true"><Icon name="arrow-up-right" /></span></button>}
           {district.id === 'studio' && <a class="world-button" href="/labs/branches/">Try the Branch Lab <span aria-hidden="true"><Icon name="arrow-up-right" /></span></a>}
           {district.id === 'small-tools' && <a class="world-button" href="/labs/studio/">Make a graphic <span aria-hidden="true"><Icon name="arrow-up-right" /></span></a>}
@@ -54,14 +57,16 @@ import '../world/world.css';
       </article>)}
     </aside>
     <WorldAttentionTask />
+    <WorldPrintshop />
   </div>
   <nav class="world-district-nav" aria-label="Choose a district">{districts.map((district) => <button type="button" data-select-district={district.id} data-world-control disabled aria-pressed="false" style={`--district-color:${district.color}`}><span class="world-nav-number">{district.number}</span><strong>{district.name}</strong><span class="world-nav-label">{district.label}</span><span class="world-nav-arrow" aria-hidden="true"><Icon name="arrow-up-right" /></span></button>)}</nav>
   <div class="world-caption"><p>A designed map of personal projects, with actual product screenshots and recordings.</p><span>Choose a place. See what happens there.</span></div>
   <p class="world-live-region" data-world-announcement aria-live="polite" aria-atomic="true"></p>
   <WorldAttentionTask fallback />
+  <WorldPrintshop fallback />
   <div class="world-directory" id="districts">
     <div class="world-directory-heading"><p class="eyebrow">The readable map</p><h2>Six places.<br /><em>One connected practice.</em></h2><p>The world is a way in. Each district has a plain-language story and a route to the work behind it.</p></div>
-    <div class="world-directory-grid">{districts.map((district) => <article class="world-directory-card" style={`--district-color:${district.color}`}><p class="world-directory-number">{district.number} / {district.name}</p><h3>{district.title}</h3><p>{district.description}</p><details><summary>Look inside this district <span aria-hidden="true"><Icon name="plus" /></span></summary><ul>{district.exhibits.map((exhibit) => <li><strong>{exhibit.href ? <a href={exhibit.href}>{exhibit.title} <Icon name="arrow-up-right" /></a> : exhibit.title}</strong><p>{exhibit.description}</p></li>)}</ul><p class="world-model-caption">{district.architecture}</p></details><a class="world-case-link" href={district.href}>{district.link}<span aria-hidden="true"><Icon name="arrow-up-right" /></span></a></article>)}</div>
+    <div class="world-directory-grid">{districts.map((district) => <article class="world-directory-card" style={`--district-color:${district.color}`}><p class="world-directory-number">{district.number} / {district.name}</p><h3>{district.title}</h3><p>{district.description}</p>{district.id === 'small-tools' && <a class="world-button" href="#printshop-readable" data-open-printshop>Make a print <Icon name="arrow-right" /></a>}<details><summary>Look inside this district <span aria-hidden="true"><Icon name="plus" /></span></summary><ul>{district.exhibits.map((exhibit) => <li><strong>{exhibit.href ? <a href={exhibit.href}>{exhibit.title} <Icon name="arrow-up-right" /></a> : exhibit.title}</strong><p>{exhibit.description}</p></li>)}</ul><p class="world-model-caption">{district.architecture}</p></details><a class="world-case-link" href={district.href}>{district.link}<span aria-hidden="true"><Icon name="arrow-up-right" /></span></a></article>)}</div>
   </div>
   <noscript><style>.world-stage,.world-toolbar-actions button,.world-district-nav{display:none!important}.world-directory{padding-top:32px}</style></noscript>
 </section>
@@ -71,12 +76,21 @@ import '../world/world.css';
   if (worldRoot) {
     let dispose: (() => void) | undefined;
     let loading = false;
+    let intended: 'attention' | 'printshop' | null = null;
+    let host: import('../world/experience-host').ExperienceHost | undefined;
+    worldRoot.addEventListener('click', event => {
+      if (host) return;
+      const target = (event.target as Element).closest('[data-open-printshop],[data-open-task]');
+      if (!target) return;
+      event.preventDefault(); intended = target.hasAttribute('data-open-printshop') ? 'printshop' : 'attention'; void start();
+    });
     const start = async () => {
       if (loading) return;
       loading = true;
       try {
-        const { mountAttentionTask } = await import('../world/attention-task/controller');
-        const task = mountAttentionTask(worldRoot);
+        const { mountExperienceHost } = await import('../world/experience-host');
+        const task = mountExperienceHost(worldRoot); host = task;
+        if (intended) { void task.open(intended); intended = null; }
         dispose = () => task.dispose();
         const { mountWorld } = await import('../world/controller');
         const disposeWorld = mountWorld(worldRoot, task);

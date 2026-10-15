@@ -51,6 +51,39 @@ export interface BakeShaderOptions {
   signal?: AbortSignal
 }
 
+/** One original preset frame, copied losslessly and owned by the caller. */
+export async function sampleShaderBackground(preset: ShaderBackgroundPreset, opts: { size?: number; signal?: AbortSignal } = {}): Promise<DecodedBackground> {
+  if (opts.signal?.aborted) throw new DOMException('Cancelled', 'AbortError')
+  const size = Math.max(1, Math.round(positive(opts.size, 512)))
+  const stage = await ShaderStage.create(size, preset, opts.signal)
+  const cancel = () => stage.dispose(true)
+  opts.signal?.addEventListener('abort', cancel, { once: true })
+  let image: ImageBitmap | HTMLCanvasElement | undefined
+  try {
+    if (opts.signal?.aborted) throw new DOMException('Cancelled', 'AbortError')
+    stage.drawAt(preset, preset.frame)
+    image = await stage.capture()
+    if (opts.signal?.aborted) { close(image); image = undefined; throw new DOMException('Cancelled', 'AbortError') }
+    return { id: `shader:${preset.id}:still`, width: size, height: size, frames: [{ image, delayMs: 4000 }], totalMs: 4000, animated: false }
+  } finally { opts.signal?.removeEventListener('abort', cancel); stage.dispose(true) }
+}
+
+/** Shared still fallback for browsers without a working shader context. */
+export function fallbackBackground(preset: ShaderBackgroundPreset, size = 512): DecodedBackground {
+  const image = document.createElement('canvas')
+  image.width = image.height = size
+  const ctx = image.getContext('2d')
+  if (!ctx) throw new Error('This browser cannot open a drawing canvas.')
+  const gradient = ctx.createLinearGradient(0, 0, size, size)
+  gradient.addColorStop(0, preset.colorBack); gradient.addColorStop(1, preset.colorTint)
+  ctx.fillStyle = gradient; ctx.fillRect(0, 0, size, size)
+  return { id: preset.id, width: size, height: size, frames: [{ image, delayMs: 4000 }], totalMs: 4000, animated: false }
+}
+
+export function releaseBackground(background: DecodedBackground | null): void {
+  background?.frames.forEach(frame => close(frame.image))
+}
+
 /**
  * How one loop is baked: the `setFrame()` values for every raw frame, and how many of those are
  * the overlap that gets cross-faded away. Pure, so the frame maths is testable without WebGL.
@@ -183,6 +216,7 @@ async function closeLoop(
 
 /** One offscreen WebGL2 canvas plus the 2D surface frames are read back through. */
 class ShaderStage {
+  private disposed = false
   private constructor(
     private readonly host: HTMLDivElement,
     private readonly mount: ShaderMount,
@@ -197,12 +231,14 @@ class ShaderStage {
    * up once, from whatever it was constructed with, so a key missing here can never be set later
    * and silently keeps WebGL's default of 0.
    */
-  static async create(size: number, preset: ShaderBackgroundPreset): Promise<ShaderStage> {
+  static async create(size: number, preset: ShaderBackgroundPreset, signal?: AbortSignal): Promise<ShaderStage> {
+    if (signal?.aborted) throw new DOMException('Cancelled', 'AbortError')
     // `u_image` only matters when masking an uploaded logo, but the mount still needs a loaded
     // element for the sampler: handed the bare data URI it warns and leaves the unit unbound.
     const mask = new Image()
     mask.src = emptyPixel
     await mask.decode()
+    if (signal?.aborted) throw new DOMException('Cancelled', 'AbortError')
 
     // Laid out, so the mount's observers see a real box, but far off-screen and inert.
     const host = document.createElement('div')
@@ -225,6 +261,7 @@ class ShaderStage {
         ['u_image'],
       )
     } catch (cause) {
+      host.querySelector('canvas')?.getContext('webgl2')?.getExtension('WEBGL_lose_context')?.loseContext()
       host.remove()
       throw new ShaderUnsupportedError(
         cause instanceof Error && cause.message ? cause.message : undefined,
@@ -242,9 +279,9 @@ class ShaderStage {
     }
 
     try {
-      await waitForSize(mount, size)
+      await waitForSize(mount, size, signal)
       return new ShaderStage(host, mount, readback, ctx, mask, size)
-    } catch(error) { mount.dispose(); host.remove(); throw error }
+    } catch(error) { const context = mount.canvasElement.getContext('webgl2'); mount.dispose(); host.remove(); context?.getExtension('WEBGL_lose_context')?.loseContext(); throw error }
   }
 
   /** Renders one frame. `setFrame()` draws synchronously, and with speed 0 it never drifts. */
@@ -267,9 +304,14 @@ class ShaderStage {
     return this.readback.toDataURL('image/jpeg', 0.82)
   }
 
-  dispose(): void {
+  dispose(releaseContext = false): void {
+    if (this.disposed) return
+    this.disposed = true
+    const context = releaseContext ? this.mount.canvasElement.getContext('webgl2') : null
     this.mount.dispose()
     this.host.remove()
+    this.readback.width = this.readback.height = 0
+    context?.getExtension('WEBGL_lose_context')?.loseContext()
   }
 }
 
@@ -328,11 +370,12 @@ function uniformsFor(mask: HTMLImageElement, preset: ShaderBackgroundPreset) {
  * returns: it starts at the 300x150 canvas default and only then snaps to the host box. Capturing
  * before that bakes a stretched frame.
  */
-async function waitForSize(mount: ShaderMount, size: number): Promise<void> {
+async function waitForSize(mount: ShaderMount, size: number, signal?: AbortSignal): Promise<void> {
   const deadline = Date.now() + SIZING_TIMEOUT_MS
   while (mount.canvasElement.width !== size || mount.canvasElement.height !== size) {
+    if (signal?.aborted) throw new DOMException('Cancelled', 'AbortError')
     if (Date.now() > deadline) throw new ShaderUnsupportedError('The animated background took too long to initialize. A still is available.')
-    await nextFrame()
+    await nextFrame(signal)
   }
 }
 
@@ -351,17 +394,25 @@ function snapshot(
 }
 
 function close(image: ImageBitmap | HTMLCanvasElement | undefined): void {
-  if (image && 'close' in image && typeof image.close === 'function') image.close()
+  if (!image) return
+  if (image instanceof HTMLCanvasElement) image.width = image.height = 0
+  else image.close()
 }
 
 function positive(value: number | undefined, fallback: number): number {
   return typeof value === 'number' && Number.isFinite(value) && value > 0 ? value : fallback
 }
 
-function nextFrame(): Promise<void> {
-  return new Promise((resolve) => {
-    if (typeof requestAnimationFrame === 'function') requestAnimationFrame(() => resolve())
-    else setTimeout(resolve, 16)
+function nextFrame(signal?: AbortSignal): Promise<void> {
+  return new Promise((resolve, reject) => {
+    let frame = 0, timer: ReturnType<typeof setTimeout> | undefined
+    const clear = () => { if (frame) cancelAnimationFrame(frame); if (timer) clearTimeout(timer); signal?.removeEventListener('abort', abort) }
+    const done = () => { clear(); resolve() }
+    const abort = () => { clear(); reject(new DOMException('Cancelled', 'AbortError')) }
+    if (signal?.aborted) { abort(); return }
+    signal?.addEventListener('abort', abort, { once: true })
+    if (typeof requestAnimationFrame === 'function') frame = requestAnimationFrame(done)
+    else timer = setTimeout(done, 16)
   })
 }
 

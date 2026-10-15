@@ -1,0 +1,782 @@
+import { ref } from 'vue';
+import { Howl, getPcmContext, isAudioArmed } from '@/lib/audioRuntime';
+import { logTelemetry } from '@/lib/telemetry';
+
+/**
+ * Queue-based audio player for streaming TTS audio chunks.
+ *
+ * Supports two playback modes:
+ *
+ * 1. **Queue mode** (Groq/OpenAI): Each chunk is an independently-synthesized audio file.
+ *    Converted to blob URLs and played sequentially via Howler.js.
+ *
+ * 2. **Stream mode** (ElevenLabs/Qwen/Fish): Chunks are raw PCM or standalone PCM16 WAV
+ *    files. Each is scheduled as an AudioBuffer on a running playhead via the Web Audio
+ *    API — gapless, and (unlike MSE+MP3) playable on Safari and iOS.
+ *
+ * Audio plays only after `armAudio()` has run in an audio gesture on this page.
+ * Before that, synthesis state and incoming chunks are dropped: a TTS event from
+ * a stream or broadcast must never be what activates the device's audio session.
+ */
+export function useWebAudioPlayer(options?: { onFirstPlay?: () => void; onGap?: () => void }) {
+  const isPlaying = ref(false);
+  const isSynthesizing = ref(false);
+
+  // Mutable callback reference — allows setOnFirstPlay() to update after construction
+  let onFirstPlayCallback = options?.onFirstPlay;
+  // Fires when the gap watchdog trips: playback has genuinely stalled (chunks buffered
+  // but the head chunk never arrived for 10s). This is the ONLY real "something's wrong"
+  // moment worth an audible cue — a backend retry that self-heals is not.
+  let onGapCallback = options?.onGap;
+
+  // --- Queue mode state (Groq/OpenAI) ---
+  // Howls are created lazily at play time — only ONE <audio> element exists at once.
+  // Eagerly creating Howls per chunk caused iOS Safari to throttle/refuse concurrent loads.
+  let currentHowl: Howl | null = null;
+  let currentBlobUrl: string | null = null;
+  const queue: Array<{ blobUrl: string; format: string; isExternalUrl?: boolean }> = [];
+  let isPlayingNext = false;
+  let hasPlayedFirst = false;
+  let currentIsExternalUrl = false;
+
+  // --- Ordered chunk buffering (for WebSocket TTS where delivery may be out-of-order) ---
+  let expectedNextIndex = 0;
+  const chunkBuffer = new Map<number, { url: string; format: string; isFinal: boolean }>();
+
+  // Gap-skip watchdog: if expectedNextIndex hasn't advanced for 10s while higher chunks
+  // are buffered, skip the missing chunk(s) and flush from the lowest buffered index.
+  let gapWatchdogTimer: ReturnType<typeof setTimeout> | null = null;
+
+  function clearGapWatchdog(): void {
+    if (gapWatchdogTimer) {
+      clearTimeout(gapWatchdogTimer);
+      gapWatchdogTimer = null;
+    }
+  }
+
+  function startGapWatchdog(): void {
+    if (gapWatchdogTimer) return; // Already running
+    gapWatchdogTimer = setTimeout(() => {
+      gapWatchdogTimer = null;
+      if (chunkBuffer.size === 0) return;
+
+      // Find the lowest buffered index and skip to it
+      const lowestBuffered = Math.min(...chunkBuffer.keys());
+      const skippedIndices = [];
+      for (let i = expectedNextIndex; i < lowestBuffered; i++) {
+        skippedIndices.push(i);
+      }
+      console.warn(
+        `[useWebAudioPlayer] Gap watchdog: skipping chunk(s) ${skippedIndices.join(', ')}, jumping to ${lowestBuffered}`
+      );
+      logTelemetry(
+        'TTS gap watchdog: chunks skipped',
+        {
+          skipped_indices: skippedIndices,
+          jumped_to: lowestBuffered,
+          buffer_size: chunkBuffer.size,
+        },
+        'error'
+      );
+
+      // A real audible stall — surface the single sanctioned audible cue.
+      onGapCallback?.();
+
+      expectedNextIndex = lowestBuffered;
+
+      // Flush consecutive chunks from the new starting point
+      while (chunkBuffer.has(expectedNextIndex)) {
+        const chunk = chunkBuffer.get(expectedNextIndex)!;
+        chunkBuffer.delete(expectedNextIndex);
+
+        if (chunk.url) {
+          queueUrl(chunk.url, chunk.format);
+        }
+
+        if (chunk.isFinal) {
+          isSynthesizing.value = false;
+        }
+
+        expectedNextIndex++;
+      }
+
+      // If there are still buffered chunks with gaps, restart the watchdog
+      if (chunkBuffer.size > 0) {
+        startGapWatchdog();
+      }
+    }, 10000);
+  }
+
+  // --- Playback watchdog (detects missed Howler onend events) ---
+  let playbackWatchdog: ReturnType<typeof setInterval> | null = null;
+  let howlCreatedAt = 0; // timestamp of current Howl creation for grace period
+
+  function clearPlaybackWatchdog(): void {
+    if (playbackWatchdog) {
+      clearInterval(playbackWatchdog);
+      playbackWatchdog = null;
+    }
+  }
+
+  // --- Stream mode state (ElevenLabs PCM / Qwen/Fish WAV via Web Audio scheduling) ---
+  // Both providers ultimately yield mono 16-bit PCM. We schedule each chunk as an AudioBuffer
+  // on a running playhead (Web Audio API) — gapless, and works on every browser
+  // including Safari/iOS, which cannot MSE-decode MP3. The context comes from
+  // `getPcmContext()`, created and resumed by `armAudio()` inside the gesture.
+  let streamCtx: AudioContext | null = null;
+  let streamSampleRate = 24000;
+  let nextPlayTime = 0;
+  let scheduledSources: AudioBufferSourceNode[] = [];
+  let pendingScheduled = 0;
+  let streamEnded = false;
+  let streamInitialBufferSeconds = 0;
+  let streamBufferedBeforeStart = 0;
+  let streamHasStarted = false;
+  let streamPendingBuffers: AudioBuffer[] = [];
+  let streamGeneration = 0;
+  let streamUrlChain: Promise<void> = Promise.resolve();
+  let streamUsesUrls = false;
+
+  let loggedUnarmedDrop = false;
+
+  /** False (and logged once) while no audio gesture has armed this page. */
+  function acceptsAudio(): boolean {
+    if (isAudioArmed()) return true;
+    if (!loggedUnarmedDrop) {
+      loggedUnarmedDrop = true;
+      logTelemetry('TTS audio dropped: page not armed by an audio gesture', {});
+    }
+    return false;
+  }
+
+  // =========================================================================
+  // Queue mode (Groq/OpenAI) — each chunk is a complete audio file
+  // =========================================================================
+
+  /**
+   * Decode base64 audio and queue the blob URL for playback.
+   * Howls are NOT created here — only when playNext() dequeues the entry.
+   * This ensures only one <audio> element exists at a time (iOS Safari
+   * throttles/refuses concurrent audio element loads).
+   */
+  async function queueChunk(base64Audio: string, format: string): Promise<void> {
+    if (!acceptsAudio()) return;
+    try {
+      const binaryString = atob(base64Audio);
+      const bytes = new Uint8Array(binaryString.length);
+      for (let i = 0; i < binaryString.length; i++) {
+        bytes[i] = binaryString.charCodeAt(i);
+      }
+
+      const mimeType = getMimeType(format);
+      const blob = new Blob([bytes], { type: mimeType });
+      const blobUrl = URL.createObjectURL(blob);
+
+      queue.push({ blobUrl, format });
+
+      // Start playing if not already
+      if (!isPlayingNext) {
+        playNext();
+      }
+    } catch (e) {
+      console.warn('[useWebAudioPlayer] Failed to decode audio chunk:', e);
+      logTelemetry(
+        'TTS audio chunk decode failed',
+        {
+          format,
+          error: String(e),
+        },
+        'error'
+      );
+    }
+  }
+
+  /**
+   * Queue an external URL (e.g. S3 pre-signed) for playback.
+   * Unlike queueChunk, no base64 decoding or blob creation needed.
+   */
+  function queueUrl(url: string, format: string): void {
+    if (!acceptsAudio()) return;
+    queue.push({ blobUrl: url, format, isExternalUrl: true });
+    if (!isPlayingNext) {
+      playNext();
+    }
+  }
+
+  /**
+   * Release the current Howl's <audio> element and revoke its blob URL.
+   */
+  function cleanupCurrentHowl(): void {
+    clearPlaybackWatchdog();
+    if (currentHowl) {
+      currentHowl.unload();
+      currentHowl = null;
+    }
+    if (currentBlobUrl && !currentIsExternalUrl) {
+      URL.revokeObjectURL(currentBlobUrl);
+    }
+    currentBlobUrl = null;
+    currentIsExternalUrl = false;
+  }
+
+  function playNext(): void {
+    if (queue.length === 0) {
+      isPlayingNext = false;
+      // Only mark as not playing if synthesis is also done
+      if (!isSynthesizing.value) {
+        isPlaying.value = false;
+      }
+      return;
+    }
+
+    isPlayingNext = true;
+    isPlaying.value = true;
+
+    const entry = queue.shift()!;
+    currentBlobUrl = entry.blobUrl;
+    currentIsExternalUrl = entry.isExternalUrl ?? false;
+
+    // Create the Howl lazily — only one <audio> element at a time
+    howlCreatedAt = Date.now();
+    currentHowl = new Howl({
+      src: [entry.blobUrl],
+      format: [entry.format === 'mp3' ? 'mp3' : entry.format === 'wav' ? 'wav' : entry.format],
+      html5: true,
+      onend: () => {
+        cleanupCurrentHowl();
+        playNext();
+      },
+      onplay: () => {
+        if (!hasPlayedFirst) {
+          hasPlayedFirst = true;
+          onFirstPlayCallback?.();
+        }
+      },
+      onloaderror: (_id: number, err: unknown) => {
+        console.warn('[useWebAudioPlayer] Failed to load audio chunk:', err);
+        cleanupCurrentHowl();
+        playNext();
+      },
+      onplayerror: (_id: number, err: unknown) => {
+        console.warn('[useWebAudioPlayer] Failed to play audio chunk:', err);
+        cleanupCurrentHowl();
+        playNext();
+      },
+    });
+    currentHowl.play();
+
+    // Watchdog: detect when Howler's onend didn't fire (iOS audio interruptions,
+    // network issues with html5:true + pre-signed URLs). Poll every 1s — if the
+    // Howl reports not playing but has progressed past seek=0, the audio ended
+    // but onend was missed.
+    clearPlaybackWatchdog();
+    playbackWatchdog = setInterval(() => {
+      if (!currentHowl) {
+        clearPlaybackWatchdog();
+        return;
+      }
+      // Grace period: skip checks for 3s after Howl creation.
+      // For html5:true with remote URLs, there's a brief window after play()
+      // where buffering hasn't started but seek() could be non-zero.
+      if (Date.now() - howlCreatedAt < 3000) {
+        return;
+      }
+      const playing = currentHowl.playing();
+      const seek = currentHowl.seek();
+      const duration = currentHowl.duration();
+
+      // Detect finished audio: either seek progressed past 0 (normal case),
+      // or the audio loaded (duration known) but is no longer playing.
+      // The duration check catches short WAV files where seek() resets to 0
+      // after completion on some browsers.
+      if (!playing && (seek > 0 || (duration > 0 && duration < Infinity))) {
+        console.warn('[useWebAudioPlayer] Watchdog: onend missed, advancing');
+        logTelemetry('TTS playback watchdog: onend missed', { seek, duration });
+        clearPlaybackWatchdog();
+        cleanupCurrentHowl();
+        playNext();
+      }
+    }, 1000);
+  }
+
+  // =========================================================================
+  // Ordered chunk buffering (for WebSocket TTS delivery)
+  // =========================================================================
+
+  /**
+   * Queue a URL-based chunk for ordered playback.
+   * Buffers out-of-order chunks and flushes consecutive ones starting
+   * from expectedNextIndex.
+   *
+   * When `isFinal` is true, `setSynthesizing(false)` is deferred until this
+   * chunk is actually flushed to the playback queue — not when it arrives.
+   * This prevents out-of-order final chunks from prematurely clearing synthesis state.
+   */
+  function queueOrderedChunk(
+    url: string,
+    format: string,
+    chunkIndex: number,
+    isFinal = false
+  ): void {
+    if (!acceptsAudio()) return;
+    chunkBuffer.set(chunkIndex, { url, format, isFinal });
+    // Flush consecutive chunks starting from expectedNextIndex
+    let flushed = false;
+    while (chunkBuffer.has(expectedNextIndex)) {
+      const chunk = chunkBuffer.get(expectedNextIndex)!;
+      chunkBuffer.delete(expectedNextIndex);
+
+      // Sentinel chunks (empty URL, isFinal only) signal completion without audio
+      if (chunk.url) {
+        queueUrl(chunk.url, chunk.format);
+      }
+
+      // Only mark synthesis done when the FINAL chunk is flushed to the playback queue
+      if (chunk.isFinal) {
+        isSynthesizing.value = false;
+      }
+
+      expectedNextIndex++;
+      flushed = true;
+    }
+
+    if (flushed) {
+      // Progress was made — clear the watchdog
+      clearGapWatchdog();
+    }
+
+    // If chunks remain buffered but can't flush (gap exists), start the watchdog
+    if (chunkBuffer.size > 0) {
+      startGapWatchdog();
+    }
+  }
+
+  /**
+   * Skip a failed chunk and advance the ordered buffer past it.
+   * Flushes any subsequently buffered chunks that were waiting behind the gap.
+   * Call this from onTtsChunkFailed so the ordering buffer doesn't get stuck.
+   */
+  function skipOrderedChunk(chunkIndex: number, isFinal = false): void {
+    if (chunkIndex === expectedNextIndex) {
+      expectedNextIndex++;
+      // Flush consecutive chunks buffered after the skipped one
+      while (chunkBuffer.has(expectedNextIndex)) {
+        const chunk = chunkBuffer.get(expectedNextIndex)!;
+        chunkBuffer.delete(expectedNextIndex);
+        if (chunk.url) {
+          queueUrl(chunk.url, chunk.format);
+        }
+        if (chunk.isFinal) {
+          isSynthesizing.value = false;
+        }
+        expectedNextIndex++;
+      }
+    } else if (chunkIndex > expectedNextIndex) {
+      // Future chunk failed — buffer it as empty so ordering can advance through it
+      chunkBuffer.set(chunkIndex, { url: '', format: '', isFinal });
+    }
+
+    if (isFinal) {
+      isSynthesizing.value = false;
+    }
+
+    // If nothing is queued or playing and synthesis just ended, clear playing state
+    if (!isSynthesizing.value && !isPlayingNext && queue.length === 0 && !isStreamMode()) {
+      isPlaying.value = false;
+    }
+
+    if (chunkBuffer.size > 0) {
+      startGapWatchdog();
+    } else {
+      clearGapWatchdog();
+    }
+  }
+
+  /**
+   * Reset ordered chunk state (call when starting a new TTS stream).
+   */
+  function resetChunkOrder(): void {
+    expectedNextIndex = 0;
+    chunkBuffer.clear();
+    clearGapWatchdog();
+    hasPlayedFirst = false;
+  }
+
+  // =========================================================================
+  // Stream mode (ElevenLabs PCM / Qwen/Fish WAV) — scheduled via the Web Audio API
+  // =========================================================================
+
+  /**
+   * Begin a PCM stream. Subsequent appendStreamData() calls schedule contiguous
+   * AudioBuffers on a running playhead for gapless playback.
+   *
+   * @param format - chunk format (expected 'pcm')
+   * @param sampleRate - PCM sample rate in Hz (defaults to 24000)
+   */
+  function startStream(format: string, sampleRate = 24000, initialBufferSeconds = 0): void {
+    // Clean up any previous stream
+    cleanupStream();
+    if (!acceptsAudio()) return;
+
+    streamEnded = false;
+    streamInitialBufferSeconds = Math.max(0, initialBufferSeconds);
+    streamBufferedBeforeStart = 0;
+    streamHasStarted = streamInitialBufferSeconds === 0;
+    streamPendingBuffers = [];
+    isPlaying.value = streamHasStarted;
+    streamSampleRate = sampleRate || 24000;
+
+    streamCtx = getPcmContext();
+
+    if (streamCtx) {
+      if (streamCtx.state === 'suspended') {
+        streamCtx.resume().catch(() => {
+          /* best-effort — armAudio() resumes it inside the gesture */
+        });
+      }
+      nextPlayTime = streamCtx.currentTime + (streamInitialBufferSeconds > 0 ? 0.03 : 0);
+    }
+  }
+
+  /**
+   * Decode a base64 PCM chunk (mono, 16-bit signed little-endian) and schedule it
+   * for gapless playback immediately after the previously-scheduled audio.
+   */
+  function appendStreamData(base64Audio: string, sampleRate?: number): void {
+    if (!streamCtx) {
+      // startStream() wasn't called (or no Web Audio) — nothing to schedule.
+      return;
+    }
+
+    const rate = sampleRate || streamSampleRate;
+
+    const binaryString = atob(base64Audio);
+    const len = binaryString.length;
+    const bytes = new Uint8Array(len);
+    for (let i = 0; i < len; i++) {
+      bytes[i] = binaryString.charCodeAt(i);
+    }
+
+    // Interpret bytes as 16-bit signed PCM, mono. Floor to whole samples in case
+    // a chunk boundary ever lands on an odd byte (it shouldn't — chunks are even).
+    appendPcmBytes(bytes, rate);
+  }
+
+  function appendPcmBytes(bytes: Uint8Array, rate: number): void {
+    if (!streamCtx) return;
+
+    // Interpret bytes as 16-bit signed PCM, mono. Floor to whole samples in case
+    // a chunk boundary ever lands on an odd byte (it shouldn't — chunks are even).
+    const sampleCount = bytes.length >> 1;
+    if (sampleCount === 0) return;
+
+    const audioBuffer = streamCtx.createBuffer(1, sampleCount, rate);
+    const channel = audioBuffer.getChannelData(0);
+    const view = new DataView(bytes.buffer, bytes.byteOffset, sampleCount * 2);
+    for (let i = 0; i < sampleCount; i++) {
+      // Int16 → Float32 in [-1, 1)
+      channel[i] = view.getInt16(i * 2, true) / 32768;
+    }
+
+    if (!streamHasStarted) {
+      streamPendingBuffers.push(audioBuffer);
+      streamBufferedBeforeStart += audioBuffer.duration;
+      releaseBufferedStreamIfReady();
+      return;
+    }
+
+    if (nextPlayTime < streamCtx.currentTime - 0.02 && pendingScheduled === 0 && !streamEnded) {
+      logTelemetry(
+        'TTS file stream underflow; rebuffering',
+        { sample_rate: rate, initial_buffer_seconds: streamInitialBufferSeconds },
+        'error'
+      );
+      streamHasStarted = false;
+      isPlaying.value = false;
+      streamPendingBuffers = [audioBuffer];
+      streamBufferedBeforeStart = audioBuffer.duration;
+      releaseBufferedStreamIfReady();
+      return;
+    }
+
+    scheduleStreamBuffer(audioBuffer);
+  }
+
+  function releaseBufferedStreamIfReady(): void {
+    if (!streamCtx || streamHasStarted || streamPendingBuffers.length === 0) return;
+    if (streamBufferedBeforeStart + 0.001 < streamInitialBufferSeconds && !streamEnded) return;
+
+    streamHasStarted = true;
+    isPlaying.value = true;
+    nextPlayTime = Math.max(nextPlayTime, streamCtx.currentTime + 0.03);
+    const pending = streamPendingBuffers;
+    streamPendingBuffers = [];
+    streamBufferedBeforeStart = 0;
+    for (const queuedBuffer of pending) scheduleStreamBuffer(queuedBuffer);
+  }
+
+  function scheduleStreamBuffer(audioBuffer: AudioBuffer): void {
+    if (!streamCtx) return;
+    const source = streamCtx.createBufferSource();
+    source.buffer = audioBuffer;
+    source.connect(streamCtx.destination);
+
+    // Never schedule in the past — if the playhead overran (underflow), catch up.
+    if (nextPlayTime < streamCtx.currentTime) {
+      nextPlayTime = streamCtx.currentTime + 0.03;
+    }
+
+    pendingScheduled++;
+    scheduledSources.push(source);
+    source.onended = () => {
+      pendingScheduled--;
+      scheduledSources = scheduledSources.filter((s) => s !== source);
+      maybeFinishStream();
+    };
+
+    source.start(nextPlayTime);
+    nextPlayTime += audioBuffer.duration;
+
+    if (!hasPlayedFirst) {
+      hasPlayedFirst = true;
+      onFirstPlayCallback?.();
+    }
+  }
+
+  /** Fetch a standalone PCM16 WAV and append its data section to stream mode. */
+  function appendStreamUrl(url: string, sampleRate?: number): Promise<void> {
+    const generation = streamGeneration;
+    streamEnded = false;
+    streamUsesUrls = true;
+    streamUrlChain = streamUrlChain
+      .then(async () => {
+        if (generation !== streamGeneration || !streamCtx) return;
+
+        // Keep at most roughly two decoded Qwen chunks scheduled ahead. URLs stay
+        // cheap in the promise chain until the Web Audio playhead has capacity.
+        while (streamCtx && nextPlayTime - streamCtx.currentTime > 3.1) {
+          await new Promise((resolve) => setTimeout(resolve, 100));
+          if (generation !== streamGeneration) return;
+        }
+
+        const response = await fetch(url);
+        if (!response.ok) throw new Error(`Audio chunk fetch failed with HTTP ${response.status}`);
+        const wav = new Uint8Array(await response.arrayBuffer());
+        const parsed = extractWavPcm(wav);
+        appendPcmBytes(parsed.pcm, sampleRate || parsed.sampleRate || streamSampleRate);
+      })
+      .catch((error) => {
+        if (generation !== streamGeneration) return;
+        logTelemetry('TTS WAV stream fetch/decode failed', { url, error: String(error) }, 'error');
+      });
+
+    return streamUrlChain;
+  }
+
+  /**
+   * Signal that no more PCM chunks will arrive. Playback finishes naturally once
+   * the last scheduled buffer ends.
+   */
+  function endStream(): void {
+    if (!streamUsesUrls) {
+      finishStreamInput();
+      return;
+    }
+
+    const generation = streamGeneration;
+    void streamUrlChain.finally(() => {
+      if (generation !== streamGeneration) return;
+      finishStreamInput();
+    });
+  }
+
+  function finishStreamInput(): void {
+    streamEnded = true;
+    if (!streamHasStarted && streamPendingBuffers.length > 0) {
+      streamBufferedBeforeStart = streamInitialBufferSeconds;
+      const pending = streamPendingBuffers;
+      streamPendingBuffers = [];
+      streamHasStarted = true;
+      isPlaying.value = true;
+      if (streamCtx) nextPlayTime = Math.max(nextPlayTime, streamCtx.currentTime + 0.03);
+      for (const queuedBuffer of pending) scheduleStreamBuffer(queuedBuffer);
+    }
+    maybeFinishStream();
+  }
+
+  /**
+   * Clear isPlaying once the stream has ended, all scheduled buffers have played
+   * out, and synthesis is no longer in progress.
+   */
+  function maybeFinishStream(): void {
+    if (streamEnded && pendingScheduled <= 0 && !isSynthesizing.value) {
+      isPlaying.value = false;
+    }
+  }
+
+  function getMimeType(format: string): string {
+    switch (format) {
+      case 'mp3':
+        return 'audio/mpeg';
+      case 'opus':
+        return 'audio/webm; codecs="opus"';
+      case 'aac':
+        return 'audio/aac';
+      case 'wav':
+        return 'audio/wav';
+      default:
+        return 'audio/mpeg';
+    }
+  }
+
+  function extractWavPcm(wav: Uint8Array): { pcm: Uint8Array; sampleRate: number } {
+    if (wav.length < 44 || String.fromCharCode(...wav.subarray(0, 4)) !== 'RIFF') {
+      throw new Error('Invalid WAV chunk');
+    }
+
+    const view = new DataView(wav.buffer, wav.byteOffset, wav.byteLength);
+    const sampleRate = view.getUint32(24, true);
+    let offset = 12;
+    while (offset + 8 <= wav.length) {
+      const id = String.fromCharCode(...wav.subarray(offset, offset + 4));
+      const size = view.getUint32(offset + 4, true);
+      if (id === 'data') {
+        const start = offset + 8;
+        return { pcm: wav.subarray(start, Math.min(wav.length, start + size)), sampleRate };
+      }
+      offset += 8 + size + (size % 2);
+    }
+
+    throw new Error('WAV data chunk missing');
+  }
+
+  function cleanupStream(): void {
+    streamGeneration++;
+    for (const source of scheduledSources) {
+      try {
+        source.onended = null;
+        source.stop();
+      } catch {
+        // already stopped / never started — ignore
+      }
+    }
+    scheduledSources = [];
+    pendingScheduled = 0;
+    streamEnded = false;
+    streamInitialBufferSeconds = 0;
+    streamBufferedBeforeStart = 0;
+    streamHasStarted = false;
+    streamPendingBuffers = [];
+    streamUrlChain = Promise.resolve();
+    streamUsesUrls = false;
+    nextPlayTime = 0;
+    streamCtx = null;
+  }
+
+  // =========================================================================
+  // Shared controls
+  // =========================================================================
+
+  /**
+   * Whether PCM stream mode is active.
+   */
+  function isStreamMode(): boolean {
+    return streamCtx !== null;
+  }
+
+  /**
+   * Stop all playback and clear state (both modes).
+   */
+  function stop(): void {
+    // Queue mode cleanup
+    hasPlayedFirst = false;
+    clearPlaybackWatchdog();
+
+    if (currentHowl) {
+      currentHowl.stop();
+      currentHowl.unload();
+      currentHowl = null;
+    }
+    if (currentBlobUrl && !currentIsExternalUrl) {
+      URL.revokeObjectURL(currentBlobUrl);
+    }
+    currentBlobUrl = null;
+    currentIsExternalUrl = false;
+
+    for (const entry of queue) {
+      if (!entry.isExternalUrl) {
+        URL.revokeObjectURL(entry.blobUrl);
+      }
+    }
+    queue.length = 0;
+
+    isPlayingNext = false;
+
+    // Ordered chunk buffer cleanup (resetChunkOrder also clears the gap watchdog)
+    resetChunkOrder();
+
+    // Stream mode cleanup
+    cleanupStream();
+
+    isSynthesizing.value = false;
+    isPlaying.value = false;
+  }
+
+  /**
+   * Set whether more chunks are expected from the backend.
+   */
+  function setSynthesizing(value: boolean): void {
+    if (value && !acceptsAudio()) return;
+
+    isSynthesizing.value = value;
+
+    // If synthesis just finished and nothing is queued or playing, clear state
+    if (!value && !isPlayingNext && queue.length === 0 && !isStreamMode()) {
+      isPlaying.value = false;
+    }
+  }
+
+  function destroy(): void {
+    stop();
+  }
+
+  /**
+   * Update the onFirstPlay callback after construction.
+   * Allows persistent instances to receive timing callbacks set later.
+   */
+  function setOnFirstPlay(callback: (() => void) | undefined): void {
+    onFirstPlayCallback = callback;
+  }
+
+  /**
+   * Update the gap-stall callback after construction (persistent instances wire
+   * this from ChatProvider, where the audible cue lives).
+   */
+  function setOnGap(callback: (() => void) | undefined): void {
+    onGapCallback = callback;
+  }
+
+  return {
+    isPlaying,
+    isSynthesizing,
+    // Queue mode (Groq/OpenAI and non-progressive providers)
+    queueChunk,
+    queueUrl,
+    // Ordered chunk buffering (WebSocket TTS)
+    queueOrderedChunk,
+    skipOrderedChunk,
+    resetChunkOrder,
+    // Stream mode (ElevenLabs PCM / Qwen/Fish WAV)
+    startStream,
+    appendStreamData,
+    appendStreamUrl,
+    endStream,
+    isStreamMode,
+    // Shared
+    stop,
+    setSynthesizing,
+    setOnGap,
+    destroy,
+    setOnFirstPlay,
+  };
+}

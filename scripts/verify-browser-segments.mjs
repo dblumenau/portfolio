@@ -8,6 +8,8 @@ const groups = {
   workbench: ['workbench-lab'],
   recovery: ['recovery'],
   studio: ['studio'],
+  'studio-spacing': ['studio-spacing'],
+  printshop: ['world-printshop'],
   gateway: ['gateway'],
   branches: ['branches'],
   margin: ['margin'],
@@ -21,6 +23,7 @@ const groups = {
   transit: ['transit'],
   'code-history': ['code-history'],
   'selected-work': ['selected-work'],
+  'audio-intent': ['audio-intent'],
   'world-task': ['world-attention'],
   world: ['world', 'world-exhibit', 'world-lifecycle'],
 };
