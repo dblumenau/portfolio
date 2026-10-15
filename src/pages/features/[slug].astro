@@ -18,13 +18,73 @@ import '../../styles/features.css';
 export function getStaticPaths() { return features.map((feature) => ({ params: { slug: feature.slug }, props: { feature } })); }
 interface Props { feature: Feature; }
 const { feature } = Astro.props;
+const featureShowcases: Record<string, {
+  component?: typeof ModelPolicyShowcase;
+  primaryAction?: { href: string; label: string };
+  sourceNote?: string;
+  researchDay: string;
+  supplement?: typeof AudioIntentShowcase;
+}> = {
+  'model-policy': {
+    component: ModelPolicyShowcase,
+    primaryAction: { href: '#saved-policy-check', label: 'Inspect the saved policy check' },
+    sourceNote: 'The saved comparison is standalone execution of the unchanged tagged Python hook with synthetic JSON and fictional configuration. Empty stdout is no denial emitted, not an explicit allow decision or a child launch. The separate Metaclaude guard and installed Codex integration were not tested.',
+    researchDay: '15',
+  },
+  'steer-without-interrupt': {
+    component: RecordedSteeringShowcase,
+    primaryAction: { href: '#recorded-correction', label: 'Inspect the recorded correction' },
+    sourceNote: 'The saved correction uses one actual Claude Engine stream and a real model, with a fictional file and a private allow-once command restriction. Two model response sequences and one final SDK result are recorded. This establishes the selected engine lifecycle; PanelForge UI/database persistence and broader steering cases were not exercised.',
+    researchDay: '15',
+  },
+  'shared-engine-surface': {
+    component: EngineContractShowcase,
+    primaryAction: { href: '#saved-engine-translations', label: 'Inspect the saved translations' },
+    sourceNote: 'The saved translation exhibit uses new synthetic inputs and actual output from pinned, unchanged source. Its source receipt defines the selected fields and execution limits.',
+    researchDay: '15',
+  },
+  'workspace-hierarchy': {
+    component: WorkspaceHierarchyShowcase,
+    primaryAction: { href: '#workspace-in-motion', label: 'Watch the project move' },
+    sourceNote: 'The recorded showcase uses the actual isolated application with fictional data and an unreleased destination-dialog fix. Its proof receipt separates the actual persistence run from mocked client tests.',
+    researchDay: '15',
+  },
+  'grounded-analysis': {
+    component: GroundedAnalysisShowcase,
+    primaryAction: { href: '#analysis-in-context', label: 'Inspect the extracted statements' },
+    sourceNote: 'The recorded extraction used an authored fictional conversation, an empty catalog and one real model-analysis job. Its selected statements remain unchanged; editorial source comparisons identify a scope error that survived name validation.',
+    researchDay: '15',
+  },
+  'voice-conversation-loop': {
+    component: RecordedVoiceTurnShowcase,
+    primaryAction: { href: '#recorded-voice-turn', label: 'Inspect the recorded voice turn' },
+    sourceNote: 'The recorded turn uses actual voice components and real provider responses in an isolated wrapper, with fictional stock file-backed input and process-muted output. Its separate three-note example tests local multi-item ordering.',
+    researchDay: '15',
+    supplement: AudioIntentShowcase,
+  },
+  'find-that': {
+    component: FindThatShowcase,
+    sourceNote: 'The saved example searches one already-known review. Archive retrieval, historical source correction and independent source reread are separate evidence; no screenshot runtime test is claimed.',
+    researchDay: '15',
+  },
+  'native-tool-boundary-profiles': {
+    component: NativeToolBoundaryShowcase,
+    primaryAction: { href: '#small-example', label: 'Inspect the saved runtime check' },
+    sourceNote: 'The saved runtime checks use scripted local upstream messages and synthetic model/account fixtures. A real native shell read, same-thread app-server restart/resume, excluded patch and separate granted patch control establish the bounded behavior shown. No real model inference or Gateway authorization is exercised.',
+    researchDay: '15',
+  },
+  helm: { researchDay: '15' },
+};
+const showcase = featureShowcases[feature.slug];
+const Showcase = showcase?.component;
+const SupplementalShowcase = showcase?.supplement;
 const related = feature.related.filter((slug) => slug !== feature.slug).map(featureBySlug).filter((item): item is Feature => Boolean(item)).slice(0, 2);
 const areaUrl = `/features/?area=${feature.area}`;
 const hasGraphCapture = feature.slug === 'knowledge-graph' || feature.slug === 'graph-exploration';
 const playground = feature.presentation === 'branch' || feature.presentation === 'reference' || feature.presentation === 'policy' ? feature.presentation : feature.slug === 'browser-handoff' ? 'tabs' : null;
 const memoryAction = ['knowledge-graph', 'graph-exploration', 'graph-curation', 'grounded-analysis', 'personal-relevance'].includes(feature.slug);
 const workbenchAction = ['metacodex', 'metaclaude', 'workbench-sync'].includes(feature.slug);
-const primaryAction = feature.slug === 'model-policy' ? { href: '#saved-policy-check', label: 'Inspect the saved policy check' } : feature.slug === 'steer-without-interrupt' ? { href: '#recorded-correction', label: 'Inspect the recorded correction' } : feature.slug === 'native-tool-boundary-profiles' ? { href: '#small-example', label: 'Inspect the saved runtime check' } : feature.slug === 'grounded-analysis' ? { href: '#analysis-in-context', label: 'Inspect the extracted statements' } : feature.slug === 'workspace-hierarchy' ? { href: '#workspace-in-motion', label: 'Watch the project move' } : feature.slug === 'shared-engine-surface' ? { href: '#saved-engine-translations', label: 'Inspect the saved translations' } : feature.slug === 'voice-conversation-loop' ? { href: '#recorded-voice-turn', label: 'Inspect the recorded voice turn' } : feature.slug === 'reference-to-chat' ? { href: '/work/panelforge/#image-revision', label: 'Compare a real image revision' } : feature.slug === 'branching-workbench' ? { href: '/labs/branches/', label: 'Follow the reference and revisions' } : feature.slug === 'focus-aware-question' ? { href: '/labs/attention/', label: 'Follow the terminal-to-Mac question' } : feature.slug === 'gateway-tool-profiles' ? { href: '/labs/gateway/', label: 'Inspect the gateway test' } : feature.slug === 'graph-curation' ? { href: '/labs/curation/', label: 'Inspect the recorded edit and inverse' } : memoryAction ? { href: '/labs/memory/', label: 'Try the Memory Lab' } : workbenchAction ? { href: '/labs/workbench/', label: 'Inspect the workbench test' } : feature.slug === 'disconnect-recovery' ? { href: '/labs/recovery/', label: 'Replay the recovered answer' } : { href: '#small-example', label: playground ? 'Try the small example' : 'Inspect the small example' };
+const primaryAction = showcase?.primaryAction ?? (feature.slug === 'reference-to-chat' ? { href: '/work/panelforge/#image-revision', label: 'Compare a real image revision' } : feature.slug === 'branching-workbench' ? { href: '/labs/branches/', label: 'Follow the reference and revisions' } : feature.slug === 'focus-aware-question' ? { href: '/labs/attention/', label: 'Follow the terminal-to-Mac question' } : feature.slug === 'gateway-tool-profiles' ? { href: '/labs/gateway/', label: 'Inspect the gateway test' } : feature.slug === 'graph-curation' ? { href: '/labs/curation/', label: 'Inspect the recorded edit and inverse' } : memoryAction ? { href: '/labs/memory/', label: 'Try the Memory Lab' } : workbenchAction ? { href: '/labs/workbench/', label: 'Inspect the workbench test' } : feature.slug === 'disconnect-recovery' ? { href: '/labs/recovery/', label: 'Replay the recovered answer' } : { href: '#small-example', label: playground ? 'Try the small example' : 'Inspect the small example' });
 ---
 <BaseLayout title={`${feature.name} | Feature atlas | David Blumenau`} description={feature.intro}>
   <main id="main" class="features-page feature-page">
@@ -33,27 +93,20 @@ const primaryAction = feature.slug === 'model-policy' ? { href: '#saved-policy-c
       <div class="feature-kicker"><a href={areaUrl}>{feature.area}</a><span>{feature.name}</span><time datetime={feature.date}>{formatFeatureDate(feature.date)}</time></div>
       <div class="feature-hero-grid"><h1>{feature.title}</h1><div><p class="feature-problem-label">The problem</p><p>{feature.problem}</p><div class="feature-early-actions"><a class="exhibit-button" href={primaryAction.href}>{primaryAction.label} <span aria-hidden="true"><Icon name="arrow-up-right" /></span></a><a href="#source-notes">Evidence & history <Icon name="arrow-down" /></a></div></div></div>
     </section>
-    {feature.slug === 'model-policy' && <ModelPolicyShowcase />}
-    {feature.slug === 'steer-without-interrupt' && <RecordedSteeringShowcase />}
-    {feature.slug === 'shared-engine-surface' && <EngineContractShowcase />}
-    {feature.slug === 'workspace-hierarchy' && <WorkspaceHierarchyShowcase />}
-    {feature.slug === 'grounded-analysis' && <GroundedAnalysisShowcase />}
-    {feature.slug === 'voice-conversation-loop' && <RecordedVoiceTurnShowcase />}
-    {feature.slug === 'find-that' && <FindThatShowcase />}
-    {feature.slug === 'native-tool-boundary-profiles' && <NativeToolBoundaryShowcase />}
-    {!['model-policy', 'steer-without-interrupt', 'shared-engine-surface', 'workspace-hierarchy', 'grounded-analysis', 'voice-conversation-loop', 'find-that', 'native-tool-boundary-profiles'].includes(feature.slug) && <section class:list={['feature-exhibit', `feature-exhibit-${feature.presentation || feature.area.toLowerCase()}`]} id="small-example" aria-labelledby="exhibit-heading"><div class="wrap">
+    {Showcase && <Showcase />}
+    {!Showcase && <section class:list={['feature-exhibit', `feature-exhibit-${feature.presentation || feature.area.toLowerCase()}`]} id="small-example" aria-labelledby="exhibit-heading"><div class="wrap">
       <div class="feature-exhibit-header"><div><p class="eyebrow">An explanatory exhibit</p><h2 id="exhibit-heading">{feature.exhibit.title}</h2></div><p>{feature.exhibit.caption}</p></div>
       {playground && <FeaturePlayground kind={playground} />}
       {!playground && feature.presentation && <FeatureSpecimen kind={feature.presentation} slug={feature.slug} />}
       {!playground && !feature.presentation && <ol class="feature-object-sequence" aria-label="Illustrated feature sequence">{feature.exhibit.steps.map((item, index) => <li><span>0{index + 1}</span><div><h3>{item.name}</h3><p>{item.detail}</p></div></li>)}</ol>}
       <div class="feature-example-choices"><p class="eyebrow">Inspect the consequence</p>{feature.exhibit.choices.map((item) => <details><summary>{item.label}<span aria-hidden="true"><Icon name="plus" /></span></summary><div><h3>{item.result}</h3><p>{item.explanation}</p></div></details>)}</div>
     </div></section>}
-    {feature.slug === 'voice-conversation-loop' && <AudioIntentShowcase />}
+    {SupplementalShowcase && <SupplementalShowcase />}
     <section class="feature-consequence wrap"><p class="eyebrow">What this makes possible</p><p>{feature.intro}</p>{hasGraphCapture && <a class="text-link" href="#recorded-workflow">Watch the actual graph workflow <span aria-hidden="true"><Icon name="arrow-down" /></span></a>}</section>
     {hasGraphCapture && <section class="feature-real-media wrap" id="recorded-workflow" aria-label="Recorded knowledge graph workflow"><VideoDemo src="/media/knowledge-graph-workflow.mp4" poster="/media/knowledge-graph.webp" captions="/media/knowledge-graph-workflow.vtt" title="Focus on a project and its connections" mediaCaption="Actual PanelForge interface · public-safe project and software relationships · edited recording" description="The real graph is filtered to PanelForge and its build relationships. Selecting a project brings connected technologies into focus; zoom and fit change the view. These are extracted relationships, including historical names and aliases, rather than a verified inventory of the current architecture." /></section>}
     <section class="feature-sources wrap" id="source-notes"><p class="eyebrow">Source information sheet</p><details><summary>Evidence, implementation & history <span>{featureEvidenceLabels[feature.sources.status]}</span></summary><div class="feature-source-content">
-      <div><h3>What I checked</h3><p>{feature.sources.note}</p>{feature.sources.release && <p>Release anchor: <strong>{feature.sources.release}</strong>.</p>}<p>Research cut: {['model-policy', 'steer-without-interrupt', 'shared-engine-surface', 'voice-conversation-loop', 'helm', 'workspace-hierarchy', 'grounded-analysis', 'find-that', 'native-tool-boundary-profiles'].includes(feature.slug) ? '15' : '14'} October 2026. Source areas below are from <strong>{feature.sources.repo}</strong>. Private conversation references are retained in the research ledger and are not published here.</p><h3>Implementation decisions</h3>{feature.built.map((paragraph) => <p>{paragraph}</p>)}<h3>A path through the feature</h3><ol>{feature.use.map((item) => <li><strong>{item.title}</strong><p>{item.description}</p></li>)}</ol></div>
-      <div><h3>Source areas</h3><ul>{feature.sources.files.map((file) => <li><code>{file}</code></li>)}</ul>{feature.slug === 'model-policy' ? <p>The saved comparison is standalone execution of the unchanged tagged Python hook with synthetic JSON and fictional configuration. Empty stdout is no denial emitted, not an explicit allow decision or a child launch. The separate Metaclaude guard and installed Codex integration were not tested.</p> : feature.slug === 'steer-without-interrupt' ? <p>The saved correction uses one actual Claude Engine stream and a real model, with a fictional file and a private allow-once command restriction. Two model response sequences and one final SDK result are recorded. This establishes the selected engine lifecycle; PanelForge UI/database persistence and broader steering cases were not exercised.</p> : feature.slug === 'native-tool-boundary-profiles' ? <p>The saved runtime checks use scripted local upstream messages and synthetic model/account fixtures. A real native shell read, same-thread app-server restart/resume, excluded patch and separate granted patch control establish the bounded behavior shown. No real model inference or Gateway authorization is exercised.</p> : feature.slug === 'find-that' ? <p>The saved example searches one already-known review. Archive retrieval, historical source correction and independent source reread are separate evidence; no screenshot runtime test is claimed.</p> : feature.slug === 'voice-conversation-loop' ? <p>The recorded turn uses actual voice components and real provider responses in an isolated wrapper, with fictional stock file-backed input and process-muted output. Its separate three-note example tests local multi-item ordering.</p> : feature.slug === 'grounded-analysis' ? <p>The recorded extraction used an authored fictional conversation, an empty catalog and one real model-analysis job. Its selected statements remain unchanged; editorial source comparisons identify a scope error that survived name validation.</p> : feature.slug === 'workspace-hierarchy' ? <p>The recorded showcase uses the actual isolated application with fictional data and an unreleased destination-dialog fix. Its proof receipt separates the actual persistence run from mocked client tests.</p> : feature.slug === 'shared-engine-surface' ? <p>The saved translation exhibit uses new synthetic inputs and actual output from pinned, unchanged source. Its source receipt defines the selected fields and execution limits.</p> : <p>The small explanatory exhibit uses invented records to describe the mechanism. Separate recordings and working examples carry their own evidence notes.</p>}<h3>Recorded history</h3><p>Dates describe the researched record, rather than today’s deployment.</p><ol class="feature-evidence-history">{feature.evolution.map((item) => <li><time datetime={item.date}>{formatFeatureDate(item.date)}</time><p>{item.title}</p></li>)}</ol></div>
+      <div><h3>What I checked</h3><p>{feature.sources.note}</p>{feature.sources.release && <p>Release anchor: <strong>{feature.sources.release}</strong>.</p>}<p>Research cut: {showcase?.researchDay ?? '14'} October 2026. Source areas below are from <strong>{feature.sources.repo}</strong>. Private conversation references are retained in the research ledger and are not published here.</p><h3>Implementation decisions</h3>{feature.built.map((paragraph) => <p>{paragraph}</p>)}<h3>A path through the feature</h3><ol>{feature.use.map((item) => <li><strong>{item.title}</strong><p>{item.description}</p></li>)}</ol></div>
+      <div><h3>Source areas</h3><ul>{feature.sources.files.map((file) => <li><code>{file}</code></li>)}</ul>{showcase?.sourceNote ? <p>{showcase.sourceNote}</p> : <p>The small explanatory exhibit uses invented records to describe the mechanism. Separate recordings and working examples carry their own evidence notes.</p>}<h3>Recorded history</h3><p>Dates describe the researched record, rather than today’s deployment.</p><ol class="feature-evidence-history">{feature.evolution.map((item) => <li><time datetime={item.date}>{formatFeatureDate(item.date)}</time><p>{item.title}</p></li>)}</ol></div>
     </div></details></section>
     <section class="feature-related wrap" aria-label="Related feature stories"><p class="eyebrow">Follow a connection</p><div>{related.map((item) => <a href={`/features/${item.slug}/`}><span>{item.area} / {item.name}</span><h3>{item.title}</h3><span class="feature-related-arrow" aria-hidden="true"><Icon name="arrow-up-right" /></span></a>)}</div><a class="text-link" href={areaUrl}>All {feature.area.toLowerCase()} features <span aria-hidden="true"><Icon name="arrow-right" /></span></a></section>
   </main>
