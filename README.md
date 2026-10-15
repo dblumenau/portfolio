@@ -30,9 +30,9 @@ Create a reviewed deployment bundle with:
 npm run package:release -- /path/to/private/release-output
 ```
 
-The command repeats verification and produces a compressed static package with a SHA-256 sidecar and release metadata. It records whether the source includes uncommitted work. Reports and release bundles stay outside the served `dist/` directory.
+The release command checks retained source, runs Astro diagnostics, builds the default `dist/` and audits its routes, assets and public media. It then runs `npm run test:deployment -- --browser`: Docker checks the isolated read-only production nginx image and runs the full browser suite against that image once. Its checks include routes, redirects, 404s, headers, image permissions, video/audio ranges and captions. The test removes its own container and temporary image afterward.
 
-The release command also requires Docker and runs `npm run test:deployment`: an isolated read-only nginx container checks static routes, redirects, 404s, headers, image permissions, video ranges and captions. The test removes its own container and temporary image afterward.
+The command produces a compressed static package with a SHA-256 sidecar and release metadata, including the retained-source and production-image browser gates. It records whether the source includes uncommitted work; publish only a package from the final clean commit. Reports and release bundles stay outside the served `dist/` directory.
 
 [Publishing and rollback](docs/publishing.md) describes the Docker package and the existing Hetzner routing. [Verification and media review](docs/verification.md) describes the local release gate.
 

@@ -7,8 +7,10 @@ import { createHash } from 'node:crypto';
 const output = resolve(process.argv[2] ?? 'artifacts');
 if (process.env.PORTFOLIO_DIST_ROOT && resolve(process.env.PORTFOLIO_DIST_ROOT) !== resolve('dist')) throw new Error('Release packaging verifies the default dist directory. Unset PORTFOLIO_DIST_ROOT before packaging.');
 if (output === resolve('dist') || output.startsWith(resolve('dist') + '/')) throw new Error('Release artifacts must stay outside the web root.');
-const check = spawnSync('npm', ['run', 'verify'], { stdio: 'inherit' });
-if (check.status !== 0) process.exit(check.status ?? 1);
+for (const script of ['check:source', 'check', 'build', 'audit']) {
+  const check = spawnSync('npm', ['run', script], { stdio: 'inherit' });
+  if (check.status !== 0) process.exit(check.status ?? 1);
+}
 const deployment = spawnSync('npm', ['run', 'test:deployment', '--', '--browser'], { stdio: 'inherit' });
 if (deployment.status !== 0) process.exit(deployment.status ?? 1);
 const revision = spawnSync('git', ['rev-parse', '--short=12', 'HEAD'], { encoding: 'utf8' }).stdout.trim();
@@ -21,7 +23,7 @@ try {
   const release = join(stage, name);
   await mkdir(release);
   for (const file of ['dist', 'Dockerfile', 'docker', 'docker-compose.prod.yml', '.dockerignore', 'README.md', 'docs']) await cp(resolve(file), join(release, file), { recursive: true });
-  await writeFile(join(release, 'release.json'), JSON.stringify({ name, revision, workingTree: dirty, builtAt: date, node: process.version, verified: ['astro-check', 'production-build', 'static-audit', 'playwright', 'docker-smoke'] }, null, 2) + '\n');
+  await writeFile(join(release, 'release.json'), JSON.stringify({ name, revision, workingTree: dirty, builtAt: date, node: process.version, verified: ['retained-source', 'astro-check', 'production-build', 'static-audit', 'playwright', 'docker-smoke'] }, null, 2) + '\n');
   const archive = join(output, `${name}.tar.gz`);
   const tar = spawnSync('tar', ['-czf', archive, '-C', stage, name], { stdio: 'inherit' });
   if (tar.status !== 0) throw new Error('Release archive failed.');
