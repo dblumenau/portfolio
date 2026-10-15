@@ -1,4 +1,5 @@
 ---
+import ObserverScreenshotShowcase from '../../components/ObserverScreenshotShowcase.astro';
 import BrowserHandoffShowcase from '../../components/BrowserHandoffShowcase.astro';
 import MaintainedProfileShowcase from '../../components/MaintainedProfileShowcase.astro';
 import ModelPolicyShowcase from '../../components/ModelPolicyShowcase.astro';
@@ -81,7 +82,12 @@ const featureShowcases: Record<string, {
     sourceNote: 'The saved check uses the unchanged ownership hook, genuine extension action popup and actual bridge with two same-URL fixture tabs. Synthetic tool events, empty fleet and terminal metadata, and a fake local app-server isolate the request. One turn/start addresses the selected owner; no agent read the page or replied.',
     researchDay: '15',
   },
-  'observer-screenshots': { researchDay: '15' },
+  'observer-screenshots': {
+    component: ObserverScreenshotShowcase,
+    primaryAction: { href: '#saved-observer-view', label: 'Inspect the saved observer view' },
+    sourceNote: 'The 15 October check used the original proxy/helper, a real standalone MCP click and the actual PanelForge viewer. The client action response remained byte-identical while the human card fetched the separate screenshot. The fictional page, saved rows and local object-storage fixtures are disclosed; no model ran or real R2 service was tested.',
+    researchDay: '15',
+  },
   'maintained-profile': {
     component: MaintainedProfileShowcase,
     primaryAction: { href: '#saved-profile-revisions', label: 'Inspect a saved revision' },

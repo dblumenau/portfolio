@@ -1,9 +1,12 @@
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
+import { createHash } from 'node:crypto';
+import { readFileSync } from 'node:fs';
 import { features } from '../../src/data/features';
 
 const recordedExhibitMarkers: Record<string, string> = {
   'browser-handoff': 'data-browser-handoff',
+  'observer-screenshots': 'data-observer-showcase',
   'model-policy': 'data-model-policy-record',
   'steer-without-interrupt': 'data-recorded-steering',
   'native-tool-boundary-profiles': 'data-native-boundary',
@@ -284,5 +287,73 @@ for (const width of [768, 1440]) {
       const result = await new AxeBuilder({ page }).analyze();
       expect(result.violations.map((violation) => violation.id), slug).toEqual([]);
     }
+  });
+}
+
+
+test('the saved observer separates unchanged tool output from the human image', async ({ page, request }) => {
+  await page.goto('/features/observer-screenshots/');
+  await page.getByRole('link', { name: 'Inspect the saved observer view', exact: true }).click();
+  await expect(page).toHaveURL(/#saved-observer-view$/);
+  const exhibit = page.locator('[data-observer-showcase]');
+  await expect(exhibit.locator('[data-observer-client] blockquote')).toHaveText('Successfully clicked on the element');
+  await expect(exhibit.locator('[data-observer-client]')).toContainText('No observer image or reference was added');
+  await expect(exhibit.locator('[data-observer-human]')).toContainText('1024 × 768');
+  await expect(exhibit.locator('[data-observer-human]')).toContainText('Ready');
+  await expect(exhibit.locator('.observer-scope')).toContainText('fictional local page and saved conversation');
+  await expect(exhibit.locator('.observer-scope')).toContainText('local test service');
+  await expect(exhibit.locator('.observer-scope')).toContainText('No model ran');
+  await expect(exhibit.locator('video,audio,button,input,textarea,select,canvas,iframe')).toHaveCount(0);
+  await expect(page.locator('.feature-example-choices,.feature-object-sequence')).toHaveCount(0);
+  const image = await request.get('/media/observer-screenshot/observer.webp');
+  const bytes = await image.body();
+  expect(bytes.length).toBe(11426);
+  expect(createHash('sha256').update(bytes).digest('hex')).toBe('80ed2ecad78ff4fcdbc8bff5bcf316f93e3cc699ba529b3d9a1e8778d7e28e1f');
+  expect(bytes.equals(readFileSync(new URL('../../public/media/observer-screenshot/observer.webp', import.meta.url)))).toBe(true);
+  const receipt = await request.get('/media/observer-screenshot/receipt.json');
+  const saved = await receipt.json();
+  expect(saved.checks).toMatchObject({ observed_action_count: 1, original_action_response_forwarded_unchanged: true, observer_response_hidden: true, fake_object_put_count: 1, actual_borg_stash_reader: true, model_inference: false, production_rows: false, external_upload: false });
+  expect(saved.hashes.originalActionResponseSha256).toBe(saved.hashes.forwardedActionResponseSha256);
+  expect(saved.hashes.webpSha256).toBe('80ed2ecad78ff4fcdbc8bff5bcf316f93e3cc699ba529b3d9a1e8778d7e28e1f');
+});
+
+test('the observer result, original image link and method work without scripts on a phone', async ({ browser, baseURL }, info) => {
+  const context = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, deviceScaleFactor: 3 });
+  const page = await context.newPage();
+  await page.goto(`${baseURL}/features/observer-screenshots/`);
+  const method = page.locator('[data-observer-method]');
+  await method.locator('summary').focus(); await page.keyboard.press('Enter');
+  await expect(method).toContainText('one observed click and one upload');
+  await expect(method).toContainText('authored fixture metadata');
+  await expect(method).toContainText('not a model-input comparison during inference');
+  await page.locator('.feature-sources summary').click();
+  await expect(page.locator('.feature-sources')).toContainText('Research cut: 15 October 2026');
+  await expect(page.locator('.feature-sources time[datetime="2026-10-10"]')).toHaveCount(2);
+  await expect(page.locator('.feature-sources time[datetime="2026-10-15"]')).toHaveCount(1);
+  await page.getByRole('link', { name: 'Open the actual observer image', exact: true }).click();
+  await expect(page).toHaveURL(/\/media\/observer-screenshot\/observer.webp$/);
+  await expect(page.locator('img')).toHaveJSProperty('naturalWidth', 1024);
+  await expect(page.locator('img')).toHaveJSProperty('naturalHeight', 768);
+  await page.screenshot({ path: info.outputPath('observer-original-nojs-phone.png') });
+  await context.close();
+});
+
+for (const width of [390, 1024, 1440]) {
+  test(`the recorded observer view fits ${width}px with static accessible content`, async ({ browser, baseURL }, info) => {
+    const context = await browser.newContext({ viewport: { width, height: 900 }, ...(width === 390 ? { isMobile: true, hasTouch: true, deviceScaleFactor: 3 } : {}) });
+    const page = await context.newPage(); const external: string[] = [], mutations: string[] = [], errors: string[] = [], serviceCalls: string[] = [];
+    page.on('request', request => { const url = new URL(request.url()); if (url.origin !== new URL(String(baseURL)).origin) external.push(request.url()); if (request.method() !== 'GET') mutations.push(request.method()); if (url.pathname.startsWith('/api/') || /\.mp4$/.test(url.pathname)) serviceCalls.push(url.pathname); });
+    page.on('pageerror', error => errors.push(error.message));
+    await page.goto(`${baseURL}/features/observer-screenshots/`);
+    const exhibit = page.locator('[data-observer-showcase]'); const image = exhibit.locator('img');
+    await image.scrollIntoViewIfNeeded(); await expect(image).toHaveJSProperty('naturalWidth', 420);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    const bounds = await image.boundingBox(); expect(bounds!.width).toBeGreaterThanOrEqual(width === 390 ? 340 : 390); expect(bounds!.x).toBeGreaterThanOrEqual(0); expect(bounds!.x + bounds!.width).toBeLessThanOrEqual(width);
+    await page.screenshot({ path: info.outputPath(`observer-${width}-card.png`) });
+    await exhibit.locator('[data-observer-client]').scrollIntoViewIfNeeded(); await page.screenshot({ path: info.outputPath(`observer-${width}-outputs.png`) });
+    await exhibit.locator('summary').click(); await expect(exhibit.locator('[data-observer-method]')).toContainText('No Claude or Codex CLI');
+    const axe = await new AxeBuilder({ page }).analyze(); expect(axe.violations.map(item => `${item.id}: ${item.description}`)).toEqual([]);
+    expect(external).toEqual([]); expect(mutations).toEqual([]); expect(serviceCalls).toEqual([]); expect(errors).toEqual([]);
+    await context.close();
   });
 }

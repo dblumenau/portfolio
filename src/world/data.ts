@@ -111,6 +111,7 @@ export const districts: WorldDistrict[] = [
       { title: 'metacodex: portable configuration', description: 'Base configuration, local overlays and a doctor command let the workbench travel without copying a logged-in session.', href: '/features/metacodex/' },
       { title: 'Coordinate with evidence', description: 'Bosun controls agent panes. Helm gives Claude and Codex coordinators a shared report and handoff protocol, with a reviewed learning loop.', href: '/features/helm/' },
       { title: 'Give a browser tab an owner', description: 'Two tabs can share an address and belong to different tasks. Follow a recorded handoff to the selected owner.', href: '/features/browser-handoff/' },
+      { title: 'See what the browser did', description: 'A separate screenshot gives the person reviewing a tool call a view of the page. Inspect the actual saved image.', href: '/features/observer-screenshots/' },
     ],
     href: '/work/agent-workbench/', link: 'Inside the agent workbench',
     image: '/media/workbench/terminal-replay.webp',

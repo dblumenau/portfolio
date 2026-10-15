@@ -18,6 +18,7 @@ const reviewedEvidenceMedia = [
   'listening-plan/receipt.json',
   'steering/receipt.json',
   'model-policy/receipt.json',
+  'observer-screenshot/tool-card.png', 'observer-screenshot/observer.webp', 'observer-screenshot/receipt.json',
   'browser-handoff/execution.mp4', 'browser-handoff/execution.vtt',
   'browser-handoff/sent.png', 'browser-handoff/context.webp', 'browser-handoff/receipt.json',
   'native-tool-boundary/receipt.json',

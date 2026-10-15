@@ -1,0 +1,7 @@
+# Observer screenshot selection
+
+The main proof uses one real standalone MCP click and the unchanged Metaclaude observer proxy/helper. Its original client response remains byte-identical, while a separate image is served to the actual PanelForge tool card and viewer. The fictional page, saved conversation/tool row and local storage substitutions are explicit. No model ran, and the proxy added neither its image nor an image reference to the action result.
+
+The public selection contains only `tool-card.png`, the exact original `observer.webp`, and a byte-preserving safe receipt. The card detail is decoded RGB from frame 60 (3.00 seconds) of the later clean saved-observation review, cropped at x398 y207 width420 height364. The film includes 87 pixels of native browser chrome above its page content; the crop begins eight pixels below the reviewer’s page-content reference to omit adjacent toolbar fragments. No pixels are resized, repainted or regenerated. No film is published.
+
+`source-provenance.json` records original and derived hashes separately. `media-provenance.fragment.json` is the owned proposal for the shared manifest. Private browser IDs, raw requests, authentication, signed URLs and complete interface captures stay outside this repository. The linked WebP retains all 11,426 bytes and its standard sRGB metadata. Existing feature tests cover responsive/no-script reading, static image links and original-byte parity.

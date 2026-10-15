@@ -156,7 +156,7 @@ const stories: Story[] = [
     built: ['The browser proxy captures the tab after a supported action, uploads a compressed image separately and forwards the original action response unchanged.', 'An expanded Claude tool card in PanelForge can request that image through a separate authenticated endpoint. The inspected path is specific to the Claude browser setup; availability and retention on individual installations need a live check.'],
     use: [step('Perform a browser action', 'Use the Claude observer path for a specifically targeted tab.'), step('Inspect the human-facing image', 'Check the tool-card screenshot against the intended action. A visual result helps supervision without claiming the interaction passed every functional check.')],
     related: ['browser-handoff', 'flow-pdf'],
-    exhibit: { title: 'Two audiences for one action', caption: 'Payload-flow illustration. The page does not contain a real observer image or connect to storage.', steps: [node('Browser action', 'Capture the specifically named tab'), node('Separate upload', 'Image linked to the matching tool call'), node('Human tool card', 'Request a temporary image URL')], choices: [choice('What the human sees', 'A browser image', 'The viewer can inspect the visible result after the action.'), choice('What the model receives', 'The original tool result', 'The private screenshot response is suppressed. This observer path adds neither its image nor an image reference to the model’s tool result.')] },
+    exhibit: { title: 'See the page after the click.', caption: 'Actual browser action and PanelForge viewer with a fictional local page, saved conversation and local test storage. No model ran.', steps: [], choices: [] },
   },
   {
     id: 'workbench-06', slug: 'flow-pdf', name: 'Flow screenshots PDF', title: 'Make a browser walkthrough someone can review.', topics: ['Browser', 'Evidence', 'Skills'],
@@ -528,18 +528,22 @@ const metadata: Record<string, Pick<Feature, 'date' | 'evolution' | 'sources'>> 
       {
         "date": "2026-10-10",
         "title": "Verifying independent browser tabs"
+      },
+      {
+        "date": "2026-10-15",
+        "title": "Checking a fictional click and its separate human-view image"
       }
     ],
     "sources": {
       "repo": "metaclaude, claude-engine, panel-forge",
       "files": [
-        "metaclaude/hooks/",
-        "metaclaude/chrome/",
+        "metaclaude/bin/chrome-devtools-observer-proxy.mjs",
+        "metaclaude/hooks/chrome-observer.mjs",
         "panel-forge resources for tool-card image display",
-        "Chrome DevTools proxy/browser server"
+        "panel-forge ToolObservationController and BorgStashReader"
       ],
       "status": "historical-shipped",
-      "note": "October records support historical delivery. Current source inspection confirms that the proxy preserves the original tool response and suppresses its observer screenshot response; the human tool card requests the image separately. Fleet availability, retention and mobile behavior were not rechecked."
+      "note": "October records support historical delivery. The 15 October isolated check exercised the original proxy/helper and actual PanelForge viewer with a fictional page, saved rows and local test storage. The client action response stayed unchanged; no model ran. Fleet availability and retention were not checked."
     }
   },
   "workbench-06": {

@@ -1,0 +1,63 @@
+{
+  "sources": {
+    "metaclaude": {
+      "commit": "df057324d637c89e2d721f5896411e537bc86fea",
+      "tag": "v0.1.41"
+    },
+    "panelForge": {
+      "commit": "93881d2eca613fde498e0933405cee3a07220a4c",
+      "tag": "web-v10.20.97"
+    },
+    "chromeDevtoolsMcp": "1.10.1",
+    "browser": "Google Chrome for Testing 156.0.8078.4",
+    "sha256": {
+      "observerProxy": "52232ed0dfb5d5f924f6a7b8692f8d0d4ca745c4094bb44e7bb82cfb25d579bf",
+      "observerHelper": "f005c72a821ac202cdaeb56512bf2424d326efe37da199351de87571718c0b54",
+      "toolCard": "e430aef14f14b72254a6163f29bf926bb8b2f9028d738f721c5000b3d449ee0c",
+      "observationComposable": "257de575eab03e5331997d82f86b068e1e1326d4f5408223cfdec8a943e73c1f",
+      "photoSwipeComposable": "4e27d383ea841f731a97518f7f7e71164e5d31d5e626723cedb5e86f78748b06",
+      "observationController": "052824de133d296324f7cd022448f300fff184503daae4a008d79e36c6d16a3f",
+      "borgStashReader": "7f0d1cf3e9150e5c9c06cbb15962ab9efe0aa58e081c92cf3a9645819e8a6500"
+    }
+  },
+  "originalWebp": {
+    "sha256": "80ed2ecad78ff4fcdbc8bff5bcf316f93e3cc699ba529b3d9a1e8778d7e28e1f",
+    "bytes": 11426,
+    "width": 1024,
+    "height": 768,
+    "rgbaSha256": "bbc14d0c7fbe55f58f7f1ca159484d76571a5e2e209d2c1ee7a2ae506e62f982",
+    "metadata": "Original standard sRGB retained without re-encoding"
+  },
+  "cardCrop": {
+    "sourceFilmSha256": "969101b46b96ac7bb57febd1dca6c92f569f7a1daff48bfaefb7ec2f892d2d1b",
+    "sourceWidth": 1360,
+    "sourceHeight": 900,
+    "sourceFrameZeroBased": 60,
+    "sourceTimeSeconds": 3.0,
+    "crop": {
+      "x": 398,
+      "y": 207,
+      "width": 420,
+      "height": 364
+    },
+    "referencePngCrop": {
+      "x": 398,
+      "y": 112,
+      "width": 420,
+      "height": 372
+    },
+    "coordinateRelation": "Film includes 87 pixels of native Chrome chrome above the page-content screenshot. The selected crop starts eight pixels below the reviewer reference to omit adjacent toolbar fragments while preserving the full result, Page after this step label and Ready image.",
+    "pixelPipeline": "Decode H.264 to RGB24, then exact integer crop. No resize, repaint, redaction or regenerated pixels."
+  },
+  "cropSha256": "b06f26a2111a9c78958493597c0f018ca4cd6408d6bf29a91769a9d2ecbb60ef",
+  "receiptSha256": "2ad20365007054bf9a2d192103ab4ae4e3dfbee559823cbed28e34cc634ce187",
+  "mediaSelection": "Three static artifacts only. Card crop derives from the later saved-observation review, not an original action/upload film.",
+  "scope": [
+    "No Claude or Codex CLI, model or provider inference ran. This proves unchanged MCP client response bytes, not input parity during real inference.",
+    "The human client obtained its image URL separately. No observer image or reference was appended to the action response.",
+    "The object receiver and storage adapter were fixtures. No real R2 authentication, authorization or persistence was tested.",
+    "The saved tool row and surrounding user/model-role text were synthetic. Tool identity, arguments and result text match the actual MCP action; the displayed one-second timing is seeded fixture metadata. Real engine/archive ingestion was not tested.",
+    "One separate early gate used a plain MCP click and explicit capture. The main proof contained one observed click and one upload.",
+    "The clean UI film reviews the completed saved observation; it is not an end-to-end action/upload recording."
+  ]
+}

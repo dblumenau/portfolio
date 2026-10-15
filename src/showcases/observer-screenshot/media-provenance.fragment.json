@@ -1,0 +1,43 @@
+{
+  "assets": [
+    {
+      "file": "observer-screenshot/tool-card.png",
+      "product": "Metaclaude observer and PanelForge tool card",
+      "captured": "2026-10-15",
+      "method": "Real standalone MCP click and original proxy/helper; actual app viewer with synthetic saved rows and local object-storage fixtures",
+      "content": "Actual desktop tool-card detail retaining the unchanged click result, Page after this step label and Ready-state observer image.",
+      "redactions": [
+        "Crop excludes sidebar decoration, identifiers, provider/composer UI and seeded timing. No pixels repainted."
+      ],
+      "editing": "Exact RGB crop of clean UI-review film frame 60 at 3.00 seconds: x398 y207 width420 height364. No resize, repaint or regenerated pixels.",
+      "bytes": 37742,
+      "sha256": "b06f26a2111a9c78958493597c0f018ca4cd6408d6bf29a91769a9d2ecbb60ef",
+      "width": 420,
+      "height": 364
+    },
+    {
+      "file": "observer-screenshot/observer.webp",
+      "product": "Metaclaude observer and PanelForge tool card",
+      "captured": "2026-10-15",
+      "method": "Real standalone MCP click and original proxy/helper; actual app viewer with synthetic saved rows and local object-storage fixtures",
+      "content": "Exact original 1024x768 observer capture of the fictional Ready-state checklist.",
+      "redactions": [],
+      "editing": "None. All 11,426 original bytes and standard sRGB metadata retained.",
+      "bytes": 11426,
+      "sha256": "80ed2ecad78ff4fcdbc8bff5bcf316f93e3cc699ba529b3d9a1e8778d7e28e1f",
+      "width": 1024,
+      "height": 768
+    },
+    {
+      "file": "observer-screenshot/receipt.json",
+      "product": "Metaclaude observer and PanelForge tool card",
+      "captured": "2026-10-15",
+      "method": "Real standalone MCP click and original proxy/helper; actual app viewer with synthetic saved rows and local object-storage fixtures",
+      "content": "Selected safe action-response, separate-image, viewer and fixture-storage checks with original source/media hashes.",
+      "redactions": [],
+      "editing": "None. Byte-preserving copy of the independently reviewed safe receipt.",
+      "bytes": 3848,
+      "sha256": "2ad20365007054bf9a2d192103ab4ae4e3dfbee559823cbed28e34cc634ce187"
+    }
+  ]
+}
