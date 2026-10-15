@@ -1,0 +1,750 @@
+{
+  "scenarios": [
+    {
+      "events": [
+        {
+          "action": "decide",
+          "begunReviews": 0,
+          "consecutiveFailures": 0,
+          "idleSeconds": null,
+          "reason": "unchanged",
+          "result": "unchanged",
+          "time": 0,
+          "unreviewedActiveSeconds": 0,
+          "unreviewedStrokes": 0
+        },
+        {
+          "action": "decide",
+          "begunReviews": 0,
+          "consecutiveFailures": 0,
+          "idleSeconds": null,
+          "reason": "unchanged",
+          "result": "unchanged",
+          "time": 10,
+          "unreviewedActiveSeconds": 0,
+          "unreviewedStrokes": 0
+        },
+        {
+          "action": "decide",
+          "begunReviews": 0,
+          "consecutiveFailures": 0,
+          "idleSeconds": null,
+          "reason": "unchanged",
+          "result": "unchanged",
+          "time": 60,
+          "unreviewedActiveSeconds": 0,
+          "unreviewedStrokes": 0
+        },
+        {
+          "action": "decide",
+          "begunReviews": 0,
+          "consecutiveFailures": 0,
+          "idleSeconds": null,
+          "reason": "unchanged",
+          "result": "unchanged",
+          "time": 300,
+          "unreviewedActiveSeconds": 0,
+          "unreviewedStrokes": 0
+        },
+        {
+          "action": "decide",
+          "begunReviews": 0,
+          "consecutiveFailures": 0,
+          "idleSeconds": null,
+          "reason": "unchanged",
+          "result": "unchanged",
+          "time": 3600,
+          "unreviewedActiveSeconds": 0,
+          "unreviewedStrokes": 0
+        }
+      ],
+      "id": "unchanged",
+      "title": "An untouched page stays quiet"
+    },
+    {
+      "events": [
+        {
+          "action": "write-range",
+          "begunReviews": 0,
+          "consecutiveFailures": 0,
+          "idleSeconds": 0,
+          "reason": "Synthetic drawing-change series",
+          "result": "write-range",
+          "time": 12,
+          "unreviewedActiveSeconds": 13,
+          "unreviewedStrokes": 26
+        },
+        {
+          "action": "decide",
+          "begunReviews": 0,
+          "consecutiveFailures": 0,
+          "idleSeconds": 0.5,
+          "reason": "writing",
+          "result": "wait",
+          "time": 12.5,
+          "unreviewedActiveSeconds": 13,
+          "unreviewedStrokes": 26
+        },
+        {
+          "action": "decide",
+          "begunReviews": 0,
+          "consecutiveFailures": 0,
+          "idleSeconds": 4,
+          "reason": "short pause",
+          "result": "wait",
+          "time": 16,
+          "unreviewedActiveSeconds": 13,
+          "unreviewedStrokes": 26
+        },
+        {
+          "action": "decide",
+          "begunReviews": 0,
+          "consecutiveFailures": 0,
+          "idleSeconds": 18,
+          "reason": "pause, but only 13 s / 26 strokes of new work",
+          "result": "wait",
+          "time": 30,
+          "unreviewedActiveSeconds": 13,
+          "unreviewedStrokes": 26
+        }
+      ],
+      "id": "brief-pause",
+      "title": "A brief thought does not need an interruption"
+    },
+    {
+      "events": [
+        {
+          "action": "write-range",
+          "begunReviews": 0,
+          "consecutiveFailures": 0,
+          "idleSeconds": 0,
+          "reason": "Synthetic drawing-change series",
+          "result": "write-range",
+          "time": 60,
+          "unreviewedActiveSeconds": 61,
+          "unreviewedStrokes": 122
+        },
+        {
+          "action": "decide",
+          "begunReviews": 0,
+          "consecutiveFailures": 0,
+          "idleSeconds": 0,
+          "reason": "writing",
+          "result": "wait",
+          "time": 60,
+          "unreviewedActiveSeconds": 61,
+          "unreviewedStrokes": 122
+        },
+        {
+          "action": "decide",
+          "begunReviews": 0,
+          "consecutiveFailures": 0,
+          "idleSeconds": 4,
+          "reason": "short pause",
+          "result": "wait",
+          "time": 64,
+          "unreviewedActiveSeconds": 61,
+          "unreviewedStrokes": 122
+        },
+        {
+          "action": "decide",
+          "begunReviews": 0,
+          "consecutiveFailures": 0,
+          "idleSeconds": 7,
+          "reason": "pause after 61 s / 122 strokes of new work",
+          "result": "review",
+          "time": 67,
+          "unreviewedActiveSeconds": 61,
+          "unreviewedStrokes": 122
+        },
+        {
+          "action": "begin",
+          "begunReviews": 1,
+          "consecutiveFailures": 0,
+          "idleSeconds": 7,
+          "reason": "Scheduler work snapshot cleared; no model was called",
+          "result": "begin",
+          "time": 67,
+          "unreviewedActiveSeconds": 0,
+          "unreviewedStrokes": 0
+        },
+        {
+          "action": "succeeded",
+          "begunReviews": 1,
+          "consecutiveFailures": 0,
+          "idleSeconds": 15,
+          "reason": "Synthetic response readiness; no model inference",
+          "result": "succeeded",
+          "time": 75,
+          "unreviewedActiveSeconds": 0,
+          "unreviewedStrokes": 0
+        },
+        {
+          "action": "present",
+          "begunReviews": 1,
+          "consecutiveFailures": 0,
+          "idleSeconds": 15,
+          "reason": "The timing policy permits a note",
+          "result": "present",
+          "time": 75,
+          "unreviewedActiveSeconds": 0,
+          "unreviewedStrokes": 0
+        },
+        {
+          "action": "shown",
+          "begunReviews": 1,
+          "consecutiveFailures": 0,
+          "idleSeconds": 15,
+          "reason": "Synthetic note presentation starts the cooldown",
+          "result": "shown",
+          "time": 75,
+          "unreviewedActiveSeconds": 0,
+          "unreviewedStrokes": 0
+        }
+      ],
+      "id": "pause-review",
+      "title": "A substantial passage earns a review"
+    },
+    {
+      "events": [
+        {
+          "action": "write-range",
+          "begunReviews": 0,
+          "consecutiveFailures": 0,
+          "idleSeconds": 0,
+          "reason": "Synthetic drawing-change series",
+          "result": "write-range",
+          "time": 149,
+          "unreviewedActiveSeconds": 150,
+          "unreviewedStrokes": 300
+        },
+        {
+          "action": "decide",
+          "begunReviews": 0,
+          "consecutiveFailures": 0,
+          "idleSeconds": 0,
+          "reason": "deadline reached; waiting for pen to settle",
+          "result": "wait",
+          "time": 149,
+          "unreviewedActiveSeconds": 150,
+          "unreviewedStrokes": 300
+        },
+        {
+          "action": "decide",
+          "begunReviews": 0,
+          "consecutiveFailures": 0,
+          "idleSeconds": 1.5,
+          "reason": "deadline: 150 s of unreviewed writing",
+          "result": "review",
+          "time": 150.5,
+          "unreviewedActiveSeconds": 150,
+          "unreviewedStrokes": 300
+        },
+        {
+          "action": "begin",
+          "begunReviews": 1,
+          "consecutiveFailures": 0,
+          "idleSeconds": 1.5,
+          "reason": "Scheduler work snapshot cleared; no model was called",
+          "result": "begin",
+          "time": 150.5,
+          "unreviewedActiveSeconds": 0,
+          "unreviewedStrokes": 0
+        }
+      ],
+      "id": "deadline",
+      "title": "A long stretch waits for a small pause"
+    },
+    {
+      "events": [
+        {
+          "action": "write-range",
+          "begunReviews": 0,
+          "consecutiveFailures": 0,
+          "idleSeconds": 0,
+          "reason": "Synthetic drawing-change series",
+          "result": "write-range",
+          "time": 149,
+          "unreviewedActiveSeconds": 150,
+          "unreviewedStrokes": 300
+        },
+        {
+          "action": "decide",
+          "begunReviews": 0,
+          "consecutiveFailures": 0,
+          "idleSeconds": 0,
+          "reason": "deadline reached; waiting for pen to settle",
+          "result": "wait",
+          "time": 149,
+          "unreviewedActiveSeconds": 150,
+          "unreviewedStrokes": 300
+        },
+        {
+          "action": "write-range",
+          "begunReviews": 0,
+          "consecutiveFailures": 0,
+          "idleSeconds": 0,
+          "reason": "Synthetic drawing-change series",
+          "result": "write-range",
+          "time": 208,
+          "unreviewedActiveSeconds": 209,
+          "unreviewedStrokes": 418
+        },
+        {
+          "action": "decide",
+          "begunReviews": 0,
+          "consecutiveFailures": 0,
+          "idleSeconds": 0,
+          "reason": "deadline reached; waiting for pen to settle",
+          "result": "wait",
+          "time": 208,
+          "unreviewedActiveSeconds": 209,
+          "unreviewedStrokes": 418
+        },
+        {
+          "action": "write",
+          "begunReviews": 0,
+          "consecutiveFailures": 0,
+          "idleSeconds": 0,
+          "reason": "Synthetic drawing-change event",
+          "result": "write",
+          "time": 209,
+          "unreviewedActiveSeconds": 210,
+          "unreviewedStrokes": 420
+        },
+        {
+          "action": "decide",
+          "begunReviews": 0,
+          "consecutiveFailures": 0,
+          "idleSeconds": 0.10000002384185791,
+          "reason": "hard deadline: 210 s of writing without a pause",
+          "result": "review",
+          "time": 209.1,
+          "unreviewedActiveSeconds": 210,
+          "unreviewedStrokes": 420
+        },
+        {
+          "action": "begin",
+          "begunReviews": 1,
+          "consecutiveFailures": 0,
+          "idleSeconds": 0.10000002384185791,
+          "reason": "Scheduler work snapshot cleared; no model was called",
+          "result": "begin",
+          "time": 209.1,
+          "unreviewedActiveSeconds": 0,
+          "unreviewedStrokes": 0
+        }
+      ],
+      "id": "hard-deadline",
+      "title": "New strokes do not postpone the check forever"
+    },
+    {
+      "events": [
+        {
+          "action": "write-range",
+          "begunReviews": 0,
+          "consecutiveFailures": 0,
+          "idleSeconds": 0,
+          "reason": "Synthetic drawing-change series",
+          "result": "write-range",
+          "time": 60,
+          "unreviewedActiveSeconds": 61,
+          "unreviewedStrokes": 122
+        },
+        {
+          "action": "decide",
+          "begunReviews": 0,
+          "consecutiveFailures": 0,
+          "idleSeconds": 7,
+          "reason": "pause after 61 s / 122 strokes of new work",
+          "result": "review",
+          "time": 67,
+          "unreviewedActiveSeconds": 61,
+          "unreviewedStrokes": 122
+        },
+        {
+          "action": "begin",
+          "begunReviews": 1,
+          "consecutiveFailures": 0,
+          "idleSeconds": 7,
+          "reason": "Scheduler work snapshot cleared; no model was called",
+          "result": "begin",
+          "time": 67,
+          "unreviewedActiveSeconds": 0,
+          "unreviewedStrokes": 0
+        },
+        {
+          "action": "write-range",
+          "begunReviews": 1,
+          "consecutiveFailures": 0,
+          "idleSeconds": 0,
+          "reason": "Synthetic drawing-change series",
+          "result": "write-range",
+          "time": 75,
+          "unreviewedActiveSeconds": 6,
+          "unreviewedStrokes": 4
+        },
+        {
+          "action": "succeeded",
+          "begunReviews": 1,
+          "consecutiveFailures": 0,
+          "idleSeconds": 0,
+          "reason": "Synthetic response readiness; no model inference",
+          "result": "succeeded",
+          "time": 75,
+          "unreviewedActiveSeconds": 6,
+          "unreviewedStrokes": 4
+        },
+        {
+          "action": "present",
+          "begunReviews": 1,
+          "consecutiveFailures": 0,
+          "idleSeconds": 0,
+          "reason": "user writing",
+          "result": "hold",
+          "time": 75,
+          "unreviewedActiveSeconds": 6,
+          "unreviewedStrokes": 4
+        },
+        {
+          "action": "present",
+          "begunReviews": 1,
+          "consecutiveFailures": 0,
+          "idleSeconds": 2.5,
+          "reason": "The timing policy permits a note",
+          "result": "present",
+          "time": 77.5,
+          "unreviewedActiveSeconds": 6,
+          "unreviewedStrokes": 4
+        },
+        {
+          "action": "shown",
+          "begunReviews": 1,
+          "consecutiveFailures": 0,
+          "idleSeconds": 2.5,
+          "reason": "Synthetic note presentation starts the cooldown",
+          "result": "shown",
+          "time": 77.5,
+          "unreviewedActiveSeconds": 6,
+          "unreviewedStrokes": 4
+        }
+      ],
+      "id": "hold-feedback",
+      "title": "Ready feedback waits while you write"
+    },
+    {
+      "events": [
+        {
+          "action": "write-range",
+          "begunReviews": 0,
+          "consecutiveFailures": 0,
+          "idleSeconds": 0,
+          "reason": "Synthetic drawing-change series",
+          "result": "write-range",
+          "time": 10,
+          "unreviewedActiveSeconds": 11,
+          "unreviewedStrokes": 22
+        },
+        {
+          "action": "present",
+          "begunReviews": 0,
+          "consecutiveFailures": 0,
+          "idleSeconds": 1,
+          "reason": "user writing",
+          "result": "hold",
+          "time": 11,
+          "unreviewedActiveSeconds": 11,
+          "unreviewedStrokes": 22
+        },
+        {
+          "action": "present",
+          "begunReviews": 0,
+          "consecutiveFailures": 0,
+          "idleSeconds": 4,
+          "reason": "The timing policy permits a note",
+          "result": "present",
+          "time": 14,
+          "unreviewedActiveSeconds": 11,
+          "unreviewedStrokes": 22
+        },
+        {
+          "action": "shown",
+          "begunReviews": 0,
+          "consecutiveFailures": 0,
+          "idleSeconds": 4,
+          "reason": "Synthetic note presentation starts the cooldown",
+          "result": "shown",
+          "time": 14,
+          "unreviewedActiveSeconds": 11,
+          "unreviewedStrokes": 22
+        },
+        {
+          "action": "present",
+          "begunReviews": 0,
+          "consecutiveFailures": 0,
+          "idleSeconds": 40,
+          "reason": "cooldown 39 s",
+          "result": "hold",
+          "time": 50,
+          "unreviewedActiveSeconds": 11,
+          "unreviewedStrokes": 22
+        },
+        {
+          "action": "present",
+          "begunReviews": 0,
+          "consecutiveFailures": 0,
+          "idleSeconds": 80,
+          "reason": "The timing policy permits a note",
+          "result": "present",
+          "time": 90,
+          "unreviewedActiveSeconds": 11,
+          "unreviewedStrokes": 22
+        },
+        {
+          "action": "present",
+          "begunReviews": 0,
+          "consecutiveFailures": 0,
+          "idleSeconds": 80,
+          "reason": "2 unsolicited notes already visible",
+          "result": "hold",
+          "time": 90,
+          "unreviewedActiveSeconds": 11,
+          "unreviewedStrokes": 22
+        }
+      ],
+      "id": "cooldown",
+      "title": "A margin needs room to think"
+    },
+    {
+      "events": [
+        {
+          "action": "write-range",
+          "begunReviews": 0,
+          "consecutiveFailures": 0,
+          "idleSeconds": 0,
+          "reason": "Synthetic drawing-change series",
+          "result": "write-range",
+          "time": 60,
+          "unreviewedActiveSeconds": 61,
+          "unreviewedStrokes": 122
+        },
+        {
+          "action": "decide",
+          "begunReviews": 0,
+          "consecutiveFailures": 0,
+          "idleSeconds": 10,
+          "reason": "pause after 61 s / 122 strokes of new work",
+          "result": "review",
+          "time": 70,
+          "unreviewedActiveSeconds": 61,
+          "unreviewedStrokes": 122
+        },
+        {
+          "action": "begin",
+          "begunReviews": 1,
+          "consecutiveFailures": 0,
+          "idleSeconds": 10,
+          "reason": "Scheduler work snapshot cleared; no model was called",
+          "result": "begin",
+          "time": 70,
+          "unreviewedActiveSeconds": 0,
+          "unreviewedStrokes": 0
+        },
+        {
+          "action": "failed",
+          "begunReviews": 1,
+          "consecutiveFailures": 1,
+          "idleSeconds": 15,
+          "reason": "Synthetic request failure restores covered work",
+          "result": "failed",
+          "time": 75,
+          "unreviewedActiveSeconds": 61,
+          "unreviewedStrokes": 122
+        },
+        {
+          "action": "decide",
+          "begunReviews": 1,
+          "consecutiveFailures": 1,
+          "idleSeconds": 30,
+          "reason": "backing off after failure (30 s)",
+          "result": "wait",
+          "time": 90,
+          "unreviewedActiveSeconds": 61,
+          "unreviewedStrokes": 122
+        },
+        {
+          "action": "decide",
+          "begunReviews": 1,
+          "consecutiveFailures": 1,
+          "idleSeconds": 50,
+          "reason": "pause after 61 s / 122 strokes of new work",
+          "result": "review",
+          "time": 110,
+          "unreviewedActiveSeconds": 61,
+          "unreviewedStrokes": 122
+        },
+        {
+          "action": "begin",
+          "begunReviews": 2,
+          "consecutiveFailures": 1,
+          "idleSeconds": 50,
+          "reason": "Scheduler work snapshot cleared; no model was called",
+          "result": "begin",
+          "time": 110,
+          "unreviewedActiveSeconds": 0,
+          "unreviewedStrokes": 0
+        },
+        {
+          "action": "failed",
+          "begunReviews": 2,
+          "consecutiveFailures": 2,
+          "idleSeconds": 55,
+          "reason": "Synthetic request failure restores covered work",
+          "result": "failed",
+          "time": 115,
+          "unreviewedActiveSeconds": 61,
+          "unreviewedStrokes": 122
+        },
+        {
+          "action": "decide",
+          "begunReviews": 2,
+          "consecutiveFailures": 2,
+          "idleSeconds": 90,
+          "reason": "backing off after failure (60 s)",
+          "result": "wait",
+          "time": 150,
+          "unreviewedActiveSeconds": 61,
+          "unreviewedStrokes": 122
+        },
+        {
+          "action": "decide",
+          "begunReviews": 2,
+          "consecutiveFailures": 2,
+          "idleSeconds": 115,
+          "reason": "pause after 61 s / 122 strokes of new work",
+          "result": "review",
+          "time": 175,
+          "unreviewedActiveSeconds": 61,
+          "unreviewedStrokes": 122
+        },
+        {
+          "action": "begin",
+          "begunReviews": 3,
+          "consecutiveFailures": 2,
+          "idleSeconds": 115,
+          "reason": "Scheduler work snapshot cleared; no model was called",
+          "result": "begin",
+          "time": 175,
+          "unreviewedActiveSeconds": 0,
+          "unreviewedStrokes": 0
+        },
+        {
+          "action": "succeeded",
+          "begunReviews": 3,
+          "consecutiveFailures": 0,
+          "idleSeconds": 120,
+          "reason": "Synthetic response readiness; no model inference",
+          "result": "succeeded",
+          "time": 180,
+          "unreviewedActiveSeconds": 0,
+          "unreviewedStrokes": 0
+        }
+      ],
+      "id": "failure",
+      "title": "A failed review keeps the work and backs off"
+    },
+    {
+      "events": [
+        {
+          "action": "write-range",
+          "begunReviews": 0,
+          "consecutiveFailures": 0,
+          "idleSeconds": 0,
+          "reason": "Synthetic drawing-change series",
+          "result": "write-range",
+          "time": 60,
+          "unreviewedActiveSeconds": 61,
+          "unreviewedStrokes": 122
+        },
+        {
+          "action": "decide",
+          "begunReviews": 0,
+          "consecutiveFailures": 0,
+          "idleSeconds": 10,
+          "reason": "pause after 61 s / 122 strokes of new work",
+          "result": "review",
+          "time": 70,
+          "unreviewedActiveSeconds": 61,
+          "unreviewedStrokes": 122
+        },
+        {
+          "action": "begin",
+          "begunReviews": 1,
+          "consecutiveFailures": 0,
+          "idleSeconds": 10,
+          "reason": "Scheduler work snapshot cleared; no model was called",
+          "result": "begin",
+          "time": 70,
+          "unreviewedActiveSeconds": 0,
+          "unreviewedStrokes": 0
+        },
+        {
+          "action": "write-range",
+          "begunReviews": 1,
+          "consecutiveFailures": 0,
+          "idleSeconds": 0,
+          "reason": "Synthetic drawing-change series",
+          "result": "write-range",
+          "time": 90,
+          "unreviewedActiveSeconds": 24,
+          "unreviewedStrokes": 200
+        },
+        {
+          "action": "decide",
+          "begunReviews": 1,
+          "consecutiveFailures": 0,
+          "idleSeconds": 0,
+          "reason": "request in flight; new work coalesces into the next check",
+          "result": "wait",
+          "time": 90,
+          "unreviewedActiveSeconds": 24,
+          "unreviewedStrokes": 200
+        },
+        {
+          "action": "decide",
+          "begunReviews": 1,
+          "consecutiveFailures": 0,
+          "idleSeconds": 9,
+          "reason": "call spacing",
+          "result": "wait",
+          "time": 99,
+          "unreviewedActiveSeconds": 24,
+          "unreviewedStrokes": 200
+        },
+        {
+          "action": "decide",
+          "begunReviews": 1,
+          "consecutiveFailures": 0,
+          "idleSeconds": 10,
+          "reason": "pause after 24 s / 200 strokes of new work",
+          "result": "review",
+          "time": 100,
+          "unreviewedActiveSeconds": 24,
+          "unreviewedStrokes": 200
+        }
+      ],
+      "id": "coalescing",
+      "title": "Writing during a request becomes the next check"
+    }
+  ],
+  "scope": "Actual unmodified Swift ReviewScheduler with synthetic drawing changes, timestamps and response outcomes. Calls are state transitions only; no model or network is used. Evaluations occur at the listed fixture timestamps, without the app coordinator timer.",
+  "sourceRevision": "07474bfebc6bd7411ead7ab91ee6a3feb66c4484",
+  "sourceSHA256": "d21f2900bd5039dcbcef7cbc15e99c11355d6abed9269491750dd585b9dcb519",
+  "verification": {
+    "scenarios": 9,
+    "decisions": 34,
+    "originalTestsPassed": 11,
+    "runtime": "Apple Swift 6.3.2; original extracted XCTest bodies through SwiftPM",
+    "testedBoundary": "Pure scheduler and ledger; synthetic drawing changes, selected evaluation times and request state transitions. No model, network, recognition, PencilKit, app coordinator timer or native presentation layout."
+  }
+}

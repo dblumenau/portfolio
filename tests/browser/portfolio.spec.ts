@@ -158,6 +158,8 @@ test('recordings have working playback, captions, posters and text alternatives'
   const observed = new Set<string>();
   for (const route of ['/', '/work/panelforge/', '/work/connected-agents/', '/work/knowledge-graph/', '/work/conference-notes/']) {
     await page.goto(route);
+    const nativeDetails = page.locator('.native-more');
+    if (await nativeDetails.count()) await nativeDetails.locator(':scope > summary').click();
     const videos = page.locator('figure.video-demo video');
     expect(await videos.count()).toBeGreaterThanOrEqual(route === '/' ? 2 : 1);
     for (const video of await videos.all()) {

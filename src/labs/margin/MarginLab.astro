@@ -1,0 +1,47 @@
+---
+import Icon from '../../components/Icon.astro';
+import { cases, scenarioFor, checksFor, decisionLabel, explanation, seconds, eventLabel, execution } from './model';
+import './margin.css';
+const scenario = scenarioFor(cases[0].id);
+const checks = checksFor(scenario);
+const event = checks[0].event;
+---
+<section class="ml" data-margin-lab data-case={scenario.id} data-check="0" data-outcome={event.result} aria-labelledby="ml-title">
+  <div class="ml-disclosure"><span aria-hidden="true"><Icon name="archive" /></span><p><strong>Recorded Swift decisions. Illustrative writing.</strong> Synthetic drawing changes, selected check times and fictional response readiness. No model, network, handwriting recognition or app timer runs here.</p></div>
+  <div class="ml-heading"><div><p class="eyebrow">Timing lab / Pencil Page</p><h2 id="ml-title">Leave room <br /><em>for the thought.</em></h2></div><p>The app asks two different questions: <strong>may I review the writing?</strong> Then, if feedback is ready, <strong>may I show a note?</strong></p></div>
+  <div class="ml-cases ml-interactive" role="group" aria-label="Choose a recorded case">{cases.slice(0, 5).map((item, i) => <button data-case-choice={item.id} aria-pressed={i === 0 ? 'true' : 'false'}><span>{String(i + 1).padStart(2, '0')}</span>{item.label}</button>)}</div>
+  <details class="ml-extra ml-interactive"><summary>Four more timing cases <Icon name="plus" /></summary><div role="group" aria-label="Additional recorded cases">{cases.slice(5).map(item => <button data-case-choice={item.id} aria-pressed="false">{item.label}</button>)}</div></details>
+  <div class="ml-case-copy"><h3 data-case-title>{cases[0].label}</h3><p data-case-intro>{cases[0].intro}</p></div>
+  <div class="ml-experiment">
+    <figure class="ml-notebook" aria-label="Illustration of synthetic writing and the margin">
+      <div class="ml-book-top"><span>FIELD NOTES / 01</span><span data-book-time>{seconds(event.time)}</span></div>
+      <div class="ml-paper">
+        <svg class="ml-writing" viewBox="0 0 370 225" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+          <path data-ink-line d="M32 36q8-14 12-2t9 0q4-8 7 0t10-2m10 2q5-15 9-1t13-3q4-7 7 0t16 0m14 0q5-11 10-1t13 0m10 0q8-10 12 0t20 0" />
+          <path data-ink-line d="M32 69q5-13 10-2t15-1m10 2q7-13 10-2t15 0q5-8 10 0t12-2m10 2q7-13 13 0t12-1m11 1q6-13 11-2t17-1" />
+          <path data-ink-line d="M32 102q9-14 14-1t12 0m10 0q8-14 11-2t12 0q7-9 9 0t17 0m10 0q7-14 11-2t14 0q4-7 10 0t14 0" />
+          <path data-ink-line d="M32 135q7-12 12-2t13 0m12 2q8-12 12-2t12 0q6-8 10 0t17 0m9 0q7-13 10-2t15 0m9 2q7-14 11-2t13-1" />
+          <path data-ink-line d="M32 168q7-14 12-2t12 0m11 2q6-12 11-2t15 0m10 2q9-14 12-2t13 0q6-9 10 0t16 0" />
+          <path data-ink-line d="M32 201q9-12 13-2t14 0m10 2q5-13 12-2t15 0m10 2q7-14 10-2t12 0q4-9 8 0t15 0m12 2q6-12 12-2t15 0" />
+        </g><g class="ml-pen" data-pen transform="translate(236 44) rotate(-28)" fill="none" stroke="currentColor" stroke-width="2"><path d="M0 0h9v58l-4.5 10L0 58V0Z" fill="#fbf8ec"/><path d="M0 10h9M0 54h9m-4.5 14v3"/></g></svg>
+        <div class="ml-margin-slot" data-margin-state><span class="ml-margin-mark" aria-hidden="true"><Icon name="pause" /></span><strong data-note-title>The margin waits</strong><span data-note-copy>No note presentation check yet.</span></div>
+      </div>
+      <figcaption>Illustration only. Pen marks do not represent recognized text or measured handwriting.</figcaption>
+    </figure>
+    <div class="ml-decision">
+      <div class="ml-check-head"><span data-check-kind>Review check</span><span data-check-count>1 / {checks.length}</span></div>
+      <div class="ml-result" aria-live="polite" aria-atomic="true"><p class="ml-result-title" data-result-title>{decisionLabel(event)}</p><p data-result-copy>{explanation(event)}</p></div>
+      <dl class="ml-metrics"><div><dt>Active new writing</dt><dd data-active>{seconds(event.unreviewedActiveSeconds)}</dd></div><div><dt>New strokes</dt><dd data-strokes>{event.unreviewedStrokes}</dd></div><div><dt>Since last pen event</dt><dd data-idle>{seconds(event.idleSeconds)}</dd></div></dl>
+      <div class="ml-permissions"><p><span>Last review check</span><strong data-review-permission>Wait</strong></p><p><span>Last note check</span><strong data-note-permission>Not checked</strong></p></div>
+      <div class="ml-controls ml-interactive"><button data-previous aria-label="Previous recorded check" aria-disabled="true"><Icon name="arrow-left" /></button><button class="ml-next" data-next>Next recorded check <Icon name="arrow-right" /></button></div>
+      <p class="ml-next-context" data-next-context>Next check: {seconds(checks[1].event.time)} into the case.</p>
+    </div>
+  </div>
+  <div class="ml-timeline ml-interactive"><div><p class="eyebrow">Selected evaluations / not a live clock</p><span data-timeline-duration>{seconds(checks.at(-1)!.event.time)} elapsed</span></div><ol data-timeline aria-label="Recorded decision timeline">{checks.map(({ event }, index) => <li><button data-check-choice={index} aria-current={index === 0 ? 'step' : undefined}><span>{seconds(event.time)}</span><strong>{eventLabel(event)}</strong></button></li>)}</ol></div>
+  <p class="ml-takeaway"><span aria-hidden="true"><Icon name="asterisk" /></span><span data-takeaway>{cases[0].takeaway}</span></p>
+  <details class="ml-inspect"><summary>Inspect this case’s exact events <Icon name="plus" /></summary><p>Every row below is output from the unmodified Swift source. “Begin”, “ready”, “failed” and “shown” are supplied fixture transitions. The controls above select recorded decisions; they do not calculate the policy.</p><div class="ml-table-scroll" tabindex="0" aria-label="Exact case events, horizontally scrollable"><table><caption data-events-caption>{scenario.title}</caption><thead><tr><th>Time</th><th>Event</th><th>Result</th><th>Source reason</th></tr></thead><tbody data-events>{scenario.events.map(e => <tr><td>{seconds(e.time)}</td><td>{e.action}</td><td>{e.result}</td><td>{e.reason}</td></tr>)}</tbody></table></div></details>
+  <details class="ml-proof"><summary>What this replay proves <span>Source & limits <Icon name="arrow-up-right" /></span></summary><div class="ml-proof-grid"><div><h3>The original timing policy ran.</h3><p>The unmodified Swift scheduler at Pencil Page revision <code>07474bf</code> was compiled on macOS. Nine fictional scenarios produced <strong>34 review and presentation decisions</strong>. All matched the expected sequences. Eleven original extracted scheduler and ledger tests passed.</p><dl><dt>Source SHA-256</dt><dd><code>{execution.sourceSHA256}</code></dd><dt>Runtime</dt><dd>Apple Swift 6.3.2 · XCTest through SwiftPM</dd><dt>Executed boundary</dt><dd>The pure scheduler and ledger.</dd></dl></div><div><h3>The events are supplied.</h3><p>Drawing changes, timestamps, request success or failure, visible-note counts and response readiness are synthetic. Checks occur only at the listed times.</p><p>This does not exercise PencilKit, recognition, model transport, the app coordinator’s timer or native note layout. A permitted review is not proof that a model answered. A permitted note is not proof that the app displayed it.</p><a href="/media/margin/receipt.json" download>Download the execution receipt <Icon name="arrow-down" /></a><a href="/media/margin/scenarios.json" download>Download the fictional event inputs <Icon name="arrow-down" /></a></div></div></details>
+  <details class="ml-all-cases"><summary>Read all nine recorded cases <span>Also available without JavaScript <Icon name="plus" /></span></summary>{cases.map(item => { const recorded = scenarioFor(item.id); return <article id={`ml-case-${item.id}`}><h3>{item.label}</h3><p>{item.intro} {item.takeaway}</p><ol>{checksFor(recorded).map(({ event }) => <li><strong>{seconds(event.time)} · {decisionLabel(event)}</strong><span>{event.reason}</span></li>)}</ol></article>; })}</details>
+  <noscript><p class="ml-nojs">The interactive controls need JavaScript. Open “Read all nine recorded cases” above for every decision, or download the receipt. The native recording below works independently.</p></noscript>
+</section>
+<script>import { initMarginLab } from './controller'; initMarginLab();</script>

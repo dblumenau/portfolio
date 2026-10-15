@@ -1,0 +1,38 @@
+---
+import Icon from '../../components/Icon.astro';
+import { execution, question, choice, finalSteps, stages } from './model';
+import './question.css';
+---
+<section class="ql" data-question-lab data-stage="0" aria-labelledby="ql-title">
+  <header class="ql-heading"><div><p class="eyebrow">Actual native execution / recorded replay</p><h2 id="ql-title">A direction for the workshop.</h2></div><p>The film shows the real native flow. These controls move through its recorded moments; they make no new model request.</p></header>
+  <ol class="ql-stages" aria-label="Recorded question workflow">
+    {stages.map((stage, index) => <li><button type="button" data-stage={index} aria-current={index === 0 ? 'step' : undefined} disabled><span>0{index + 1}</span>{stage.label}</button></li>)}
+  </ol>
+  <div class="ql-workspace">
+    <div class="ql-story">
+      <div class="ql-story-heading"><p class="eyebrow">The fictional Lantern Makers workshop</p><span data-question-progress>01 / 04</span></div>
+      {stages.map((stage, index) => <article data-question-panel={index} hidden={index !== 0}>
+        <h3>{stage.title}</h3><p class="ql-stage-copy">{stage.copy}</p>
+        {index === 0 && <blockquote class="ql-task">{execution.task}</blockquote>}
+        {index === 1 && <div class="ql-question-text"><p>{question.question}</p><ul>{question.options.map(option => <li><strong>{option.label}</strong><span>{option.description}</span></li>)}</ul><p class="ql-small-note">The replay follows the recorded Quick setup answer. More customization has no recorded result here.</p></div>}
+        {index === 2 && <div class="ql-answer"><Icon name="check" /><div><span>Recorded native selection</span><strong>{choice}</strong><p>The request reached the original pending question. Its request and stream identities matched.</p></div></div>}
+        {index === 3 && <div class="ql-result"><p class="ql-result-title">Chosen direction: {choice}</p><ol>{finalSteps.map(step => <li>{step}</li>)}</ol><p class="ql-small-note">Actual model text. This is a plan; none of the actions in it ran.</p></div>}
+      </article>)}
+      <button type="button" class="ql-next" data-question-next disabled>{stages[0].action}<Icon name="arrow-right" /></button>
+      <p class="ql-status" role="status" aria-live="polite" data-question-status>{stages[0].status}</p>
+      <noscript><div class="ql-noscript"><h3>The recorded answer and result</h3><p>The automated participant chose Quick setup. The actual tool confirmed that answer, then the same invocation completed with this text:</p><p><strong>Chosen direction: {choice}</strong></p><ol>{finalSteps.map(step => <li>{step}</li>)}</ol><p>None of the plan’s actions ran. The native video and full-size captures remain available below.</p></div></noscript>
+    </div>
+    <figure class="ql-film">
+      <video controls playsinline preload="none" poster="/media/question/question.png" width="720" height="1566" aria-label="Actual native question answered while the same Claude invocation continues" aria-describedby="ql-film-caption ql-boundary">
+        <source src="/media/question/execution.mp4" type="video/mp4" />
+        <track kind="captions" src="/media/question/execution.vtt" srclang="en" label="English" default />
+        Your browser does not support this video. <a href="/media/question/execution.mp4">Download the recording.</a>
+      </video>
+      <figcaption id="ql-film-caption">A continuous 22-second segment of the actual native capture, at original speed. Stage controls pause and seek the film; Play runs the recorded flow.</figcaption>
+      <a class="ql-original" href="/media/question/execution.mp4">Open the native recording <Icon name="arrow-up-right" /></a>
+    </figure>
+  </div>
+  <p class="ql-boundary" id="ql-boundary"><Icon name="check" /><span><strong>Isolated iPhone Simulator. Automated test participant.</strong> A local API shim forwards real Claude Engine inference. This build includes an <strong>unreleased Claude-only answer-key correction</strong>; it does not demonstrate the live PanelForge API.</span></p>
+  <div class="ql-proof-strip"><div><span>Original invocation</span><strong>1 throughout</strong></div><div><span>Native answer</span><strong>+10.727 seconds</strong></div><div><span>Confirmed completion</span><strong>+12.551 seconds</strong></div></div>
+</section>
+<script>import { initQuestionLab } from './controller';document.querySelectorAll<HTMLElement>('[data-question-lab]').forEach(initQuestionLab);</script>

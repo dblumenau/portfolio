@@ -890,6 +890,110 @@
       "width": 1440,
       "height": 1000,
       "editing": "Actual app screenshot converted to WebP. No content replacement or redaction was required."
+    },
+    {
+      "file": "margin/receipt.json",
+      "product": "Pencil Page timing Lab / actual Swift with synthetic events",
+      "captured": "2026-10-15",
+      "method": "Unmodified Swift ReviewScheduler at revision 07474bfebc6bd7411ead7ab91ee6a3feb66c4484 compiled with Apple Swift 6.3.2. Fictional timestamped event fixtures, no model or network.",
+      "content": "Actual recorded scheduler output for nine scenarios and 34 decisions, with source hash, test summary and execution boundaries.",
+      "redactions": [
+        "No private filesystem paths, source archive, session identifiers or raw test transcript included."
+      ],
+      "bytes": 22589,
+      "sha256": "29443e8a8389657f536cf180a8abdc1267e272bc5f7d332e938bdbb3179f1580"
+    },
+    {
+      "file": "margin/scenarios.json",
+      "product": "Pencil Page timing Lab / actual Swift with synthetic events",
+      "captured": "2026-10-15",
+      "method": "Unmodified Swift ReviewScheduler at revision 07474bfebc6bd7411ead7ab91ee6a3feb66c4484 compiled with Apple Swift 6.3.2. Fictional timestamped event fixtures, no model or network.",
+      "content": "Original fictional drawing-change, selected-check-time and request-state fixture inputs for the nine executed scenarios.",
+      "redactions": [
+        "No private filesystem paths, source archive, session identifiers or raw test transcript included."
+      ],
+      "bytes": 5855,
+      "sha256": "93f113e2748d8bc705664eab928bf339880a5c2a0ce9cfa98e51af39275757c7"
+    },
+    {
+      "file": "question/execution.mp4",
+      "product": "PanelForge native chat / Claude Engine",
+      "captured": "2026-10-15",
+      "method": "Actual iPhone 17 Pro Simulator / iOS 26.5; isolated native build and local API shim",
+      "content": "Fictional Lantern Makers workshop. Automated participant answers the real built-in question; the same original invocation confirms Quick setup and completes. Includes an unreleased Claude-only answer-key correction. No plan action ran.",
+      "redactions": [],
+      "bytes": 734627,
+      "sha256": "f8866c4efdedede4fa93b30a95b5d3bef2bbfc243df7c893c1c220b88f895496",
+      "codec_name": "h264",
+      "width": 720,
+      "height": 1566,
+      "duration_seconds": 22.133333,
+      "first_frame_seconds": 0.433008,
+      "editing": "One continuous original-speed trim, scaled to 720 pixels wide and encoded at 30 fps; no regenerated screen or spliced run. Four English captions with Simulator/shim/unreleased-patch and automated-participant disclosures."
+    },
+    {
+      "file": "question/execution.vtt",
+      "product": "PanelForge native chat / Claude Engine",
+      "captured": "2026-10-15",
+      "method": "Actual iPhone 17 Pro Simulator / iOS 26.5; isolated native build and local API shim",
+      "content": "Four English cues for the actual native film. First cue discloses Simulator, local shim and unreleased correction; third identifies the automated participant. Final cue ends at 22.133 seconds, within the 22.133333-second encoding.",
+      "redactions": [],
+      "bytes": 364,
+      "sha256": "7b060db6f3df134834fb00b437b95073f1e549f9897af5c66c5b4955824e8967"
+    },
+    {
+      "file": "question/question.png",
+      "product": "PanelForge native chat / Claude Engine",
+      "captured": "2026-10-15",
+      "method": "Actual iPhone 17 Pro Simulator / iOS 26.5; isolated native build and local API shim",
+      "content": "Fictional Lantern Makers workshop. Automated participant answers the real built-in question; the same original invocation confirms Quick setup and completes. Includes an unreleased Claude-only answer-key correction. No plan action ran.",
+      "redactions": [],
+      "bytes": 307408,
+      "sha256": "9545e93f71978c643a6578eee91a6538f65232968b99f6c017ed3ce3962e6544",
+      "codec_name": "png",
+      "width": 1206,
+      "height": 2622,
+      "editing": "Untouched full-resolution native XCTest screenshot. HTML previews use a disclosed CSS crop; the full-size original remains accessible."
+    },
+    {
+      "file": "question/selected.png",
+      "product": "PanelForge native chat / Claude Engine",
+      "captured": "2026-10-15",
+      "method": "Actual iPhone 17 Pro Simulator / iOS 26.5; isolated native build and local API shim",
+      "content": "Fictional Lantern Makers workshop. Automated participant answers the real built-in question; the same original invocation confirms Quick setup and completes. Includes an unreleased Claude-only answer-key correction. No plan action ran.",
+      "redactions": [],
+      "bytes": 308515,
+      "sha256": "13594de9aca21121973ae121405adc4795c0bb6da9842352dabaa6c34da27935",
+      "codec_name": "png",
+      "width": 1206,
+      "height": 2622,
+      "editing": "Untouched full-resolution native XCTest screenshot. HTML previews use a disclosed CSS crop; the full-size original remains accessible."
+    },
+    {
+      "file": "question/completed.png",
+      "product": "PanelForge native chat / Claude Engine",
+      "captured": "2026-10-15",
+      "method": "Actual iPhone 17 Pro Simulator / iOS 26.5; isolated native build and local API shim",
+      "content": "Fictional Lantern Makers workshop. Automated participant answers the real built-in question; the same original invocation confirms Quick setup and completes. Includes an unreleased Claude-only answer-key correction. No plan action ran.",
+      "redactions": [],
+      "bytes": 288009,
+      "sha256": "fd2e844ae49d62c9b0ebf9fb10b130dd95cd991c861dda8fa5a9f3840980a818",
+      "codec_name": "png",
+      "width": 1206,
+      "height": 2622,
+      "editing": "Untouched full-resolution native XCTest screenshot. HTML previews use a disclosed CSS crop; the full-size original remains accessible."
+    },
+    {
+      "file": "question/receipt.json",
+      "product": "PanelForge native chat / Claude Engine",
+      "captured": "2026-10-15",
+      "method": "Sanitized actual causal receipt, verified against private captured native POST and engine events",
+      "content": "Actual task/question/tool-result/final plan. ui_selection identifies the UI header; native_answer_payload contains the actual full-question answer map with opaque request_id omitted. Shim, Simulator, automated participant and unreleased Claude-only correction are explicit.",
+      "redactions": [
+        "Opaque request, stream, session and tool identities omitted; equality-check flags retained. Private auth, machine paths, thinking and accounting absent."
+      ],
+      "bytes": 3698,
+      "sha256": "6a3e9535993229492ad15dc0c3819948ed4212802698b77ca34c6a062de07e75"
     }
   ]
 }

@@ -192,7 +192,7 @@ export const supportingProjects: SupportingProject[] = [
     name: 'Pencil Page', label: 'Handwriting + margin notes', title: 'A page with room for a reply.',
     description: 'A native iPad experiment built around one growing handwritten page. AI feedback appears in the margin. Inserted exercise sheets give it the printed instructions to read alongside the pen strokes.',
     image: '/media/pencil-page.webp', alt: 'Pencil Page in an iPad simulator, with a synthetic Danish exercise and a real AI margin note correcting a verb form.',
-    href: '/work/connected-agents/', link: 'Explore the agent system', status: 'Early iPad project',
+    href: '/labs/margin/', link: 'Explore the timing behind the notes', status: 'Early iPad project',
     video: '/media/pencil-page-workflow.mp4', captions: '/media/pencil-page-workflow.vtt',
     mediaCaption: 'Synthetic demo ink · real Opus 5.5 feedback · edited recording.',
     videoDescription: 'A synthetic Danish exercise is sent for manual review. A real margin note corrects a modal-verb error, a follow-up adds an example, and the note folds and unfolds. Cuts remove waiting time.',

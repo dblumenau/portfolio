@@ -1,0 +1,87 @@
+{
+  "recorded_at": "2026-10-14T23:08:56.026370+00:00",
+  "source_revisions": {
+    "claude-engine": "bf89abc1646bd12133a0f22bc2d51f3286813250",
+    "claude-engine-app": "48d380467d270c6f5fb10cbfd68923985a973c3b"
+  },
+  "invocations": 1,
+  "timings_seconds": {
+    "question": 2.075,
+    "answer": 10.727,
+    "done": 12.551
+  },
+  "post_answer_text_events": 25,
+  "tool_use_count": 1,
+  "final_character_count": 232,
+  "model": "haiku",
+  "reported_model": "claude-haiku-5-5",
+  "native_source_patch": "Unreleased isolated patch: key answers by full question text rather than UI header.",
+  "transport": "Real native iOS chat, loopback compatibility shim, original Claude Engine streaming/respond HTTP routes, actual subscription SDK inference",
+  "participant": "Automated XCUITest participant",
+  "engine_tools": [
+    "AskUserQuestion"
+  ],
+  "mcp_servers": [],
+  "tool_result": {
+    "content": "Your questions have been answered: \"Should I prioritize Quick setup or More customization for the Lantern Makers check-in?\"=\"Quick setup\". You can now continue with these answers in mind.",
+    "is_error": false,
+    "same_tool_use_id_verified": true
+  },
+  "question": {
+    "questions": [
+      {
+        "question": "Should I prioritize Quick setup or More customization for the Lantern Makers check-in?",
+        "header": "Priority",
+        "options": [
+          {
+            "label": "Quick setup",
+            "description": "Keep the check-in simple and fast to launch."
+          },
+          {
+            "label": "More customization",
+            "description": "Tailor the check-in in more detail before drafting."
+          }
+        ],
+        "multiSelect": false
+      }
+    ]
+  },
+  "answer_status": "answered",
+  "same_request_id_verified": true,
+  "same_stream_verified": true,
+  "final_text": "Chosen direction: Quick setup\n\n1. Send a one-line check-in invite to all Lantern Makers members.\n2. Use a shared doc with three prompts: progress, blockers, next steps.\n3. Hold a 20-minute session and assign one owner per follow-up.",
+  "boundary": "Isolated simulator build; local PanelForge API compatibility shim forwards real SSE/respond. No live PanelForge API or production routing validation.",
+  "artifacts": {
+    "native-question-execution.mp4": {
+      "bytes": 734627,
+      "sha256": "f8866c4efdedede4fa93b30a95b5d3bef2bbfc243df7c893c1c220b88f895496"
+    },
+    "02-question.png": {
+      "bytes": 307408,
+      "sha256": "9545e93f71978c643a6578eee91a6538f65232968b99f6c017ed3ce3962e6544"
+    },
+    "03-selected.png": {
+      "bytes": 308515,
+      "sha256": "13594de9aca21121973ae121405adc4795c0bb6da9842352dabaa6c34da27935"
+    },
+    "04-completed.png": {
+      "bytes": 288009,
+      "sha256": "fd2e844ae49d62c9b0ebf9fb10b130dd95cd991c861dda8fa5a9f3840980a818"
+    }
+  },
+  "ui_selection": {
+    "Priority": "Quick setup"
+  },
+  "ui_selection_explanation": "The visible card stores its selection under the UI header Priority; this is display state, not the answer map sent to Claude.",
+  "native_answer_payload": {
+    "action": "answer",
+    "answers": {
+      "Should I prioritize Quick setup or More customization for the Lantern Makers check-in?": "Quick setup"
+    }
+  },
+  "native_answer_payload_explanation": "Actual captured native POST body with opaque request_id omitted. Answers are keyed by full question text.",
+  "native_payload_matches_private_capture_verified": true,
+  "task": "Plan a check-in for the fictional Lantern Makers workshop. Before drafting, ask whether to prioritize Quick setup or More customization. Use my answer to give three short practical steps.",
+  "source_patch_released": false,
+  "plan_actions_executed": false
+}

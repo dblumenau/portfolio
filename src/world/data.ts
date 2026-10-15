@@ -52,13 +52,15 @@ export const districts: WorldDistrict[] = [
     architecture: 'Three racks stand for three distinct runtimes. A device dock represents the clients that read their work.',
     exhibits: [
       { title: 'Three runtimes, one client contract', description: 'The engine adapters handle an agent SDK, app-server JSON-RPC and a typed OpenCode client. Each keeps its own session rules.', href: '/features/shared-engine-surface/' },
-      { title: 'Return after a disconnect', description: 'A stored result can reconcile a client’s partial transcript after the browser connection breaks. Runtime restart recovery has separate rules.', href: '/features/disconnect-recovery/' },
+      { title: 'Return after a disconnect', description: 'An actual engine run keeps working after its browser disconnects, then returns the stored answer. Runtime restart recovery has separate rules.', href: '/labs/recovery/' },
+      { title: 'A native answer resumes the task', description: 'An actual Claude question waits for a recorded native choice, then the same invocation continues. The isolated build and its correction are disclosed.', href: '/labs/question/' },
       { title: 'Give the turn a new direction', description: 'A queued correction can reach a compatible tool boundary or follow-up turn, preserving the order of the instructions.', href: '/features/steer-without-interrupt/' },
     ],
     href: '/work/connected-agents/', link: 'How the engines connect',
-    image: '/media/apple-client.webp', alt: 'The Apple conversation client running in an iPhone simulator.', caption: 'Apple client · iPhone Simulator · real saved conversation',
-    video: '/media/apple-client-workflow.mp4', captions: '/media/apple-client-workflow.vtt',
-    videoDescription: 'A recorded conversation in the Apple client, showing the client’s real chat interface in an iPhone simulator.',
+    image: '/media/question/question.png', alt: 'The actual native question card asks which direction the fictional workshop task should take.', caption: 'Native Simulator · real Claude turn · automated answer · local API shim and unreleased correction',
+    video: '/media/question/execution.mp4', captions: '/media/question/execution.vtt',
+    videoDescription: 'The actual native chat asks for a choice. An automated participant selects Quick setup, and the same Claude invocation confirms the answer and completes its plan. This isolated build uses a local API shim and an unreleased answer-key correction.',
+    videoAction: 'Watch the native question and answer',
   },
   {
     id: 'connections', number: '03', name: 'Connections', label: 'Tools with boundaries', color: '#706325', position: [10, 0, -5.5],
@@ -120,7 +122,7 @@ export const districts: WorldDistrict[] = [
     architecture: 'A colourful print workshop, a writing desk and a camera station represent Kitforge, Pencil Page and Legobro.',
     exhibits: [
       { title: 'Kitforge: make a tile and a clip', description: 'One browser rendering function drives the preview, JPG and looping MP4. The photo stays in the browser.' },
-      { title: 'Pencil Page: notes in the margin', description: 'A native iPad handwriting page where AI feedback can be anchored beside the writing.' },
+      { title: 'Pencil Page: notes in the margin', description: 'A native iPad handwriting page where feedback sits beside the writing. Explore the separate decisions about when to review and when to show a note.', href: '/labs/margin/' },
       { title: 'Conference notes: turn notes into a presentation', description: 'A conference notebook with reviewed analysis and an editable presentation output.', href: '/work/conference-notes/' },
       { title: 'Legobro: a playful photobooth', description: 'An iPad camera workflow turns a selfie into a collectible-figure style, then offers preview, email and printing.' },
     ],

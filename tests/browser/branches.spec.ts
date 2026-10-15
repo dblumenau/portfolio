@@ -125,9 +125,10 @@ test('the actual edited film decodes, plays, seeks and provides captions', async
   await expect.poll(() => video.evaluate((element: HTMLVideoElement) => element.currentTime)).toBeCloseTo(22, 1);
   await expect(video.locator('track')).toHaveAttribute('src', '/media/branches/execution.vtt');
   const captions = await page.request.get('/media/branches/execution.vtt');
-  expect((await captions.text())).toContain('unreleased source fix 905cceef4');
+  expect((await captions.text())).toContain('unreleased local fix');
   await expect(page.locator('#bl-film-caption')).toContainText('loading intervals removed');
   await expect(page.locator('.bl-film .bl-patch-note')).toContainText('unreleased');
+  await expect(page.locator('.bl-film .bl-patch-note')).toContainText('905cceef4');
   await mkdir(evidence, { recursive: true });
   await writeFile(`${evidence}/playback.json`, JSON.stringify(await video.evaluate((element: HTMLVideoElement) => ({ duration: element.duration, videoWidth: element.videoWidth, videoHeight: element.videoHeight, soughtTo: element.currentTime, paused: element.paused, error: element.error?.message ?? null })), null, 2));
 });

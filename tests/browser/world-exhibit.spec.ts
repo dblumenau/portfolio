@@ -16,6 +16,23 @@ async function fullyInViewport(page: Page, selector: string) {
   expect(rect!.y + rect!.height, `${selector} bottom`).toBeLessThanOrEqual(page.viewportSize()!.height);
 }
 
+test('390px portrait exhibit exposes playback before the tall native capture', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await ready(page);
+  await page.locator('[data-select-district="engines"]').click();
+  const detail = page.locator('[data-district-detail="engines"]');
+  await detail.locator('[data-open-exhibit]').click();
+  await fullyInViewport(page, '[data-district-detail="engines"] [data-play-recording]');
+  const video = detail.locator('video');
+  await video.evaluate(element => (element as HTMLVideoElement).muted = true);
+  await detail.locator('[data-play-recording]').click();
+  await expect(video).toHaveAttribute('src', '/media/question/execution.mp4');
+  await expect.poll(() => video.evaluate(element => (element as HTMLVideoElement).currentTime)).toBeGreaterThan(.5);
+  await expect(detail.locator('figcaption')).toContainText('unreleased correction');
+  await page.locator('[data-close-exhibit]').click();
+  expect(await video.evaluate(element => (element as HTMLVideoElement).paused)).toBe(true);
+});
+
 test('390px touch selection exposes title, useful actions and close in the same viewport, with Back restoring the overview', async ({ browser }, info) => {
   const context = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
   const page = await context.newPage();

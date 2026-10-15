@@ -256,6 +256,9 @@
   .tool-run-heading .eyebrow { margin-bottom: 12px; }
   .tool-run-heading p:last-child { color: var(--muted); margin-top: 15px; font-size: .95rem; }
   .native-client-demo { display: grid; grid-template-columns: .8fr 1.2fr; gap: 60px; margin-top: 60px; padding-top: 35px; border-top: 1px solid var(--line); align-items: start; }
+  .native-more { margin-top:35px; border-top:1px solid var(--line); }
+  .native-more > summary { display:flex; justify-content:space-between; align-items:center; gap:20px; padding-block:20px; font-size:.85rem; font-weight:550; }
+  .native-more .native-client-demo { margin-top:0; padding-top:15px; border-top:0; }
   .native-client-demo .native-screen { max-width: 320px; margin-inline: auto; }
   .native-screen img { width: 100%; height: auto; border-radius: 22px; border: 1px solid var(--line); box-shadow: 0 16px 40px -25px #20262299; }
   .native-client-demo .native-copy > .eyebrow { margin-bottom: 15px; }

@@ -1,0 +1,342 @@
+[
+  {
+    "id": "unchanged",
+    "title": "An untouched page stays quiet",
+    "events": [
+      {
+        "action": "decide",
+        "time": 0
+      },
+      {
+        "action": "decide",
+        "time": 10
+      },
+      {
+        "action": "decide",
+        "time": 60
+      },
+      {
+        "action": "decide",
+        "time": 300
+      },
+      {
+        "action": "decide",
+        "time": 3600
+      }
+    ]
+  },
+  {
+    "id": "brief-pause",
+    "title": "A brief thought does not need an interruption",
+    "events": [
+      {
+        "action": "write-range",
+        "from": 0,
+        "through": 12,
+        "strokes": 2,
+        "gap": 1
+      },
+      {
+        "action": "decide",
+        "time": 12.5
+      },
+      {
+        "action": "decide",
+        "time": 16
+      },
+      {
+        "action": "decide",
+        "time": 30
+      }
+    ]
+  },
+  {
+    "id": "pause-review",
+    "title": "A substantial passage earns a review",
+    "events": [
+      {
+        "action": "write-range",
+        "from": 0,
+        "through": 60,
+        "strokes": 2,
+        "gap": 1
+      },
+      {
+        "action": "decide",
+        "time": 60
+      },
+      {
+        "action": "decide",
+        "time": 64
+      },
+      {
+        "action": "decide",
+        "time": 67
+      },
+      {
+        "action": "begin",
+        "time": 67
+      },
+      {
+        "action": "succeeded",
+        "time": 75
+      },
+      {
+        "action": "present",
+        "time": 75
+      },
+      {
+        "action": "shown",
+        "time": 75
+      }
+    ]
+  },
+  {
+    "id": "deadline",
+    "title": "A long stretch waits for a small pause",
+    "events": [
+      {
+        "action": "write-range",
+        "from": 0,
+        "through": 149,
+        "strokes": 2,
+        "gap": 1
+      },
+      {
+        "action": "decide",
+        "time": 149
+      },
+      {
+        "action": "decide",
+        "time": 150.5
+      },
+      {
+        "action": "begin",
+        "time": 150.5
+      }
+    ]
+  },
+  {
+    "id": "hard-deadline",
+    "title": "New strokes do not postpone the check forever",
+    "events": [
+      {
+        "action": "write-range",
+        "from": 0,
+        "through": 149,
+        "strokes": 2,
+        "gap": 1
+      },
+      {
+        "action": "decide",
+        "time": 149
+      },
+      {
+        "action": "write-range",
+        "from": 150,
+        "through": 208,
+        "strokes": 2,
+        "gap": 1
+      },
+      {
+        "action": "decide",
+        "time": 208
+      },
+      {
+        "action": "write",
+        "time": 209,
+        "strokes": 2
+      },
+      {
+        "action": "decide",
+        "time": 209.1
+      },
+      {
+        "action": "begin",
+        "time": 209.1
+      }
+    ]
+  },
+  {
+    "id": "hold-feedback",
+    "title": "Ready feedback waits while you write",
+    "events": [
+      {
+        "action": "write-range",
+        "from": 0,
+        "through": 60,
+        "strokes": 2,
+        "gap": 1
+      },
+      {
+        "action": "decide",
+        "time": 67
+      },
+      {
+        "action": "begin",
+        "time": 67
+      },
+      {
+        "action": "write-range",
+        "from": 74,
+        "through": 75,
+        "strokes": 2,
+        "gap": 1
+      },
+      {
+        "action": "succeeded",
+        "time": 75
+      },
+      {
+        "action": "present",
+        "time": 75
+      },
+      {
+        "action": "present",
+        "time": 77.5
+      },
+      {
+        "action": "shown",
+        "time": 77.5
+      }
+    ]
+  },
+  {
+    "id": "cooldown",
+    "title": "A margin needs room to think",
+    "events": [
+      {
+        "action": "write-range",
+        "from": 0,
+        "through": 10,
+        "strokes": 2,
+        "gap": 1
+      },
+      {
+        "action": "present",
+        "time": 11
+      },
+      {
+        "action": "present",
+        "time": 14
+      },
+      {
+        "action": "shown",
+        "time": 14
+      },
+      {
+        "action": "present",
+        "time": 50,
+        "visible": 1
+      },
+      {
+        "action": "present",
+        "time": 90,
+        "visible": 1
+      },
+      {
+        "action": "present",
+        "time": 90,
+        "visible": 2
+      }
+    ]
+  },
+  {
+    "id": "failure",
+    "title": "A failed review keeps the work and backs off",
+    "events": [
+      {
+        "action": "write-range",
+        "from": 0,
+        "through": 60,
+        "strokes": 2,
+        "gap": 1
+      },
+      {
+        "action": "decide",
+        "time": 70
+      },
+      {
+        "action": "begin",
+        "time": 70
+      },
+      {
+        "action": "failed",
+        "time": 75
+      },
+      {
+        "action": "decide",
+        "time": 90
+      },
+      {
+        "action": "decide",
+        "time": 110
+      },
+      {
+        "action": "begin",
+        "time": 110
+      },
+      {
+        "action": "failed",
+        "time": 115
+      },
+      {
+        "action": "decide",
+        "time": 150
+      },
+      {
+        "action": "decide",
+        "time": 175
+      },
+      {
+        "action": "begin",
+        "time": 175
+      },
+      {
+        "action": "succeeded",
+        "time": 180
+      }
+    ]
+  },
+  {
+    "id": "coalescing",
+    "title": "Writing during a request becomes the next check",
+    "events": [
+      {
+        "action": "write-range",
+        "from": 0,
+        "through": 60,
+        "strokes": 2,
+        "gap": 1
+      },
+      {
+        "action": "decide",
+        "time": 70
+      },
+      {
+        "action": "begin",
+        "time": 70
+      },
+      {
+        "action": "write-range",
+        "from": 71,
+        "through": 90,
+        "strokes": 10,
+        "gap": 1
+      },
+      {
+        "action": "decide",
+        "time": 90,
+        "inFlight": true
+      },
+      {
+        "action": "decide",
+        "time": 99
+      },
+      {
+        "action": "decide",
+        "time": 100
+      }
+    ]
+  }
+]

@@ -1,0 +1,14 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Icon from '../../components/Icon.astro';
+import VideoDemo from '../../components/VideoDemo.astro';
+import MarginLab from '../../labs/margin/MarginLab.astro';
+---
+<BaseLayout title="Pencil Page Timing Lab | David Blumenau" description="Useful help knows when to wait. Explore recorded decisions from Pencil Page’s actual Swift timing policy, with fictional pen events and a separate real native demonstration.">
+  <main id="main" class="ml-page">
+    <section class="ml-hero wrap" id="top"><a class="ml-back" href="/#small-work-title"><Icon name="arrow-left" /> Small tools, real work</a><div class="ml-hero-grid"><div><p class="eyebrow">Pencil Page / Help in the margin</p><h1>Useful help knows<br /><em>when to wait.</em></h1></div><p>A notebook should leave you space to think. I built Pencil Page’s timing policy to wait for enough new writing, then choose a quieter moment for feedback.</p></div></section>
+    <div class="wrap"><MarginLab /></div>
+    <section class="ml-native wrap" aria-labelledby="ml-native-title"><div><p class="eyebrow">A separate native demonstration</p><h2 id="ml-native-title">What a note<br /><em>looks like.</em></h2><p>This real iPad Simulator recording shows a manual review, an actual Opus 5.5 response, a follow-up and a folded note thread.</p><p class="ml-native-boundary">The ink is synthetic PencilKit input. Manual Review starts the request. This clip demonstrates native feedback; it does not run the automatic timing cases above end to end.</p><a class="text-link" href="/#small-work-title">Explore the smaller tools <Icon name="arrow-up-right" /></a></div><VideoDemo src="/media/pencil-page-workflow.mp4" poster="/media/pencil-page.webp" title="A real Pencil Page margin note" captions="/media/pencil-page-workflow.vtt" mediaCaption="Actual native app · iPad Simulator · synthetic Danish exercise ink · real Opus feedback" description="Manual Review asks for feedback on a fictional Danish exercise. A margin card appears, a question continues its thread, and the card folds and unfolds. Waiting is cut from the recording. This is separate from the pure scheduling replay." /></section>
+    <section class="ml-design wrap"><p class="eyebrow">Two timing decisions</p><h2>Read the work.<br /><em>Respect the person.</em></h2><p>Accumulated writing decides when there is enough to review. Presentation makes a separate decision about whether to show an unsolicited note. A response can be ready while its note still waits: the person may be writing, a recent note may need time, or the margin may already be full.</p><p>After a failed request, the policy keeps the writing available for another review and delays the next attempt. The goal is a useful companion that keeps track without turning every pause into an interruption.</p></section>
+  </main>
+</BaseLayout>

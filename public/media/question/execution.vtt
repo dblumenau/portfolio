@@ -1,0 +1,13 @@
+WEBVTT
+
+00:00.000 --> 00:05.500
+Native iPhone Simulator. Local API shim and unreleased answer-key correction.
+
+00:05.500 --> 00:10.000
+Real Claude Engine asks a native question and waits.
+
+00:10.000 --> 00:14.500
+The automated participant selects Quick setup and sends the answer.
+
+00:14.500 --> 00:22.133
+The same invocation resumes and produces the chosen plan.

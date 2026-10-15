@@ -329,6 +329,8 @@
   .forge-world .world-stage[data-exhibit]:not([data-exhibit=""]) .world-viewport { height: 120px; }
   .forge-world .world-stage[data-exhibit]:not([data-exhibit=""]) .world-inspector { padding: 20px 18px; }
   .forge-world .world-stage[data-exhibit]:not([data-exhibit=""]) .world-media img { max-height: 520px; }
+  .forge-world .world-stage[data-exhibit]:not([data-exhibit=""]) .world-media-phone { display:flex; flex-direction:column; }
+  .forge-world .world-stage[data-exhibit]:not([data-exhibit=""]) .world-media-phone .world-play { order:-1; margin:0 0 10px; }
 }
 
 .forge-world .world-stage[data-exhibit]:not([data-exhibit=""]) .world-layer-graphic,

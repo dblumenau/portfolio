@@ -18,6 +18,9 @@ const reviewedEvidenceMedia = [
   'studio/sample-print.png', 'studio/sample-loop.mp4', 'studio/sample-loop.webp', 'studio/sample-loop.vtt',
   'branches/comparison.webp', 'branches/execution.mp4', 'branches/execution.vtt',
   'branches/original-retained.webp', 'branches/receipt.json', 'branches/reference-handoff.webp',
+  'margin/receipt.json', 'margin/scenarios.json',
+  'question/execution.mp4', 'question/execution.vtt', 'question/question.png',
+  'question/selected.png', 'question/completed.png', 'question/receipt.json',
 ];
 const reviewedTextMedia = new Set(reviewedEvidenceMedia.filter(name => /\.(?:json|txt)$/.test(name)));
 const required = [
