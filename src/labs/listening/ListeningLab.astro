@@ -8,7 +8,8 @@ const story = fixture.aligned.map(word => word.word).join(' ');
 <section class="ll" aria-labelledby="ll-title">
   <div class="ll-heading"><div><p class="eyebrow">An original story / A working player</p><h2 id="ll-title">Find the phrase.<br /><em>Hear it again.</em></h2></div><p>Play the story, follow the words, then choose a passage to repeat. The sound and waveform are the same original sample used in the recordings below.</p></div>
   <div class="ll-disclosure"><Icon name="play" /><p><strong>AI-generated Danish narration.</strong> Standard Cedar voice · 15.9 seconds · an original fictional story.</p></div>
-  <div data-listening-mount id="ll-player"><div class="ll-fallback"><p>Play the original sample. Enable JavaScript for word highlighting, waveform seeking and phrase loops.</p><audio controls preload="none" src="/media/listening/sample.wav" aria-label="Original Danish story, AI-generated Cedar narration"></audio></div></div>
+  <div data-listening-mount id="ll-player"><div class="ll-fallback"><p class="ll-fallback-basic">Play the original sample. Enable JavaScript for word highlighting, waveform seeking and phrase loops.</p><p class="ll-fallback-loading" role="status">Loading the word and waveform player. You can already play the original sample below.</p><audio controls preload="none" src="/media/listening/sample.wav" aria-label="Original Danish story, AI-generated Cedar narration"></audio></div></div>
+  <script is:inline>document.currentScript?.previousElementSibling?.setAttribute('data-listening-enhanced', '');</script>
   <details class="ll-transcript" id="ll-story"><summary>Read the complete original Danish story</summary><p lang="da">{story}</p></details>
   <p class="ll-timing-note">The word timings are reviewed ASR estimates for this sample. They demonstrate the listening interface; they do not measure the original study-text alignment pipeline.</p>
 </section>

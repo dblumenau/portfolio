@@ -1,6 +1,7 @@
 ---
 import Icon from './Icon.astro';
 const media = '/media/image-revision';
+const previewSizes = 'auto, (max-width: 600px) calc(100vw - 36px), (max-width: 800px) calc(100vw - 48px), (max-width: 932px) calc(100vw - 72px), 860px';
 ---
 <section class="image-revision wrap" id="image-revision" aria-labelledby="image-revision-title" data-image-revision>
   <div class="revision-intro">
@@ -17,15 +18,16 @@ const media = '/media/image-revision';
     </div>
     <div class="revision-images">
       <figure class="revision-original">
-        <img src={`${media}/original.jpg`} alt="Original blue teapot with a red lid, knob and handle, on a cream background above a grey oval shadow." width="1264" height="848" loading="lazy" />
-        <figcaption><strong>Original</strong><span>Red lid and handle. The source file stays intact.</span></figcaption>
+        <img src={`${media}/original-preview-960.webp`} srcset={[480, 960, 1264].map(width => `${media}/original-preview-${width}.webp ${width}w`).join(', ')} sizes={previewSizes} alt="Original blue teapot with a red lid, knob and handle, on a cream background above a grey oval shadow." width="1264" height="848" loading="lazy" decoding="async" />
+        <figcaption><strong>Original</strong><span>Red lid and handle. The source file stays intact.</span><a href={`${media}/original.jpg`} download="teapot-original.jpg">Download the original JPEG <Icon name="arrow-down" /></a></figcaption>
       </figure>
       <figure class="revision-result">
-        <img src={`${media}/revision.jpg`} alt="Revised blue teapot with a mustard-yellow lid, knob and handle, retaining the same recognisable composition." width="1264" height="848" loading="lazy" />
-        <figcaption><strong>Revision</strong><span>Mustard lid and handle. Saved as a separate image.</span></figcaption>
+        <img src={`${media}/revision-preview-960.webp`} srcset={[480, 960, 1264].map(width => `${media}/revision-preview-${width}.webp ${width}w`).join(', ')} sizes={previewSizes} alt="Revised blue teapot with a mustard-yellow lid, knob and handle, retaining the same recognisable composition." width="1264" height="848" loading="lazy" decoding="async" />
+        <figcaption><strong>Revision</strong><span>Mustard lid and handle. Saved as a separate image.</span><a href={`${media}/revision.jpg`} download="teapot-revision.jpg">Download the revision JPEG <Icon name="arrow-down" /></a></figcaption>
       </figure>
     </div>
   </fieldset>
+  <p class="revision-preview-note">Web previews are resized and compressed. The JPEG links download the exact saved files.</p>
   <div class="revision-outcome">
     <p><strong>The original file is unchanged.</strong> PanelForge’s gallery links the revision back to it.</p>
     <p><strong>The edit keeps the composition recognisable.</strong> This is a generative result judged by inspection; it does not establish pixel-perfect preservation.</p>
@@ -66,6 +68,9 @@ const media = '/media/image-revision';
   .revision-images img{width:100%;height:auto;aspect-ratio:1264/848}
   .revision-images figcaption{display:grid;gap:3px;padding:15px 18px;font-size:14px;line-height:1.6}
   .revision-images figcaption strong{font-size:16px}.revision-images figcaption span{color:#505b51}
+  .revision-images figcaption a{display:inline-flex;align-items:center;gap:9px;min-height:44px;width:fit-content;font-size:14px;line-height:1.5;text-underline-offset:4px}
+  .revision-images figcaption a .ui-icon{flex:0 0 auto}
+  .revision-preview-note{font-size:14px;line-height:1.7;color:var(--muted);margin-top:14px}
   .revision-comparison:has([value=original]:checked) .revision-result,.revision-comparison:has([value=revision]:checked) .revision-original{display:none}
   .revision-comparison:has([value=original]:checked) .revision-images,.revision-comparison:has([value=revision]:checked) .revision-images{grid-template-columns:1fr;max-width:860px;margin-inline:auto}
   .revision-outcome{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:22px}

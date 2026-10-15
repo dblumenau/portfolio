@@ -3,6 +3,7 @@ import AxeBuilder from '@axe-core/playwright';
 import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
+import { writeFile } from 'node:fs/promises';
 import fixture from '../../src/labs/listening/fixture.json' with { type: 'json' };
 import provenance from '../../src/labs/listening/provenance.json' with { type: 'json' };
 
@@ -12,6 +13,90 @@ async function ready(page: import('@playwright/test').Page) {
   await page.waitForFunction(() => document.querySelector<HTMLAudioElement>('[data-listening-audio]')!.readyState >= 2);
 }
 const audioTime = (page: import('@playwright/test').Page) => page.locator('[data-listening-audio]').evaluate((audio: HTMLAudioElement) => audio.currentTime);
+
+async function playBeforeEnhancement(page: import('@playwright/test').Page) {
+  let release!: () => void;
+  let requested!: () => void;
+  const gate = new Promise<void>(resolve => { release = resolve; });
+  const moduleRequested = new Promise<void>(resolve => { requested = resolve; });
+  await page.route('**/_astro/ListeningLab*.js', async route => { requested(); await gate; await route.continue(); });
+  await page.goto('/labs/listening/', { waitUntil: 'commit' });
+  const native = page.locator('.ll-fallback audio');
+  await native.waitFor();
+  await moduleRequested;
+  await native.scrollIntoViewIfNeeded();
+  await native.evaluate(async (audio: HTMLAudioElement) => {
+    (window as any).__nativeAudio = audio;
+    (window as any).__nativeEvents = [];
+    (window as any).__enhancedPlayEvents = 0;
+    for (const event of ['play', 'playing', 'pause', 'ended']) audio.addEventListener(event, () => (window as any).__nativeEvents.push({ event, time: audio.currentTime, connected: audio.isConnected }));
+    document.addEventListener('play', event => { if ((event.target as Element)?.matches('[data-listening-audio]')) (window as any).__enhancedPlayEvents++; }, true);
+    audio.muted = true;
+    await audio.play();
+  });
+  await expect.poll(() => native.evaluate((audio: HTMLAudioElement) => audio.currentTime)).toBeGreaterThan(.6);
+  return { native, release };
+}
+
+test('a playing native fallback survives module arrival and hands off paused at the visitor position', async ({ page }) => {
+  const { native, release } = await playBeforeEnhancement(page);
+  try {
+    const before = await native.evaluate((audio: HTMLAudioElement) => audio.currentTime);
+    release();
+    await expect(page.locator('#ll-player')).toHaveAttribute('data-listening-state', 'waiting-for-pause');
+    await expect.poll(() => native.evaluate((audio: HTMLAudioElement) => audio.currentTime)).toBeGreaterThan(before + .5);
+    expect(await native.evaluate((audio: HTMLAudioElement) => ({ connected: audio.isConnected, paused: audio.paused }))).toEqual({ connected: true, paused: false });
+    await expect(page.locator('[data-listening-player]')).toHaveCount(0);
+    await expect(page.locator('.ll-fallback-loading')).toHaveText('The word and waveform controls are ready. Pause the sample or let it finish to use them.');
+    await page.screenshot({ path: test.info().outputPath('native-playing-after-module.png') });
+    await native.click({ position: { x: 30, y: 27 } });
+    await expect(page.locator('[data-listening-player]')).toBeVisible();
+    const stopped = await page.evaluate(() => (window as any).__nativeAudio.currentTime);
+    await expect.poll(async () => Math.abs(await audioTime(page) - stopped)).toBeLessThan(.03);
+    await page.waitForTimeout(250);
+    expect(await page.locator('[data-listening-audio]').evaluate((audio: HTMLAudioElement) => audio.paused)).toBe(true);
+    expect(await audioTime(page)).toBeCloseTo(stopped, 2);
+    expect(await page.evaluate(() => (window as any).__enhancedPlayEvents)).toBe(0);
+    const evidence = await page.evaluate(() => ({ old: { time: (window as any).__nativeAudio.currentTime, paused: (window as any).__nativeAudio.paused, connected: (window as any).__nativeAudio.isConnected }, enhanced: { time: document.querySelector<HTMLAudioElement>('[data-listening-audio]')!.currentTime, paused: document.querySelector<HTMLAudioElement>('[data-listening-audio]')!.paused }, events: (window as any).__nativeEvents, enhancedPlayEvents: (window as any).__enhancedPlayEvents }));
+    expect(evidence.old).toMatchObject({ paused: true, connected: false });
+    expect(evidence.events.filter((event: any) => event.event === 'pause')).toHaveLength(1);
+    expect(evidence.events.find((event: any) => event.event === 'pause').connected).toBe(true);
+    await writeFile(test.info().outputPath('native-pause-handoff.json'), JSON.stringify({ before, ...evidence }, null, 2));
+    await page.screenshot({ path: test.info().outputPath('enhanced-after-native-pause.png') });
+  } finally { release(); }
+});
+
+test('a native sample may finish before enhancement without an automatic replay', async ({ page }) => {
+  const { native, release } = await playBeforeEnhancement(page);
+  try {
+    await native.evaluate((audio: HTMLAudioElement) => { audio.currentTime = audio.duration - 1; });
+    release();
+    await expect(page.locator('#ll-player')).toHaveAttribute('data-listening-state', 'waiting-for-pause');
+    await expect(page.locator('[data-listening-player]')).toBeVisible();
+    await expect.poll(() => audioTime(page)).toBeCloseTo(fixture.chapter.audio_seconds, 2);
+    expect(await page.evaluate(() => (window as any).__nativeAudio.ended)).toBe(true);
+    expect(await page.locator('[data-listening-audio]').evaluate((audio: HTMLAudioElement) => audio.paused)).toBe(true);
+    expect(await page.evaluate(() => (window as any).__enhancedPlayEvents)).toBe(0);
+  } finally { release(); }
+});
+
+test('page lifecycle pauses a waiting native fallback and restores its position without restarting it', async ({ page }) => {
+  const { release } = await playBeforeEnhancement(page);
+  try {
+    release();
+    await expect(page.locator('#ll-player')).toHaveAttribute('data-listening-state', 'waiting-for-pause');
+    await page.evaluate(() => window.dispatchEvent(new PageTransitionEvent('pagehide', { persisted: true })));
+    const stopped = await page.evaluate(() => (window as any).__nativeAudio.currentTime);
+    await page.waitForTimeout(150);
+    expect(await page.evaluate(() => ({ paused: (window as any).__nativeAudio.paused, connected: (window as any).__nativeAudio.isConnected }))).toEqual({ paused: true, connected: true });
+    await expect(page.locator('[data-listening-player]')).toHaveCount(0);
+    await page.evaluate(() => window.dispatchEvent(new PageTransitionEvent('pageshow', { persisted: true })));
+    await expect(page.locator('[data-listening-player]')).toBeVisible();
+    await expect.poll(async () => Math.abs(await audioTime(page) - stopped)).toBeLessThan(.03);
+    expect(await page.locator('[data-listening-audio]').evaluate((audio: HTMLAudioElement) => audio.paused)).toBe(true);
+    expect(await page.evaluate(() => (window as any).__enhancedPlayEvents)).toBe(0);
+  } finally { release(); }
+});
 
 test('actual audio time drives the retained highlight, seeking and native range keys', async ({ page }) => {
   await ready(page);

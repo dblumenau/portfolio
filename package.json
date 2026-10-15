@@ -16,7 +16,7 @@
     "verify": "npm run check:source && npm run check && npm run build && npm run audit && npm run test:browser",
     "package:release": "node scripts/package-release.mjs",
     "test:deployment": "node scripts/smoke-deployment.mjs",
-    "check:source": "node src/labs/listening/vendor/compile.mjs --check && node src/showcases/audio-intent/vendor/compile.mjs --check"
+    "check:source": "node src/labs/listening/vendor/compile.mjs --check && node src/showcases/audio-intent/vendor/compile.mjs --check && node scripts/build-display-derivatives.mjs --check"
   },
   "dependencies": {
     "@fontsource-variable/dm-sans": "^5.2.8",

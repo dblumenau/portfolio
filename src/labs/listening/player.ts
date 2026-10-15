@@ -21,15 +21,26 @@ function sentenceAt(t: number) {
   return { start: words[first].start, end: words[last].end };
 }
 
-export function ListeningPlayer() {
+export function ListeningPlayer({ initialTime = 0 }: { initialTime?: number }) {
+  const initialPosition = useRef(Math.max(0, Math.min(duration, Number.isFinite(initialTime) ? initialTime : 0))).current;
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
   const [playing, setPlaying] = useState(false);
-  const [time, setTime] = useState(0);
+  const [time, setTime] = useState(initialPosition);
   const [speed, setSpeed] = useState(1);
   const [mode, setMode] = useState<Mode>('karaoke');
   const [error, setError] = useState('');
   const root = useRef<HTMLDivElement>(null);
   const connectAudio = useCallback((element: HTMLAudioElement | null) => { setAudio(element); }, []);
+  useEffect(() => {
+    if (!audio) return;
+    const restorePosition = () => {
+      audio.currentTime = Math.min(audio.duration || duration, initialPosition);
+      setTime(audio.currentTime);
+    };
+    if (audio.readyState >= 1) restorePosition();
+    else audio.addEventListener('loadedmetadata', restorePosition, { once: true });
+    return () => audio.removeEventListener('loadedmetadata', restorePosition);
+  }, [audio, initialPosition]);
   useEffect(() => {
     if (!audio) return;
     const onTime = () => setTime(audio.currentTime);

@@ -10,4 +10,15 @@
 
 #ll-player{scroll-margin-top:24px}
 
+/* Reserve the enhanced player's first frame while its module loads. */
+#ll-player[data-listening-enhanced]{min-height:44rem}
+#ll-player[data-listening-enhanced]>.ll-player,#ll-player[data-listening-enhanced]>.ll-fallback{min-height:inherit}
+.ll-fallback-loading{display:none}
+#ll-player[data-listening-enhanced]>.ll-fallback{background:#18241d;color:#f6f6ed;border-color:#485b45;border-radius:5px}
+#ll-player[data-listening-enhanced] .ll-fallback-basic{display:none}
+#ll-player[data-listening-enhanced] .ll-fallback-loading{display:block;max-width:520px}
+@media(max-width:1023px){#ll-player[data-listening-enhanced]{min-height:47rem}}
+@media(max-width:900px){#ll-player[data-listening-enhanced]{min-height:46rem}}
+@media(max-width:640px){#ll-player[data-listening-enhanced]{min-height:calc(70.5rem - 60vw)}}
+
 .ll-settings,.ll-settings select,.ll-help,.ll-shortcuts,.ll-transcript,.ll-timing-note{font-size:.875rem}

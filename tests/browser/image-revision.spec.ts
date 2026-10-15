@@ -26,10 +26,12 @@ test('the real comparison sits before the case prose and changes images with nat
   await page.keyboard.press('ArrowLeft');
   await expectView(page, 'revision');
   await expect(section.getByRole('radio', { name: 'Revision', exact: true })).toBeFocused();
-  await expect(section.locator('.revision-result img')).toHaveAttribute('src', `${media}revision.jpg`);
+  await expect(section.locator('.revision-result img')).toHaveAttribute('src', `${media}revision-preview-960.webp`);
+  await expect(section.getByRole('link', { name: 'Download the revision JPEG' })).toHaveAttribute('href', `${media}revision.jpg`);
   await page.keyboard.press('ArrowLeft');
   await expectView(page, 'original');
-  await expect(section.locator('.revision-original img')).toHaveAttribute('src', `${media}original.jpg`);
+  await expect(section.locator('.revision-original img')).toHaveAttribute('src', `${media}original-preview-960.webp`);
+  await expect(section.getByRole('link', { name: 'Download the original JPEG' })).toHaveAttribute('href', `${media}original.jpg`);
   expect(await section.getByRole('radio', { name: 'Original', exact: true }).evaluate(element => getComputedStyle(element.closest('label')!).outlineStyle)).toBe('solid');
   await page.keyboard.press('ArrowRight');
   await expectView(page, 'revision');
@@ -50,7 +52,8 @@ for (const width of [390, 768, 1440]) {
       await section.getByRole('radio', { name, exact: true }).check();
       const image = section.locator('.revision-images figure:visible img').first();
       await expect(image).toBeVisible();
-      expect(await image.evaluate((element: HTMLImageElement) => element.complete && element.naturalWidth === 1264)).toBe(true);
+      await image.evaluate((element: HTMLImageElement) => element.decode());
+      expect(await image.evaluate((element: HTMLImageElement) => element.complete && element.naturalWidth > 0 && /-preview-(480|960|1264)\.webp$/.test(element.currentSrc))).toBe(true);
     }
     await section.locator('summary').click();
     await section.locator('.revision-evidence img').evaluateAll(async images => { await Promise.all(images.map(image => (image as HTMLImageElement).decode())); });
