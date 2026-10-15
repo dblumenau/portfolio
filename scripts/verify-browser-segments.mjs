@@ -35,6 +35,7 @@ const groups = {
   'workspace-hierarchy': ['workspace-hierarchy'],
   'grounded-analysis': ['grounded-analysis'],
   'maintained-profile': ['maintained-profile'],
+  'scratch-pad': ['scratch-pad'],
   'world-task': ['world-attention'],
   'world-memory': ['world-memory', 'world-presentation'],
   'world-connections': ['world-connections', 'world-connections-focus'],

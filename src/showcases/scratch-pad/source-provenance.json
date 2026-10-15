@@ -1,0 +1,106 @@
+{
+  "applicationTag": "web-v10.21.2",
+  "applicationRevision": "4bb89c99324dd287baed1122c9e460d4bb1b196e",
+  "mcpTag": "v5.12.0",
+  "mcpRevision": "25d1b7140355be1b8fc9f5331cf41cc01c8b8050",
+  "portfolioBase": "d4357df8221f8c10dbb71395ff5e1153b6932c1e",
+  "sourceUnchanged": true,
+  "selection": "One compact collapsed disclosure on the existing PanelForge case; no feature, lab or route addition",
+  "proofScope": {
+    "actualIsolatedApplication": true,
+    "fictionalNote": "Lantern Workshop",
+    "twoClientsOneFictionalAccount": true,
+    "controlledToolEdit": true,
+    "modelCalls": 0,
+    "actualServiceKeyMiddleware": true,
+    "syntheticCallerContext": true,
+    "upstreamGatewayAuthenticationExercised": false,
+    "actualReverbDelivery": true,
+    "uiActorLabel": "The app labels generic assistant edits Claude; this request used no model."
+  },
+  "stills": [
+    {
+      "file": "conflict.png",
+      "sourceFrameZeroBased": 300,
+      "sourceSeconds": 12.0,
+      "crop": {
+        "x": 217,
+        "y": 150,
+        "width": 743,
+        "height": 320
+      },
+      "sourceDecodedFramePngSha256": "79998f94a9099c2bcbdccd710276add52c97077da24fa35e29169679c64c33a7",
+      "outputSha256": "f0f2d35592e677db7132a842715d4ee91094995e0cd27aced1d1290a65f91104",
+      "exactDecodedRgbCrop": true,
+      "encoding": "Lossless PNG; no resize, mask or repaint"
+    },
+    {
+      "file": "result.png",
+      "sourceFrameZeroBased": 550,
+      "sourceSeconds": 22.0,
+      "crop": {
+        "x": 1177,
+        "y": 150,
+        "width": 743,
+        "height": 260
+      },
+      "sourceDecodedFramePngSha256": "19410b70f1eb9789d5608aa3c071a14fecada1c66527620bfe874b33b3c6471a",
+      "outputSha256": "a6ccd7b7384c07fb9d2fecd5d1e6b0802b056483435a7b4d5e02b51131891a19",
+      "exactDecodedRgbCrop": true,
+      "encoding": "Lossless PNG; no resize, mask or repaint"
+    },
+    {
+      "file": "poster.png",
+      "sourceFrameZeroBased": 300,
+      "sourceSeconds": 12.0,
+      "crop": {
+        "x": 0,
+        "y": 88,
+        "width": 1920,
+        "height": 1012
+      },
+      "sourceDecodedFramePngSha256": "79998f94a9099c2bcbdccd710276add52c97077da24fa35e29169679c64c33a7",
+      "outputSha256": "7c33942d16ffd526ed6e768711e3d3c8ab631d7039b1c2b458cb15343e49acb1",
+      "exactDecodedRgbCrop": true,
+      "encoding": "Lossless PNG; no resize, mask or repaint"
+    }
+  ],
+  "film": {
+    "file": "draft-choice.mp4",
+    "sourceFilmSha256": "4a245a2cbd2290cfca34d12318553a7f306cf6e0e0f7489ab238e8360284182f",
+    "sourceSpanSeconds": [
+      7,
+      22.24
+    ],
+    "sourceFramesZeroBasedInclusive": [
+      175,
+      555
+    ],
+    "sourceEndFrameExclusive": 556,
+    "frameCount": 381,
+    "durationSeconds": 15.24,
+    "framesPerSecond": 25,
+    "width": 1920,
+    "height": 1012,
+    "crop": {
+      "x": 0,
+      "y": 88,
+      "width": 1920,
+      "height": 1012
+    },
+    "encoding": "H.264 CRF 18, yuv420p, original frame order and speed, no audio",
+    "outputSha256": "09faa3d88e6fc2ecae6768f26a27b9fe26eba7e1496e017e6481fdc9b507a316",
+    "internalCuts": 0,
+    "speedChanges": false,
+    "addedVisualOverlays": false
+  },
+  "publicMedia": [
+    "scratch-pad/conflict.png",
+    "scratch-pad/result.png",
+    "scratch-pad/poster.png",
+    "scratch-pad/draft-choice.mp4",
+    "scratch-pad/draft-choice.vtt",
+    "scratch-pad/receipt.json"
+  ],
+  "publicPrivacy": "Positive allowlist, exact crops exclude browser endpoints; raw identities/auth/hosts and private installer/canonical drift remain in private proof ledger."
+}

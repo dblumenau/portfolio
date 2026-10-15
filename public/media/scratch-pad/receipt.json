@@ -1,0 +1,208 @@
+{
+  "title": "Scratch Pad: preserve an unsaved draft",
+  "source": {
+    "applicationTag": "web-v10.21.2",
+    "applicationRevision": "4bb89c99324dd287baed1122c9e460d4bb1b196e",
+    "mcpTag": "v5.12.0",
+    "mcpRevision": "25d1b7140355be1b8fc9f5331cf41cc01c8b8050",
+    "applicationAndHandlerUnchanged": true,
+    "currentProductionClaim": false
+  },
+  "scope": {
+    "actualIsolatedApplication": true,
+    "fictionalNote": "Lantern Workshop",
+    "twoClientsOneFictionalAccount": true,
+    "controlledToolEdit": true,
+    "modelCalls": 0,
+    "actualServiceKeyMiddleware": true,
+    "syntheticCallerContext": true,
+    "upstreamGatewayAuthenticationExercised": false,
+    "actualReverbDelivery": true,
+    "uiActorLabel": "The app labels generic assistant edits Claude; this request used no model."
+  },
+  "revisions": [
+    {
+      "revision": 1,
+      "actor": "user",
+      "operation": "Native New file creates empty record",
+      "content": "",
+      "contentSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "revision": 2,
+      "actor": "user",
+      "operation": "Browser Save",
+      "content": "# Lantern Workshop\n\nBegin with a paper sketch.\nReserve five minutes for questions.\n",
+      "contentSha256": "3b251a5e0bd039ede98250e54dee2b3a9cb1998f1b3effcd9be14ae324431088"
+    },
+    {
+      "revision": 3,
+      "actor": "assistant",
+      "operation": "Controlled MCP edit",
+      "content": "# Lantern Workshop\n\nBegin with a cardboard model.\nReserve five minutes for questions.\n",
+      "contentSha256": "c71f1682994d327427ab2e91bbcf0098da95f78cfb88bd09582dba20a77e97a0"
+    },
+    {
+      "revision": 4,
+      "actor": "user",
+      "operation": "Native Keep mine",
+      "content": "# Lantern Workshop\n\nBegin with a paper sketch.\nReserve ten minutes for questions.\n",
+      "contentSha256": "8d678dd50b2bae724dd0f8e6cbb75e7f15f568e40ed03b4f1e9d8e6bef804b0b"
+    }
+  ],
+  "observed": {
+    "dirtyDraft": "# Lantern Workshop\n\nBegin with a paper sketch.\nReserve ten minutes for questions.\n",
+    "cleanClientReadControlledToolEdit": true,
+    "dirtyClientPreservedItsExactDraft": true,
+    "keepMineWholeFileReplacement": true,
+    "automaticMerge": false,
+    "assistantCardboardChangeReplaced": true,
+    "bothClientsShowFinalDraft": true,
+    "otherClientReloadRetainsFinalDraft": true
+  },
+  "counts": {
+    "browserFileWrites": 3,
+    "controlledMcpFileWrites": 1,
+    "scratchNotificationFrames": 8,
+    "framesPerClient": 4,
+    "notificationContainsDocumentContent": false,
+    "cleanClientContentReads": 4,
+    "cleanClientReadsPerRevision": {
+      "revision2": 1,
+      "revision3": 1,
+      "revision4": 2
+    },
+    "dirtyClientContentReadsReplacingDraft": 0
+  },
+  "retention": {
+    "backing": "Short-lived cache-backed note records, not project files",
+    "daysAfterEachFilesLastWrite": 7,
+    "readsRenewExpiry": false,
+    "separateControlledClockServiceCheck": true,
+    "sevenRealDaysElapsed": false
+  },
+  "recordedSourceTests": {
+    "phpTests": 24,
+    "phpAssertions": 305,
+    "vueFiles": 8,
+    "vueTests": 63,
+    "originalPhpTestsFakeBroadcastEvents": true,
+    "primaryRecordedFlowUsesRealReverb": true
+  },
+  "media": {
+    "sourceFilmSha256": "4a245a2cbd2290cfca34d12318553a7f306cf6e0e0f7489ab238e8360284182f",
+    "stills": [
+      {
+        "file": "conflict.png",
+        "sourceFrameZeroBased": 300,
+        "sourceSeconds": 12.0,
+        "crop": {
+          "x": 217,
+          "y": 150,
+          "width": 743,
+          "height": 320
+        },
+        "sourceDecodedFramePngSha256": "79998f94a9099c2bcbdccd710276add52c97077da24fa35e29169679c64c33a7",
+        "outputSha256": "f0f2d35592e677db7132a842715d4ee91094995e0cd27aced1d1290a65f91104",
+        "exactDecodedRgbCrop": true,
+        "encoding": "Lossless PNG; no resize, mask or repaint"
+      },
+      {
+        "file": "result.png",
+        "sourceFrameZeroBased": 550,
+        "sourceSeconds": 22.0,
+        "crop": {
+          "x": 1177,
+          "y": 150,
+          "width": 743,
+          "height": 260
+        },
+        "sourceDecodedFramePngSha256": "19410b70f1eb9789d5608aa3c071a14fecada1c66527620bfe874b33b3c6471a",
+        "outputSha256": "a6ccd7b7384c07fb9d2fecd5d1e6b0802b056483435a7b4d5e02b51131891a19",
+        "exactDecodedRgbCrop": true,
+        "encoding": "Lossless PNG; no resize, mask or repaint"
+      },
+      {
+        "file": "poster.png",
+        "sourceFrameZeroBased": 300,
+        "sourceSeconds": 12.0,
+        "crop": {
+          "x": 0,
+          "y": 88,
+          "width": 1920,
+          "height": 1012
+        },
+        "sourceDecodedFramePngSha256": "79998f94a9099c2bcbdccd710276add52c97077da24fa35e29169679c64c33a7",
+        "outputSha256": "7c33942d16ffd526ed6e768711e3d3c8ab631d7039b1c2b458cb15343e49acb1",
+        "exactDecodedRgbCrop": true,
+        "encoding": "Lossless PNG; no resize, mask or repaint"
+      }
+    ],
+    "film": {
+      "file": "draft-choice.mp4",
+      "sourceFilmSha256": "4a245a2cbd2290cfca34d12318553a7f306cf6e0e0f7489ab238e8360284182f",
+      "sourceSpanSeconds": [
+        7,
+        22.24
+      ],
+      "sourceFramesZeroBasedInclusive": [
+        175,
+        555
+      ],
+      "sourceEndFrameExclusive": 556,
+      "frameCount": 381,
+      "durationSeconds": 15.24,
+      "framesPerSecond": 25,
+      "width": 1920,
+      "height": 1012,
+      "crop": {
+        "x": 0,
+        "y": 88,
+        "width": 1920,
+        "height": 1012
+      },
+      "encoding": "H.264 CRF 18, yuv420p, original frame order and speed, no audio",
+      "outputSha256": "09faa3d88e6fc2ecae6768f26a27b9fe26eba7e1496e017e6481fdc9b507a316",
+      "internalCuts": 0,
+      "speedChanges": false,
+      "addedVisualOverlays": false
+    },
+    "captions": {
+      "file": "draft-choice.vtt",
+      "sha256": "38443b0a0b8d669775cfd31ed146fdeb79e318f1eb42854a29f32cc45a785b0a",
+      "cues": [
+        {
+          "startSeconds": 0,
+          "endSeconds": 2.8,
+          "text": "Edit five minutes to ten; leave it unsaved."
+        },
+        {
+          "startSeconds": 2.8,
+          "endSeconds": 4,
+          "text": "Controlled tool edit; no model."
+        },
+        {
+          "startSeconds": 4,
+          "endSeconds": 6.8,
+          "text": "Saved file changes. The dirty draft stays."
+        },
+        {
+          "startSeconds": 6.8,
+          "endSeconds": 10.64,
+          "text": "Keep mine replaces the whole saved file."
+        },
+        {
+          "startSeconds": 10.64,
+          "endSeconds": 13.2,
+          "text": "Reload the other browser."
+        },
+        {
+          "startSeconds": 13.2,
+          "endSeconds": 15.24,
+          "text": "After reload: paper sketch, ten minutes."
+        }
+      ],
+      "rendering": "Native selectable captions, no burned replacement UI"
+    }
+  }
+}

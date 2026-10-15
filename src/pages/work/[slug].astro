@@ -10,6 +10,7 @@ import NativeClientDemo from '../../components/NativeClientDemo.astro';
 import WorkbenchMap from '../../components/WorkbenchMap.astro';
 import ConferenceOutput from '../../components/ConferenceOutput.astro';
 import ConferenceStorageBridge from '../../components/ConferenceStorageBridge.astro';
+import ScratchPadShowcase from '../../components/ScratchPadShowcase.astro';
 import RecoveryResult from '../../components/RecoveryResult.astro';
 import AttentionPreview from '../../components/AttentionPreview.astro';
 import ImageRevisionShowcase from '../../components/ImageRevisionShowcase.astro';
@@ -51,6 +52,7 @@ const mobileImage = project.slug === 'conference-notes' ? '/media/conference-not
     </section>
     <section class="case-decisions" id="the-decisions"><div class="wrap"><SectionHeading number="03" label="Design + engineering" title="The decisions underneath." /><div class="decision-grid">{project.decisions.map((decision, index) => <article><span class="decision-index">0{index + 1} /</span><h3>{decision.title}</h3><p>{decision.description}</p></article>)}</div></div></section>
     {project.slug === 'conference-notes' && <ConferenceStorageBridge />}
+    {project.slug === 'panelforge' && <ScratchPadShowcase />}
     {caseFeatures.length > 0 && <section class="case-feature-index wrap" aria-labelledby="case-feature-title"><p class="eyebrow">Explore the individual features</p><h2 id="case-feature-title">The smaller pieces of this story.</h2><div>{caseFeatures.map(feature => feature && <a href={`/features/${feature.slug}/`}><span>{feature.name}</span><strong>{feature.title}</strong><span aria-hidden="true"><Icon name="arrow-up-right" /></span></a>)}</div></section>}
     {project.slug === 'connected-agents' && <SessionCronShowcase />}
     {project.slug === 'panelforge' && <CodeHistoryShowcase />}

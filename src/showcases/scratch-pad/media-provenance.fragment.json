@@ -1,0 +1,87 @@
+{
+  "assets": [
+    {
+      "file": "scratch-pad/conflict.png",
+      "product": "PanelForge Scratch Pad",
+      "captured": "2026-10-15",
+      "method": "Selected completed pinned isolated application capture; actual tool handler, local service middleware and real Reverb; no new app or model run",
+      "content": "Exact crop from source frame 300 of the real unsaved-draft conflict, preserving original actor label and both native choice controls.",
+      "redactions": [
+        "Browser chrome and local address bars excluded by exact crop"
+      ],
+      "bytes": 82003,
+      "sha256": "f0f2d35592e677db7132a842715d4ee91094995e0cd27aced1d1290a65f91104",
+      "width": 743,
+      "height": 320
+    },
+    {
+      "file": "scratch-pad/result.png",
+      "product": "PanelForge Scratch Pad",
+      "captured": "2026-10-15",
+      "method": "Selected completed pinned isolated application capture; actual tool handler, local service middleware and real Reverb; no new app or model run",
+      "content": "Exact crop from source frame 550 of the other client after reload, showing paper sketch and ten minutes.",
+      "redactions": [
+        "Browser chrome and local address bars excluded by exact crop"
+      ],
+      "bytes": 53136,
+      "sha256": "a6ccd7b7384c07fb9d2fecd5d1e6b0802b056483435a7b4d5e02b51131891a19",
+      "width": 743,
+      "height": 260
+    },
+    {
+      "file": "scratch-pad/poster.png",
+      "product": "PanelForge Scratch Pad",
+      "captured": "2026-10-15",
+      "method": "Selected completed pinned isolated application capture; actual tool handler, local service middleware and real Reverb; no new app or model run",
+      "content": "Browser-bar crop of source frame 300, preserving both actual clients.",
+      "redactions": [
+        "Browser chrome and local address bars excluded by exact crop"
+      ],
+      "bytes": 181681,
+      "sha256": "7c33942d16ffd526ed6e768711e3d3c8ab631d7039b1c2b458cb15343e49acb1",
+      "width": 1920,
+      "height": 1012
+    },
+    {
+      "file": "scratch-pad/draft-choice.mp4",
+      "product": "PanelForge Scratch Pad",
+      "captured": "2026-10-15",
+      "method": "Selected completed pinned isolated application capture; actual tool handler, local service middleware and real Reverb; no new app or model run",
+      "content": "Continuous source frames 175–555 at original speed; only the browser bars are cropped. No audio, model or visual overlays.",
+      "redactions": [
+        "Browser chrome and local address bars excluded by exact crop"
+      ],
+      "bytes": 256553,
+      "sha256": "09faa3d88e6fc2ecae6768f26a27b9fe26eba7e1496e017e6481fdc9b507a316",
+      "width": 1920,
+      "height": 1012,
+      "durationSeconds": 15.24,
+      "frameCount": 381,
+      "audioStreams": 0,
+      "sourceSpanSeconds": [
+        7,
+        22.24
+      ]
+    },
+    {
+      "file": "scratch-pad/draft-choice.vtt",
+      "product": "PanelForge Scratch Pad",
+      "captured": "2026-10-15",
+      "method": "Selected completed pinned isolated application capture; actual tool handler, local service middleware and real Reverb; no new app or model run",
+      "content": "Six native action captions aligned to the declared 15.24-second excerpt.",
+      "redactions": [],
+      "bytes": 420,
+      "sha256": "38443b0a0b8d669775cfd31ed146fdeb79e318f1eb42854a29f32cc45a785b0a"
+    },
+    {
+      "file": "scratch-pad/receipt.json",
+      "product": "PanelForge Scratch Pad",
+      "captured": "2026-10-15",
+      "method": "Selected completed pinned isolated application capture; actual tool handler, local service middleware and real Reverb; no new app or model run",
+      "content": "Positive-allowlist exact fictional strings, hashes, revisions, counts, source pins and media operations; no raw account/channel/origin/credential data.",
+      "redactions": [],
+      "bytes": 6837,
+      "sha256": "900fe517f711b1567cb8c104d1a5ffd368868e71c5342356c4ab19758f63eadc"
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+---
+import Icon from './Icon.astro';
+const media = '/media/scratch-pad';
+---
+<section class="scratch-showcase wrap" id="shared-scratch-draft" aria-label="Scratch Pad draft preservation" data-scratch-showcase>
+  <details data-scratch-main>
+    <summary>Keep your draft when the saved file changes. <Icon name="plus" /></summary>
+    <div class="scratch-content">
+      <p class="scratch-intro">One browser held an unsaved ten-minute draft. A tool edit changed the saved note to a cardboard model. The other browser picked up that change; the first kept its draft and showed a choice.</p>
+      <p class="scratch-scope"><strong>Actual PanelForge, in an isolated recorded run.</strong> Two browsers shared one fictional account. A controlled MCP tool edit travelled through the real API and Reverb updates. <strong>No model ran.</strong></p>
+      <p class="scratch-excerpt-label">Observed excerpts from the fictional Lantern Workshop note</p>
+      <ol class="scratch-states" aria-label="Competing wording and the saved result">
+        <li data-scratch-state="draft"><h3>Unsaved draft</h3><blockquote>Begin with a <strong>paper sketch.</strong><br />Reserve <strong>ten minutes</strong> for questions.</blockquote></li>
+        <li data-scratch-state="saved"><h3>Saved tool edit</h3><blockquote>Begin with a <strong>cardboard model.</strong><br />Reserve <strong>five minutes</strong> for questions.</blockquote></li>
+        <li data-scratch-state="result"><h3>After Keep mine</h3><blockquote>Begin with a <strong>paper sketch.</strong><br />Reserve <strong>ten minutes</strong> for questions.</blockquote><p>Keep mine saved the whole draft, replacing the saved file. The cardboard change was replaced. <strong>This is whole-file replacement, not a merge.</strong></p></li>
+      </ol>
+      <p class="scratch-reading-note">These are quotations from the recorded states, not an editor. Both browsers showed the final wording, including after the second browser reloaded.</p>
+      <div class="scratch-captures">
+        <figure>
+          <a href={`${media}/conflict.png`} target="_blank" rel="noopener" aria-label="Open the actual conflict crop at full size"><img src={`${media}/conflict.png`} width="743" height="320" loading="lazy" decoding="async" alt="Actual first-browser crop: Unsaved remains visible, the draft says paper sketch and ten minutes, and the conflict banner offers Load saved version and Keep mine." /></a>
+          <figcaption><strong>First browser: the unsaved draft survives.</strong> The app labels assistant edits “Claude”; this check used a controlled tool call, with no model. The original banner and controls are unchanged.</figcaption>
+        </figure>
+        <figure>
+          <a href={`${media}/result.png`} target="_blank" rel="noopener" aria-label="Open the other browser's saved result crop at full size"><img src={`${media}/result.png`} width="743" height="260" loading="lazy" decoding="async" alt="Actual other-browser crop after reload: brief.md shows Begin with a paper sketch and Reserve ten minutes for questions, with no conflict banner." /></a>
+          <figcaption><strong>Other browser, after reload.</strong> The complete user draft is now the saved file. Select either genuine frame crop to inspect it at full size.</figcaption>
+        </figure>
+      </div>
+      <p class="scratch-retention">Scratch notes are short-lived cache-backed records, separate from project files. Each expires <strong>seven days after its last write</strong>; reads do not renew it.</p>
+      <details class="scratch-film" data-scratch-film>
+        <summary><span><Icon name="play" />Watch the recorded choice</span><Icon name="plus" /></summary>
+        <div>
+          <video controls playsinline preload="none" poster={`${media}/poster.png`} width="1920" height="1012" aria-label="Recorded Scratch Pad conflict and whole-file Keep mine choice in two actual browser clients" aria-describedby="scratch-film-note">
+            <source src={`${media}/draft-choice.mp4`} type="video/mp4" />
+            <track kind="captions" src={`${media}/draft-choice.vtt`} srclang="en" label="English action captions" default />
+            <p><a href={`${media}/draft-choice.mp4`}>Open the recorded choice</a></p>
+          </video>
+          <p id="scratch-film-note">A continuous 15.24-second excerpt at original speed, ending after the other browser reloads. Only the browser bars were cropped away; both real clients and their controls remain. The app’s “Claude” label means a controlled tool edit here, with no model.</p>
+          <div class="scratch-links"><a href={`${media}/draft-choice.mp4`}>Open the film full size <Icon name="arrow-up-right" /></a><a href={`${media}/draft-choice.vtt`}>Read the action captions <Icon name="arrow-up-right" /></a></div>
+        </div>
+      </details>
+      <details class="scratch-method" data-scratch-method>
+        <summary>How this was checked <Icon name="plus" /></summary>
+        <div><p>The pinned, unchanged PanelForge <code>web-v10.21.2</code> and MCP <code>v5.12.0</code> used a disposable account, database and cache. The actual tool handler called the actual service-key middleware with fixture credentials. Two authenticated clients received real metadata-only Reverb events; the clean client fetched the saved content separately.</p><p>Native New file first created an empty revision 1. The authored save was revision 2, the controlled tool edit revision 3, and Keep mine revision 4. The dirty client retained its draft throughout the conflict. Upstream gateway authentication and model inference were outside this run.</p><p>The original focused checks recorded 24 PHP tests with 305 assertions and 63 Vue tests. A separate controlled-clock check of the unchanged service verified expiry after each file’s last write and that reads do not renew it. That check did not wait seven real days.</p><a href={`${media}/receipt.json`}>Read the selected Scratch Pad receipt <Icon name="arrow-up-right" /></a></div>
+      </details>
+    </div>
+  </details>
+</section>
+<script>
+  document.querySelectorAll<HTMLElement>('[data-scratch-showcase]').forEach(section => {
+    const video = section.querySelector('video');
+    section.querySelectorAll<HTMLDetailsElement>('[data-scratch-main], [data-scratch-film]').forEach(details => {
+      details.addEventListener('toggle', () => { if (!details.open) video?.pause(); });
+    });
+    window.addEventListener('pagehide', () => video?.pause());
+  });
+</script>
+<style>
+.scratch-showcase{padding-block:26px 32px;scroll-margin-top:24px}.scratch-showcase>details{border-block:1px solid var(--line)}.scratch-showcase summary{display:flex;justify-content:space-between;align-items:center;gap:18px;min-height:54px;padding:14px 8px;font-size:15px;font-weight:650;line-height:1.5;cursor:pointer}.scratch-showcase>details>summary{min-height:60px;font-size:18px}.scratch-showcase summary :global(.ui-icon){flex-shrink:0;width:18px;height:18px}.scratch-showcase details[open]>summary>:global(.ui-icon){transform:rotate(45deg)}.scratch-content{padding:8px 0 22px}.scratch-content p,.scratch-content figcaption{font-size:15px;line-height:1.8}.scratch-intro{max-width:850px;color:var(--muted)}.scratch-scope{margin-top:19px;padding:15px 18px;background:#e8ecdf;border-left:3px solid var(--forest);color:var(--muted);max-width:950px}.scratch-scope strong{color:var(--ink);font-weight:600}.scratch-excerpt-label{margin:26px 0 12px;font-weight:650}.scratch-states{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));list-style:none;margin:0;padding:0;border:1px solid #bdc7b2;border-radius:4px;overflow:hidden;background:#fbfaf4}.scratch-states li{min-width:0;padding:23px 25px}.scratch-states li:nth-child(2){border-left:1px solid #c5ccb9;background:#f3eee3}.scratch-states li:last-child{grid-column:1/-1;border-top:1px solid #c5ccb9;background:#e8eddf}.scratch-states h3{font:600 17px/1.5 var(--sans);margin-bottom:15px;letter-spacing:-.02em}.scratch-states blockquote{margin:0;padding:0;border:0;font:400 clamp(21px,2.1vw,27px)/1.6 var(--serif)}.scratch-states blockquote strong{font-weight:600;color:var(--forest-dark)}.scratch-states li:last-child>p{margin:17px 0 0;max-width:850px;color:var(--muted)}.scratch-states li:last-child>p strong{color:var(--ink);font-weight:600}.scratch-reading-note{max-width:900px;color:var(--muted);margin-top:15px}.scratch-captures{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:25px;margin-top:26px;align-items:start}.scratch-captures figure{min-width:0;margin:0}.scratch-captures a{display:block;min-height:44px}.scratch-captures img{display:block;width:100%;height:auto;border:1px solid #85917c;border-radius:4px;background:#121820}.scratch-captures figcaption{margin-top:13px;color:var(--muted)}.scratch-captures figcaption strong{display:block;color:var(--ink);font-weight:650}.scratch-retention{margin:24px 0;color:var(--forest-dark);max-width:900px}.scratch-film,.scratch-method{border-top:1px solid var(--line)}.scratch-film>summary>span{display:flex;align-items:center;gap:12px}.scratch-film>div,.scratch-method>div{padding:10px 0 20px}.scratch-film video{display:block;width:100%;height:auto;aspect-ratio:1920/1012;background:#111820;border:1px solid #85917c;border-radius:4px}.scratch-film video::cue{font-size:clamp(14px,1.5vw,22px);color:#fff;background:#10151b}.scratch-film p,.scratch-method p{margin-top:14px;max-width:960px;color:var(--muted)}.scratch-links{display:flex;flex-wrap:wrap;gap:2px 30px;margin-top:8px}.scratch-links a,.scratch-method a{display:inline-flex;align-items:center;gap:12px;min-height:46px;font-size:14px;padding-block:8px}.scratch-method code{font-size:14px;overflow-wrap:anywhere}.scratch-showcase :is(a,summary,video):focus-visible{outline:3px solid var(--rust);outline-offset:4px}
+@media(max-width:1100px){.scratch-captures{grid-template-columns:1fr;max-width:743px;margin-inline:auto}.scratch-states li{padding:22px}.scratch-states blockquote{font-size:23px}}
+@media(max-width:640px){.scratch-showcase{padding-block:20px 26px}.scratch-showcase>details>summary{font-size:17px}.scratch-content p,.scratch-content figcaption{font-size:14px}.scratch-scope{padding:13px 15px}.scratch-states{grid-template-columns:1fr}.scratch-states li{padding:20px}.scratch-states li:nth-child(2){border-left:0;border-top:1px solid #c5ccb9}.scratch-states li:last-child{grid-column:auto}.scratch-states h3{font-size:17px}.scratch-states blockquote{font-size:21px;line-height:1.7}.scratch-film video:not(:fullscreen)::cue{font-size:14px}}
+</style>

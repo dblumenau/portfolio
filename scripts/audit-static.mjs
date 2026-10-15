@@ -9,6 +9,8 @@ const errors = [];
 const external = new Set();
 const report = { date: new Date().toISOString(), buildRoot: root, routes: [], assets: [], sampleFiles: [], externalLinks: [], errors };
 const reviewedEvidenceMedia = [
+  'scratch-pad/conflict.png', 'scratch-pad/result.png', 'scratch-pad/poster.png',
+  'scratch-pad/draft-choice.mp4', 'scratch-pad/draft-choice.vtt', 'scratch-pad/receipt.json',
   'conference-bridge/reloaded-pending.webp', 'conference-bridge/saved-after-reload.webp', 'conference-bridge/receipt.json',
   'maintained-profile/profile-history.mp4', 'maintained-profile/profile-history.vtt',
   'maintained-profile/history-phone.png', 'maintained-profile/poster.png', 'maintained-profile/receipt.json',
@@ -301,6 +303,7 @@ for (const file of all) {
       videoDurations.set(name, info.duration);
       info.streams = metadata.streams;
       if (name === 'media/image-revision/motion-study.mp4' && (metadata.streams.length !== 1 || metadata.streams[0].codec_type !== 'video')) errors.push(`Reviewed video-only study contains additional streams: ${name}`);
+      if (name === 'media/scratch-pad/draft-choice.mp4' && (metadata.streams.length !== 1 || metadata.streams[0].codec_type !== 'video')) errors.push(`Reviewed silent Scratch Pad film contains additional streams: ${name}`);
       if (!(info.duration > 1) || !metadata.streams.some(stream => stream.codec_type === 'video' && stream.codec_name === 'h264')) errors.push(`Invalid browser MP4: ${name}`);
     }
   }
