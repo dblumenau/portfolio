@@ -13,3 +13,7 @@ The adapter scopes keyboard controls to its player, adds a native seek range and
 The curated public package includes only the original sample, two genuine recordings, two encoded genuine stills, ordered English action-caption files, a redacted receipt and source/library notices. Desktop footage contains actual synchronized browser output; touch footage is silent Chromium emulation at 390 × 844, without a physical-device claim. The full authored story is readable beside the player; action captions describe the recorded workflow without pretending the entire story plays continuously through seek/loop actions.
 
 No subjective human listening, original PDF/SRT alignment accuracy, learner improvement, physical touch or native Safari result is claimed. AI-generated voice disclosure accompanies the interactive sample and the footage descriptions. No extra synthesis was performed for this integration.
+
+## Separate study-plan check
+
+The section after the listening recordings presents a saved actual local-app workflow with an explicitly unreleased callback-scope correction. Its history, question and duration metadata are fictional; no audio was played. It is separate from the retained playback component proof. The scoped new section pauses only its own optional recording on disclosure close/pagehide. See `../../showcases/listening-plan/PROVENANCE.md` and the public selected receipt.

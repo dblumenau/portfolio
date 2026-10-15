@@ -41,3 +41,5 @@ Interface icons are SVGs from `src/components/Icon.astro` and `src/ui/icons.ts`.
 The existing Grounded Analysis feature presents actual saved extraction from an authored fictional transcript. `src/showcases/grounded-analysis/` records the selection, source-navigation edit and limits; semantic review is editorial and saved output is unchanged.
 
 The native tool-boundary feature presents recorded execution in the patched Codex app-server: a protected shell read, the same grant after restart/resume, an excluded patch and a separate granted control. Synthetic upstream messages drive these checks; the shell remains a broad tool grant.
+
+The steering feature presents a static record of one real Claude Engine correction during a deliberately delayed fictional-file read. Its receipt retains selected observed events, the preserved result and exact code-only answer; private command restrictions and engine-only scope are disclosed. No runtime starts from the exhibit.

@@ -1,0 +1,62 @@
+{
+  "purpose": "Selected facts from an actual isolated app workflow with fictional inputs. Not a released application claim.",
+  "source": {
+    "original_revision": "5c925b1de588f1f668648774925d8cca5efbcf39",
+    "private_unreleased_correction": "Moved the unchanged result-action callback declaration above its early return. The original source failed at that button.",
+    "fixture_manifest": "Two authored chapters with duration metadata taken from source regression inputs; no audio files.",
+    "unchanged_behavior": "Original phase, slot and persistence code."
+  },
+  "inputs": {
+    "history": "Six seeded fictional completed days and one pending fixture completion.",
+    "question": "One wholly authored fictional question, answered correctly through the actual UI.",
+    "normal_twenty_question_pool_used": false,
+    "actual_listening": false
+  },
+  "observed": {
+    "completion_events": 1,
+    "active_day_before": 6,
+    "active_day_at_check": 7,
+    "saved_score": {
+      "correct": 1,
+      "total": 1,
+      "percent": 100
+    },
+    "saved_choice": "Mark complete",
+    "previous_chapter": {
+      "title": "Cedar",
+      "status_after": "complete",
+      "plays": 2,
+      "duration_metadata_seconds": 790,
+      "planned_seconds": 1580,
+      "planned_display": "26:20"
+    },
+    "next_chapter": {
+      "title": "Harbor",
+      "status_after": "active",
+      "week": 1,
+      "active_day": 0,
+      "slot_minutes": 30,
+      "plays": 5,
+      "duration_metadata_seconds": 357,
+      "planned_seconds": 1785,
+      "planned_display": "29:45"
+    },
+    "post_action_events": 1
+  },
+  "capture": {
+    "duration_seconds": 8.36,
+    "dimensions": [
+      1280,
+      900
+    ],
+    "editing": "Complete original-speed span; H.264 encoding only. No crop, masking, cuts, time change or synthetic pixel replacement.",
+    "soundtrack": false
+  },
+  "limits": [
+    "No audio was played or listening measured.",
+    "No human study history, learning or retention result.",
+    "One fictional question, not the ordinary twenty-question pool.",
+    "Unreleased callback-scope correction; not unmodified production behavior.",
+    "A static presentation of saved evidence, with no connected service."
+  ]
+}

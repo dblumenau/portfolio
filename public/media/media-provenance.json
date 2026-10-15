@@ -2187,6 +2187,66 @@
       ],
       "bytes": 3282,
       "sha256": "ba27631e5ae653884117a02c4256973b1076ea8d34234a672e98f2405cd968f8"
+    },
+    {
+      "file": "steering/receipt.json",
+      "product": "Claude Engine",
+      "captured": "2026-10-15",
+      "method": "Explicit allowlisted projection from actual isolated engine SSE and control/dispatcher records; no raw private objects copied. Static text exhibit, no UI recording or replay.",
+      "content": "One queued correction during a deliberately delayed fictional-file read; the same actual result and code-only final answer, source pins and execution limits. Two model response sequences and one final SDK result.",
+      "redactions": [
+        "Excluded all raw identifiers, private paths, commands, headers, auth/account data, infrastructure and accounting fields."
+      ],
+      "bytes": 2693,
+      "sha256": "22fbc578d51af5fac61197990f5106ce1006553fa1038a83e13b2fc84232a894"
+    },
+    {
+      "file": "listening-plan/chapter-choice.mp4",
+      "product": "Saturation Listening study plan",
+      "captured": "2026-10-15",
+      "method": "Actual isolated app with fictional seeded progress and one authored question; unreleased callback-scope correction; metadata-only durations, no audio played",
+      "content": "Complete actual8.36second UI flow: fictional day6, one fixture completion, one-question saved result, Mark complete, next plan.",
+      "redactions": [],
+      "bytes": 133471,
+      "sha256": "0ab6ec04a1b767ab3a73473e8ef71cf4896e810b250bd9fa4a3c357fe9f62d4e",
+      "codec_name": "h264",
+      "width": 1280,
+      "height": 900,
+      "duration_seconds": 8.36,
+      "editing": "H.264 encoding only; all209frames retained at25fps and original speed; no crop, mask, cuts or pixel replacement."
+    },
+    {
+      "file": "listening-plan/chapter-choice.vtt",
+      "product": "Saturation Listening study plan",
+      "captured": "2026-10-15",
+      "method": "Actual isolated app with fictional seeded progress and one authored question; unreleased callback-scope correction; metadata-only durations, no audio played",
+      "content": "Authored native action captions for the complete actual recording.",
+      "redactions": [],
+      "bytes": 299,
+      "sha256": "6a43d47f85cfac1d4a626c3264abb168743187ac6d6bb153a55c906bb419766e"
+    },
+    {
+      "file": "listening-plan/next-plan.png",
+      "product": "Saturation Listening study plan",
+      "captured": "2026-10-15",
+      "method": "Actual isolated app with fictional seeded progress and one authored question; unreleased callback-scope correction; metadata-only durations, no audio played",
+      "content": "Exact actual corrected-app Harbor Dashboard capture; fictional metadata, no playback.",
+      "redactions": [],
+      "bytes": 34486,
+      "sha256": "df662e877e9749251f572e1fd8b38c43ef90e46b553dd258f97d0ca9ea36deb5",
+      "width": 1280,
+      "height": 900,
+      "editing": "None; byte-identical actual source capture."
+    },
+    {
+      "file": "listening-plan/receipt.json",
+      "product": "Saturation Listening study plan",
+      "captured": "2026-10-15",
+      "method": "Actual isolated app with fictional seeded progress and one authored question; unreleased callback-scope correction; metadata-only durations, no audio played",
+      "content": "Selected safe actual result and capture facts, with original-source/correction/fixture limits.",
+      "redactions": [],
+      "bytes": 2222,
+      "sha256": "111e294fb00a892513892a990ced3e188663f427c63433bd16dcae8e7dcccf51"
     }
   ]
 }

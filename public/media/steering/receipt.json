@@ -1,0 +1,81 @@
+{
+  "schema": 1,
+  "kind": "recorded-isolated-engine-steering",
+  "recorded": "2026-10-15",
+  "source": {
+    "engine": "Claude Engine",
+    "version": "v6.17.0",
+    "commit": "bf89abc1646bd12133a0f22bc2d51f3286813250",
+    "sdk": "0.2.164",
+    "cli": "2.1.292",
+    "model": "claude-haiku-5-5"
+  },
+  "instructions": {
+    "originalSelectedExcerpt": "Wait for the result, then answer in one full sentence identifying the observed fictional code.",
+    "changed": "Keep the observed fictional code exactly, but answer with that code only. No sentence, label, punctuation or markdown."
+  },
+  "sequence": [
+    {
+      "event": "tool_use",
+      "label": "Read started",
+      "seconds": 2.4763
+    },
+    {
+      "event": "steer_queued",
+      "label": "Correction queued",
+      "seconds": 2.5633
+    },
+    {
+      "event": "tool_result",
+      "label": "Tool returned",
+      "seconds": 10.5714
+    },
+    {
+      "event": "steer_applied",
+      "label": "Correction applied",
+      "seconds": 10.5768
+    },
+    {
+      "event": "done",
+      "label": "Stream complete",
+      "seconds": 13.0677
+    }
+  ],
+  "tool": {
+    "name": "Bash",
+    "fixture": "fictional file",
+    "deliberateDelaySeconds": 8,
+    "result": "LANTERN-4827",
+    "successful": true,
+    "sameResultRetainedAtApplication": true
+  },
+  "answer": "LANTERN-4827",
+  "observations": {
+    "streams": 1,
+    "corrections": 1,
+    "toolCalls": 1,
+    "toolResults": 1,
+    "interruptRequests": 0,
+    "modelResponseSequences": 2,
+    "finalSdkResults": 1,
+    "matchedDeliveryEcho": true,
+    "pendingAfterEcho": 0,
+    "steerTurns": 1,
+    "completedWithoutError": true,
+    "backgroundActiveAtCompletion": false,
+    "deliveryBeforeFirstResultBoundary": true
+  },
+  "method": {
+    "sourceUnchanged": true,
+    "restriction": "A private allow-once hook accepted only the exact delayed read, then replaced it with a fixed launcher into read-only filesystem and private network namespaces. The trusted CLI and launcher remain outside the payload namespace.",
+    "sdkControl": "The initial request and the correction use separate SDK input/control writes. One stream is not one model response.",
+    "builtinPlugins": [
+      "cc-plugin-agents-md",
+      "cc-plugin-plugin-authoring"
+    ],
+    "localBashLifecycle": true,
+    "agentOrSkillToolCalls": 0,
+    "externalPluginsConfigured": []
+  },
+  "scope": "One real engine stream with two model response sequences: a tool call and a final response, using one correction and a fictional file. No PanelForge UI or database persistence, deployment availability, multiple tools/corrections, agent steering, voice behavior or universal model compliance is established."
+}

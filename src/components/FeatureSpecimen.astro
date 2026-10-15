@@ -1,14 +1,13 @@
 ---
 import Icon from './Icon.astro';
 interface Props { kind: string; slug: string; }
-const { kind, slug } = Astro.props;
+const { kind } = Astro.props;
 ---
 {kind === 'timeline' && <div class="feature-specimen specimen-timeline">
-  <ol aria-label={slug === 'steer-without-interrupt' ? 'Illustrative steering order' : 'Illustrative agent activity'}>
+  <ol aria-label="Illustrative agent activity">
     <li><span>01</span><div><small>Request</small><p>Find a material for the Lantern prototype.</p></div></li>
     <li><span>02</span><div><small>Tool / read-only lookup</small><p>Catalog search is running.</p><details><summary>Inspect the synthetic tool record</summary><code>lookup_materials({'{'} purpose: "offline prototype" {'}'})</code><p>Result: three fictional entries.</p></details></div></li>
-    {slug === 'steer-without-interrupt' && <li class="specimen-queued"><span>03</span><div><small>Queued while the lookup runs</small><p>“Use metric units.” <Icon name="arrow-right" /> “Keep it short.”</p></div></li>}
-    <li><span>{slug === 'steer-without-interrupt' ? '04' : '03'}</span><div><small>{slug === 'steer-without-interrupt' ? 'Delivered at a boundary' : 'Final answer'}</small><p>{slug === 'steer-without-interrupt' ? 'Metric units applied. Concise answer follows on the same turn.' : 'Two entries suit a small offline prototype.'}</p></div></li>
+    <li><span>03</span><div><small>Final answer</small><p>Two entries suit a small offline prototype.</p></div></li>
   </ol>
 </div>}
 {kind === 'recovery' && <div class="feature-specimen specimen-recovery"><div><p class="exhibit-object-label">Foreground / client lane</p><ol><li>Request starts</li><li class="specimen-disconnect">Connection disappears</li><li>Reconnect <Icon name="arrow-right" /> retrieve result</li></ol></div><div><p class="exhibit-object-label">Background / engine lane</p><ol><li>Turn starts</li><li>Tool completes</li><li>Completion stored</li></ol></div><p class="specimen-footnote">Illustrated browser/SSE disconnect. The engine stays running; permission behavior depends on its configured disconnect policy.</p></div>}

@@ -1,0 +1,34 @@
+---
+import Icon from '../../components/Icon.astro';
+import VideoDemo from '../../components/VideoDemo.astro';
+import { listeningPlan as plan, listeningPlanMedia as media } from './content';
+---
+<section class="listening-plan" id="choose-next" aria-labelledby="listening-plan-title" data-listening-plan>
+  <p class="eyebrow">A separate local workflow check</p>
+  <h2 id="listening-plan-title">Choose what comes next.</h2>
+  <p class="lp-intro">The saved <strong>{plan.choice}</strong> choice moved the plan from Cedar to Harbor. The app calculated the next chapter’s listening time.</p>
+  <div class="lp-plans" aria-label="Actual plans before and after the recorded choice">
+    <article><p class="lp-label">Before the check</p><h3>Chapter {plan.before.chapter}</h3><p class="lp-duration">{plan.before.actual}<span>planned</span></p><p>{plan.before.plays} plays of {plan.before.duration}</p><p class="lp-phase">{plan.before.phase} · {plan.before.slot}</p></article>
+    <article><p class="lp-label">After “{plan.choice}”</p><h3>Chapter {plan.after.chapter}</h3><p class="lp-duration">{plan.after.actual}<span>planned</span></p><p>{plan.after.plays} plays of {plan.after.duration}</p><p class="lp-phase">{plan.after.phase} · {plan.after.slot}</p></article>
+  </div>
+  <p class="lp-saved"><strong>Saved choice: {plan.choice}.</strong> Cedar completed; Harbor active. The new plan is approximately 30 minutes.</p>
+  <div class="lp-scope" id="listening-plan-scope"><p><strong>Actual app in an isolated test copy with an unreleased interface fix.</strong> Fictional study history and question; example chapter durations. <strong>No audio was played in this recorded plan check.</strong></p><p>Six completed days were prefilled. One test completion reached day 7, and the app saved one correct answer to one authored question. This checks the workflow, not learning or retention, and does not use the usual 20-question pool.</p></div>
+  <details class="lp-recording" data-plan-recording><summary>Watch the 8-second app check <Icon name="plus" /></summary><div>
+    <VideoDemo src={`${media}/chapter-choice.mp4`} poster={`${media}/next-plan.png`} captions={`${media}/chapter-choice.vtt`} title="A saved chapter choice changes the next plan" mediaCaption={plan.disclosure} description="The complete 8.36-second silent capture shows Cedar’s seeded day-6 plan, the one-question result, an actual Mark complete click and Harbor’s next plan. Original speed and every frame are retained; only the video encoding changed." />
+    <p class="lp-film-note">Read the plans above on a small screen, or <a href={`${media}/chapter-choice.mp4`}>open the recording full size</a>. <a href={`${media}/chapter-choice.vtt`}>Read the action captions</a>.</p>
+    <p class="lp-method">Source <code>{plan.sourceRevision.slice(0, 7)}</code>, with the unchanged callback moved above an early return in a private copy. The original version failed at this button; this correction is unreleased. A fixture manifest supplies source-regression durations without audio files. The app’s phase, slot and persistence code produced the result shown.</p>
+    <a class="lp-receipt" href={`${media}/receipt.json`}>Read the concise execution receipt <Icon name="arrow-up-right" /></a>
+  </div></details>
+</section>
+<script>
+  document.querySelectorAll<HTMLElement>('[data-listening-plan]').forEach(section => {
+    const disclosure = section.querySelector<HTMLDetailsElement>('[data-plan-recording]');
+    const video = section.querySelector<HTMLVideoElement>('video');
+    disclosure?.addEventListener('toggle', () => { if (!disclosure.open) video?.pause(); });
+    window.addEventListener('pagehide', () => video?.pause());
+  });
+</script>
+<style>
+.listening-plan{padding-block:42px;margin-block:12px 28px;border-block:1px solid var(--line);scroll-margin-top:28px}.listening-plan>.eyebrow{font-size:14px;color:var(--rust);margin-bottom:12px}.listening-plan h2{font-size:clamp(1.9rem,3.6vw,3rem);line-height:1.15;margin-bottom:16px}.lp-intro{max-width:740px;font-size:18px;line-height:1.75;color:var(--muted);margin-bottom:24px}.lp-intro strong{color:var(--ink)}.lp-plans{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);max-width:940px}.lp-plans article{min-width:0;padding:22px 26px;background:var(--paper)}.lp-plans article+article{background:#edf0e4}.lp-label{font-size:14px;color:var(--muted);margin-bottom:10px}.lp-plans h3{font-size:24px;margin-bottom:14px}.lp-duration{display:flex;align-items:baseline;gap:12px;font-size:35px;line-height:1.2;font-weight:650;margin-bottom:8px;font-variant-numeric:tabular-nums}.lp-duration span{font-size:14px;font-weight:400;color:var(--muted)}.lp-plans article>p:not(.lp-duration){font-size:15px;line-height:1.8}.lp-phase{color:var(--muted);margin-top:4px}.lp-saved{font-size:16px;line-height:1.8;margin:18px 0;max-width:850px}.lp-scope{max-width:940px;border-left:3px solid #9aa78d;padding:2px 0 2px 17px}.lp-scope p{font-size:15px;line-height:1.85;color:var(--muted);margin-bottom:9px}.lp-scope p:last-child{margin-bottom:0}.lp-scope strong{color:var(--ink);font-weight:650}.lp-recording{margin-top:24px;max-width:940px;border-block:1px solid var(--line)}.lp-recording>summary{display:flex;justify-content:space-between;align-items:center;gap:20px;min-height:56px;padding:12px 3px;cursor:pointer;font-size:16px;font-weight:650}.lp-recording[open]>summary :global(.ui-icon){transform:rotate(45deg)}.lp-recording>div{padding:12px 0 24px}.lp-recording :global(.video-demo){margin:0}.lp-recording :global(video){width:100%;height:auto;aspect-ratio:1280/900}.lp-recording :global(video::cue){font-size:clamp(14px,1.4vw,22px)}.lp-recording :global(.video-heading h3){font-size:25px}.lp-recording :global(.video-provenance){display:block}.lp-film-note,.lp-method{font-size:15px;line-height:1.85;color:var(--muted);margin-top:18px}.lp-method code{font-size:14px}.lp-receipt{display:inline-flex;align-items:center;gap:10px;min-height:46px;font-size:15px;margin-top:10px}.listening-plan :is(a,summary):focus-visible{outline:3px solid var(--rust);outline-offset:4px}
+@media(max-width:640px){.listening-plan{padding-block:30px}.lp-plans{grid-template-columns:1fr}.lp-plans article{padding:20px}.lp-intro{font-size:17px}.lp-duration{font-size:32px}.lp-recording :global(video:not(:fullscreen)::cue){font-size:14px}.lp-recording :global(.video-heading h3){font-size:23px}}
+</style>

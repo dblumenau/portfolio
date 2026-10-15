@@ -302,40 +302,49 @@ export const coreFeatures: Feature[] = [
     "id": "core-steer-without-interrupt",
     "slug": "steer-without-interrupt",
     "name": "Redirect a turn without throwing it away",
-    "title": "Correct the direction while the turn continues.",
+    "title": "Change the instruction. Keep the work.",
     "area": "Engine",
     "date": "2026-10-04",
     "topics": [
       "Streaming",
       "Steering"
     ],
-    "intro": "A follow-up steer waits for a tool boundary or becomes a same-stream follow-up; multiple steers are delivered in order while the turn continues.",
-    "problem": "The old way to correct a running request was to interrupt the turn and start over, potentially losing useful progress.",
+    "intro": "A correction queued during a real fictional-file read changed the answer from a sentence to the code alone. The same engine stream retained the result and returned LANTERN-4827.",
+    "problem": "A useful result may already be on its way when the answer needs a different format. Interrupting the request can discard that progress.",
     "built": [
-      "A follow-up steer waits for a tool boundary or becomes a same-stream follow-up; multiple steers are delivered in order while the turn continues.",
-      "Queue and inject steering at a safe boundary, with an explicit delivery marker, instead of treating every new instruction as cancellation."
+      "Claude Engine accepts an additional user instruction on the active stream and marks its delivery explicitly. The recorded run queued one correction while the actual delayed read was in flight.",
+      "The successful tool result remained in the application marker. Its matched delivery echo cleared the pending correction before the single final SDK result; the model then answered with the observed code alone. The two model response sequences belong to the same stream."
     ],
     "use": [
       {
-        "title": "The consequence",
-        "description": "Queue and inject steering at a safe boundary, with an explicit delivery marker, instead of treating every new instruction as cancellation."
+        "title": "Correct the requested answer",
+        "description": "The original instruction asked for a full sentence. One correction requested the exact code alone while the read continued."
+      },
+      {
+        "title": "Keep the useful result",
+        "description": "The read returned LANTERN-4827. The same stream completed with that exact code, in the revised format."
       }
     ],
     "evolution": [
       {
         "date": "2026-10-04",
         "title": "claude-engine v6.15.0; panel-forge web-v10.20.37"
+      },
+      {
+        "date": "2026-10-15",
+        "title": "One isolated real-model engine stream: read, queued correction, preserved result and code-only answer. Source pinned at Claude Engine v6.17.0."
       }
     ],
     "sources": {
       "repo": "claude-engine + panel-forge",
       "files": [
-        "claude-engine/claude_engine/routes/stream.py",
-        "panel-forge/resources/js/composables/useClaudeEngineStream.ts",
-        "panel-forge/app/Http/Controllers/Api/ClaudeEngineStreamController.php"
+        "claude-engine/claude_engine/routes/stream_control.py",
+        "claude-engine/claude_engine/session_runtime.py",
+        "claude-engine/claude_engine/invocation.py",
+        "claude-engine/claude_engine/routes/stream.py"
       ],
       "status": "source-current",
-      "note": "Source and release record inspected; no current product execution is claimed for this illustration.",
+      "note": "On 15 October 2026, one isolated real-model execution used unchanged Claude Engine v6.17.0 source with a private exact-command hook and namespace restriction. One correction queued during the real fictional-file read, then the same stream returned its code alone. No PanelForge UI or database persistence was tested.",
       "release": "claude-engine v6.15.0; panel-forge web-v10.20.37"
     },
     "related": [
@@ -344,30 +353,10 @@ export const coreFeatures: Feature[] = [
       "native-tool-boundary-profiles"
     ],
     "exhibit": {
-      "title": "The activity beside the answer",
-      "caption": "Local explanatory exhibit · invented records · no live service or agent call",
-      "steps": [
-        {
-          "name": "During the lookup",
-          "detail": "Queued: use metric units; keep it short"
-        },
-        {
-          "name": "At the delivery boundary",
-          "detail": "Applied: metric units / concise response"
-        }
-      ],
-      "choices": [
-        {
-          "label": "During the lookup",
-          "result": "Queued: use metric units; keep it short",
-          "explanation": "Two instructions wait in the order they arrived."
-        },
-        {
-          "label": "At the delivery boundary",
-          "result": "Applied: metric units / concise response",
-          "explanation": "The source supports continued-turn steering, with explicit delivery events."
-        }
-      ]
+      "title": "A new instruction. The same result.",
+      "caption": "Recorded isolated engine execution with a real model response and a fictional file; the exact delayed read was privately restricted.",
+      "steps": [],
+      "choices": []
     },
     "presentation": "timeline"
   },

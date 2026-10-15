@@ -29,7 +29,7 @@ test('all feature links resolve to distinct stories with evidence notes', async 
     const html = await response.text();
     expect(html).toContain(feature.title);
     expect(html).toContain('Source information sheet');
-    expect(html).toContain(feature.slug === 'native-tool-boundary-profiles' ? 'data-native-boundary' : feature.slug === 'find-that' ? 'Recorded private-archive example' : feature.slug === 'voice-conversation-loop' ? 'data-recorded-voice-turn' : feature.slug === 'grounded-analysis' ? 'data-grounded-analysis' : feature.slug === 'workspace-hierarchy' ? 'data-workspace-showcase' : feature.slug === 'shared-engine-surface' ? 'data-engine-contract' : 'explanatory exhibit');
+    expect(html).toContain(feature.slug === 'steer-without-interrupt' ? 'data-recorded-steering' : feature.slug === 'native-tool-boundary-profiles' ? 'data-native-boundary' : feature.slug === 'find-that' ? 'Recorded private-archive example' : feature.slug === 'voice-conversation-loop' ? 'data-recorded-voice-turn' : feature.slug === 'grounded-analysis' ? 'data-grounded-analysis' : feature.slug === 'workspace-hierarchy' ? 'data-workspace-showcase' : feature.slug === 'shared-engine-surface' ? 'data-engine-contract' : 'explanatory exhibit');
     expect(html).not.toMatch(/conversation_id|\/home\/|conversations\/\d+/);
   }
 });
