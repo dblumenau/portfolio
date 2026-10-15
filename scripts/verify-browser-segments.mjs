@@ -25,6 +25,8 @@ const groups = {
   'selected-work': ['selected-work'],
   'audio-intent': ['audio-intent'],
   'voice-turn': ['voice-turn'],
+  'find-that': ['find-that'],
+  'native-tool-boundary': ['native-tool-boundary'],
   'engine-contract': ['engine-contract'],
   'session-cron': ['session-cron'],
   'workspace-hierarchy': ['workspace-hierarchy'],

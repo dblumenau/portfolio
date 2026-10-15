@@ -1467,7 +1467,7 @@
       "height": 1080,
       "duration_seconds": 78.2,
       "fps": 30,
-      "editing": "Silent. Original-speed moving footage, hard cuts and contained scaling in authored typographic framing. Attention source excerpts are 5\u201319s and 35.5\u201338.5s; the latter is a later actual generated-page render. The separate post-upgrade build128 persisted-card observation is excluded. Recovery source 2\u201318s shows one continuing engine process, not process-restart recovery. World is an illustration with a fixed recorded choice; original participant automated Computer Use.",
+      "editing": "Silent. Original-speed moving footage, hard cuts and contained scaling in authored typographic framing. Attention source excerpts are 5–19s and 35.5–38.5s; the latter is a later actual generated-page render. The separate post-upgrade build128 persisted-card observation is excluded. Recovery source 2–18s shows one continuing engine process, not process-restart recovery. World is an illustration with a fixed recorded choice; original participant automated Computer Use.",
       "bytes": 3107388,
       "sha256": "323da5988a2c6c680d1b979a2b1df59262f123ef23549746ec183b0cbde5cd87"
     },
@@ -2175,6 +2175,18 @@
       "method": "Exact generated and persisted OpenAI tts-1/alloy WAV.",
       "content": "Fictional moon-garden request and actual generated reply; stock file-backed input, isolated component wrapper, process-muted original capture.",
       "redactions": []
+    },
+    {
+      "file": "native-tool-boundary/receipt.json",
+      "product": "Codex native tool boundary",
+      "captured": "2026-10-15",
+      "method": "Selected projection of two recorded actual patched app-server runs driven by a deterministic local fake Responses peer",
+      "content": "Synthetic model/account fixtures. One protected shell read and same-thread app-server restart/resume with excluded patch; a separate fresh granted patch control creates the expected owned file. No real model inference or live operation by this page.",
+      "redactions": [
+        "Private protocol records, runtime identifiers, unique target filenames, absolute paths, auth, ports, hostnames, binary hashes and full schemas omitted by explicit field selection."
+      ],
+      "bytes": 3282,
+      "sha256": "ba27631e5ae653884117a02c4256973b1076ea8d34234a672e98f2405cd968f8"
     }
   ]
 }

@@ -1,0 +1,84 @@
+{
+  "version": 1,
+  "captured": "2026-10-15",
+  "kind": "Selected projection of two saved native-runtime checks",
+  "runtime": {
+    "name": "Patched Codex app-server",
+    "cliVersion": "0.162.0",
+    "engineSource": "e1553a5",
+    "upstreamTag": "rust-v0.162.0",
+    "upstreamSource": "c1382380",
+    "policyBridgeVersion": 1,
+    "artifact": "Existing prepared patched runtime reused; not independently rebuilt by these checks"
+  },
+  "fixtures": {
+    "modelAccountCatalog": "Synthetic local model metadata and account fixtures",
+    "modelLabel": "gpt-6.1-sol",
+    "observedNativeToolCount": 24,
+    "catalogIdenticalAcrossRestartAndControl": true,
+    "upstreamMessages": "Deterministic local fake Responses peer supplied all assistant messages and tool-call items",
+    "realModelInference": false,
+    "protectedOperationMcpServers": 0,
+    "catalogHelper": "Source-owned inventory-only local MCP fixture in ephemeral catalog probes; not a Gateway authorization test"
+  },
+  "protectedRun": {
+    "context": "One protected thread",
+    "exactGrant": "exec_command",
+    "read": {
+      "tool": "exec_command",
+      "command": "cat fictional-observatory.txt",
+      "exitCode": 0,
+      "output": "FICTIONAL OBSERVATORY\nThe brass telescope points north.\n",
+      "fixtureUnchanged": true
+    },
+    "resume": {
+      "processRestarted": "Codex app-server",
+      "restartCount": 1,
+      "sameSavedThread": true,
+      "engineRecordUnchanged": true,
+      "runtimeCeilingUnchanged": true,
+      "exactGrantAfter": "exec_command",
+      "enginePath": "start_or_resume_thread"
+    },
+    "excludedPatch": {
+      "tool": "apply_patch",
+      "callType": "custom_tool_call",
+      "inputShape": "FREEFORM Add File patch",
+      "actualRuntimeRefusal": "unsupported custom tool call: apply_patch",
+      "targetBefore": "absent",
+      "targetAfter": "absent"
+    }
+  },
+  "separateControl": {
+    "context": "Separate fresh thread; the protected grant was not widened",
+    "exactGrant": "apply_patch",
+    "tool": "apply_patch",
+    "callType": "custom_tool_call",
+    "inputShape": "Same FREEFORM Add File patch shape",
+    "exitCode": 0,
+    "fileAdded": true,
+    "targetBefore": "absent",
+    "targetAfter": "present",
+    "expectedFixtureBytesMatched": true,
+    "restartCount": 0
+  },
+  "controlledComparison": {
+    "threadStartDifference": "Exact selected native tool grant only",
+    "scriptedPatchDifference": "Owned target filename only",
+    "otherCallFieldsAndPatchShapeMatch": true,
+    "contextDifference": "Protected denial follows cold resume; control starts a separate fresh thread"
+  },
+  "checks": {
+    "focusedOriginalSourceTestsPassed": 13,
+    "sourceTestSkips": 0,
+    "cleanupVerified": true
+  },
+  "limits": [
+    "exec_command is a broad shell tool, not a read-only filesystem permission",
+    "Scripted upstream messages; no real model autonomously chose a call",
+    "Fixture-configured catalog, not current account entitlement or provider availability",
+    "App-server restart, not a full Engine process restart",
+    "No production deployment, settings UI, account authentication, fork/child test or adversarial security audit",
+    "Native runtime identity enforcement is distinct from Gateway/MCP resource scopes and tool profiles"
+  ]
+}

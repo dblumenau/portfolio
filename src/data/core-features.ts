@@ -461,16 +461,24 @@ export const coreFeatures: Feature[] = [
       "Tools",
       "Policy"
     ],
-    "intro": "Codex discovers the installed native catalog and enforces exact tool permissions through the runtime bridge; the ceiling persists across resume, fork and child sessions.",
+    "intro": "Codex resolves exact native tool identities against a runtime catalog and enforces the selected ceiling. The recorded checks show that grant surviving an app-server restart and same-thread resume.",
     "problem": "A profile that names only allowed MCP tools leaves native shell, browser or other runtime tools outside the visible choice.",
     "built": [
-      "Codex discovers the installed native catalog and enforces exact tool permissions through the runtime bridge; the ceiling persists across resume, fork and child sessions.",
-      "Resolve selections against the actual host catalog and pass an enforced registry ceiling into the runtime, rather than trusting prompt instructions."
+      "Discover the runtime catalog, validate exact selected names and pass an enforced registry ceiling into the patched app-server. The engine also persists its policy record for protected sessions.",
+      "The source defines ceiling inheritance for fork and child sessions as well. The execution exhibit here checks resume only; its separate positive control verifies that the excluded patch call form works when granted."
     ],
     "use": [
       {
-        "title": "The consequence",
-        "description": "Resolve selections against the actual host catalog and pass an enforced registry ceiling into the runtime, rather than trusting prompt instructions."
+        "title": "Select an exact native tool",
+        "description": "The protected thread grants exec_command, a broad shell tool. Its harmless fixture read does not make that grant a read-only filesystem permission."
+      },
+      {
+        "title": "Resume with the same ceiling",
+        "description": "After one app-server restart, the engine resumes the same saved thread and the excluded apply_patch call is unavailable."
+      },
+      {
+        "title": "Check the separate control",
+        "description": "A fresh control thread grants apply_patch and creates its expected owned file. The protected thread is not widened."
       }
     ],
     "evolution": [
@@ -484,45 +492,26 @@ export const coreFeatures: Feature[] = [
       "files": [
         "codex-engine/codex_engine/tool_policy.py",
         "codex-engine/codex_engine/native_tools.py",
+        "codex-engine/codex_engine/thread_session.py",
         "panel-forge/resources/js/components/settings/tabs/SystemPromptsTab.vue",
         "panel-forge/app/Support/CodexEngine/CodexEngineToolFence.php"
       ],
       "status": "source-current",
-      "note": "Source and release record inspected; no current product execution is claimed for this illustration.",
+      "note": "Source and release history inspected. The 15 October controlled checks ran the actual patched Codex app-server with scripted local upstream messages and synthetic model/account fixtures. They establish a real native read, same-thread app-server resume and separate denied/granted patch outcomes; no real inference or production deployment is claimed.",
       "release": "codex-engine v0.6.28; panel-forge web-v10.20.74"
     },
     "related": [
+      "gateway-tool-profiles",
       "visible-agent-activity",
-      "steer-without-interrupt",
-      "native-tool-boundary-profiles"
+      "steer-without-interrupt"
     ],
     "exhibit": {
-      "title": "A read-only profile, tested against three actions",
-      "caption": "Local explanatory exhibit · invented records · no live service or agent call",
-      "steps": [
-        {
-          "name": "Read-only ceiling",
-          "detail": "Read a file: allowed"
-        },
-        {
-          "name": "Attempt a write",
-          "detail": "Write a file: denied"
-        }
-      ],
-      "choices": [
-        {
-          "label": "Read-only ceiling",
-          "result": "Read a file: allowed",
-          "explanation": "An exact selected tool is allowed by the synthetic profile."
-        },
-        {
-          "label": "Attempt a write",
-          "result": "Write a file: denied",
-          "explanation": "An operation outside the selected ceiling is refused. This is a local explanation, not a host permission test."
-        }
-      ]
+      "title": "The grant survives a restart.",
+      "caption": "Actual patched app-server; saved results from scripted local tool calls and synthetic model/account fixtures; no real model inference.",
+      "steps": [],
+      "choices": []
     },
-    "presentation": "policy"
+    "presentation": "native-boundary"
   },
   {
     "id": "core-gateway-tool-profiles",

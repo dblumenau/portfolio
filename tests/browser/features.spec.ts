@@ -29,7 +29,7 @@ test('all feature links resolve to distinct stories with evidence notes', async 
     const html = await response.text();
     expect(html).toContain(feature.title);
     expect(html).toContain('Source information sheet');
-    expect(html).toContain(feature.slug === 'voice-conversation-loop' ? 'data-recorded-voice-turn' : feature.slug === 'grounded-analysis' ? 'data-grounded-analysis' : feature.slug === 'workspace-hierarchy' ? 'data-workspace-showcase' : feature.slug === 'shared-engine-surface' ? 'data-engine-contract' : 'explanatory exhibit');
+    expect(html).toContain(feature.slug === 'native-tool-boundary-profiles' ? 'data-native-boundary' : feature.slug === 'find-that' ? 'Recorded private-archive example' : feature.slug === 'voice-conversation-loop' ? 'data-recorded-voice-turn' : feature.slug === 'grounded-analysis' ? 'data-grounded-analysis' : feature.slug === 'workspace-hierarchy' ? 'data-workspace-showcase' : feature.slug === 'shared-engine-surface' ? 'data-engine-contract' : 'explanatory exhibit');
     expect(html).not.toMatch(/conversation_id|\/home\/|conversations\/\d+/);
   }
 });
@@ -91,16 +91,19 @@ test('gallery handoff keeps the same synthetic reference and resets explicitly',
   await expect(page.locator('[data-chip]')).toBeHidden();
 });
 
-test('the policy exhibit recalculates exact grants when a profile changes', async ({ page }) => {
+test('the recorded native boundary preserves its grant and separates the granted control', async ({ page }) => {
   await page.goto('/features/native-tool-boundary-profiles/');
-  await page.getByRole('button', { name: 'Write a file' }).click();
-  await expect(page.locator('[data-policy-result]')).toContainText('Denied: write_file');
-  await page.getByRole('button', { name: 'Read + edit', exact: true }).click();
-  await expect(page.locator('[data-policy-result]')).toContainText('Allowed: write_file');
-  await page.getByRole('button', { name: 'Run a shell' }).click();
-  await expect(page.locator('[data-policy-result]')).toContainText('Denied: run_shell');
-  await page.getByRole('button', { name: 'Read a file' }).click();
-  await expect(page.locator('[data-policy-result]')).toContainText('Allowed: read_file');
+  await expect(page.locator('[data-native-read]')).toContainText('exec_command');
+  await expect(page.locator('[data-native-read] pre')).toHaveText('FICTIONAL OBSERVATORY\nThe brass telescope points north.\n');
+  await expect(page.locator('[data-native-resume]')).toContainText('exec_command');
+  await expect(page.locator('[data-native-resume]')).toContainText('Unchanged');
+  await expect(page.locator('[data-native-denied] pre')).toHaveText('unsupported custom tool call: apply_patch');
+  await expect(page.locator('[data-native-denied]')).toContainText('Absent before');
+  await expect(page.locator('[data-native-denied]')).toContainText('absent after');
+  await expect(page.locator('[data-native-control]')).toContainText('Separate fresh control thread');
+  await expect(page.locator('[data-native-control]')).toContainText('apply_patch');
+  await expect(page.locator('[data-native-control]')).toContainText('Expected fixture bytes matched');
+  await expect(page.locator('[data-policy-playground]')).toHaveCount(0);
 });
 
 test('identical URLs cannot substitute for browser ownership', async ({ page }) => {
@@ -124,14 +127,20 @@ test('new exhibits offer a first-screen action, fit phones and have accessible c
   }
 });
 
-test('synthetic exhibits explain their outcomes without JavaScript', async ({ browser }) => {
+test('feature exhibits explain their outcomes without JavaScript', async ({ browser }) => {
   const context = await browser.newContext({ javaScriptEnabled: false });
   const page = await context.newPage();
   for (const slug of ['branching-workbench', 'reference-to-chat', 'native-tool-boundary-profiles', 'browser-handoff']) {
     await page.goto(`${test.info().project.use.baseURL}/features/${slug}/`);
-    await expect(page.locator('.feature-exhibit noscript')).toBeVisible();
-    await page.locator('.feature-example-choices summary').first().click();
-    await expect(page.locator('.feature-example-choices details').first()).toHaveAttribute('open', '');
+    if (slug === 'native-tool-boundary-profiles') {
+      await expect(page.locator('[data-native-denied] pre')).toHaveText('unsupported custom tool call: apply_patch');
+      await page.locator('[data-native-evidence] summary').click();
+      await expect(page.locator('[data-native-evidence]')).toHaveAttribute('open', '');
+    } else {
+      await expect(page.locator('.feature-exhibit noscript')).toBeVisible();
+      await page.locator('.feature-example-choices summary').first().click();
+      await expect(page.locator('.feature-example-choices details').first()).toHaveAttribute('open', '');
+    }
     await page.locator('.feature-sources summary').click();
     await expect(page.getByRole('heading', { name: 'Source areas' })).toBeVisible();
   }
