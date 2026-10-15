@@ -53,10 +53,10 @@
       "product": "PanelForge audio intent and ordered queue",
       "captured": "2026-10-15",
       "method": "Authored deterministic WAV tones and unmodified retained source; private actual Chromium output capture; no inference",
-      "content": "Concise source/scope receipt",
+      "content": "Current compiled source/scope receipt with separately identified historical verification provenance",
       "redactions": [],
-      "bytes": 3268,
-      "sha256": "a000a7a39a5ee38fbd01ffa1d8d3afe67ef5652f2429e32e1c68a8e08d96b889",
+      "bytes": 4401,
+      "sha256": "f3155da1160aa53d2693563c242ab6790c14f26e652e217dfc213519e250a90d",
       "releaseScope": "Unmodified retained source at 93881d2; queue-only public candidate. Separate PCM correction remains private and unreleased."
     },
     {
@@ -67,7 +67,7 @@
       "content": "Licenses for every bundled runtime dependency",
       "redactions": [],
       "bytes": 5604,
-      "sha256": "736e4b7f1a670ea93727f8ebb7a33bd51fa3d494611bff44ab6c0ba59af4c915",
+      "sha256": "a265fe4e82f51a069a2f4820e7b2b9613290005035f92808ebc7713b5efd8398",
       "releaseScope": "Unmodified retained source at 93881d2; queue-only public candidate. Separate PCM correction remains private and unreleased."
     }
   ]

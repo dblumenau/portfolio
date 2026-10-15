@@ -6,7 +6,7 @@
     "useWebAudioPlayer.ts.txt": "3b85ffbb132973703b23cc298cd32d059939c5576f2be891e042702fa0b74752"
   },
   "compiler": "esbuild 0.27.1; browser ESM ES2022; TypeScript loader; import aliases; production dependency flags and syntax folding",
-  "runtimeModuleSha256": "50c611eff5d1bf6bd329085164407593565963dbd108bfd1db4491e522667716",
+  "runtimeModuleSha256": "dfdbb05c3b707588d406b417b316772ca83c7451cc56db512cc1bad8b872de78",
   "bundledDependencies": [
     "@vue/reactivity",
     "@vue/runtime-core",
@@ -14,5 +14,5 @@
     "howler",
     "vue"
   ],
-  "dependencyLicenseSha256": "736e4b7f1a670ea93727f8ebb7a33bd51fa3d494611bff44ab6c0ba59af4c915"
+  "dependencyLicenseSha256": "a265fe4e82f51a069a2f4820e7b2b9613290005035f92808ebc7713b5efd8398"
 }

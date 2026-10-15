@@ -1263,9 +1263,9 @@ var cacheStringFunction = (fn) => {
   (str) => str ? `on${capitalize(str)}` : ""
 ), hasChanged = (value, oldValue) => !Object.is(value, oldValue);
 var _globalThis, getGlobalThis = () => _globalThis || (_globalThis = typeof globalThis < "u" ? globalThis : typeof self < "u" ? self : typeof window < "u" ? window : typeof global < "u" ? global : {});
-var specialBooleanAttrs = "itemscope,allowfullscreen,formnovalidate,ismap,nomodule,novalidate,readonly";
+var specialBooleanAttrs = "itemscope,allowfullscreen,formnovalidate,ismap,nomodule,novalidate,playsinline,readonly";
 var isBooleanAttr = /* @__PURE__ */ makeMap(
-  specialBooleanAttrs + ",async,autofocus,autoplay,controls,default,defer,disabled,hidden,inert,loop,open,required,reversed,scoped,seamless,checked,muted,multiple,selected"
+  specialBooleanAttrs + ",async,autofocus,autoplay,controls,default,defer,disabled,inert,loop,open,required,reversed,scoped,seamless,checked,muted,multiple,selected"
 );
 
 // node_modules/@vue/reactivity/dist/reactivity.esm-bundler.js
@@ -1404,7 +1404,7 @@ function trigger(target, type, key, newValue, oldValue, oldTarget) {
 }
 function reactiveReadArray(array) {
   let raw = /* @__PURE__ */ toRaw(array);
-  return raw === array ? raw : (track(raw, "iterate", ARRAY_ITERATE_KEY), /* @__PURE__ */ isShallow(array) ? raw : raw.map(toReactive));
+  return raw === array || (track(raw, "iterate", ARRAY_ITERATE_KEY), /* @__PURE__ */ isShallow(array)) ? raw : /* @__PURE__ */ isReadonly(array) ? /* @__PURE__ */ isReactive(array) ? raw.map((item) => toReadonly(toReactive(item))) : raw.map(toReadonly) : raw.map(toReactive);
 }
 function shallowReadArray(arr) {
   return track(arr = /* @__PURE__ */ toRaw(arr), "iterate", ARRAY_ITERATE_KEY), arr;
@@ -1523,11 +1523,31 @@ var arrayInstrumentations = {
   }
 };
 function iterator(self2, method, wrapValue) {
-  let arr = shallowReadArray(self2), iter = arr[method]();
-  return arr !== self2 && !/* @__PURE__ */ isShallow(self2) && (iter._next = iter.next, iter.next = () => {
-    let result = iter._next();
-    return result.done || (result.value = wrapValue(result.value)), result;
-  }), iter;
+  let arr = shallowReadArray(self2), methodFn = arr[method], iter = methodFn.call(arr);
+  if (arr !== self2 && !/* @__PURE__ */ isShallow(self2)) {
+    if (iter[Symbol.toStringTag] === "Array Iterator") {
+      let wrapped = Object.create(Object.getPrototypeOf(iter));
+      return wrapped.next = () => wrapResult(iter.next(), wrapValue), methodFn !== arrayProto[method] && Object.defineProperties(wrapped, {
+        return: {
+          get() {
+            let fn = iter.return;
+            return typeof fn == "function" ? fn.bind(iter) : fn;
+          }
+        },
+        throw: {
+          get() {
+            let fn = iter.throw;
+            return typeof fn == "function" ? fn.bind(iter) : fn;
+          }
+        }
+      }), wrapped;
+    }
+    iter._next = iter.next, iter.next = () => wrapResult(iter._next(), wrapValue);
+  }
+  return iter;
+}
+function wrapResult(result, wrapValue) {
+  return result.done || (result.value = wrapValue(result.value)), result;
 }
 var arrayProto = Array.prototype;
 function apply(self2, method, fn, thisArg, wrappedRetFn, args) {
@@ -1761,7 +1781,7 @@ function createInstrumentations(readonly3, shallow) {
 }
 function createInstrumentationGetter(isReadonly2, shallow) {
   let instrumentations = createInstrumentations(isReadonly2, shallow);
-  return (target, key, receiver) => key === "__v_isReactive" ? !isReadonly2 : key === "__v_isReadonly" ? isReadonly2 : key === "__v_raw" ? target : Reflect.get(
+  return (target, key, receiver) => key === "__v_isReactive" ? !isReadonly2 : key === "__v_isReadonly" ? isReadonly2 : key === "__v_isShallow" ? shallow : key === "__v_raw" ? target : Reflect.get(
     hasOwn(instrumentations, key) && key in target ? instrumentations : target,
     key,
     receiver
@@ -2309,28 +2329,28 @@ howler/dist/howler.js:
 
 @vue/shared/dist/shared.esm-bundler.js:
   (**
-  * @vue/shared v3.5.40
+  * @vue/shared v3.5.44
   * (c) 2018-present Yuxi (Evan) You and Vue contributors
   * @license MIT
   **)
 
 @vue/reactivity/dist/reactivity.esm-bundler.js:
   (**
-  * @vue/reactivity v3.5.40
+  * @vue/reactivity v3.5.44
   * (c) 2018-present Yuxi (Evan) You and Vue contributors
   * @license MIT
   **)
 
 @vue/runtime-core/dist/runtime-core.esm-bundler.js:
   (**
-  * @vue/runtime-core v3.5.40
+  * @vue/runtime-core v3.5.44
   * (c) 2018-present Yuxi (Evan) You and Vue contributors
   * @license MIT
   **)
 
 vue/dist/vue.runtime.esm-bundler.js:
   (**
-  * vue v3.5.40
+  * vue v3.5.44
   * (c) 2018-present Yuxi (Evan) You and Vue contributors
   * @license MIT
   **)

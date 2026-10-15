@@ -11,7 +11,7 @@ const sha=bytes=>createHash('sha256').update(bytes).digest('hex');
 const check=process.argv.includes('--check');
 const expected={'audioRuntime.ts.txt':'768a72c288fd11807d64d2302798486cf5c020fa3760ce19bb0d7863e1dbf3b0','useWebAudioPlayer.ts.txt':'3b85ffbb132973703b23cc298cd32d059939c5576f2be891e042702fa0b74752'};
 for(const [name,digest] of Object.entries(expected))if(sha(await readFile(resolve(here,'retained',name)))!==digest)throw new Error('Unmodified retained source hash mismatch: '+name);
-for(const [pkg,version] of Object.entries({vue:'3.5.40',howler:'2.2.4',esbuild:'0.27.1'}))if(require(pkg+'/package.json').version!==version)throw new Error('Pin mismatch: '+pkg);
+for(const [pkg,version] of Object.entries({vue:'3.5.44',howler:'2.2.4',esbuild:'0.27.1'}))if(require(pkg+'/package.json').version!==version)throw new Error('Pin mismatch: '+pkg);
 const target=resolve(here,'runtime.js');
 const result=await build({absWorkingDir:project,entryPoints:[resolve(here,'entry.mjs')],outfile:target,bundle:true,minifySyntax:true,format:'esm',target:'es2022',platform:'browser',define:{'process.env.NODE_ENV':'"production"','__VUE_OPTIONS_API__':'false','__VUE_PROD_DEVTOOLS__':'false','__VUE_PROD_HYDRATION_MISMATCH_DETAILS__':'false'},write:false,metafile:true,legalComments:'eof',banner:{js:'// @ts-nocheck\n// Generated from hashed retained source by compile.mjs; see runtime.d.ts.'},alias:{'@/lib/audioRuntime':resolve(here,'retained/audioRuntime.ts.txt'),'@/lib/telemetry':resolve(here,'telemetry.ts')},plugins:[{name:'retained-typescript-bytes',setup(b){b.onLoad({filter:/\.ts\.txt$/},async args=>({contents:await readFile(args.path,'utf8'),loader:'ts',resolveDir:dirname(args.path)}));}}]});
 const bytes=result.outputFiles[0].contents;
