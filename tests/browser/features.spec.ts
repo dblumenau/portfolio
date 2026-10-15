@@ -2,6 +2,19 @@ import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import { features } from '../../src/data/features';
 
+const recordedExhibitMarkers: Record<string, string> = {
+  'browser-handoff': 'data-browser-handoff',
+  'model-policy': 'data-model-policy-record',
+  'steer-without-interrupt': 'data-recorded-steering',
+  'native-tool-boundary-profiles': 'data-native-boundary',
+  'find-that': 'Recorded private-archive example',
+  'voice-conversation-loop': 'data-recorded-voice-turn',
+  'grounded-analysis': 'data-grounded-analysis',
+  'workspace-hierarchy': 'data-workspace-showcase',
+  'shared-engine-surface': 'data-engine-contract',
+  'maintained-profile': 'data-maintained-profile-showcase',
+};
+
 test('the catalogue combines filters, shares state and resets', async ({ page }) => {
   await page.goto('/features/');
   await expect(page.locator('.atlas-row:visible')).toHaveCount(features.length);
@@ -29,7 +42,7 @@ test('all feature links resolve to distinct stories with evidence notes', async 
     const html = await response.text();
     expect(html).toContain(feature.title);
     expect(html).toContain('Source information sheet');
-    expect(html).toContain(feature.slug === 'model-policy' ? 'data-model-policy-record' : feature.slug === 'steer-without-interrupt' ? 'data-recorded-steering' : feature.slug === 'native-tool-boundary-profiles' ? 'data-native-boundary' : feature.slug === 'find-that' ? 'Recorded private-archive example' : feature.slug === 'voice-conversation-loop' ? 'data-recorded-voice-turn' : feature.slug === 'grounded-analysis' ? 'data-grounded-analysis' : feature.slug === 'workspace-hierarchy' ? 'data-workspace-showcase' : feature.slug === 'shared-engine-surface' ? 'data-engine-contract' : 'explanatory exhibit');
+    expect(html).toContain(recordedExhibitMarkers[feature.slug] ?? 'explanatory exhibit');
     expect(html).not.toMatch(/conversation_id|\/home\/|conversations\/\d+/);
   }
 });
@@ -106,12 +119,120 @@ test('the recorded native boundary preserves its grant and separates the granted
   await expect(page.locator('[data-policy-playground]')).toHaveCount(0);
 });
 
-test('identical URLs cannot substitute for browser ownership', async ({ page }) => {
+test('the saved browser handoff distinguishes same-address owners and the fixture acknowledgment', async ({ page, request }) => {
+  await page.goto('/features/');
+  const atlasLink = page.getByRole('link', { name: 'Read about Browser handoff', exact: true });
+  await expect(atlasLink).toContainText('Read the story');
+  await atlasLink.click();
+  await page.getByRole('link', { name: 'Inspect the saved handoff', exact: true }).click();
+  await expect(page).toHaveURL(/#recorded-browser-handoff$/);
+  const exhibit = page.locator('[data-browser-handoff]');
+  await expect(exhibit.locator('[data-handoff-tab-a] th,[data-handoff-tab-a] td')).toHaveText(['Tab A', 'Same address', 'Session A', 'Selected and sent']);
+  await expect(exhibit.locator('[data-handoff-tab-b] th,[data-handoff-tab-b] td')).toHaveText(['Tab B', 'Same address', 'Session B', 'Not sent']);
+  await expect(exhibit.locator('.handoff-result')).toContainText('One request · Session A');
+  await expect(exhibit.locator('.handoff-scope')).toContainText('no agent read the page or replied');
+  await expect(exhibit.locator('img')).toHaveAttribute('alt', /opened this tab.*Sent to Session A/);
+  await expect(page.locator('[data-tab-playground],.feature-example-choices')).toHaveCount(0);
+  await expect(exhibit.locator('button,input,textarea,select')).toHaveCount(0);
+  const response = await request.get('/media/browser-handoff/receipt.json');
+  expect(response.ok()).toBe(true);
+  const receipt = await response.json();
+  expect(receipt.savedCheck).toMatchObject({ twoTabsSameUrl: true, distinctTabIds: true, distinctStoredOwners: true, popupTargetMatchesStoredOwner: true, requestRetainsSelectedTabIdentifiers: true, bridgeThreadMatchesSelectedOwner: true, turnStartCount: 1, acknowledgment: 'Sent to Session A', modelCalls: 0, providerCalls: 0 });
+  expect(receipt.browser.genuineActionPopup).toBe(true);
+  expect(receipt.browser.popupOpenedAsNormalTab).toBe(false);
+  expect(receipt.media.publicExcerpt).toMatchObject({ startSeconds: 1, endExclusiveSeconds: 9.4, frames: 168, fps: 20, durationSeconds: 8.4, speed: 1, internalCuts: false, heldEnding: false, audioStreams: 0 });
+  expect(JSON.stringify(receipt)).not.toMatch(/\/home\/|\/Users\/|\/tmp\/|127\.0\.0\.1|localhost|work-macbook|owner:\d+|windowId|groupId|session_id|Authorization|api[_-]?key/i);
+});
+
+test('the recorded handoff uses opt-in native media and pauses on close and pagehide', async ({ page }) => {
+  const films: string[] = [];
+  page.on('request', request => { if (request.url().endsWith('/browser-handoff/execution.mp4')) films.push(request.url()); });
   await page.goto('/features/browser-handoff/');
-  await page.getByRole('button', { name: /Tab 17/ }).click();
-  await expect(page.locator('[data-tab-result]')).toContainText('belongs to Session A');
-  await page.getByRole('button', { name: /Tab 24/ }).click();
-  await expect(page.locator('[data-tab-result]')).toContainText('returns to Session B');
+  const film = page.locator('[data-handoff-film]');
+  const video = film.locator('video');
+  await expect(film).not.toHaveAttribute('open', '');
+  await expect(video).toHaveAttribute('preload', 'none');
+  await expect(video).toHaveAttribute('controls', '');
+  await expect(video).not.toHaveAttribute('autoplay', '');
+  await expect(video).not.toHaveAttribute('loop', '');
+  expect(await video.evaluate((node: HTMLVideoElement) => node.paused)).toBe(true);
+  expect(films).toEqual([]);
+  await film.locator('summary').focus();
+  await page.keyboard.press('Enter');
+  await expect(video).toBeVisible();
+  await video.evaluate((node: HTMLVideoElement) => node.play());
+  await expect.poll(() => video.evaluate((node: HTMLVideoElement) => node.currentTime)).toBeGreaterThan(0.2);
+  expect(await video.evaluate((node: HTMLVideoElement) => node.duration)).toBeCloseTo(8.4, 1);
+  await expect(video.locator('track')).toHaveAttribute('kind', 'captions');
+  await expect.poll(() => video.evaluate((node: HTMLVideoElement) => node.textTracks[0].cues?.length)).toBe(3);
+  await film.locator('summary').click();
+  await expect.poll(() => video.evaluate((node: HTMLVideoElement) => node.paused)).toBe(true);
+  await film.locator('summary').click();
+  expect(await video.evaluate((node: HTMLVideoElement) => node.paused)).toBe(true);
+  await video.evaluate((node: HTMLVideoElement) => node.play());
+  expect(await video.evaluate((node: HTMLVideoElement) => { window.dispatchEvent(new PageTransitionEvent('pagehide')); return node.paused; })).toBe(true);
+  const method = page.locator('[data-handoff-method]');
+  await method.locator('summary').focus();
+  await page.keyboard.press('Space');
+  await expect(method).toContainText('fake Unix app-server');
+  await expect(method).toContainText('does not independently read browser ownership');
+});
+
+for (const width of [390, 1024, 1440]) {
+  test(`the saved handoff fits ${width}px with readable results and static local requests`, async ({ browser, baseURL }, info) => {
+    const context = await browser.newContext({ viewport: { width, height: 900 }, ...(width === 390 ? { isMobile: true, hasTouch: true, deviceScaleFactor: 3 } : {}) });
+    const page = await context.newPage();
+    const external: string[] = [], mutations: string[] = [], errors: string[] = [];
+    page.on('request', request => {
+      if (new URL(request.url()).origin !== new URL(String(baseURL)).origin) external.push(request.url());
+      if (request.method() !== 'GET') mutations.push(request.method());
+    });
+    page.on('pageerror', error => errors.push(error.message));
+    await page.goto(`${baseURL}/features/browser-handoff/`);
+    const exhibit = page.locator('[data-browser-handoff]');
+    await exhibit.locator('img').scrollIntoViewIfNeeded();
+    await expect(exhibit.locator('img')).toHaveJSProperty('naturalWidth', 380);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    const bounds = await exhibit.locator('img').boundingBox();
+    expect(bounds!.width).toBeGreaterThanOrEqual(width === 390 ? 340 : 300);
+    expect(bounds!.x).toBeGreaterThanOrEqual(0);
+    expect(bounds!.x + bounds!.width).toBeLessThanOrEqual(width);
+    await exhibit.screenshot({ path: info.outputPath(`handoff-${width}.png`) });
+    for (const summary of await exhibit.locator('summary').all()) await summary.click();
+    await expect(exhibit.locator('video')).toBeVisible();
+    const cueFont = await exhibit.locator('video').evaluate(node => parseFloat(getComputedStyle(node, '::cue').fontSize));
+    expect(cueFont).toBeGreaterThanOrEqual(14);
+    const result = await new AxeBuilder({ page }).analyze();
+    expect(result.violations.map(violation => `${violation.id}: ${violation.description}`)).toEqual([]);
+    expect(external).toEqual([]); expect(mutations).toEqual([]); expect(errors).toEqual([]);
+    await context.close();
+  });
+}
+
+test('the saved handoff remains readable and plays through native controls without scripts on a phone', async ({ browser, baseURL }, info) => {
+  const context = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, deviceScaleFactor: 3 });
+  const page = await context.newPage();
+  await page.goto(`${baseURL}/features/browser-handoff/`);
+  await page.getByRole('link', { name: 'Inspect the saved handoff', exact: true }).click();
+  await expect(page.locator('[data-handoff-tab-a]')).toContainText('Session A');
+  await expect(page.locator('[data-handoff-tab-b]')).toContainText('Not sent');
+  await expect(page.locator('.handoff-scope')).toContainText('no agent read the page or replied');
+  const method = page.locator('[data-handoff-method]');
+  await method.locator('summary').click();
+  await expect(method).toContainText('a request for a new turn');
+  await expect(method.getByRole('link', { name: 'Read the concise execution receipt' })).toBeVisible();
+  const film = page.locator('[data-handoff-film]');
+  await film.locator('summary').click();
+  const video = film.locator('video');
+  await video.scrollIntoViewIfNeeded();
+  const bounds = await video.boundingBox();
+  await video.tap({ position: { x: 22, y: bounds!.height - 50 } });
+  await expect.poll(() => video.evaluate((node: HTMLVideoElement) => node.currentTime)).toBeGreaterThan(0.2);
+  await expect(video).toHaveAttribute('controls', '');
+  await expect(video.locator('track')).toHaveAttribute('src', '/media/browser-handoff/execution.vtt');
+  await page.screenshot({ path: info.outputPath('handoff-nojs-phone-native-playback.png') });
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+  await context.close();
 });
 
 test('new exhibits offer a first-screen action, fit phones and have accessible controls', async ({ page }) => {
@@ -132,7 +253,14 @@ test('feature exhibits explain their outcomes without JavaScript', async ({ brow
   const page = await context.newPage();
   for (const slug of ['branching-workbench', 'reference-to-chat', 'native-tool-boundary-profiles', 'browser-handoff']) {
     await page.goto(`${test.info().project.use.baseURL}/features/${slug}/`);
-    if (slug === 'native-tool-boundary-profiles') {
+    if (slug === 'browser-handoff') {
+      await expect(page.locator('[data-handoff-tab-a]')).toContainText('Selected and sent');
+      await expect(page.locator('[data-handoff-tab-b]')).toContainText('Not sent');
+      await page.locator('[data-handoff-method] summary').click();
+      await expect(page.locator('[data-handoff-method]')).toContainText('No real Codex CLI');
+      await page.locator('[data-handoff-film] summary').click();
+      await expect(page.locator('[data-handoff-film] video')).toBeVisible();
+    } else if (slug === 'native-tool-boundary-profiles') {
       await expect(page.locator('[data-native-denied] pre')).toHaveText('unsupported custom tool call: apply_patch');
       await page.locator('[data-native-evidence] summary').click();
       await expect(page.locator('[data-native-evidence]')).toHaveAttribute('open', '');

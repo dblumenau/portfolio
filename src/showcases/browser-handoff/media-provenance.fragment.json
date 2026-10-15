@@ -1,0 +1,75 @@
+{
+  "assets": [
+    {
+      "file": "browser-handoff/execution.mp4",
+      "product": "Metacodex browser handoff",
+      "captured": "2026-10-15",
+      "method": "Unchanged ownership hook, actual Chrome for Testing action popup and bridge; synthetic tool/session events, isolated networking and fake Unix app-server",
+      "content": "Continuous original-speed handoff from two same-URL fixture tabs through the actual popup to one synthetic endpoint request.",
+      "redactions": [
+        "Endpoint and machine lines masked in the film and image derivatives. Raw browser/session identifiers, addresses, paths and headers excluded from the selected receipt."
+      ],
+      "bytes": 95198,
+      "sha256": "09e403460ff381eaf1b1c5d76be2b4704cfb9255bbbd390c93e97eef907d62d3",
+      "width": 1360,
+      "height": 900,
+      "duration_seconds": 8.4,
+      "codec_name": "h264",
+      "editing": "Original frames 20 through 187 at 20 fps; no internal cuts, speed change or held ending. Solid masks; no audio in original."
+    },
+    {
+      "file": "browser-handoff/execution.vtt",
+      "product": "Metacodex browser handoff",
+      "captured": "2026-10-15",
+      "method": "Unchanged ownership hook, actual Chrome for Testing action popup and bridge; synthetic tool/session events, isolated networking and fake Unix app-server",
+      "content": "Authored native captions for the two owners, actual popup selection and fixture acknowledgment.",
+      "redactions": [
+        "Endpoint and machine lines masked in the film and image derivatives. Raw browser/session identifiers, addresses, paths and headers excluded from the selected receipt."
+      ],
+      "bytes": 219,
+      "sha256": "30d6b564b301e38bc25656963008bf9166e3ebb0989eb099dd8486c65e83e7a6"
+    },
+    {
+      "file": "browser-handoff/sent.png",
+      "product": "Metacodex browser handoff",
+      "captured": "2026-10-15",
+      "method": "Unchanged ownership hook, actual Chrome for Testing action popup and bridge; synthetic tool/session events, isolated networking and fake Unix app-server",
+      "content": "Exact RGB crop of decoded redacted public film frame 162; actual owner badge and Sent to Session A state.",
+      "redactions": [
+        "Endpoint and machine lines masked in the film and image derivatives. Raw browser/session identifiers, addresses, paths and headers excluded from the selected receipt."
+      ],
+      "bytes": 33177,
+      "sha256": "18399f952aa74fa56129c31018035f9524c0f06bf28cbc16206623cd3a1a45c2",
+      "width": 380,
+      "height": 284,
+      "editing": "Decoded public film frame 162, original frame 182 at 9.10 seconds; exact RGB crop x847 y85 width380 height284; no resize or regenerated pixels."
+    },
+    {
+      "file": "browser-handoff/context.webp",
+      "product": "Metacodex browser handoff",
+      "captured": "2026-10-15",
+      "method": "Unchanged ownership hook, actual Chrome for Testing action popup and bridge; synthetic tool/session events, isolated networking and fake Unix app-server",
+      "content": "Lossless full-size poster from decoded redacted public film frame 0.",
+      "redactions": [
+        "Endpoint and machine lines masked in the film and image derivatives. Raw browser/session identifiers, addresses, paths and headers excluded from the selected receipt."
+      ],
+      "bytes": 111994,
+      "sha256": "980331091a554d616a18829893db579b3a9866a56e8e002dfa2a1df48f6e5801",
+      "width": 1360,
+      "height": 900,
+      "editing": "Lossless WebP of decoded public film frame 0, corresponding to original frame 20; no crop or resize."
+    },
+    {
+      "file": "browser-handoff/receipt.json",
+      "product": "Metacodex browser handoff",
+      "captured": "2026-10-15",
+      "method": "Unchanged ownership hook, actual Chrome for Testing action popup and bridge; synthetic tool/session events, isolated networking and fake Unix app-server",
+      "content": "Selected actual ownership, popup and request result; source hashes, synthetic endpoint limits and media selection facts.",
+      "redactions": [
+        "Endpoint and machine lines masked in the film and image derivatives. Raw browser/session identifiers, addresses, paths and headers excluded from the selected receipt."
+      ],
+      "bytes": 3843,
+      "sha256": "b468a53a777f11f6d20150ef13beb28b844a3dcb8c308067f68af9a6cba559d5"
+    }
+  ]
+}

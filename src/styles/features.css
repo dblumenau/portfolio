@@ -262,7 +262,7 @@
 .feature-related h3 { font-size: 1.4rem; }
 .feature-related > div > a { padding-block: 16px; }
 .feature-related-arrow { padding-top: 12px; }
-.reference-playground, .policy-playground, .tab-playground { margin-block: 28px; color: var(--ink); background: var(--paper); border-radius: 3px; padding: 24px; }
+.reference-playground { margin-block: 28px; color: var(--ink); background: var(--paper); border-radius: 3px; padding: 24px; }
 .reference-playground { display: grid; grid-template-columns: minmax(210px, .7fr) 1.3fr; gap: 35px; }
 .fictional-poster { min-height: 300px; background: #ccd9d9; color: #213d43; position: relative; padding: 22px; overflow: hidden; display: flex; flex-direction: column; transition: background .35s, color .35s; }
 .fictional-poster > span { font-size: .6rem; letter-spacing: .06em; position: relative; z-index: 1; }
@@ -273,12 +273,12 @@
 .poster-warm { background: #e8b898; color: #542c26; }
 .poster-warm .poster-orbit { border-color: #996850; box-shadow: 0 0 0 24px #c4845933, 0 0 0 48px #c4845933; }
 .exhibit-object-label { font-size: .65rem; color: var(--rust); letter-spacing: .04em; margin-bottom: 14px; }
-.reference-desk h3, .policy-profile h3 { font-size: clamp(1.45rem, 2.3vw, 2.25rem); }
+.reference-desk h3 { font-size: clamp(1.45rem, 2.3vw, 2.25rem); }
 .branch-tree { margin-top: 24px; }
 .branch-tree > span { font-size: .75rem; display: inline-block; padding: 8px 14px; background: #e7eadc; border: 1px solid #b7c1aa; }
 .branch-tree > div { border-left: 1px solid #aeb8a6; margin-left: 18px; padding: 14px 0 0 20px; display: grid; gap: 10px; }
-.branch-tree button, .policy-profiles button { border: 1px solid #aeb8a6; background: var(--paper); font: inherit; padding: 10px 14px; text-align: left; font-size: .8rem; cursor: pointer; border-radius: 2px; }
-.branch-tree button[aria-pressed="true"], .policy-profiles button[aria-pressed="true"] { background: var(--forest); color: var(--paper); border-color: var(--forest); }
+.branch-tree button { border: 1px solid #aeb8a6; background: var(--paper); font: inherit; padding: 10px 14px; text-align: left; font-size: .8rem; cursor: pointer; border-radius: 2px; }
+.branch-tree button[aria-pressed="true"] { background: var(--forest); color: var(--paper); border-color: var(--forest); }
 .branch-receipt, .preference-receipt { font-size: .76rem; color: var(--muted); margin-block: 14px; }
 .reference-request { border: 1px solid var(--line); padding: 18px; margin-top: 20px; background: #f2efe5; }
 .reference-request blockquote { font-family: var(--serif); font-size: 1.4rem; margin: 15px 0; }
@@ -287,25 +287,7 @@
 .attachment-chip[hidden] { display: none; }
 .exhibit-reset { border: 0; border-bottom: 1px solid var(--line); background: none; font: inherit; font-size: .75rem; margin-top: 16px; cursor: pointer; padding: 5px 0; }
 .reference-desk > .exhibit-button { margin-top: 18px; }
-.reference-playground noscript, .policy-playground noscript { grid-column: 1/-1; font-size: .8rem; }
-.policy-playground { display: grid; grid-template-columns: 1fr 1.2fr; gap: 40px; }
-.policy-profiles { display: flex; gap: 8px; margin-block: 22px 16px; }
-.policy-profile [data-ceiling] { font-size: .75rem; font-family: monospace; overflow-wrap: anywhere; }
-.policy-inheritance { margin-top: 28px; font-size: .8rem; color: var(--forest); }
-.policy-inheritance > span { display: block; color: var(--muted); font-size: .72rem; margin-top: 5px; max-width: 300px; }
-.policy-actions > div { display: grid; gap: 8px; }
-.policy-actions button { border: 1px solid var(--line); background: #f2efe5; padding: 13px 16px; cursor: pointer; display: flex; justify-content: space-between; gap: 12px; font: inherit; font-size: .85rem; }
-.policy-actions code { font-size: .7rem; color: var(--muted); align-self: center; }
-.policy-receipt { border-left: 3px solid var(--forest); padding: 12px 14px; margin-top: 18px; font-size: .84rem; background: #e7eadc; min-height: 92px; }
-.policy-receipt[data-allowed="false"] { border-color: var(--rust); background: #f1ddcf; }
-.illustrative-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
-.illustrative-tabs button { text-align: left; border: 1px solid #aeb8a6; background: #e7eadc; padding: 18px; font: inherit; cursor: pointer; }
-.illustrative-tabs strong, .illustrative-tabs span, .illustrative-tabs code { display: block; }
-.illustrative-tabs strong { font-family: var(--serif); font-size: 1.4rem; }
-.illustrative-tabs span { font-size: .75rem; margin-block: 12px; color: var(--forest-dark); }
-.illustrative-tabs code { font-size: .65rem; color: var(--muted); }
-.illustrative-tabs button[aria-pressed="true"] { outline: 2px solid var(--rust); outline-offset: 2px; }
-.tab-playground > [data-tab-result] { font-size: .85rem; margin-top: 20px; }
+.reference-playground noscript { grid-column: 1/-1; font-size: .8rem; }
 .feature-exhibit button:focus-visible { outline: 3px solid var(--rust); outline-offset: 4px; }
 .feature-exhibit .feature-example-choices { margin-top: 24px; }
 @media (max-width: 760px) {
@@ -320,7 +302,7 @@
   .feature-consequence > p:not(.eyebrow) { font-size: 1.05rem; }
   .feature-consequence > a { grid-column: 1; }
   .feature-related > div { grid-template-columns: 1fr; }
-  .reference-playground, .policy-playground { grid-template-columns: 1fr; padding: 18px; gap: 22px; }
+  .reference-playground { grid-template-columns: 1fr; padding: 18px; gap: 22px; }
   .reference-playground { grid-template-columns: 100px 1fr; align-items: start; gap: 16px; }
   .fictional-poster { min-height: 205px; padding: 12px; }
   .fictional-poster > span { font-size: .46rem; }
@@ -336,10 +318,6 @@
   .reference-request { padding: 12px; }
   .reference-request blockquote { font-size: 1.15rem; }
   .branch-receipt, .preference-receipt { font-size: .7rem; }
-  .illustrative-tabs { gap: 12px; }
-  .illustrative-tabs button { padding: 12px; }
-  .illustrative-tabs strong { font-size: 1.1rem; }
-  .illustrative-tabs span { font-size: .68rem; }
 }
 .feature-specimen { background: var(--paper); color: var(--ink); margin-block: 28px; padding: 24px; border-radius: 3px; }
 .specimen-footnote { grid-column: 1/-1; font-size: .75rem; color: var(--muted); padding-top: 16px; border-top: 1px solid var(--line); }

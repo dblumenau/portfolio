@@ -1,0 +1,139 @@
+{
+  "schema": "maintained-profile-selected-proof-v1",
+  "scope": {
+    "application": "Actual isolated PanelForge",
+    "content": "Mira Vale / Harbor Notebook is wholly fictional",
+    "operations": "Manual edit, full-snapshot inspection, restore-forward and reload",
+    "modelRuns": 0,
+    "automaticRefreshes": 0,
+    "providerOrEngineSessions": 0
+  },
+  "source": {
+    "tag": "web-v10.20.97",
+    "revision": "93881d2eca613fde498e0933405cee3a07220a4c",
+    "applicationSourceUnchanged": true,
+    "productPatch": false
+  },
+  "versions": [
+    {
+      "version": 1,
+      "origin": "Seeded fictional starting profile and matching full snapshot",
+      "preference": "Prefer a short written outline before changing a notebook page."
+    },
+    {
+      "version": 2,
+      "origin": "One actual Settings Save; user_edit snapshot",
+      "preference": "Prefer a concrete page example before changing a notebook page."
+    },
+    {
+      "version": 3,
+      "origin": "One actual restore; copied forward from version 1",
+      "preference": "Prefer a short written outline before changing a notebook page."
+    }
+  ],
+  "operations": {
+    "save": {
+      "count": 1,
+      "expectedVersion": 1,
+      "resultVersion": 2,
+      "responseStatus": 200
+    },
+    "restore": {
+      "count": 1,
+      "expectedVersion": 2,
+      "resultVersion": 3,
+      "restoredFromVersion": 1,
+      "responseStatus": 200
+    },
+    "confirmation": "Real native window.confirm invoked and accepted by automation; browser chrome is not visible in the headless recording. No modal was recreated."
+  },
+  "verified": {
+    "restoredTextEqualsVersion1": true,
+    "versions1And2RetainedUnchanged": true,
+    "allThreeVersionsRemainAfterReload": true,
+    "separateAuthoredFieldsUnchanged": 4,
+    "seededEvidenceWatermarkUnchanged": true,
+    "contentTimestampAdvancedOnEditAndRestore": true,
+    "timestampMeaning": "The seeded synced date is an evidence watermark, not proof of a fresh sweep. Edit and restore update the content-change timestamp.",
+    "otherWrites": "Separate login and view-preference state can change; this is not a zero-database-write claim."
+  },
+  "testEvidence": {
+    "sourceApiSuite": {
+      "recordedPassedTests": 8,
+      "recordedAssertions": 83,
+      "scope": "Unchanged source API test file in a separate disposable schema",
+      "runnerLimit": "The run used a task-local isolation bootstrap adjustment. Generated runner configuration was removed during cleanup; the retained log and per-test fence records were reviewed, not independently re-executed."
+    }
+  },
+  "media": {
+    "film": {
+      "file": "profile-history.mp4",
+      "durationSeconds": 20.08,
+      "frameCount": 502,
+      "frameRate": 25,
+      "width": 1440,
+      "height": 1050,
+      "audioStreams": 0,
+      "continuousSourceSpanSeconds": [
+        3,
+        23.08
+      ],
+      "privateSourceSha256": "1fc1a1d0f43ff6c59a4e17d3f3cccd26813192179da46bc6a907e4339bc7f552",
+      "originalSpeed": true,
+      "internalCuts": 0,
+      "masksOrOverlays": 0,
+      "crop": false,
+      "edit": "Trim only the opening three seconds from the original browser WebM, rebase timestamps and encode H.264. The browser source has no editorial footer; none was repainted. All selected viewport frames match before encoding.",
+      "encoding": {
+        "codec": "libx264",
+        "preset": "medium",
+        "crf": 21,
+        "pixelFormat": "yuv420p",
+        "stripInputMetadata": true,
+        "faststart": true
+      },
+      "nativeCaptions": "Action cues end at 20.080 seconds; restore invocation and invisible confirmation acceptance have separate cues.",
+      "nativeCaptionCount": 9
+    },
+    "historyStill": {
+      "file": "history-phone.png",
+      "width": 390,
+      "height": 1000,
+      "unchangedSourceBytes": true,
+      "captureScope": "390px browser emulation after the desktop workflow and actual reload; not a physical-phone edit or restore. No crop."
+    },
+    "poster": {
+      "file": "poster.png",
+      "width": 1130,
+      "height": 821,
+      "unchangedSourceBytes": true,
+      "captureScope": "Actual stable restored-version 3 desktop profile card, not a newly designed dashboard."
+    }
+  },
+  "files": [
+    {
+      "file": "profile-history.mp4",
+      "bytes": 1235042,
+      "sha256": "9436412a0e11dd68e4019294de79e7ca27dff45edacf15ac73fbf1484339c6d2"
+    },
+    {
+      "file": "profile-history.vtt",
+      "bytes": 662,
+      "sha256": "cc0ab8410f72f2018a5aa734ed412cb9b002eda1839d72a8bbd2ff6e44af7284"
+    },
+    {
+      "file": "history-phone.png",
+      "bytes": 50820,
+      "sha256": "eb10f195ec0d74788d590ac6bbc6dc84949a17165bd3c56ab01ecf20e7524ba7",
+      "width": 390,
+      "height": 1000
+    },
+    {
+      "file": "poster.png",
+      "bytes": 77123,
+      "sha256": "cd80633339401f8bb840bd0fcf41a56445f0d9301a0b90f71e004b33f0f2ebad",
+      "width": 1130,
+      "height": 821
+    }
+  ]
+}

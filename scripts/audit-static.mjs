@@ -9,12 +9,16 @@ const errors = [];
 const external = new Set();
 const report = { date: new Date().toISOString(), buildRoot: root, routes: [], assets: [], sampleFiles: [], externalLinks: [], errors };
 const reviewedEvidenceMedia = [
+  'maintained-profile/profile-history.mp4', 'maintained-profile/profile-history.vtt',
+  'maintained-profile/history-phone.png', 'maintained-profile/poster.png', 'maintained-profile/receipt.json',
   'listening-plan/chapter-choice.mp4',
   'listening-plan/chapter-choice.vtt',
   'listening-plan/next-plan.png',
   'listening-plan/receipt.json',
   'steering/receipt.json',
   'model-policy/receipt.json',
+  'browser-handoff/execution.mp4', 'browser-handoff/execution.vtt',
+  'browser-handoff/sent.png', 'browser-handoff/context.webp', 'browser-handoff/receipt.json',
   'native-tool-boundary/receipt.json',
   'voice-turn/recorded-request.wav', 'voice-turn/reply.wav', 'voice-turn/component-flow.mp4',
   'voice-turn/component-flow.vtt', 'voice-turn/component-flow.webp', 'voice-turn/receipt.json',

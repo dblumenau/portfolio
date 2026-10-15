@@ -1,0 +1,97 @@
+{
+  "schema": 1,
+  "kind": "recorded-browser-owner-handoff",
+  "recorded": "2026-10-15",
+  "source": {
+    "project": "metacodex",
+    "tag": "v1.0.6",
+    "commit": "f034947811e9227f3c50f41f0aa8c0d410293b0a",
+    "unchanged": true,
+    "sha256": {
+      "bin/chrome-session-tabs.mjs": "3f03b0e9cc3d4aab73eb7da579ec116b4cee6f4e63b5e30fe6c522df9808264c",
+      "bin/chrome-tab-bridge.py": "1c1c046e5b2ae3ccad30d0f8c92ba9bf87cd2928b1904039fcf1f5f715ec3c7c",
+      "chrome/tab-groups-extension/manifest.json": "bd0eb35dc60634dec408bd6513f283ed282a2431bb38410c4dc0d1e064968f32",
+      "chrome/tab-groups-extension/worker.js": "ffd0df05e554b6e1767694b86f3d04bd778e51bb5795e6d5f74f9e2388fabb5d",
+      "chrome/tab-groups-extension/popup.js": "36497d41b9f981cfa723502c8c8496d4b9d781c98ebd7340ab65d67ea7fd74f5",
+      "chrome/tab-groups-extension/popup.html": "591ae391d0c53f17f14f1a42106c3aca3f4a6f85bf43fb533ae91b0aa1938ba4",
+      "chrome/tab-groups-extension/popup.css": "e5892b4e4f74df73f8ee05a28c2d3e030320a49993799cc6e8d916b257b0c6dc"
+    }
+  },
+  "browser": {
+    "product": "Google Chrome for Testing",
+    "version": "156.0.8078.4",
+    "disposableProfile": true,
+    "genuineActionPopup": true,
+    "popupOpenedAsNormalTab": false
+  },
+  "savedCheck": {
+    "twoTabsSameUrl": true,
+    "distinctTabIds": true,
+    "distinctStoredOwners": true,
+    "selectedTab": "Tab A",
+    "selectedOwner": "Session A",
+    "otherTab": "Tab B",
+    "otherOwner": "Session B",
+    "popupTargetMatchesStoredOwner": true,
+    "requestRetainsSelectedTabIdentifiers": true,
+    "bridgeThreadMatchesSelectedOwner": true,
+    "turnStartCount": 1,
+    "acknowledgment": "Sent to Session A",
+    "endpoint": "Synthetic local Unix app-server",
+    "modelCalls": 0,
+    "providerCalls": 0
+  },
+  "method": {
+    "actual": [
+      "Ownership hook and browser storage",
+      "Genuine extension action popup and POST",
+      "Bridge validation, target routing, message composition and Unix RPC"
+    ],
+    "fixtures": [
+      "Synthetic tool events around real tab creation",
+      "Two synthetic user sessions and a fictional brief",
+      "Empty fleet and terminal metadata; infrastructure subprocesses blocked",
+      "Private network and same-path home overlays; fake app-server at the canonical socket path"
+    ],
+    "limits": [
+      "No actual Codex CLI, page-reading tool, agent reply or model inference.",
+      "The bridge routes the selected target; it does not independently read browser ownership storage.",
+      "No real session discovery, cross-machine delivery or downstream page-tool identity selection.",
+      "turn/start requests a new turn, not a continuation injected into running inference."
+    ]
+  },
+  "media": {
+    "originalRecordingSha256": "527b037c64ba1ad3cdcce915a95ca258491b249ad38e0c00f48a56315e8b566f",
+    "originalFrames": 245,
+    "originalFps": 20,
+    "publicExcerpt": {
+      "startSeconds": 1.0,
+      "endExclusiveSeconds": 9.4,
+      "frames": 168,
+      "fps": 20,
+      "durationSeconds": 8.4,
+      "speed": 1,
+      "internalCuts": false,
+      "heldEnding": false,
+      "audioStreams": 0,
+      "sha256": "09e403460ff381eaf1b1c5d76be2b4704cfb9255bbbd390c93e97eef907d62d3"
+    },
+    "redactions": "Browser address masked throughout; popup endpoint and machine lines masked from one frame before opening through the final frame. No replacement address text.",
+    "still": {
+      "derivedFrom": "Decoded redacted public film frame",
+      "publicFrameZeroBased": 162,
+      "publicSeconds": 8.1,
+      "originalFrameZeroBased": 182,
+      "originalSeconds": 9.1,
+      "crop": {
+        "x": 847,
+        "y": 85,
+        "width": 380,
+        "height": 284
+      },
+      "resized": false,
+      "regenerated": false,
+      "sha256": "18399f952aa74fa56129c31018035f9524c0f06bf28cbc16206623cd3a1a45c2"
+    }
+  }
+}

@@ -79,12 +79,12 @@ const stories: Story[] = [
   },
   {
     id: 'memory-06', slug: 'maintained-profile', name: 'Maintained profile', title: 'Keep a working brief with a restore path.', topics: ['Context', 'Curation'],
-    intro: 'I built a concise maintained profile with authored sections, revision snapshots and an explicit opt-in for use as assistant context.',
+    intro: 'I built a working brief with editable text, saved revisions and a restore path. Separate authored notes and opt-in settings govern how it becomes assistant context.',
     problem: 'Repeating stable working preferences takes time. An automatically maintained brief needs visible history so its changes can be checked.',
-    built: ['The personal context service and refresh job maintain a short brief from evidence. User-authored sections, opt-in settings and stored revisions give the person control over the resulting context.', 'The profile can be refreshed, edited, inspected and restored. Its contents are private; this portfolio explains the mechanism using fictional examples.'],
-    use: [step('Review the brief', 'Check the maintained and authored sections before opting in to prompt inclusion.'), step('Inspect a revision', 'Compare a refresh with an earlier snapshot. Restore an earlier version when the new wording is unsuitable.')],
+    built: ['The personal context service and refresh job maintain a short profile from evidence. Four separate authored context fields are user-only overrides; opt-in settings govern use as assistant context.', 'Each content-changing edit or restore stores a full snapshot and increments the profile version. A restore copies earlier text forward, retaining the intervening edit. The recorded example uses only a fictional profile and no automatic refresh.'],
+    use: [step('Inspect a saved revision', 'Open History and View to read the complete earlier snapshot. The current interface is a snapshot viewer, not a diff editor.'), step('Restore as a new version', 'Copy the selected wording forward. The new version retains its lineage, while previous snapshots remain available after reload.')],
     related: ['engine-context', 'same-page'],
-    exhibit: { title: 'A brief with visible revisions', caption: 'Fictional preferences only. This diagram does not reproduce any personal profile.', steps: [node('Authored section', '“Use plain language in project notes.”'), node('Refresh', 'Evidence may update maintained sections'), node('History', 'Inspect revisions and restore a snapshot')], choices: [choice('Review the current brief', 'Inspect before inclusion', 'A concise profile remains editable context. Authored text and opt-in settings matter to its use.'), choice('Return to a revision', 'Restore the selected snapshot', 'A stored revision provides a reference for correcting an unwanted refresh.')] },
+    exhibit: { title: 'Bring back the wording. Keep the history.', caption: 'Actual isolated Settings workflow using a fictional seed, one saved edit and one restore. No model or automatic refresh ran.', steps: [node('Version 1', 'Fictional starting profile'), node('Version 2', 'One changed preference, saved as a user edit'), node('Version 3', 'Earlier wording restored forward; all three snapshots retained')], choices: [] },
   },
   {
     id: 'memory-07', slug: 'engine-context', name: 'Context across engines', title: 'Carry an approved brief into a fresh session.', topics: ['Context', 'Engines'],
@@ -147,16 +147,16 @@ const stories: Story[] = [
     built: ['Session-colored groups and per-session tab ownership make agent-opened pages identifiable. The extension’s toolbar can send a chosen page to its session, including an optional prompt.', 'The bridge was developed for Claude and then Codex. The archived October rollout records installation on multiple machines; that history does not establish that every host is currently enrolled.'],
     use: [step('Identify the owning session', 'Use the tab group and ownership information before acting on a shared browser page.'), step('Send a specific page', 'Choose the tab and, if useful, attach a short instruction for its session.')],
     related: ['observer-screenshots', 'browser-evidence', 'metacodex'],
-    exhibit: { title: 'Two sessions can share a browser', caption: 'Fictional tabs and sessions demonstrate ownership. No private URLs or browser history are shown.', steps: [node('Session A', 'Opened a documentation page'), node('Owned tab', 'Group and identity retain the link'), node('Handoff', 'Send the selected page to Session A')], choices: [choice('Send the documentation tab', 'Route to Session A', 'The selected tab’s ownership identifies the intended recipient, even in a shared browser.'), choice('A second tab has the same URL', 'Retain its separate identity', 'A URL alone cannot distinguish two independent tabs. The handoff needs the chosen tab’s identity.')] },
+    exhibit: { title: 'Same page. Different tab owners.', caption: 'Recorded ownership hook, extension popup and bridge with two same-URL fixture tabs and a synthetic session endpoint. No agent read the page or replied.', steps: [], choices: [] },
   },
   {
     id: 'workbench-05', slug: 'observer-screenshots', name: 'Observer screenshots', title: 'Give the human a view of the browser action.', topics: ['Browser', 'Evidence'],
-    intro: 'I added compressed browser screenshots for the human viewer, carried separately from the pixels sent to the model.',
+    intro: 'I added browser screenshots that a human can inspect beside a tool result, without adding those observer images to the model’s input.',
     problem: 'A remote supervisor needs to see whether a browser interaction reached the expected screen. Adding every image to model input also increases the payload.',
-    built: ['A browser action can produce a compressed screenshot uploaded separately. A small signed reference appears in the tool card so the human can inspect the image.', 'The browser proxy also preserves named-tab identity. October implementation and verification sessions tested independent tabs with the same URL. Supported engines, retention and mobile behavior need checking before broader current claims.'],
-    use: [step('Perform a browser action', 'Use the supported observer path for a specifically targeted tab.'), step('Inspect the human-facing image', 'Check the tool-card screenshot against the intended action. A visual result helps supervision without claiming the interaction passed every functional check.')],
+    built: ['The browser proxy captures the tab after a supported action, uploads a compressed image separately and forwards the original action response unchanged.', 'An expanded Claude tool card in PanelForge can request that image through a separate authenticated endpoint. The inspected path is specific to the Claude browser setup; availability and retention on individual installations need a live check.'],
+    use: [step('Perform a browser action', 'Use the Claude observer path for a specifically targeted tab.'), step('Inspect the human-facing image', 'Check the tool-card screenshot against the intended action. A visual result helps supervision without claiming the interaction passed every functional check.')],
     related: ['browser-handoff', 'flow-pdf'],
-    exhibit: { title: 'Two audiences for one action', caption: 'Payload-flow illustration. The page does not contain a real observer image or connect to storage.', steps: [node('Browser action', 'Capture the specifically named tab'), node('Separate upload', 'Compressed image and signed reference'), node('Human tool card', 'Viewer opens the screenshot')], choices: [choice('What the human sees', 'A browser image', 'The viewer can inspect the visible result after the action.'), choice('What the model receives', 'A small reference', 'The observer image travels separately from model content in this design.')] },
+    exhibit: { title: 'Two audiences for one action', caption: 'Payload-flow illustration. The page does not contain a real observer image or connect to storage.', steps: [node('Browser action', 'Capture the specifically named tab'), node('Separate upload', 'Image linked to the matching tool call'), node('Human tool card', 'Request a temporary image URL')], choices: [choice('What the human sees', 'A browser image', 'The viewer can inspect the visible result after the action.'), choice('What the model receives', 'The original tool result', 'The private screenshot response is suppressed. This observer path adds neither its image nor an image reference to the model’s tool result.')] },
   },
   {
     id: 'workbench-06', slug: 'flow-pdf', name: 'Flow screenshots PDF', title: 'Make a browser walkthrough someone can review.', topics: ['Browser', 'Evidence', 'Skills'],
@@ -340,10 +340,13 @@ const metadata: Record<string, Pick<Feature, 'date' | 'evolution' | 'sources'>> 
         "app/Jobs/RefreshPersonalContextJob.php",
         "app/Models/UserPersonalContext.php",
         "app/Models/PersonalContextRevision.php",
-        "app/Http/Controllers/Api/PersonalContextController.php"
+        "app/Http/Controllers/Api/PersonalContextController.php",
+        "resources/js/components/settings/personal-context/PersonalContextProfileCard.vue",
+        "resources/js/components/settings/personal-context/PersonalContextRevisionSheet.vue"
       ],
       "status": "source-current",
-      "note": "Profile service, revisions and refresh source inspected. Only fictional profile content is used in the illustration."
+      "release": "web-v10.20.97 (captured source)",
+      "note": "Profile, revision and refresh source inspected. The 15 October isolated UI proof used a complete fictional seed, one actual Save and a restore-forward retaining all three versions after reload. Source files were unchanged. No model, automatic refresh or provider session ran; refresh and context-inclusion capabilities remain source-backed rather than executed by this recording."
     }
   },
   "memory-07": {
@@ -507,10 +510,12 @@ const metadata: Record<string, Pick<Feature, 'date' | 'evolution' | 'sources'>> 
       "files": [
         "metaclaude/chrome/tab-groups-extension/",
         "metaclaude/chrome/",
-        "metacodex/chrome/"
+        "metacodex/chrome/",
+        "metacodex/bin/chrome-session-tabs.mjs",
+        "metacodex/bin/chrome-tab-bridge.py"
       ],
       "status": "source-current",
-      "note": "Bridge source and October rollout records inspected. Current availability on individual machines has not been rechecked."
+      "note": "Unchanged Metacodex v1.0.6 hook, extension popup and bridge exercised with two same-URL fixture tabs and synthetic sessions. One request reached a fake local app-server; no model or agent ran. October rollout records remain historical; current availability on individual machines was not checked."
     }
   },
   "workbench-05": {
@@ -534,7 +539,7 @@ const metadata: Record<string, Pick<Feature, 'date' | 'evolution' | 'sources'>> 
         "Chrome DevTools proxy/browser server"
       ],
       "status": "historical-shipped",
-      "note": "October implementation and verification records support historical delivery. Supported engines, retention and mobile behavior need a current live check."
+      "note": "October records support historical delivery. Current source inspection confirms that the proxy preserves the original tool response and suppresses its observer screenshot response; the human tool card requests the image separately. Fleet availability, retention and mobile behavior were not rechecked."
     }
   },
   "workbench-06": {

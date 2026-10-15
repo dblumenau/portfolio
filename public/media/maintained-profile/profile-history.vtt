@@ -1,0 +1,29 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:02.200
+Fictional starting profile: a short written outline.
+
+00:00:02.200 --> 00:00:04.800
+Change to a concrete page example, then save.
+
+00:00:04.800 --> 00:00:07.400
+The saved edit is version 2. Open History.
+
+00:00:07.400 --> 00:00:09.000
+View the complete version 1 snapshot.
+
+00:00:09.000 --> 00:00:10.200
+Restore version 1.
+
+00:00:10.200 --> 00:00:11.200
+Confirmation accepted; not visible.
+
+00:00:11.200 --> 00:00:14.600
+Earlier wording returns as version 3.
+Version 2 stays in history.
+
+00:00:14.600 --> 00:00:17.800
+Reload the actual Settings page.
+
+00:00:17.800 --> 00:00:20.080
+After reload: versions 3, 2 and 1 remain.

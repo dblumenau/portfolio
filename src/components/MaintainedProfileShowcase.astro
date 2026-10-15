@@ -1,0 +1,73 @@
+---
+import Icon from './Icon.astro';
+import { maintainedProfile as record } from '../showcases/maintained-profile/content';
+---
+<section class="maintained-profile-showcase wrap" id="saved-profile-revisions" aria-labelledby="profile-revisions-heading" data-maintained-profile-showcase>
+  <header class="profile-intro">
+    <div><p class="eyebrow">An actual edit and restore</p><h2 id="profile-revisions-heading">Bring back the wording.<br /><em>Keep the history.</em></h2></div>
+    <p>A working preference changed from an outline to an example. Restoring the earlier wording created version 3; version 2 stayed available in history.</p>
+  </header>
+  <p class="profile-scope"><strong>Actual PanelForge in an isolated test, using Mira Vale’s fictional profile.</strong> This records a manual edit and restore. No model or automatic refresh ran.</p>
+  <ol class="profile-excerpts" aria-label="Exact preference excerpts from the three saved versions">
+    {record.excerpts.map(excerpt => <li data-profile-version={excerpt.version}>
+      <p class="profile-version">Version {excerpt.version}</p>
+      <h3>{excerpt.label}</h3>
+      <blockquote>{record.prefix}<strong>{excerpt.emphasis}</strong>{record.suffix}</blockquote>
+    </li>)}
+  </ol>
+  <p class="profile-excerpt-note">Selected actual fixture text. The emphasis highlights the changed words; these are saved excerpts, not a live editor.</p>
+  <p class="profile-result"><Icon name="check" /><strong>After reload, all three versions were still present.</strong></p>
+  <details class="profile-history" data-profile-history>
+    <summary>Inspect the saved history <Icon name="plus" /></summary>
+    <div class="profile-history-content">
+      <figure>
+        <a href={`${record.media}/history-phone.png`} aria-label="Open the full-size saved history capture"><img src={`${record.media}/history-phone.png`} alt="Actual History showing revision 3 marked Restore from revision 1, with revisions 2 and 1 still available below. Fictional Mira Vale profile." width="390" height="1000" loading="lazy" /><span>Open full size <Icon name="arrow-up-right" /></span></a>
+        <figcaption>A 390px browser viewport after the desktop workflow and reload. This is browser emulation, not a physical-phone edit or restore. The capture is unchanged.</figcaption>
+      </figure>
+      <div><h3>A new version, with a way back.</h3><p>The history records version 3 as a restore from version 1. The saved edit remains as version 2, alongside the starting snapshot.</p><p>View opens the complete Markdown snapshot. Restore copies its wording forward; it does not rewind the version counter or erase the intervening edit.</p></div>
+    </div>
+  </details>
+  <details class="profile-film" data-maintained-profile-film>
+    <summary><span><Icon name="play" />Watch the 20-second edit and restore</span><Icon name="plus" /></summary>
+    <div class="profile-film-content">
+      <figure>
+        <video controls playsinline preload="none" poster={`${record.media}/poster.png`} width="1440" height="1050" aria-label="Actual isolated PanelForge manual edit, snapshot inspection, restore and reload using a fictional profile" aria-describedby="profile-film-description">
+          <source src={`${record.media}/profile-history.mp4`} type="video/mp4" />
+          <track kind="captions" src={`${record.media}/profile-history.vtt`} srclang="en" label="English action captions" default />
+          <p><a href={`${record.media}/profile-history.mp4`}>Open the edit and restore film</a></p>
+        </video>
+        <figcaption id="profile-film-description">The continuous, silent desktop recording saves version 2, views the complete version 1 snapshot, restores it as version 3, then reloads History. The real browser confirmation was accepted but is not visible in the headless recording. No confirmation UI was recreated.</figcaption>
+      </figure>
+      <div class="profile-film-links"><a href={`${record.media}/profile-history.mp4`}>Open the film full size <Icon name="arrow-up-right" /></a><a href={`${record.media}/profile-history.vtt`}>Read the action captions <Icon name="arrow-up-right" /></a></div>
+    </div>
+  </details>
+  <details class="profile-method" data-profile-method>
+    <summary>Source, checks and what this run covers <Icon name="plus" /></summary>
+    <div>
+      <p>The complete fictional version 1 profile and its first snapshot were seeded. One actual Settings Save created version 2; one actual Restore created version 3. The restored text matches version 1, and the original two snapshots remained unchanged.</p>
+      <p>The four separate authored context fields stayed unchanged. The seeded “synced” date is an evidence watermark, not a fresh sweep: manual edit and restore update the content-change timestamp instead.</p>
+      <p>This used unchanged PanelForge <code>{record.source.tag}</code> in a disposable database, with unrelated jobs and external traffic intercepted. It exercises manual revision behavior, not automatic maintenance or live assistant-context use.</p>
+      <p>An offline source-service check separately confirmed the opt-in branches; no engine session was started.</p>
+      <a href={`${record.media}/receipt.json`}>Read the selected proof receipt <Icon name="arrow-up-right" /></a>
+    </div>
+  </details>
+</section>
+<script>
+  document.querySelectorAll<HTMLDetailsElement>('[data-maintained-profile-film]').forEach(details => {
+    const video = details.querySelector('video');
+    details.addEventListener('toggle', () => { if (!details.open) video?.pause(); });
+    window.addEventListener('pagehide', () => video?.pause());
+  });
+</script>
+<style>
+  .maintained-profile-showcase{padding-block:20px 46px;border-bottom:1px solid var(--line);scroll-margin-top:28px}
+  .profile-intro{display:grid;grid-template-columns:1.12fr 1fr;gap:26px 58px;align-items:end;margin-bottom:24px}.profile-intro .eyebrow{font-size:14px;color:var(--rust);margin-bottom:14px}.profile-intro h2{font-size:clamp(2.1rem,4.2vw,4.1rem);line-height:1.09}.profile-intro h2 em{color:var(--forest)}.profile-intro>p{font-size:17px;line-height:1.8;max-width:470px;color:var(--muted)}
+  .profile-scope{font-size:15px;line-height:1.8;color:#45513f;background:#e8ecdf;border-left:3px solid var(--forest);padding:14px 18px;margin-bottom:24px}.profile-scope strong{font-weight:600;color:var(--ink)}
+  .profile-excerpts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:0;padding:0;list-style:none;border:1px solid #b5bfaa;border-radius:4px;overflow:hidden;background:#fbfaf4}.profile-excerpts>li{padding:23px 24px 26px;min-width:0}.profile-excerpts>li+li{border-left:1px solid #c5ccb9}.profile-excerpts>li:nth-child(2){background:#f1eddf}.profile-excerpts>li:last-child{background:#e7eddf}.profile-version{font-size:14px;line-height:1.6;color:var(--forest-dark);margin-bottom:10px}.profile-excerpts h3{font:600 18px/1.5 var(--sans);letter-spacing:-.025em;margin:0 0 20px}.profile-excerpts blockquote{font:400 clamp(19px,1.8vw,24px)/1.65 var(--serif);padding:0;margin:0;border:0}.profile-excerpts blockquote strong{font-weight:600;color:var(--forest-dark)}
+  .profile-excerpt-note{font-size:14px;line-height:1.8;color:var(--muted);margin:14px 0 18px;max-width:820px}.profile-result{display:flex;align-items:flex-start;gap:12px;font-size:18px;line-height:1.7;margin-bottom:27px;color:var(--forest-dark)}.profile-result :global(.ui-icon){width:22px;height:22px;flex-shrink:0;margin-top:4px}.profile-result strong{font-weight:600}
+  .profile-history,.profile-film,.profile-method{border-top:1px solid var(--line)}.profile-method{border-bottom:1px solid var(--line)}.maintained-profile-showcase details>summary{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:55px;padding:13px 8px;font-size:15px;font-weight:600;cursor:pointer}.maintained-profile-showcase details>summary :global(.ui-icon){width:18px;height:18px;flex-shrink:0}.maintained-profile-showcase details[open]>summary>:global(.ui-icon){transform:rotate(45deg)}.profile-film>summary>span{display:flex;align-items:center;gap:12px}
+  .profile-history-content{display:grid;grid-template-columns:minmax(0,390px) minmax(0,1fr);gap:25px 44px;align-items:start;padding:14px 0 25px}.profile-history figure{margin:0;min-width:0}.profile-history figure>a{display:block;background:#10151b;border:1px solid var(--line);border-radius:4px;overflow:hidden}.profile-history img{display:block;width:100%;height:auto}.profile-history figure>a>span{display:flex;align-items:center;justify-content:flex-end;gap:12px;min-height:46px;padding:10px 15px;border-top:1px solid #39444c;color:#e6eaed;font-size:14px}.profile-history figcaption{font-size:14px;line-height:1.8;color:var(--muted);margin-top:13px}.profile-history-content h3{font:600 23px/1.4 var(--sans);letter-spacing:-.035em;margin:2px 0 15px}.profile-history-content>div>p{font-size:16px;line-height:1.8;color:var(--muted);max-width:520px;margin-top:14px}
+  .profile-film-content{padding:12px 0 24px}.profile-film figure{margin:0}.profile-film video{display:block;width:100%;height:auto;aspect-ratio:1440/1050;background:#10151b;border:1px solid #899281;border-radius:4px}.profile-film video::cue{font-size:clamp(14px,1.6vw,22px);color:#fff;background:#10151b}.profile-film figcaption{font-size:15px;line-height:1.8;color:var(--muted);margin-top:15px;max-width:930px}.profile-film-links{display:flex;flex-wrap:wrap;gap:3px 28px;margin-top:9px}.profile-film-links a,.profile-method a{display:inline-flex;align-items:center;gap:12px;min-height:46px;font-size:14px;padding-block:8px}.profile-method>div{padding:8px 0 22px}.profile-method p{font-size:15px;line-height:1.85;color:var(--muted);max-width:910px;margin:0 0 15px}.profile-method code{font-size:14px;overflow-wrap:anywhere}.maintained-profile-showcase :is(a,summary,video):focus-visible{outline:3px solid var(--rust);outline-offset:4px}
+  @media(max-width:820px){.profile-intro{grid-template-columns:1fr;gap:18px}.profile-intro>p{font-size:16px;max-width:none}.profile-excerpts>li{padding:20px 17px}.profile-excerpts h3{font-size:17px}.profile-excerpts blockquote{font-size:19px}.profile-history-content{gap:24px}.profile-history-content>div>p{font-size:15px}}
+  @media(max-width:640px){.maintained-profile-showcase{padding-block:12px 34px}.profile-intro h2{font-size:clamp(2rem,7.8vw,3rem)}.profile-scope{font-size:14px;padding:13px 15px}.profile-excerpts{grid-template-columns:1fr}.profile-excerpts>li{padding:21px}.profile-excerpts>li+li{border-left:0;border-top:1px solid #c5ccb9}.profile-excerpts h3{font-size:19px;margin-bottom:13px}.profile-excerpts blockquote{font-size:21px;line-height:1.7}.profile-result{font-size:17px}.profile-history-content{grid-template-columns:1fr}.profile-history figure{max-width:390px;margin-inline:auto}.profile-film video:not(:fullscreen)::cue{font-size:14px}.maintained-profile-showcase details>summary{font-size:14px}.profile-film figcaption,.profile-method p{font-size:14px}}
+</style>

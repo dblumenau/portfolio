@@ -1,0 +1,22 @@
+{
+  "sourceTag": "web-v10.20.97",
+  "sourceRevision": "93881d2eca613fde498e0933405cee3a07220a4c",
+  "portfolioBase": "fe9729beccf50087b152e062fbb00cd340accb07",
+  "capture": "Actual isolated Settings UI and HTTP persistence; fictional seeded v1 followed by one actual Save and one actual restore",
+  "sourceUnchanged": true,
+  "noProductFix": true,
+  "manualOnly": true,
+  "independentReview": "Read-only evidence/source/media inspection; no app, source-test harness, provider or original capture was re-executed for the candidate",
+  "testRunnerCaveat": "Passing 8/83 isolated run is supported by retained log/fences; generated runner configuration was removed during auth cleanup.",
+  "confirmation": "Native confirmation event accepted by automation; not painted in headless video or recreated",
+  "offlineSourceCheck": "One separate optional method sentence only; no engine session or injection proof",
+  "publicMedia": [
+    "maintained-profile/profile-history.mp4",
+    "maintained-profile/profile-history.vtt",
+    "maintained-profile/history-phone.png",
+    "maintained-profile/poster.png",
+    "maintained-profile/receipt.json"
+  ],
+  "placement": "Replace invented exhibit only on existing maintained-profile feature through local typed featureShowcases registry",
+  "atlas": "Keep existing generic Read the story action; no new atlas API"
+}

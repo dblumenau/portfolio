@@ -34,6 +34,7 @@ const groups = {
   'session-cron': ['session-cron'],
   'workspace-hierarchy': ['workspace-hierarchy'],
   'grounded-analysis': ['grounded-analysis'],
+  'maintained-profile': ['maintained-profile'],
   'world-task': ['world-attention'],
   'world-memory': ['world-memory', 'world-presentation'],
   'world-connections': ['world-connections', 'world-connections-focus'],

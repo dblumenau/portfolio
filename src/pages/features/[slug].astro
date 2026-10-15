@@ -1,4 +1,6 @@
 ---
+import BrowserHandoffShowcase from '../../components/BrowserHandoffShowcase.astro';
+import MaintainedProfileShowcase from '../../components/MaintainedProfileShowcase.astro';
 import ModelPolicyShowcase from '../../components/ModelPolicyShowcase.astro';
 import RecordedSteeringShowcase from '../../components/RecordedSteeringShowcase.astro';
 import GroundedAnalysisShowcase from '../../components/GroundedAnalysisShowcase.astro';
@@ -73,6 +75,19 @@ const featureShowcases: Record<string, {
     sourceNote: 'The saved runtime checks use scripted local upstream messages and synthetic model/account fixtures. A real native shell read, same-thread app-server restart/resume, excluded patch and separate granted patch control establish the bounded behavior shown. No real model inference or Gateway authorization is exercised.',
     researchDay: '15',
   },
+  'browser-handoff': {
+    component: BrowserHandoffShowcase,
+    primaryAction: { href: '#recorded-browser-handoff', label: 'Inspect the saved handoff' },
+    sourceNote: 'The saved check uses the unchanged ownership hook, genuine extension action popup and actual bridge with two same-URL fixture tabs. Synthetic tool events, empty fleet and terminal metadata, and a fake local app-server isolate the request. One turn/start addresses the selected owner; no agent read the page or replied.',
+    researchDay: '15',
+  },
+  'observer-screenshots': { researchDay: '15' },
+  'maintained-profile': {
+    component: MaintainedProfileShowcase,
+    primaryAction: { href: '#saved-profile-revisions', label: 'Inspect a saved revision' },
+    sourceNote: 'The recorded Settings workflow uses a complete fictional seed in the unchanged isolated application. One actual Save creates version 2; restoring the earlier full snapshot creates version 3 while retaining versions 1 and 2. Separate authored fields and the seeded evidence watermark stay unchanged. The native confirmation was accepted but is not painted in the headless recording. No model, refresh or provider session ran.',
+    researchDay: '15',
+  },
   helm: { researchDay: '15' },
 };
 const showcase = featureShowcases[feature.slug];
@@ -81,7 +96,7 @@ const SupplementalShowcase = showcase?.supplement;
 const related = feature.related.filter((slug) => slug !== feature.slug).map(featureBySlug).filter((item): item is Feature => Boolean(item)).slice(0, 2);
 const areaUrl = `/features/?area=${feature.area}`;
 const hasGraphCapture = feature.slug === 'knowledge-graph' || feature.slug === 'graph-exploration';
-const playground = feature.presentation === 'branch' || feature.presentation === 'reference' || feature.presentation === 'policy' ? feature.presentation : feature.slug === 'browser-handoff' ? 'tabs' : null;
+const playground = feature.presentation === 'branch' || feature.presentation === 'reference' ? feature.presentation : null;
 const memoryAction = ['knowledge-graph', 'graph-exploration', 'graph-curation', 'grounded-analysis', 'personal-relevance'].includes(feature.slug);
 const workbenchAction = ['metacodex', 'metaclaude', 'workbench-sync'].includes(feature.slug);
 const primaryAction = showcase?.primaryAction ?? (feature.slug === 'reference-to-chat' ? { href: '/work/panelforge/#image-revision', label: 'Compare a real image revision' } : feature.slug === 'branching-workbench' ? { href: '/labs/branches/', label: 'Follow the reference and revisions' } : feature.slug === 'focus-aware-question' ? { href: '/labs/attention/', label: 'Follow the terminal-to-Mac question' } : feature.slug === 'gateway-tool-profiles' ? { href: '/labs/gateway/', label: 'Inspect the gateway test' } : feature.slug === 'graph-curation' ? { href: '/labs/curation/', label: 'Inspect the recorded edit and inverse' } : memoryAction ? { href: '/labs/memory/', label: 'Try the Memory Lab' } : workbenchAction ? { href: '/labs/workbench/', label: 'Inspect the workbench test' } : feature.slug === 'disconnect-recovery' ? { href: '/labs/recovery/', label: 'Replay the recovered answer' } : { href: '#small-example', label: playground ? 'Try the small example' : 'Inspect the small example' });

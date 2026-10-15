@@ -1,0 +1,12 @@
+WEBVTT
+
+00:00.000 --> 00:02.700
+Two tabs share an address.
+Each has its own session owner.
+
+00:02.700 --> 00:07.900
+Tab A's popup selects Session A,
+marked "opened this tab".
+
+00:07.900 --> 00:08.400
+Sent to Session A.

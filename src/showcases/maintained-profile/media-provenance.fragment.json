@@ -1,0 +1,67 @@
+{
+  "assets": [
+    {
+      "file": "maintained-profile/profile-history.mp4",
+      "product": "PanelForge maintained profile",
+      "captured": "2026-10-15",
+      "method": "Actual unchanged isolated Settings workflow with fictional profile; selected frozen capture, no new runtime or model run",
+      "content": "Continuous original-speed manual edit, snapshot View, restore-forward and reload. Native confirmation event accepted but not visible in recording.",
+      "redactions": [],
+      "bytes": 1235042,
+      "sha256": "9436412a0e11dd68e4019294de79e7ca27dff45edacf15ac73fbf1484339c6d2",
+      "width": 1440,
+      "height": 1050,
+      "durationSeconds": 20.08,
+      "audioStreams": 0,
+      "frameCount": 502,
+      "sourceSpanSeconds": [
+        3,
+        23.08
+      ]
+    },
+    {
+      "file": "maintained-profile/profile-history.vtt",
+      "product": "PanelForge maintained profile",
+      "captured": "2026-10-15",
+      "method": "Actual unchanged isolated Settings workflow with fictional profile; selected frozen capture, no new runtime or model run",
+      "content": "Action-specific native captions aligned to the continuous 3.00\u201323.08s source span; no burned replacement UI.",
+      "redactions": [],
+      "bytes": 662,
+      "sha256": "cc0ab8410f72f2018a5aa734ed412cb9b002eda1839d72a8bbd2ff6e44af7284"
+    },
+    {
+      "file": "maintained-profile/history-phone.png",
+      "product": "PanelForge maintained profile",
+      "captured": "2026-10-15",
+      "method": "Actual unchanged isolated Settings workflow with fictional profile; selected frozen capture, no new runtime or model run",
+      "content": "Exact 390px browser-emulation History after desktop edit/restore/reload, retaining versions 3/2/1.",
+      "redactions": [],
+      "bytes": 50820,
+      "sha256": "eb10f195ec0d74788d590ac6bbc6dc84949a17165bd3c56ab01ecf20e7524ba7",
+      "width": 390,
+      "height": 1000
+    },
+    {
+      "file": "maintained-profile/poster.png",
+      "product": "PanelForge maintained profile",
+      "captured": "2026-10-15",
+      "method": "Actual unchanged isolated Settings workflow with fictional profile; selected frozen capture, no new runtime or model run",
+      "content": "Exact saved desktop restored-version 3 profile card.",
+      "redactions": [],
+      "bytes": 77123,
+      "sha256": "cd80633339401f8bb840bd0fcf41a56445f0d9301a0b90f71e004b33f0f2ebad",
+      "width": 1130,
+      "height": 821
+    },
+    {
+      "file": "maintained-profile/receipt.json",
+      "product": "PanelForge maintained profile",
+      "captured": "2026-10-15",
+      "method": "Actual unchanged isolated Settings workflow with fictional profile; selected frozen capture, no new runtime or model run",
+      "content": "Positive-allowlist source, manual operations, version-level lineage, media transformations and file checks; no raw infrastructure/account identifiers.",
+      "redactions": [],
+      "bytes": 4919,
+      "sha256": "f2bfb13c365250aa7a39e007d2d403e2175d69f6893309ce4d27a6c697a0f15f"
+    }
+  ]
+}
