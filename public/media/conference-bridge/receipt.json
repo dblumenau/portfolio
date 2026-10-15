@@ -1,0 +1,159 @@
+{
+  "record_type": "Selected checks from an actual embedded notebook recovery proof",
+  "execution_date": "2026-10-15",
+  "source": {
+    "product": "Conference Notes",
+    "commit": "6acc869a4b3c3cdb9cac11850534b69d2ca3aa21",
+    "tag": "v1.1.1",
+    "latest_deployment_claimed": false,
+    "application_files_checked": 125,
+    "source_unchanged": true,
+    "generated_parent_script_matches_checked_source": true,
+    "parent_script_sha256": "cb53f4657902a6c6fb84b3556102c0ea08e2c97302a1079e477cf4e6da3fa114"
+  },
+  "scope": {
+    "browser": "Chromium on Linux",
+    "fictional_data": true,
+    "parent_and_iframe_on_different_sites": true,
+    "parent_explicitly_trusted_with_notebook_data": true,
+    "normal_parent_setting_and_origin_window_checks_unchanged": true,
+    "faults": [
+      "Iframe Storage methods deliberately throw SecurityError",
+      "Local notes API returns 503 while parent and static page files remain available"
+    ],
+    "natural_browser_storage_policy_reproduced": false,
+    "whole_network_offline_loading_claimed": false,
+    "browser_restart_or_indefinite_retention_claimed": false,
+    "production_deployment_or_general_security_guarantee_claimed": false
+  },
+  "note": "Agree on one clear owner before each handover.",
+  "observed_states": {
+    "typed_once": true,
+    "server_response_rows_before_and_through_reload": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "parent_pending_finalise_record_exactly_equal_across_reload": true,
+    "comparison_includes": [
+      "text",
+      "client timestamp",
+      "revision",
+      "finalise flag"
+    ],
+    "parent_document_reloaded": true,
+    "account_and_note_recovered_without_retyping": true,
+    "server_resumed_with_unchanged_natural_retry": true,
+    "synthetic_online_event_or_app_state_restore": false,
+    "final_server_response_rows": 1,
+    "final_server_version_rows": 1,
+    "final_server_status": "FINALISED",
+    "server_text_and_timestamp_equal_pending_intent": true,
+    "clear_request_and_acknowledgement_target_same_revision": true,
+    "acknowledged_parent_pending_count": 0,
+    "parent_settled_revision_matches": true,
+    "second_parent_reload_retains_saved_result": true,
+    "actual_message_origin_and_source_window_matches": 122
+  },
+  "separate_tests": {
+    "focused_source": {
+      "passed": 25,
+      "failed": 0
+    },
+    "bridge_browser": {
+      "passed": 6,
+      "failed": 0
+    },
+    "attendee_browser": {
+      "passed": 3,
+      "failed": 1,
+      "classification": "Adjacent stale expectation for an intentionally removed full-screen link; not changed or rerun"
+    },
+    "whole_suite_pass_claimed": false
+  },
+  "selected_media": [
+    {
+      "file": "reloaded-pending.webp",
+      "sourceFrameZeroBased": 108,
+      "sourceFrameTimeSeconds": 4.32,
+      "sourceFrameSha256": "b16cf7479f21faf5ab2edfd3ace482e14e4553e82bbc335c1612944cc754da8b",
+      "crop": {
+        "x": 350,
+        "y": 180,
+        "width": 740,
+        "height": 560
+      },
+      "encoding": "Lossless WebP; no resize, repaint, new pixels or masking",
+      "decodedPixelsEqualSourceCrop": true,
+      "decodedRgbSha256": "50f0d79be7c4c94196c66a0a3de6be69cf75eedac62271264a2290485164cfca",
+      "sha256": "2ba62bedd8579eeec3ab4d8ce1b31445b2dd7964351fbe9f8f84d20a9250ac03",
+      "bytes": 87492,
+      "verifiedState": "Finalised syncing; Offline saved on this device; parent header still reports API 503",
+      "parentTestControlsExcludedByCrop": true
+    },
+    {
+      "file": "saved-after-reload.webp",
+      "sourceFrameZeroBased": 184,
+      "sourceFrameTimeSeconds": 7.36,
+      "sourceFrameSha256": "24f124eb46b8668fdf9cc2803a9d2bfe191eac3e0deca02aa7e193b3c4096f0d",
+      "crop": {
+        "x": 350,
+        "y": 180,
+        "width": 740,
+        "height": 560
+      },
+      "encoding": "Lossless WebP; no resize, repaint, new pixels or masking",
+      "decodedPixelsEqualSourceCrop": true,
+      "decodedRgbSha256": "4c0533a8b9eef1b078aabeee13275c33db7587a777252dde59a6da5f026d2325",
+      "sha256": "b2f531a21553f499e7165018afa3965ff0bbc5d2ee74b30a84ad4adf92ef6f3c",
+      "bytes": 62494,
+      "verifiedState": "Finalised; Saved; after server recovery and second parent reload",
+      "parentTestControlsExcludedByCrop": true
+    }
+  ],
+  "privacy": {
+    "raw_recording_login_prefix_selected": false,
+    "raw_auth_traces_or_identifiers_published": false,
+    "images_are_desktop_crops_not_phone_captures": true,
+    "shown_note_and_speaker_are_fictional": true,
+    "excluded_parent_header_controls_are_test_harness_not_production_attendee_controls": true
+  },
+  "boundaries": {
+    "provider_model_analysis_mail_or_outreach": false,
+    "production_or_worker_runtime_used": false,
+    "original_global_test_database_touched": false,
+    "owned_runtime_database_and_auth_removed": true
+  },
+  "separate_native_compatibility": {
+    "fresh_independent_run": true,
+    "browser": "Safari 27.0",
+    "operating_system": "Intel macOS 26.7.1",
+    "source_commit": "6acc869a4b3c3cdb9cac11850534b69d2ca3aa21",
+    "same_real_generated_parent_script": true,
+    "application_source_unchanged": true,
+    "different_sites_and_explicit_trusted_parent": true,
+    "same_injected_iframe_storage_denial_and_API503_static_available_condition": true,
+    "actual_OS_note_typing_and_control_activation": true,
+    "pending_text_timestamp_revision_and_finalise_equal_across_parent_reload": true,
+    "natural_retry_no_synthetic_online_event": true,
+    "finalised_response_rows": 1,
+    "finalised_version_rows": 1,
+    "server_text_and_timestamp_equal_queued_intent": true,
+    "matching_parent_clear_ack_and_settled_revision": true,
+    "pending_empty_after_ack_and_second_reload": true,
+    "second_reload_retains_saved_result": true,
+    "actual_message_origin_and_source_window_matches": 122,
+    "native_notes_http_status_counts": {
+      "503": 10,
+      "200": 1
+    },
+    "native_counts_are_separate_from_Chromium": true,
+    "original_privacy_security_settings_unchanged": true,
+    "owned_runtime_and_origin_storage_cleaned": true,
+    "tests_rerun": false,
+    "single_login_attempt_claimed": false,
+    "natural_Safari_denial_policy_or_phone_or_browser_restart_or_whole_network_offline_claimed": false,
+    "native_media_selected": false
+  }
+}

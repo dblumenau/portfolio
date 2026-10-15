@@ -1,0 +1,52 @@
+---
+import Icon from './Icon.astro';
+const media = '/media/conference-bridge';
+---
+<section class="conference-bridge wrap" id="conference-storage-bridge" data-conference-bridge aria-label="Embedded notebook recovery">
+  <details>
+    <summary>The page can reload. The draft stays.</summary>
+    <div class="bridge-content">
+      <p class="bridge-intro">The notebook was embedded in another page. Its own browser storage was deliberately blocked, and the notes server was temporarily unavailable. The containing page kept a confirmed copy. After a reload, the note and queued finalisation returned; when the server recovered, it saved the exact note.</p>
+      <p class="bridge-scope" data-bridge-scope><strong>Controlled local test.</strong> Actual app and parent-storage bridge in Chromium, with fictional conference data. Page files stayed available while the notes API returned 503. The storage failure was injected. The containing page was explicitly trusted with the notebook data.</p>
+      <p class="bridge-state-label">Summary of the recorded states</p>
+      <ol class="bridge-sequence" aria-label="Three recorded recovery states">
+        <li><h3>Finalise during the outage</h3><dl><div><dt>Containing page</dt><dd>Note and finalisation queued.</dd></div><div><dt>Notes server</dt><dd>No response saved.</dd></div></dl></li>
+        <li><h3>Reload while unavailable</h3><dl><div><dt>Containing page</dt><dd>The same pending revision restored.</dd></div><div><dt>Notes server</dt><dd>Still no response saved.</dd></div></dl></li>
+        <li><h3>The server returns</h3><dl><div><dt>Containing page</dt><dd>Nothing left to sync.</dd></div><div><dt>Notes server</dt><dd>One finalised note saved.</dd></div></dl></li>
+      </ol>
+      <p class="bridge-note-label">The note, unchanged through the reload</p>
+      <blockquote class="bridge-note">Agree on one clear owner before each handover.</blockquote>
+      <p class="bridge-payoff">A second page reload retained the saved result.</p>
+      <div class="bridge-captures">
+        <figure><a href={`${media}/reloaded-pending.webp`} target="_blank" rel="noopener" aria-label="Open the desktop crop after reload, waiting to sync"><img src={`${media}/reloaded-pending.webp`} width="740" height="560" loading="lazy" decoding="async" alt="Actual notebook desktop crop after parent reload: the fictional note remains, with Finalised syncing and Offline saved on this device labels." /></a><figcaption><strong>After reload, waiting to sync.</strong> The device copy still held the queued finalisation; no server response had been saved.</figcaption></figure>
+        <figure><a href={`${media}/saved-after-reload.webp`} target="_blank" rel="noopener" aria-label="Open the desktop crop after the server returned and a second reload"><img src={`${media}/saved-after-reload.webp`} width="740" height="560" loading="lazy" decoding="async" alt="Actual notebook desktop crop after server recovery and a second parent reload: the identical fictional note shows Finalised and Saved." /></a><figcaption><strong>After the server returned and a second reload.</strong> One matching finalised response was saved, and the containing page had nothing pending.</figcaption></figure>
+      </div>
+      <p class="bridge-capture-note">Actual desktop video-frame crops, with the note and save labels retained. Select either image to inspect it at full size. The excluded parent header and outage controls belonged to the test harness, not production attendee controls.</p>
+      <details class="bridge-method"><summary>How this was checked</summary><div><p>The unchanged app used its actual trusted-parent bridge and local storage. A matching acknowledgement confirmed each saved revision. The normal retry timer completed finalisation after the API returned; no app state was injected to restore the note.</p><p class="bridge-native-note">A separate run in Safari 27 on Intel macOS 26.7.1 passed the same injected-storage and API-outage scenario, including both reloads, the exact server note and acknowledged pending clear.</p><p>The images and state summary above are from Chromium. These controlled results do not establish natural browser storage policy, whole-network offline loading, browser-restart or indefinite retention, a production deployment, or a general security guarantee.</p><p>For this recovery proof, 25 focused source tests and six bridge browser tests passed. The attendee suite had three passes and one stale expectation for an intentionally removed full-screen link; the whole suite is not claimed to pass.</p><a class="bridge-receipt" href={`${media}/receipt.json`}>Read the selected recovery checks <Icon name="arrow-up-right" /></a></div></details>
+    </div>
+  </details>
+</section>
+<style>
+  .conference-bridge{padding-block:28px 34px}
+  .conference-bridge>details{border-block:1px solid var(--line)}
+  .conference-bridge>details>summary{min-height:58px;padding:17px 8px;font-size:17px;font-weight:650;line-height:1.5}
+  .bridge-content{padding:10px 0 24px}
+  .bridge-content p,.bridge-content dd,.bridge-content dt,.bridge-content figcaption{font-size:15px;line-height:1.75}
+  .bridge-intro{max-width:850px;color:var(--muted)}
+  .bridge-scope{max-width:900px;margin-top:18px;padding:15px 18px;border-left:3px solid var(--forest);background:#e8ecdf;color:var(--muted)}.bridge-scope strong{color:var(--ink)}
+  .bridge-state-label,.bridge-note-label{margin-top:25px;font-weight:650}
+  .bridge-sequence{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;list-style:none;padding:0;margin:12px 0 0;counter-reset:bridge}
+  .bridge-sequence li{min-width:0;border:1px solid var(--line);border-radius:4px;padding:18px;counter-increment:bridge}
+  .bridge-sequence h3{font-family:var(--sans);font-size:17px;line-height:1.5;margin-bottom:14px}.bridge-sequence h3:before{content:counter(bridge) '. ';color:var(--rust)}
+  .bridge-sequence dl{display:grid;gap:14px}.bridge-sequence dt{font-weight:650}.bridge-sequence dd{margin:0;color:var(--muted)}
+  .bridge-note{max-width:850px;margin:8px 0 0;font-family:var(--serif);font-size:clamp(20px,2.2vw,28px);line-height:1.5;color:var(--forest-dark)}
+  .bridge-payoff{margin-top:15px;color:var(--muted)}
+  .bridge-captures{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;margin-top:27px}
+  .bridge-captures figure{min-width:0}.bridge-captures a{display:block;min-height:44px}.bridge-captures img{display:block;width:100%;height:auto;border:1px solid var(--line);border-radius:4px}
+  .bridge-captures figcaption{margin-top:13px;color:var(--muted)}.bridge-captures figcaption strong{display:block;color:var(--ink)}
+  .bridge-capture-note{margin-top:18px;max-width:900px;color:var(--muted)}
+  .bridge-method{margin-top:22px;border-top:1px solid var(--line)}.bridge-method>summary{font-size:15px;font-weight:650;min-height:52px;padding:14px 8px}.bridge-method>div{max-width:900px;padding:0 8px 8px}.bridge-method p{color:var(--muted);margin-bottom:14px}
+  .bridge-receipt{display:inline-flex;gap:20px;align-items:center;min-height:48px;font-size:15px;text-underline-offset:4px}
+  @media(max-width:1100px){.bridge-captures{grid-template-columns:1fr;max-width:740px;margin-inline:auto}}
+  @media(max-width:760px){.conference-bridge{padding-block:20px 27px}.bridge-sequence{grid-template-columns:1fr;gap:12px}.bridge-sequence dl{grid-template-columns:1fr 1fr;gap:18px}.bridge-captures{grid-template-columns:1fr;gap:25px}.bridge-scope{padding:13px}.bridge-content p,.bridge-content dd,.bridge-content dt,.bridge-content figcaption{font-size:14px}.bridge-note{font-size:22px}.bridge-sequence h3{font-size:16px}}
+</style>

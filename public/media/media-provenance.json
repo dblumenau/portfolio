@@ -2431,6 +2431,42 @@
       "redactions": [],
       "bytes": 4919,
       "sha256": "f2bfb13c365250aa7a39e007d2d403e2175d69f6893309ce4d27a6c697a0f15f"
+    },
+    {
+      "file": "conference-bridge/reloaded-pending.webp",
+      "product": "Conference Notes",
+      "captured": "2026-10-15",
+      "method": "Actual raw Chromium recording frame 108 at 4.32 seconds, cropped 740x560 at 350,180; lossless WebP; no resize or repainted pixels",
+      "content": "After real parent reload: same fictional note, Finalised syncing and Offline saved on this device. Parent test controls excluded.",
+      "redactions": [],
+      "bytes": 87492,
+      "sha256": "2ba62bedd8579eeec3ab4d8ce1b31445b2dd7964351fbe9f8f84d20a9250ac03",
+      "width": 740,
+      "height": 560,
+      "editing": "Crop only from an actual recorded frame; parent harness header/login excluded by selection; no masks, overlays or generated pixels."
+    },
+    {
+      "file": "conference-bridge/saved-after-reload.webp",
+      "product": "Conference Notes",
+      "captured": "2026-10-15",
+      "method": "Actual raw Chromium recording frame 184 at 7.36 seconds, same exact desktop crop and lossless encoding",
+      "content": "After server acknowledgement and second parent reload: same fictional note, Finalised and Saved.",
+      "redactions": [],
+      "bytes": 62494,
+      "sha256": "b2f531a21553f499e7165018afa3965ff0bbc5d2ee74b30a84ad4adf92ef6f3c",
+      "width": 740,
+      "height": 560,
+      "editing": "Crop only from an actual recorded frame; parent harness header/login excluded by selection; no masks, overlays or generated pixels."
+    },
+    {
+      "file": "conference-bridge/receipt.json",
+      "product": "Conference Notes",
+      "captured": "2026-10-15",
+      "method": "Fresh positive-allowlist selection from verified source, storage, response and media checks",
+      "content": "Selected Chromium recovery checks, separate root-reviewed native Safari compatibility object, test classifications and exact crop operations. No raw auth, hosts or row/revision/message identifiers.",
+      "redactions": [],
+      "bytes": 6266,
+      "sha256": "abbf280d28ea77cb1fc8a3c60e7813c6056ee3819e2fe8dcec15db501088e9d0"
     }
   ]
 }

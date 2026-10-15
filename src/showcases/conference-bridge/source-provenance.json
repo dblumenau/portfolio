@@ -1,0 +1,30 @@
+{
+  "source_commit": "6acc869a4b3c3cdb9cac11850534b69d2ca3aa21",
+  "source_tag": "v1.1.1",
+  "latest_deployment_claim": false,
+  "proof": "One actual cross-site embedded notebook flow on unchanged source, fictional local Bun SQLite and the real generated parent bridge.",
+  "faults": "Injected iframe Storage method SecurityError; local app APIs 503 while static page files remained available. Supported parent is selected first by source.",
+  "observed": "Same entire pending finalise record across actual parent reload; server responses 0 until retry; exact FINALISED response plus one version; matching clear acknowledgement and second reload.",
+  "capture": "Two selected actual raw-recording frames; exact desktop crops preserve title, note, upper badge and lower save status. No login frames, parent test controls, raw film or traces selected.",
+  "selected_frame_indices_zero_based": [
+    108,
+    184
+  ],
+  "crop": {
+    "x": 350,
+    "y": 180,
+    "width": 740,
+    "height": 560
+  },
+  "encoding": "Lossless WebP of exact cropped decoded RGB; no resize, masks or repainted pixels.",
+  "tests": "25 focused source and six bridge browser passes; attendee three passes and one confirmed stale expectation, no fix or rerun.",
+  "privacy": "Compare identities as equalities; all raw auth, origins, endpoints, source event/account details and revision/message UUIDs remain private.",
+  "scope": "Main images/state summary: Chromium on Linux. Separate root-reviewed fresh native Safari 27 on Intel macOS 26.7.1 under the same injected faults; not natural policy, whole-network offline loading, indefinite retention, production deployment or general security proof.",
+  "mount": "Existing Conference case, after workflow and reliability decisions, before feature index.",
+  "public_media": [
+    "conference-bridge/reloaded-pending.webp",
+    "conference-bridge/saved-after-reload.webp",
+    "conference-bridge/receipt.json"
+  ],
+  "separate_native_compatibility": "One method sentence and a separately selected receipt object; native HTTP counts remain separate, no native media selected and no rerun by this task."
+}

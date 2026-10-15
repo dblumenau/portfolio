@@ -9,6 +9,7 @@ const errors = [];
 const external = new Set();
 const report = { date: new Date().toISOString(), buildRoot: root, routes: [], assets: [], sampleFiles: [], externalLinks: [], errors };
 const reviewedEvidenceMedia = [
+  'conference-bridge/reloaded-pending.webp', 'conference-bridge/saved-after-reload.webp', 'conference-bridge/receipt.json',
   'maintained-profile/profile-history.mp4', 'maintained-profile/profile-history.vtt',
   'maintained-profile/history-phone.png', 'maintained-profile/poster.png', 'maintained-profile/receipt.json',
   'listening-plan/chapter-choice.mp4',
