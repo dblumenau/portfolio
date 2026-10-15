@@ -2115,6 +2115,66 @@
       "sha256": "9ca63b88c8fff06ebc3d62b7d0be92173e6b13480c2cf6c5b61f8ea76c10f3d1",
       "width": 1080,
       "height": 1000
+    },
+    {
+      "file": "voice-turn/component-flow.mp4",
+      "bytes": 573517,
+      "sha256": "cae9839ba98abb0f8ef064b8e988b31d4abde10f397af0d96e39c8ecd604b7f1",
+      "captured": "2026-10-15",
+      "product": "PanelForge voice components in isolated wrapper",
+      "method": "Continuous silent component recording; video stream copied with metadata removed.",
+      "content": "Fictional moon-garden request and actual generated reply; stock file-backed input, isolated component wrapper, process-muted original capture.",
+      "redactions": []
+    },
+    {
+      "file": "voice-turn/component-flow.vtt",
+      "bytes": 479,
+      "sha256": "25ae5e25b51da07ccae0326a5e35e2cc915f194d3153a4618946f4752586deb8",
+      "captured": "2026-10-15",
+      "product": "PanelForge voice components in isolated wrapper",
+      "method": "Native action captions derived from observed phase times.",
+      "content": "Fictional moon-garden request and actual generated reply; stock file-backed input, isolated component wrapper, process-muted original capture.",
+      "redactions": []
+    },
+    {
+      "file": "voice-turn/component-flow.webp",
+      "bytes": 55700,
+      "sha256": "5904b6312b9b2d9baa111c1f467de54debd01e19e07879104a2cfb040510881e",
+      "captured": "2026-10-15",
+      "product": "PanelForge voice components in isolated wrapper",
+      "method": "Actual frame at 9.8 seconds from the continuous component film, WebP encoded.",
+      "content": "Fictional moon-garden request and actual generated reply; stock file-backed input, isolated component wrapper, process-muted original capture.",
+      "redactions": []
+    },
+    {
+      "file": "voice-turn/receipt.json",
+      "bytes": 3981,
+      "sha256": "670a42f570a8e80d6d37c9ca004f990b439a021058f2133132a18d999e7adddd",
+      "captured": "2026-10-15",
+      "product": "PanelForge voice components in isolated wrapper",
+      "method": "Explicit allowlisted projection of the completed fictional turn and selected artifact provenance.",
+      "content": "Fictional moon-garden request and actual generated reply; stock file-backed input, isolated component wrapper, process-muted original capture.",
+      "redactions": []
+    },
+    {
+      "file": "voice-turn/recorded-request.wav",
+      "bytes": 385964,
+      "sha256": "b6288458bb3a6d3b19e9ec7696e564460e5ce2b1b57bd7cf5f1e3e970e20a0de",
+      "captured": "2026-10-15",
+      "product": "PanelForge voice components in isolated wrapper",
+      "method": "Decode and resample actual uploaded WebM/Opus to mono 24 kHz PCM 16-bit; no cuts, speed or gain adjustment.",
+      "content": "Fictional moon-garden request and actual generated reply; stock file-backed input, isolated component wrapper, process-muted original capture.",
+      "redactions": []
+    },
+    {
+      "file": "voice-turn/reply.wav",
+      "bytes": 60644,
+      "sha256": "290f2c8a0f9fe02d15d221974ccaafd13459f1bfaa3c5334e2adc0200a62acec",
+      "captured": "2026-10-15",
+      "product": "PanelForge voice components in isolated wrapper",
+      "method": "Exact generated and persisted OpenAI tts-1/alloy WAV.",
+      "content": "Fictional moon-garden request and actual generated reply; stock file-backed input, isolated component wrapper, process-muted original capture.",
+      "redactions": []
     }
   ]
 }

@@ -9,6 +9,8 @@ const errors = [];
 const external = new Set();
 const report = { date: new Date().toISOString(), buildRoot: root, routes: [], assets: [], sampleFiles: [], externalLinks: [], errors };
 const reviewedEvidenceMedia = [
+  'voice-turn/recorded-request.wav', 'voice-turn/reply.wav', 'voice-turn/component-flow.mp4',
+  'voice-turn/component-flow.vtt', 'voice-turn/component-flow.webp', 'voice-turn/receipt.json',
   'grounded-analysis/entity.png',
   'grounded-analysis/phone-source.png',
   'grounded-analysis/receipt.json',

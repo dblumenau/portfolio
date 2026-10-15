@@ -1,0 +1,104 @@
+{
+  "schemaVersion": 1,
+  "captured": "2026-10-15",
+  "scope": "Actual PanelForge voice components and server pipeline in an isolated wrapper, using fictional file-backed input and real provider responses.",
+  "recording": {
+    "origin": "Stock eSpeak en-gb machine speech recorded by Chromium MediaRecorder from a file-backed fake device.",
+    "uploadedFormat": "WebM/Opus",
+    "uploadedBytes": 96427,
+    "uploadedSha256": "a9113abaeaa962084647cfa36c2fee3b160d2d9645fd2975e7eaf72ce0b614be",
+    "recognizedTextRaw": " For an imaginary moon garden, name one blue flower. Answer in one short sentence.",
+    "recognizedTextDisplay": "For an imaginary moon garden, name one blue flower. Answer in one short sentence.",
+    "displayNormalization": "Only surrounding whitespace removed for display. Raw recognized value retained above.",
+    "publicClip": "recorded-request.wav",
+    "conversion": "Decoded actual uploaded WebM/Opus and resampled mono 48 kHz to mono 24 kHz PCM 16-bit WAV. No cuts, speed change or volume normalization. Converted bytes differ from the upload.",
+    "decodedFrames": 192960,
+    "sampleRate": 24000,
+    "publicDurationSeconds": 8.04,
+    "uploadedContainerDurationSeconds": 8.02
+  },
+  "reply": {
+    "text": "Moonlight Bellflower.",
+    "provider": "OpenAI",
+    "model": "tts-1",
+    "voice": "alloy",
+    "clip": "reply.wav",
+    "bytes": 60644,
+    "sha256": "290f2c8a0f9fe02d15d221974ccaafd13459f1bfaa3c5334e2adc0200a62acec",
+    "durationSeconds": 1.2625,
+    "preservedExactOutputBytes": true
+  },
+  "sources": {
+    "panelForge": {
+      "revision": "93881d2eca613fde498e0933405cee3a07220a4c",
+      "release": "web-v10.20.97"
+    },
+    "claudeEngine": {
+      "revision": "bf89abc1646bd12133a0f22bc2d51f3286813250",
+      "release": "v6.17.0"
+    },
+    "observedModel": "claude-haiku-5-5",
+    "observedClaudeCli": "2.1.292",
+    "transcriptionModel": "whisper-large-v3-turbo"
+  },
+  "observations": {
+    "authoredPttTurns": 1,
+    "observedGroqResponses": 1,
+    "sdkInvocations": 1,
+    "completedModelTurns": 1,
+    "observedOpenAiSpeechResponses": 1,
+    "ttsChunkIndices": [
+      0
+    ],
+    "finalChunk": true,
+    "queuePlaying": true,
+    "queueEnded": true,
+    "queueDrained": true,
+    "persistedMessages": 2,
+    "toolCalls": 0,
+    "cleanupVerified": true
+  },
+  "method": {
+    "privateToolRestriction": "Empty SDK toolset, empty MCP selection and deny-every-tool hook.",
+    "limits": "One SDK turn; model budget $0.50; configured 160-token output cap; independent 240-second whole-run watchdog.",
+    "interceptedSideEffects": [
+      "queued jobs",
+      "broadcast events",
+      "notifications",
+      "mail"
+    ],
+    "normalVoicePolicyRetained": true,
+    "productionWrites": false,
+    "productionApplicationRuntimeUsed": false,
+    "captureOutputMuted": true
+  },
+  "limits": [
+    "One final chunk; not an out-of-order multi-chunk proof.",
+    "Media completion is not evidence of human audibility or physical speaker routing.",
+    "File-backed input is not a physical microphone or iOS/Safari test.",
+    "Provider HTTP/billing totals were not inferred from model turns or transport connections.",
+    "The portfolio serves saved files only and connects to no microphone or provider."
+  ],
+  "artifacts": {
+    "component-flow.mp4": {
+      "bytes": 573517,
+      "sha256": "cae9839ba98abb0f8ef064b8e988b31d4abde10f397af0d96e39c8ecd604b7f1"
+    },
+    "component-flow.vtt": {
+      "bytes": 479,
+      "sha256": "25ae5e25b51da07ccae0326a5e35e2cc915f194d3153a4618946f4752586deb8"
+    },
+    "component-flow.webp": {
+      "bytes": 55700,
+      "sha256": "5904b6312b9b2d9baa111c1f467de54debd01e19e07879104a2cfb040510881e"
+    },
+    "recorded-request.wav": {
+      "bytes": 385964,
+      "sha256": "b6288458bb3a6d3b19e9ec7696e564460e5ce2b1b57bd7cf5f1e3e970e20a0de"
+    },
+    "reply.wav": {
+      "bytes": 60644,
+      "sha256": "290f2c8a0f9fe02d15d221974ccaafd13459f1bfaa3c5334e2adc0200a62acec"
+    }
+  }
+}

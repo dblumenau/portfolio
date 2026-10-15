@@ -706,17 +706,22 @@ export const coreFeatures: Feature[] = [
       }
     ],
     "sources": {
-      "repo": "panel-forge",
+      "repo": "panel-forge and claude-engine",
       "files": [
         "resources/js/composables/voice/useVoiceSession.ts",
         "resources/js/composables/voice/claudeEngineVoiceAdapter.ts",
         "resources/js/components/chat/ChatInputVoiceMode.vue",
         "resources/js/lib/audioRuntime.ts",
-        "resources/js/composables/useWebAudioPlayer.ts"
+        "resources/js/composables/useWebAudioPlayer.ts",
+        "app/Http/Controllers/Api/TranscribeController.php",
+        "app/Services/GroqTranscriptionService.php",
+        "app/Services/EngineVoiceStream.php",
+        "express-ai-service/src/audio/AudioManager.ts",
+        "claude-engine: claude_engine/routes/stream.py"
       ],
       "status": "source-current",
-      "note": "The voice-state diagram is explanatory. The working sound example uses unmodified retained audio code with synthetic WAV notes and captured desktop output; it is not a complete live voice session or device-routing demonstration. The separate PCM restart limitation remains disclosed.",
-      "release": "web-v6.20.0"
+      "note": "One fictional file-backed turn ran through actual PanelForge voice components and isolated server routes, Groq transcription, Claude Engine and OpenAI speech. The browser output was muted; one chunk completed and two messages persisted. The separate local three-note queue tests multi-item ordering. Neither is a physical microphone or device-routing claim.",
+      "release": "web-v10.20.97"
     },
     "related": [
       "gateway-tool-profiles",
@@ -724,28 +729,28 @@ export const coreFeatures: Feature[] = [
       "voice-conversation-loop"
     ],
     "exhibit": {
-      "title": "The phases of one spoken turn",
-      "caption": "Local explanatory exhibit · invented records · no live service or agent call",
+      "title": "A recorded request. A spoken reply.",
+      "caption": "Actual voice components and server pipeline in an isolated wrapper; fictional file-backed input and real provider responses.",
       "steps": [
         {
-          "name": "During listening",
-          "detail": "Listening / transcript ready"
+          "name": "Record the request",
+          "detail": "The browser uploads a new recording of fictional stock speech."
         },
         {
-          "name": "During playback",
-          "detail": "Responding / speaking"
+          "name": "Save the reply",
+          "detail": "A real model reply and one generated audio chunk complete the turn."
         }
       ],
       "choices": [
         {
-          "label": "During listening",
-          "result": "Listening / transcript ready",
-          "explanation": "The fictional sentence becomes visible text before a response."
+          "label": "Inspect the recorded turn",
+          "result": "Moonlight Bellflower.",
+          "explanation": "One actual turn used the canonical voice components and server pipeline in an isolated wrapper."
         },
         {
-          "label": "During playback",
-          "result": "Responding / speaking",
-          "explanation": "A visible phase tells the person what the voice loop is doing. No microphone or speech service is connected here."
+          "label": "Inspect separate ordering",
+          "result": "Three synthetic notes",
+          "explanation": "The separate local audio example tests multi-item ordering without a microphone or speech service."
         }
       ]
     },

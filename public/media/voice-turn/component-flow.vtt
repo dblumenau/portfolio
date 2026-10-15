@@ -1,0 +1,19 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:00.650
+Fictional stock speech through a file-backed input.
+
+00:00:00.650 --> 00:00:08.809
+Hold to talk: Chromium records the request.
+
+00:00:08.809 --> 00:00:09.450
+Groq transcribes the uploaded recording.
+
+00:00:09.450 --> 00:00:15.623
+Claude Engine answers; OpenAI synthesizes the reply.
+
+00:00:15.623 --> 00:00:17.419
+One returned chunk plays to completion in the muted browser.
+
+00:00:17.419 --> 00:00:20.880
+Saved reply: Moonlight Bellflower.
