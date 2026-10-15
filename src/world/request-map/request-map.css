@@ -1,0 +1,82 @@
+.forge-world .world-request-readable { padding:20px 25px; margin-top:12px; border:1px solid var(--world-border); background:#e6ece3; font-size:.8rem; line-height:1.8; }
+.forge-world .world-request-readable summary { min-height:44px; align-content:center; cursor:pointer; font-weight:650; }
+.forge-world .world-request-readable p { margin-top:12px; }
+.forge-world .request-readable-case { padding:12px 0; border-top:1px solid #bdc9b9; margin-top:12px; }
+.forge-world .request-readable-case h3 { font-family:var(--serif); font-size:1.3rem; margin-top:12px; }
+.forge-world .request-readable-case h4 { margin-top:16px; font-size:.85rem; }
+.forge-world .world-request-readable a { display:inline-flex; align-items:center; min-height:44px; margin-right:15px; }
+.forge-world .world-stage[data-experience="connections"][data-selected][data-exhibit] { grid-template-columns:minmax(0,1.4fr) minmax(410px,1fr); }
+.forge-world .world-stage[data-experience="connections"][data-selected][data-exhibit] .world-viewport { grid-area:1/1; height:min(78vh,850px); min-height:580px; }
+.forge-world .world-stage[data-experience="connections"] :is(.world-inspector,.world-exhibit-bar,.world-view-controls,.world-labels,.world-view-meta) { display:none; }
+.forge-world .world-stage[data-experience="connections"] .world-canvas { touch-action:pan-y; cursor:default; }
+.forge-world .world-request-overlay { position:relative; grid-area:1/1; z-index:2; pointer-events:none; padding:23px 20px; color:#34534a; font-size:.55rem; letter-spacing:.1em; }
+.forge-world .request-scene-windows { position:absolute; top:27%; left:16%; right:29%; display:flex; justify-content:space-between; gap:8px; font-size:.48rem; letter-spacing:0; }
+.forge-world .request-scene-windows span { padding:6px; background:#f5f1e6dd; border:1px solid #a8b8a2; max-width:95px; text-align:center; }
+.forge-world .request-scene-windows [data-selected="true"] { background:#eeddb5; border-color:#a5894c; }
+.forge-world [data-request-scene-note] { position:absolute; bottom:22px; left:20px; right:20px; letter-spacing:0; font-size:.6rem; line-height:1.5; text-align:center; }
+.forge-world .world-request-card { grid-area:1/2; min-width:0; height:min(78vh,850px); min-height:580px; overflow:auto; padding:14px 24px 26px; border-left:1px solid var(--world-border); background:#faf6ed; scrollbar-width:thin; font-size:.76rem; line-height:1.65; }
+.forge-world .request-top { display:flex; align-items:center; justify-content:space-between; gap:12px; border-bottom:1px solid #bfcbb8; }
+.forge-world .request-top > span,.forge-world .request-kicker { color:#506c59; font-size:.52rem; letter-spacing:.08em; font-weight:650; }
+.forge-world .request-top button { min-height:44px; font-size:.65rem; gap:6px; }
+.forge-world .world-request-card h2 { font-family:var(--serif); font-size:2.5rem; line-height:1.03; letter-spacing:-.04em; margin:20px 0 14px; }
+.forge-world .world-request-card h2 em { color:#647f67; font-weight:450; }
+.forge-world .request-boundary { color:#506c59; font-size:.68rem; }
+.forge-world .request-case { padding:15px; border:1px solid #b6c5ae; background:#e9eddf; margin-top:17px; }
+.forge-world .request-case h3 { font-family:var(--serif); font-size:1.3rem; line-height:1.2; margin:8px 0; }
+.forge-world .request-role { font-family:monospace; overflow-wrap:anywhere; font-size:.73rem; margin:8px 0 12px; }
+.forge-world .world-request-card .world-button { min-height:44px; font-size:.71rem; gap:8px; }
+.forge-world [data-request-open],.forge-world [data-request-build],.forge-world [data-request-download] { width:100%; }
+.forge-world .request-outcome > strong { display:block; color:#7b4e35; font-size:.85rem; }
+.forge-world .request-outcome > span { display:block; color:#4e6354; font-size:.65rem; margin-top:5px; overflow-wrap:anywhere; }
+.forge-world .request-outcome > p { display:flex; align-items:center; gap:12px; margin-top:10px; border-top:1px solid #bac9b0; padding-top:10px; }
+.forge-world .request-outcome b { font-family:var(--serif); font-size:2rem; line-height:1; }
+.forge-world .request-outcome > p span { font-size:.68rem; }
+.forge-world .world-request-card details { margin-top:12px; }
+.forge-world .world-request-card summary { min-height:44px; align-content:center; cursor:pointer; font-size:.7rem; text-decoration:underline; text-underline-offset:4px; }
+.forge-world .request-choose > div { display:grid; gap:8px; }
+.forge-world .request-choose button { display:grid; grid-template-columns:1fr auto; gap:5px 10px; align-items:center; text-align:left; background:#f4f2e7; border:1px solid #b9c8b3; min-height:64px; padding:10px 12px; color:#29483c; }
+.forge-world .request-choose strong { font:inherit; font-size:.73rem; font-weight:600; }
+.forge-world .request-choose button span { font:inherit; font-size:.64rem; grid-column:1; }
+.forge-world .request-choose button svg { grid-column:2; grid-row:1/3; }
+.forge-world .request-notice { min-height:1.5em; font-size:.64rem; color:#506c59; margin:9px 0; }
+.forge-world .request-fields { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; }
+.forge-world .request-fields button { min-height:48px; padding:8px; border:1px solid #a9bca1; background:#f7f2e6; color:#29483c; font:inherit; font-size:.68rem; font-weight:600; }
+.forge-world .request-fields [aria-pressed="true"] { border-color:#827043; background:#eeddb5; box-shadow:inset 0 0 0 1px #827043; }
+.forge-world .request-evidence { padding:16px; margin-top:14px; background:#fffaf0; border:1px solid #bdcbb6; }
+.forge-world .request-evidence h3 { font-family:var(--serif); font-size:1.35rem; margin:8px 0; }
+.forge-world .request-evidence p { margin-top:9px; font-size:.72rem; overflow-wrap:anywhere; }
+.forge-world .request-artifact { padding:16px; margin-top:18px; border:1px solid #baa780; background:#eee4d0; }
+.forge-world .request-artifact > p { margin:8px 0 13px; }
+.forge-world .request-artifact [role="status"] { font-size:.65rem; }
+.forge-world .request-preview img { display:block; width:100%; height:auto; border:1px solid #bcbaa7; margin-bottom:12px; background:#fbf7ec; }
+.forge-world .request-method p { margin:10px 0; font-size:.66rem; }
+.forge-world .request-method a,.forge-world .request-lab-link,.forge-world .request-readable-link { display:flex; align-items:center; gap:8px; min-height:44px; font-size:.67rem; }
+.forge-world .world-request-card :is(button,a,summary):focus-visible { outline:3px solid #5d765b; outline-offset:3px; }
+.forge-world[data-world-state="fallback"] .world-request-overlay { display:none; }
+.forge-world[data-world-state="fallback"] .world-stage[data-experience="connections"][data-selected][data-exhibit] .world-viewport { height:110px; min-height:110px; }
+.forge-world[data-request-scene="unavailable"] .world-stage[data-experience="connections"] .world-canvas { visibility:hidden; }
+.forge-world[data-request-scene="unavailable"] .world-stage[data-experience="connections"] .world-viewport::after { content:"The illustration is unavailable. The recorded cases and local SVG map still work in the panel."; position:absolute; inset:25%; display:grid; place-content:center; text-align:center; font-size:.8rem; line-height:1.7; }
+@media(max-width:1100px) {
+ .forge-world .world-stage[data-experience="connections"][data-selected][data-exhibit] { grid-template-columns:minmax(0,1fr); }
+ .forge-world .world-stage[data-experience="connections"][data-selected][data-exhibit] .world-viewport { height:280px; min-height:0; }
+ .forge-world .world-request-card { grid-area:2/1; height:auto; min-height:0; overflow:visible; border-left:0; border-top:1px solid var(--world-border); }
+}
+@media(max-width:800px) { .forge-world .world-request-readable { order:6; } }
+@media(max-width:600px) {
+ .forge-world .world-stage[data-experience="connections"][data-selected][data-exhibit] .world-viewport { height:200px; }
+ .forge-world .world-request-card { padding:10px 16px 22px; }
+ .forge-world .world-request-card h2 { font-size:1.95rem; margin:14px 0 11px; }
+ .forge-world .request-top > span { font-size:.43rem; }
+ .forge-world .request-top button { font-size:.58rem; }
+ .forge-world .request-case { margin-top:13px; padding:12px; }
+ .forge-world .request-case h3 { font-size:1.2rem; }
+ .forge-world .request-boundary { font-size:.66rem; }
+ .forge-world .request-scene-windows { top:20%; left:14%; right:28%; font-size:.4rem; gap:5px; }
+ .forge-world .request-scene-windows span { padding:4px; max-width:64px; }
+ .forge-world .world-request-overlay { padding:12px; font-size:.45rem; }
+ .forge-world [data-request-scene-note] { font-size:.47rem; bottom:11px; }
+}
+
+.forge-world .world-request-card[data-request-forwarded="true"] .request-outcome > strong { color:#315e4d; }
+
+.forge-world .request-code-note { display:block; margin-top:5px; font-size:.64rem; }

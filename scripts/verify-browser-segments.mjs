@@ -30,6 +30,7 @@ const groups = {
   'grounded-analysis': ['grounded-analysis'],
   'world-task': ['world-attention'],
   'world-memory': ['world-memory', 'world-presentation'],
+  'world-connections': ['world-connections', 'world-connections-focus'],
   world: ['world', 'world-exhibit', 'world-lifecycle'],
 };
 if (process.argv.includes('--list')) { console.log(JSON.stringify(groups, null, 2)); process.exit(0); }

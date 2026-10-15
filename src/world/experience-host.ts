@@ -4,7 +4,7 @@ import { taskHash } from './attention-task/model';
 
 export type WorldPose = { worldHash?: string; position: [number, number, number]; target: [number, number, number]; quaternion: [number, number, number, number] };
 export type WorldOrigin = { hash: string; state: Record<string, unknown>; scroll: number; inspectorScroll: number; pose?: WorldPose };
-export type ExperienceId = 'attention' | 'printshop' | 'memory';
+export type ExperienceId = 'attention' | 'printshop' | 'memory' | 'connections';
 export type Suspension = 'offscreen' | 'hidden' | 'persisted' | 'context-lost';
 export type ExperienceBridge = { invalidate: () => void; pushHash: (hash: string) => void; exit: () => void; gpuAvailable: () => boolean };
 export type WorldExperience = {
@@ -13,7 +13,7 @@ export type WorldExperience = {
   suspend: (reason: Suspension) => void; resume: () => void; escape: () => boolean; dispose: () => void;
 };
 type WorldHooks = { capture: () => WorldPose; open: (origin: WorldOrigin) => void; close: () => void; invalidate: () => void };
-const experienceForHash = (hash: string): ExperienceId | null => taskHash(hash) !== null ? 'attention' : /^#printshop(?:\/|$)/.test(hash) ? 'printshop' : /^#memory-desk(?:$|\/(?:vue|vue-js|vue-3)$)/.test(hash) ? 'memory' : null;
+const experienceForHash = (hash: string): ExperienceId | null => taskHash(hash) !== null ? 'attention' : /^#printshop(?:\/|$)/.test(hash) ? 'printshop' : /^#memory-desk(?:$|\/(?:vue|vue-js|vue-3)$)/.test(hash) ? 'memory' : /^#request-map(?:$|\/(?:host-volume-policy-denied|scout-queue-denied|wrong-resource-scope|scout-search)$)/.test(hash) ? 'connections' : null;
 
 /** Navigation, origin and input ownership for the World experiences. */
 export function mountExperienceHost(root: HTMLElement) {
@@ -25,7 +25,9 @@ export function mountExperienceHost(root: HTMLElement) {
   const modules = new Map<ExperienceId, WorldExperience>();
   let shopImport: Promise<typeof import('./printshop/controller')> | undefined;
   let memoryImport: Promise<typeof import('./memory-desk/controller')> | undefined;
-  const entrySelector = (id: ExperienceId) => id === 'attention' ? '[data-open-task]' : id === 'memory' ? '[data-world-activities] [data-open-memory]' : '[data-world-activities] [data-open-printshop]';
+  let requestImport: Promise<typeof import('./request-map/controller')> | undefined;
+  let requestFocusFallback = false;
+  const entrySelector = (id: ExperienceId) => id === 'attention' ? '[data-open-task]' : id === 'memory' ? '[data-world-activities] [data-open-memory]' : id === 'connections' ? '[data-district-detail="connections"] [data-open-connections]' : '[data-world-activities] [data-open-printshop]';
   const cleanState = (state: unknown) => { const copy = state && typeof state === 'object' ? { ...state } as Record<string, unknown> : {}; delete copy.worldTask; delete copy.worldTaskOrigin; return copy; };
   function stateForHistory() { const { focus: _focus, ...origin } = previous; return { ...origin.state, worldTask: true, worldTaskOrigin: origin }; }
   function readOrigin(): WorldOrigin | null {
@@ -47,21 +49,29 @@ export function mountExperienceHost(root: HTMLElement) {
     const card = root.querySelector<HTMLElement>('[data-shop-card]');
     if (card && id === 'printshop') card.hidden = false;
     if (id === 'memory') root.querySelector<HTMLElement>('[data-memory-card]')!.hidden = false;
+    if (id === 'connections') root.querySelector<HTMLElement>('[data-request-card]')!.hidden = false;
   }
-  async function open(id: ExperienceId, fresh = true, hash = id === 'attention' ? '#task/attention/waiting' : id === 'memory' ? '#memory-desk' : '#printshop', opener?: HTMLElement) {
+  async function open(id: ExperienceId, fresh = true, hash = id === 'attention' ? '#task/attention/waiting' : id === 'memory' ? '#memory-desk' : id === 'connections' ? '#request-map' : '#printshop', opener?: HTMLElement) {
     if (disposed) return;
     if (activeId === id) { if (!fresh) modules.get(id)?.enter(hash, false); return; }
     const switching = activeId !== null;
     if (switching) exit(false, false);
-    if (fresh && !switching) previous = { hash: location.hash, state: cleanState(history.state), scroll: window.scrollY, inspectorScroll: root.querySelector<HTMLElement>('[data-world-inspector]')!.scrollTop, focus: opener ?? document.activeElement as HTMLElement, pose: hooks?.capture() };
+    if (fresh && !switching) { requestFocusFallback = false; previous = { hash: location.hash, state: cleanState(history.state), scroll: window.scrollY, inspectorScroll: root.querySelector<HTMLElement>('[data-world-inspector]')!.scrollTop, focus: opener ?? document.activeElement as HTMLElement, pose: hooks?.capture() }; }
     else if (!fresh) {
       const origin = readOrigin();
-      if (origin) previous = { ...origin, focus: origin.hash === previous.hash && previous.focus?.isConnected ? previous.focus : root.querySelector<HTMLElement>(entrySelector(id)) };
+      if (origin) {
+        const retainedFocus = origin.hash === previous.hash && previous.focus?.isConnected;
+        // A connected fallback is still unresolved until Return finds a visible World target.
+        requestFocusFallback = (requestFocusFallback && origin.hash === previous.hash) || (id === 'connections' && !retainedFocus);
+        previous = { ...origin, focus: retainedFocus ? previous.focus : root.querySelector<HTMLElement>(entrySelector(id)) };
+      }
       else {
         const currentSelected = root.dataset.selected;
         const defaultMemory = id === 'memory' && !currentSelected;
-        const selected = currentSelected || (defaultMemory ? 'memory' : '');
-        previous = { hash: selected ? `#${selected}${stage.dataset.exhibit ? '/exhibit' : ''}` : '', state: cleanState(history.state), scroll: window.scrollY, inspectorScroll: root.querySelector<HTMLElement>('[data-world-inspector]')!.scrollTop, focus: root.querySelector<HTMLElement>(entrySelector(id)), ...(defaultMemory ? {} : { pose: hooks?.capture() }) };
+        const defaultConnections = id === 'connections' && !currentSelected;
+        requestFocusFallback = id === 'connections';
+        const selected = currentSelected || (defaultMemory ? 'memory' : defaultConnections ? 'connections' : '');
+        previous = { hash: selected ? `#${selected}${stage.dataset.exhibit ? '/exhibit' : ''}` : '', state: cleanState(history.state), scroll: window.scrollY, inspectorScroll: root.querySelector<HTMLElement>('[data-world-inspector]')!.scrollTop, focus: root.querySelector<HTMLElement>(entrySelector(id)), ...(defaultMemory || defaultConnections ? {} : { pose: hooks?.capture() }) };
       }
     }
     activeId = id; activateHooks(); showMode(id);
@@ -70,7 +80,12 @@ export function mountExperienceHost(root: HTMLElement) {
     window.scrollTo({ top: Math.max(0, window.scrollY + stage.getBoundingClientRect().top - 12), behavior: 'instant' });
     if (!modules.has(id)) {
       try {
-        if (id === 'memory') {
+        if (id === 'connections') {
+          requestImport ||= import('./request-map/controller');
+          const { mountRequestMap } = await requestImport;
+          if (disposed || token !== request || activeId !== id) return;
+          modules.set(id, mountRequestMap(root, bridge(id)));
+        } else if (id === 'memory') {
           memoryImport ||= import('./memory-desk/controller');
           const { mountMemoryDesk } = await memoryImport;
           if (disposed || token !== request || activeId !== id) return;
@@ -83,7 +98,8 @@ export function mountExperienceHost(root: HTMLElement) {
         }
       } catch {
         if (activeId === id) {
-          if (id === 'memory') { memoryImport = undefined; root.querySelector<HTMLElement>('[data-memory-status]')!.textContent = 'The evidence desk could not open. Read the comparison below or open the existing Memory Lab.'; }
+          if (id === 'connections') { requestImport = undefined; root.querySelector<HTMLElement>('[data-request-notice]')!.textContent = 'The diagram desk could not open. Read the four cases below or open the existing Gateway Lab.'; }
+          else if (id === 'memory') { memoryImport = undefined; root.querySelector<HTMLElement>('[data-memory-status]')!.textContent = 'The evidence desk could not open. Read the comparison below or open the existing Memory Lab.'; }
           else root.querySelector<HTMLElement>('[data-shop-status]')!.textContent = 'The press could not open. The Studio Lab and readable map are available below.';
         }
         return;
@@ -98,21 +114,28 @@ export function mountExperienceHost(root: HTMLElement) {
     modules.get(activeId)?.leave(); activeId = null;
     root.querySelector<HTMLElement>('[data-shop-card]')!.hidden = true;
     root.querySelector<HTMLElement>('[data-memory-card]')!.hidden = true;
+    root.querySelector<HTMLElement>('[data-request-card]')!.hidden = true;
     delete root.dataset.experience; delete stage.dataset.experience; delete stage.dataset.experienceLoading;
     if (push) history.pushState(previous.state, '', `${location.pathname}${location.search}${previous.hash}`);
     hooks?.close();
     root.querySelector<HTMLElement>('[data-world-inspector]')!.scrollTop = previous.inspectorScroll;
     window.scrollTo({ top: previous.scroll, behavior: 'instant' });
+    if (restoreFocus && requestFocusFallback) {
+      const candidates = [previous.focus, ...root.querySelectorAll<HTMLElement>('[data-district-detail="connections"] [data-open-connections],#districts [data-open-connections],.world-toolbar-actions a[href="#districts"],[data-select-district="connections"],[data-district-detail]:not([hidden]) h2')];
+      const visible = candidates.find(element => { if (!element?.isConnected) return false; const box = element.getBoundingClientRect(); return box.width > 0 && box.height > 0 && box.top >= 0 && box.bottom <= window.innerHeight; });
+      if (visible) { previous.focus = visible; requestFocusFallback = false; }
+    }
     if (restoreFocus && previous.focus?.isConnected) previous.focus.focus({ preventScroll: true });
   }
   function fromHash() { const id = experienceForHash(location.hash); if (id) { if (activeId === id) modules.get(id)?.enter(location.hash, false); else void open(id, false, location.hash); } else exit(false); }
   root.addEventListener('click', event => {
-    const target = (event.target as Element).closest<HTMLElement>('[data-open-task],[data-open-printshop],[data-open-memory],[data-task-exit],[data-shop-exit],[data-memory-exit]');
+    const target = (event.target as Element).closest<HTMLElement>('[data-open-task],[data-open-printshop],[data-open-memory],[data-open-connections],[data-task-exit],[data-shop-exit],[data-memory-exit],[data-request-exit]');
     if (!target) return;
     event.preventDefault();
     if (target.hasAttribute('data-open-task')) void open('attention', true, undefined, target);
     else if (target.hasAttribute('data-open-printshop')) void open('printshop', true, undefined, target);
     else if (target.hasAttribute('data-open-memory')) void open('memory', true, undefined, target);
+    else if (target.hasAttribute('data-open-connections')) void open('connections', true, undefined, target);
     else exit();
   }, { signal: scope.signal });
   for (const event of ['popstate', 'hashchange']) window.addEventListener(event, fromHash, { signal: scope.signal });

@@ -3,6 +3,8 @@ import Icon from './Icon.astro';
 import WorldAttentionTask from './WorldAttentionTask.astro';
 import WorldPrintshop from './WorldPrintshop.astro';
 import WorldMemoryDesk from './WorldMemoryDesk.astro';
+import WorldRequestMap from './WorldRequestMap.astro';
+import '../world/request-map/request-map.css';
 import '../world/memory-desk/memory-desk.css';
 import '../world/printshop/printshop.css';
 import { districts } from '../world/data';
@@ -45,6 +47,7 @@ import '../world/world.css';
           {district.image && <button class="world-button world-button-solid" type="button" data-open-exhibit={district.id}>Open the exhibit <span aria-hidden="true"><Icon name="arrow-up-right" /></span></button>}
           {district.id === 'studio' && <a class="world-button" href="/labs/branches/">Try the Branch Lab <span aria-hidden="true"><Icon name="arrow-up-right" /></span></a>}
           {district.id === 'small-tools' && <a class="world-button" href="/labs/studio/">Make a graphic <span aria-hidden="true"><Icon name="arrow-up-right" /></span></a>}
+          {district.id === 'connections' && <a class="world-button world-button-solid" href="#request-map-readable" data-open-connections>Map a recorded request <Icon name="arrow-right" /></a>}
           {district.id === 'connections' && <a class="world-button" href="/labs/gateway/">Try the Gateway Lab <span aria-hidden="true"><Icon name="arrow-up-right" /></span></a>}
           {district.id === 'workbench' && <a class="world-button" href="/labs/workbench/">Try the Workbench Lab <span aria-hidden="true"><Icon name="arrow-up-right" /></span></a>}
           {district.id === 'engines' && <a class="world-button" href="/labs/question/">Answer in native chat <span aria-hidden="true"><Icon name="arrow-up-right" /></span></a>}
@@ -67,6 +70,7 @@ import '../world/world.css';
     <WorldAttentionTask />
     <WorldPrintshop />
     <WorldMemoryDesk />
+    <WorldRequestMap />
   </div>
   <nav class="world-district-nav" aria-label="Choose a district">{districts.map((district) => <button type="button" data-select-district={district.id} data-world-control disabled aria-pressed="false" style={`--district-color:${district.color}`}><span class="world-nav-number">{district.number}</span><strong>{district.name}</strong><span class="world-nav-label">{district.label}</span><span class="world-nav-arrow" aria-hidden="true"><Icon name="arrow-up-right" /></span></button>)}</nav>
   <div class="world-caption"><p>A designed map of personal projects, with actual product screenshots and recordings.</p><span>Choose a place. See what happens there.</span></div>
@@ -74,9 +78,10 @@ import '../world/world.css';
   <WorldAttentionTask fallback />
   <WorldPrintshop fallback />
   <WorldMemoryDesk fallback />
+  <WorldRequestMap fallback />
   <div class="world-directory" id="districts">
     <div class="world-directory-heading"><p class="eyebrow">The readable map</p><h2>Six places.<br /><em>One connected practice.</em></h2><p>The world is a way in. Each district has a plain-language story and a route to the work behind it.</p></div>
-    <div class="world-directory-grid">{districts.map((district) => <article class="world-directory-card" style={`--district-color:${district.color}`}><p class="world-directory-number">{district.number} / {district.name}</p><h3>{district.title}</h3><p>{district.description}</p>{district.id === 'small-tools' && <a class="world-button" href="#printshop-readable" data-open-printshop>Make a print <Icon name="arrow-right" /></a>}{district.id === 'memory' && <a class="world-button" href="#memory-desk-readable" data-open-memory>Compare three names <Icon name="arrow-right" /></a>}<details><summary>Look inside this district <span aria-hidden="true"><Icon name="plus" /></span></summary><ul>{district.exhibits.map((exhibit) => <li><strong>{exhibit.href ? <a href={exhibit.href}>{exhibit.title} <Icon name="arrow-up-right" /></a> : exhibit.title}</strong><p>{exhibit.description}</p></li>)}</ul><p class="world-model-caption">{district.architecture}</p></details><a class="world-case-link" href={district.href}>{district.link}<span aria-hidden="true"><Icon name="arrow-up-right" /></span></a></article>)}</div>
+    <div class="world-directory-grid">{districts.map((district) => <article class="world-directory-card" style={`--district-color:${district.color}`}><p class="world-directory-number">{district.number} / {district.name}</p><h3>{district.title}</h3><p>{district.description}</p>{district.id === 'small-tools' && <a class="world-button" href="#printshop-readable" data-open-printshop>Make a print <Icon name="arrow-right" /></a>}{district.id === 'connections' && <a class="world-button" href="#request-map-readable" data-open-connections>Map a recorded request <Icon name="arrow-right" /></a>}{district.id === 'memory' && <a class="world-button" href="#memory-desk-readable" data-open-memory>Compare three names <Icon name="arrow-right" /></a>}<details><summary>Look inside this district <span aria-hidden="true"><Icon name="plus" /></span></summary><ul>{district.exhibits.map((exhibit) => <li><strong>{exhibit.href ? <a href={exhibit.href}>{exhibit.title} <Icon name="arrow-up-right" /></a> : exhibit.title}</strong><p>{exhibit.description}</p></li>)}</ul><p class="world-model-caption">{district.architecture}</p></details><a class="world-case-link" href={district.href}>{district.link}<span aria-hidden="true"><Icon name="arrow-up-right" /></span></a></article>)}</div>
   </div>
   <noscript><style>.world-stage,.world-toolbar-actions button,.world-district-nav{display:none!important}.world-directory{padding-top:32px}</style></noscript>
 </section>
@@ -86,14 +91,14 @@ import '../world/world.css';
   if (worldRoot) {
     let dispose: (() => void) | undefined;
     let loading = false;
-    let intended: 'attention' | 'printshop' | 'memory' | null = null;
+    let intended: 'attention' | 'printshop' | 'memory' | 'connections' | null = null;
     let intendedEntry: HTMLElement | undefined;
     let host: import('../world/experience-host').ExperienceHost | undefined;
     worldRoot.addEventListener('click', event => {
       if (host) return;
-      const target = (event.target as Element).closest<HTMLElement>('[data-open-printshop],[data-open-task],[data-open-memory]');
+      const target = (event.target as Element).closest<HTMLElement>('[data-open-printshop],[data-open-task],[data-open-memory],[data-open-connections]');
       if (!target) return;
-      event.preventDefault(); intendedEntry = target; intended = target.hasAttribute('data-open-printshop') ? 'printshop' : target.hasAttribute('data-open-memory') ? 'memory' : 'attention'; void start();
+      event.preventDefault(); intendedEntry = target; intended = target.hasAttribute('data-open-printshop') ? 'printshop' : target.hasAttribute('data-open-memory') ? 'memory' : target.hasAttribute('data-open-connections') ? 'connections' : 'attention'; void start();
     });
     const start = async () => {
       if (loading) return;
