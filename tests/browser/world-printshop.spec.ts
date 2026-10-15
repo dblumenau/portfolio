@@ -164,7 +164,7 @@ test('encoding failure and exit during a held replacement preserve both finished
   await expect(page.locator('[data-shop-status]')).toContainText('Preparation stopped');
 });
 
-test('native keyboard and IME preserve focus and keep visitor words out of navigation and storage', async ({ page }) => {
+test('native keyboard and IME preserve focus and keep visitor words in local workspace storage', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 }); await ready(page);
   const headline = page.locator('[data-shop-field="headline"]'); await headline.focus();
   const historyBefore = await page.evaluate(() => history.length);
@@ -175,7 +175,8 @@ test('native keyboard and IME preserve focus and keep visitor words out of navig
   const before = await page.evaluate(() => scrollY); await headline.fill('Ærlighed, glæde og åbne døre');
   expect(await page.evaluate(() => history.length)).toBe(historyBefore); expect(await page.evaluate(() => scrollY)).toBe(before);
   expect(await page.evaluate(() => JSON.stringify(history.state) + location.href)).not.toMatch(/Ærlighed|døre|blob:/);
-  expect(await page.evaluate(() => localStorage.length + sessionStorage.length)).toBe(0);
+  expect(await page.evaluate(() => localStorage.length)).toBe(0);
+  expect(await page.evaluate(() => JSON.parse(sessionStorage.getItem('portfolio.creative.v1')!).world.draft.headline)).toBe('Ærlighed, glæde og åbne døre');
   await page.locator('[data-shop-done]').click(); await expect(page.locator('[data-forge-world]')).toHaveAttribute('data-shop-keyboard', '');
   await page.setViewportSize({ width: 390, height: 844 }); await pull(page, 1);
 });
@@ -193,11 +194,18 @@ for (const origin of ['#small-tools', '#studio/exhibit', '#memory/exhibit']) tes
   await page.goBack(); await expect(page.locator('[data-task-card]')).toBeVisible(); await page.keyboard.press('Escape'); expect(new URL(page.url()).hash).toBe(origin);
 });
 
-test('a reloaded print-slot link opens an honest editor with no fabricated finished print', async ({ page }) => {
-  await ready(page); await pull(page, 1); await page.locator('[data-shop-slot="0"] [data-shop-inspect]').click();
+test('a reloaded print-slot link restores the exact original PNG and inspector', async ({ page }) => {
+  await ready(page); await pull(page, 1); await expect(page.locator('[data-forge-world]')).toHaveAttribute('data-shop-saved', 'true'); const original = await hashPrint(page, 0);
+  await page.locator('[data-shop-slot="0"] [data-shop-inspect]').click();
   await page.reload(); await expect(page.locator('[data-forge-world]')).toHaveAttribute('data-shop-preparation', 'ready');
+  await expect(page.locator('[data-shop-missing]')).toBeHidden(); await expect(page.locator('[data-forge-world]')).toHaveAttribute('data-shop-prints', '1');
+  await expect(page.locator('[data-shop-proof]')).toBeVisible(); expect(await hashPrint(page, 0)).toBe(original);
+});
+
+test('a print-slot URL in a fresh workspace cannot fabricate a finished print', async ({ page }) => {
+  await ready(page, '#printshop/print-1');
   await expect(page.locator('[data-shop-missing]')).toBeVisible(); await expect(page.locator('[data-forge-world]')).toHaveAttribute('data-shop-prints', '0');
-  await expect(page.locator('[data-shop-proof]')).not.toBeVisible(); await expect(pullButton(page)).toBeEnabled();
+  await expect(page.locator('[data-shop-proof]')).toBeHidden();
 });
 
 test('World context loss leaves genuine native editing and PNGs usable and restores the same retained print', async ({ page }) => {

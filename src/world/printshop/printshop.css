@@ -138,3 +138,5 @@
 @media(max-width:600px) { .forge-world .world-shop-lever { max-width:100px; } }
 
 @media(max-width:600px) { .forge-world[data-shop-keyboard="open"] .world-shop-overlay { display:none; } }
+
+.forge-world .world-shop-storage{font-size:.63rem;line-height:1.7;margin-top:9px;padding-top:8px;border-top:1px solid #c5cdb5;color:#3f5638}.forge-world .world-shop-continue{display:flex;align-items:center;gap:.4rem;min-height:44px;font-size:.72rem;line-height:1.5;margin-top:7px;color:#31472e}.forge-world [data-shop-continue][aria-disabled="true"]{opacity:.55}.forge-world [data-shop-continue="draft"]{min-height:44px;align-content:center;margin-top:7px}

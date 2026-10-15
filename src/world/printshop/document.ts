@@ -8,6 +8,7 @@ export function printDocument(draft: Draft, background: DecodedBackground): KitD
   const doc = createDoc();
   doc.templateId = 'custom'; doc.customTemplate = { prefix: 'A SMALL EDITION', headline: draft.headline };
   doc.eventName = { text: draft.smallLine, visible: !!draft.smallLine.trim() };
+  doc.name.text = doc.title.text = doc.company.text = '';
   doc.name.visible = doc.title.visible = doc.company.visible = doc.photo.visible = false;
   doc.companyLogo.image = doc.eventLogo.image = null;
   doc.font = 'sans'; doc.textColor = '#ffffff'; doc.composition = draft.arrangement;
