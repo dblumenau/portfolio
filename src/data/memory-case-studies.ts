@@ -54,14 +54,14 @@ export const memoryCaseStudies: CaseStudy[] = [
     decisions: [
       { title: 'Separate portable setup from runtime state', description: 'Selective links and layered configuration let shared practices travel without turning authentication or session history into configuration artifacts.' },
       { title: 'Make browser identity specific', description: 'Two independent tabs can share a URL. Session ownership and tab identity preserve the intended destination when an agent inspects or receives a page.' },
-      { title: 'Give feedback a review step', description: 'A delegated finding and a proposed general rule carry different claims. Helm asks the captain to inspect evidence before accepting either result or guidance change.' },
+      { title: 'Put review before shared guidance', description: 'A September Helm review caught conflicting report paths and a rule that assumed every screenshot tool had the same limits. The lead agent corrected both; an independent source check confirmed the changes.' },
     ],
     releases: [
       { kind: 'Major', version: 'v1.0.0', date: 'September 2026', title: 'A shared captain protocol across runtimes', description: 'Helm established distinct runtime directions for Claude/Bosun and native Codex, with common reports, handoffs and reviewed instruction feedback.', project: 'Helm' },
       { kind: 'Patch', version: 'v1.0.6', date: 'October 2026', title: 'A repeatable browser walkthrough', description: 'metacodex added the adapted flow-screenshots-pdf skill and printable template, alongside model-routing guidance.', project: 'metacodex' },
     ],
     current: 'The portable configuration, browser bridge and named skills are present in inspected source. The Workbench Lab replays eight actual manager commands from committed metacodex source in two fictional homes: a refused conflict, deliberate adoption, a shared update and preserved local-file hashes. Its synthetic settings and empty hooks are disclosed; it does not launch agents, authenticate or synchronise the fleet. Other workbench installations and observer behavior have not been audited as one live deployment inventory.',
-    evidence: 'The configuration story begins with metaclaude in December 2025. September records and Helm’s checked v1.0.0 tag establish its cross-runtime protocol. October bridge, observer and PDF records support the browser workflows; metacodex’s checked v1.0.6 tag contains the PDF skill. Private configuration, session details and machine identities are excluded.',
+    evidence: 'The configuration story begins with metaclaude in December 2025. September records and Helm’s checked v1.0.0 tag establish its cross-runtime protocol. Commit 666911e contains the two artifact-rule corrections, supported by the archived review and follow-up source check; those checks did not exercise a screenshot tool. October bridge, observer and PDF records support the browser workflows; metacodex’s checked v1.0.6 tag contains the PDF skill. Private configuration, session details and machine identities are excluded.',
     stack: ['Python', 'Shell', 'Chrome extension', 'Agent hooks', 'Skills'],
     image: '', imageAlt: '',
     imageCaption: 'The workbench is explained through feature exhibits. No live configuration or private browser screenshot is published.',

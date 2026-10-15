@@ -24,6 +24,7 @@ const groups = {
   'code-history': ['code-history'],
   'selected-work': ['selected-work'],
   'audio-intent': ['audio-intent'],
+  'engine-contract': ['engine-contract'],
   'world-task': ['world-attention'],
   world: ['world', 'world-exhibit', 'world-lifecycle'],
 };

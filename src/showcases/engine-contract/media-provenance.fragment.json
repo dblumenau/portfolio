@@ -1,0 +1,16 @@
+{
+  "assets": [
+    {
+      "file": "engine-contract/receipt.json",
+      "product": "Claude, Codex and OpenCode engine adapters",
+      "captured": "2026-10-15",
+      "method": "Curated projection of actual offline translation output from pinned unchanged source using new synthetic upstream fixtures.",
+      "content": "Selected exact input fields and normalized output fields, source revisions/hashes, focused test counts and explicit execution limits.",
+      "redactions": [
+        "Projection omits fixture cost, usage, duration and context metadata; Claude turn_meta events omitted; terminal Claude input fields selected. Retained values are unchanged."
+      ],
+      "bytes": 23403,
+      "sha256": "ed9f6645c3da0f38ac1f838deedebbafbe0fba3eca240acf25a288a4b29a1d23"
+    }
+  ]
+}

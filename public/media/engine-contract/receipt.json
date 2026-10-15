@@ -1,0 +1,736 @@
+{
+  "schema_version": 1,
+  "recorded": "2026-10-15",
+  "kind": "saved offline translation of new synthetic upstream inputs",
+  "projection": {
+    "outputs": "For each recorded output, retain only the listed top-level fields when present. Omitted fields include fixture usage, cost, duration and context metadata. No retained field value is changed. An empty outputs array means the source emitted no event.",
+    "output_fields": [
+      "type",
+      "subtype",
+      "session_id",
+      "content",
+      "accumulated",
+      "phase",
+      "tool_use_id",
+      "name",
+      "input",
+      "is_error",
+      "result",
+      "final_text",
+      "parent_tool_use_id",
+      "ui_resource_uri"
+    ],
+    "inputs": "Selected original upstream inputs are exact except Claude terminal input 6: only sdk_type and fields.subtype/session_id/result/is_error retained. All /tmp paths, model names, IDs, commands and message contents are synthetic fixture values.",
+    "claude_omitted_events": "turn_meta output events omitted from this curated event selection; full capture retained privately.",
+    "event_selection": "The events list retains only text, tool_use, tool_result and done, in captured order; system and turn_meta events are omitted. The records list contains only the indexed upstream records selected for this exhibit, with their corresponding outputs."
+  },
+  "verified": {
+    "original_focused_tests_passed": 75,
+    "original_focused_tests_total": 75,
+    "capture_byte_identical_replays": 2,
+    "source_code_changed": false
+  },
+  "limits": [
+    "No engine, model or tool command runs on this page.",
+    "No live inference, HTTP/SSE delivery or client compatibility test.",
+    "Shared event vocabulary; optional payload fields and capabilities differ.",
+    "No conversation state portability is implied."
+  ],
+  "engines": [
+    {
+      "id": "claude",
+      "name": "Claude",
+      "revision": "bf89abc1646bd12133a0f22bc2d51f3286813250",
+      "source_sha256": {
+        "claude_engine/invocation.py": "d7e2d0c79d8f0e11cbc0874bef13a413645e2b08e04f8f995555852254741bba",
+        "claude_engine/session_runtime.py": "f67fa0c466a419c50d733f0d8f4b598903112218b9ef328fa1abb20b72f6757e",
+        "tests/test_wire_contract.py": "7bc8f03bfc2e37dbfbe333947ce95fa1cc5e2fadd53f96e17e3f8eafc2e0a6bc"
+      },
+      "original_tests": {
+        "passed": 13,
+        "total": 13
+      },
+      "input_sha256": "c6b079e6b65f73f57079b0dfd6f964b926884ed996a791beaebe9eb0993d0d9b",
+      "full_private_capture_sha256": "67898557f5c32c667ac1b5d74ba30f6a83a529f9192941faa16c5300c2267002",
+      "boundary": "MagicMock pool + AsyncMock SDK query/receive_response/get_context_usage; SDK classes real; resolve_working_dir stub; source run_foreground_turn chooses its explicit unit-harness compatibility branch; invocation translation logic unchanged. No lifetime dispatcher/CLI/inference/SSE transport.",
+      "events": [
+        {
+          "type": "text",
+          "content": "Checking the fixture.",
+          "accumulated": "Checking the fixture.",
+          "parent_tool_use_id": null,
+          "session_id": "synthetic-claude-session"
+        },
+        {
+          "type": "tool_use",
+          "tool_use_id": "synthetic-call-1",
+          "name": "Bash",
+          "input": {
+            "command": "printf 'fixture-ok\\n'"
+          },
+          "parent_tool_use_id": null,
+          "ui_resource_uri": null
+        },
+        {
+          "type": "tool_result",
+          "tool_use_id": "synthetic-call-1",
+          "content": "fixture-ok\n",
+          "is_error": false,
+          "parent_tool_use_id": null,
+          "ui_resource_uri": null
+        },
+        {
+          "type": "text",
+          "content": "Fixture complete.",
+          "accumulated": "Checking the fixture.Fixture complete.",
+          "parent_tool_use_id": null,
+          "session_id": "synthetic-claude-session"
+        },
+        {
+          "type": "done",
+          "session_id": "synthetic-claude-session",
+          "result": "Fixture complete.",
+          "final_text": "Fixture complete.",
+          "is_error": false,
+          "subtype": "success"
+        }
+      ],
+      "records": [
+        {
+          "input_index": 1,
+          "input": {
+            "sdk_type": "StreamEvent",
+            "fields": {
+              "uuid": "synthetic-delta-0-21",
+              "session_id": "synthetic-claude-session",
+              "parent_tool_use_id": null,
+              "event": {
+                "type": "content_block_delta",
+                "index": 0,
+                "delta": {
+                  "type": "text_delta",
+                  "text": "Checking the fixture."
+                }
+              }
+            }
+          },
+          "outputs": [
+            {
+              "type": "text",
+              "content": "Checking the fixture.",
+              "accumulated": "Checking the fixture.",
+              "parent_tool_use_id": null,
+              "session_id": "synthetic-claude-session"
+            }
+          ]
+        },
+        {
+          "input_index": 2,
+          "input": {
+            "sdk_type": "AssistantMessage",
+            "fields": {
+              "content": [
+                {
+                  "sdk_type": "TextBlock",
+                  "fields": {
+                    "text": "Checking the fixture."
+                  }
+                },
+                {
+                  "sdk_type": "ToolUseBlock",
+                  "fields": {
+                    "id": "synthetic-call-1",
+                    "name": "Bash",
+                    "input": {
+                      "command": "printf 'fixture-ok\\n'"
+                    }
+                  }
+                }
+              ],
+              "model": "synthetic-model",
+              "parent_tool_use_id": null
+            }
+          },
+          "outputs": [
+            {
+              "type": "tool_use",
+              "tool_use_id": "synthetic-call-1",
+              "name": "Bash",
+              "input": {
+                "command": "printf 'fixture-ok\\n'"
+              },
+              "parent_tool_use_id": null,
+              "ui_resource_uri": null
+            }
+          ]
+        },
+        {
+          "input_index": 3,
+          "input": {
+            "sdk_type": "UserMessage",
+            "fields": {
+              "content": [
+                {
+                  "sdk_type": "ToolResultBlock",
+                  "fields": {
+                    "tool_use_id": "synthetic-call-1",
+                    "content": "fixture-ok\n",
+                    "is_error": false
+                  }
+                }
+              ],
+              "parent_tool_use_id": null
+            }
+          },
+          "outputs": [
+            {
+              "type": "tool_result",
+              "tool_use_id": "synthetic-call-1",
+              "content": "fixture-ok\n",
+              "is_error": false,
+              "parent_tool_use_id": null,
+              "ui_resource_uri": null
+            }
+          ]
+        },
+        {
+          "input_index": 6,
+          "input": {
+            "sdk_type": "ResultMessage",
+            "fields": {
+              "subtype": "success",
+              "session_id": "synthetic-claude-session",
+              "result": "Fixture complete.",
+              "is_error": false
+            }
+          },
+          "outputs": [
+            {
+              "type": "done",
+              "session_id": "synthetic-claude-session",
+              "result": "Fixture complete.",
+              "final_text": "Fixture complete.",
+              "is_error": false,
+              "subtype": "success"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "codex",
+      "name": "Codex",
+      "revision": "e1553a508a7b6ac6cfdb34b1b51a3be45a91bf7e",
+      "source_sha256": {
+        "codex_engine/notifications.py": "ba3d5cdcbe193a679cc4045dba44546f8406fd28c49e398726494b0d4bd78f50",
+        "tests/test_notifications.py": "dab2ee624918aed4cc466cbc1644c1d401c97fd5eb745c5e0a8a25964603a6d3"
+      },
+      "original_tests": {
+        "passed": 35,
+        "total": 35
+      },
+      "input_sha256": "219acddf6eb0977f765838764c941a7780c258cd17948598ff8a626b211f4389",
+      "full_private_capture_sha256": "e93e6b8c940f2f3b3374d3857237d1cb094a0d114ed7ff835221ca3c7e3b874e",
+      "boundary": "Actual notifications.translate called directly; fresh TurnState; no app-server, route, HTTP/SSE transport or inference.",
+      "events": [
+        {
+          "type": "text",
+          "content": "Checking the fixture.",
+          "accumulated": "Checking the fixture.",
+          "phase": "commentary",
+          "session_id": "synthetic-codex-thread"
+        },
+        {
+          "type": "tool_use",
+          "tool_use_id": "synthetic-call-1",
+          "name": "Bash",
+          "input": {
+            "command": "printf 'fixture-ok\\n'",
+            "cwd": "/tmp/fixture-workspace"
+          },
+          "session_id": "synthetic-codex-thread"
+        },
+        {
+          "type": "tool_result",
+          "tool_use_id": "synthetic-call-1",
+          "content": "fixture-ok\n",
+          "is_error": false,
+          "session_id": "synthetic-codex-thread"
+        },
+        {
+          "type": "text",
+          "content": "Fixture ",
+          "accumulated": "Fixture ",
+          "phase": "final_answer",
+          "session_id": "synthetic-codex-thread"
+        },
+        {
+          "type": "text",
+          "content": "complete.",
+          "accumulated": "Fixture complete.",
+          "phase": "final_answer",
+          "session_id": "synthetic-codex-thread"
+        },
+        {
+          "type": "done",
+          "session_id": "synthetic-codex-thread",
+          "result": "Fixture complete.",
+          "final_text": "Fixture complete.",
+          "is_error": false
+        }
+      ],
+      "records": [
+        {
+          "input_index": 2,
+          "input": {
+            "method": "item/agentMessage/delta",
+            "params": {
+              "threadId": "synthetic-codex-thread",
+              "turnId": "synthetic-codex-turn",
+              "itemId": "synthetic-commentary",
+              "delta": "Checking the fixture."
+            }
+          },
+          "outputs": [
+            {
+              "type": "text",
+              "content": "Checking the fixture.",
+              "accumulated": "Checking the fixture.",
+              "phase": "commentary",
+              "session_id": "synthetic-codex-thread"
+            }
+          ]
+        },
+        {
+          "input_index": 4,
+          "input": {
+            "method": "item/started",
+            "params": {
+              "threadId": "synthetic-codex-thread",
+              "turnId": "synthetic-codex-turn",
+              "item": {
+                "type": "commandExecution",
+                "id": "synthetic-call-1",
+                "command": "printf 'fixture-ok\\n'",
+                "cwd": "/tmp/fixture-workspace"
+              }
+            }
+          },
+          "outputs": [
+            {
+              "type": "tool_use",
+              "tool_use_id": "synthetic-call-1",
+              "name": "Bash",
+              "input": {
+                "command": "printf 'fixture-ok\\n'",
+                "cwd": "/tmp/fixture-workspace"
+              },
+              "session_id": "synthetic-codex-thread"
+            }
+          ]
+        },
+        {
+          "input_index": 5,
+          "input": {
+            "method": "item/commandExecution/outputDelta",
+            "params": {
+              "threadId": "synthetic-codex-thread",
+              "turnId": "synthetic-codex-turn",
+              "itemId": "synthetic-call-1",
+              "delta": "fixture-"
+            }
+          },
+          "outputs": []
+        },
+        {
+          "input_index": 6,
+          "input": {
+            "method": "item/commandExecution/outputDelta",
+            "params": {
+              "threadId": "synthetic-codex-thread",
+              "turnId": "synthetic-codex-turn",
+              "itemId": "synthetic-call-1",
+              "delta": "ok\n"
+            }
+          },
+          "outputs": []
+        },
+        {
+          "input_index": 7,
+          "input": {
+            "method": "item/completed",
+            "params": {
+              "threadId": "synthetic-codex-thread",
+              "turnId": "synthetic-codex-turn",
+              "item": {
+                "type": "commandExecution",
+                "id": "synthetic-call-1",
+                "exitCode": 0,
+                "status": "success"
+              }
+            }
+          },
+          "outputs": [
+            {
+              "type": "tool_result",
+              "tool_use_id": "synthetic-call-1",
+              "content": "fixture-ok\n",
+              "is_error": false,
+              "session_id": "synthetic-codex-thread"
+            }
+          ]
+        },
+        {
+          "input_index": 9,
+          "input": {
+            "method": "item/agentMessage/delta",
+            "params": {
+              "threadId": "synthetic-codex-thread",
+              "turnId": "synthetic-codex-turn",
+              "itemId": "synthetic-final",
+              "delta": "Fixture "
+            }
+          },
+          "outputs": [
+            {
+              "type": "text",
+              "content": "Fixture ",
+              "accumulated": "Fixture ",
+              "phase": "final_answer",
+              "session_id": "synthetic-codex-thread"
+            }
+          ]
+        },
+        {
+          "input_index": 10,
+          "input": {
+            "method": "item/agentMessage/delta",
+            "params": {
+              "threadId": "synthetic-codex-thread",
+              "turnId": "synthetic-codex-turn",
+              "itemId": "synthetic-final",
+              "delta": "complete."
+            }
+          },
+          "outputs": [
+            {
+              "type": "text",
+              "content": "complete.",
+              "accumulated": "Fixture complete.",
+              "phase": "final_answer",
+              "session_id": "synthetic-codex-thread"
+            }
+          ]
+        },
+        {
+          "input_index": 12,
+          "input": {
+            "method": "turn/completed",
+            "params": {
+              "threadId": "synthetic-codex-thread",
+              "turnId": "synthetic-codex-turn",
+              "turn": {
+                "id": "synthetic-codex-turn",
+                "status": "completed",
+                "durationMs": 30
+              }
+            }
+          },
+          "outputs": [
+            {
+              "type": "done",
+              "session_id": "synthetic-codex-thread",
+              "result": "Fixture complete.",
+              "final_text": "Fixture complete.",
+              "is_error": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "opencode",
+      "name": "OpenCode",
+      "revision": "671de66ac4f32b09b2d8b36328030935edc3ac38",
+      "source_sha256": {
+        "src/translator.ts": "81feb677613506abad4aba50001726379be2558eb3984706a327e02c9e0b051e",
+        "tests/translator.test.ts": "30f456f7eea6115ef13b0e76d0d77f1285b6c1d12913731a96ad623fc71642e9"
+      },
+      "original_tests": {
+        "passed": 27,
+        "total": 27
+      },
+      "input_sha256": "af8d7e361a3e0302f225ded1722b63aa1807db943df4fc02ef9982de24ef556b",
+      "full_private_capture_sha256": "39637da89fbcc980c562337b205f15c8b20f045b830b4d62747ec40df3d22c78",
+      "boundary": "Actual TurnState.handle called directly; fresh state; no event-bus subscription, supervisor, provider, route, HTTP/SSE transport or inference.",
+      "events": [
+        {
+          "type": "text",
+          "content": "Checking the fixture.",
+          "accumulated": "Checking the fixture.",
+          "session_id": "synthetic-opencode-session"
+        },
+        {
+          "type": "tool_use",
+          "tool_use_id": "synthetic-call-1",
+          "name": "Bash",
+          "input": {
+            "command": "printf 'fixture-ok\\n'"
+          },
+          "session_id": "synthetic-opencode-session"
+        },
+        {
+          "type": "tool_result",
+          "tool_use_id": "synthetic-call-1",
+          "content": "fixture-ok\n",
+          "is_error": false,
+          "session_id": "synthetic-opencode-session"
+        },
+        {
+          "type": "text",
+          "content": "Fixture ",
+          "accumulated": "Fixture ",
+          "session_id": "synthetic-opencode-session"
+        },
+        {
+          "type": "text",
+          "content": "complete.",
+          "accumulated": "Fixture complete.",
+          "session_id": "synthetic-opencode-session"
+        },
+        {
+          "type": "done",
+          "session_id": "synthetic-opencode-session",
+          "result": "Fixture complete.",
+          "is_error": false
+        }
+      ],
+      "records": [
+        {
+          "input_index": 2,
+          "input": {
+            "type": "message.part.updated",
+            "properties": {
+              "part": {
+                "id": "synthetic-user-part",
+                "sessionID": "synthetic-opencode-session",
+                "messageID": "synthetic-user",
+                "type": "text",
+                "text": "Synthetic user prompt must not be streamed."
+              }
+            }
+          },
+          "outputs": []
+        },
+        {
+          "input_index": 4,
+          "input": {
+            "type": "message.part.updated",
+            "properties": {
+              "part": {
+                "id": "synthetic-commentary-part",
+                "sessionID": "synthetic-opencode-session",
+                "messageID": "synthetic-commentary",
+                "type": "text",
+                "text": "Checking the fixture."
+              }
+            }
+          },
+          "outputs": [
+            {
+              "type": "text",
+              "content": "Checking the fixture.",
+              "accumulated": "Checking the fixture.",
+              "session_id": "synthetic-opencode-session"
+            }
+          ]
+        },
+        {
+          "input_index": 5,
+          "input": {
+            "type": "message.part.updated",
+            "properties": {
+              "part": {
+                "id": "synthetic-tool-part",
+                "sessionID": "synthetic-opencode-session",
+                "messageID": "synthetic-commentary",
+                "type": "tool",
+                "callID": "synthetic-call-1",
+                "tool": "bash",
+                "state": {
+                  "status": "pending",
+                  "input": {},
+                  "raw": ""
+                }
+              }
+            }
+          },
+          "outputs": []
+        },
+        {
+          "input_index": 6,
+          "input": {
+            "type": "message.part.updated",
+            "properties": {
+              "part": {
+                "id": "synthetic-tool-part",
+                "sessionID": "synthetic-opencode-session",
+                "messageID": "synthetic-commentary",
+                "type": "tool",
+                "callID": "synthetic-call-1",
+                "tool": "bash",
+                "state": {
+                  "status": "running",
+                  "input": {
+                    "command": "printf 'fixture-ok\\n'"
+                  },
+                  "time": {
+                    "start": 1001
+                  }
+                }
+              }
+            }
+          },
+          "outputs": [
+            {
+              "type": "tool_use",
+              "tool_use_id": "synthetic-call-1",
+              "name": "Bash",
+              "input": {
+                "command": "printf 'fixture-ok\\n'"
+              },
+              "session_id": "synthetic-opencode-session"
+            }
+          ]
+        },
+        {
+          "input_index": 7,
+          "input": {
+            "type": "message.part.updated",
+            "properties": {
+              "part": {
+                "id": "synthetic-tool-part",
+                "sessionID": "synthetic-opencode-session",
+                "messageID": "synthetic-commentary",
+                "type": "tool",
+                "callID": "synthetic-call-1",
+                "tool": "bash",
+                "state": {
+                  "status": "completed",
+                  "input": {
+                    "command": "printf 'fixture-ok\\n'"
+                  },
+                  "output": "fixture-ok\n",
+                  "title": "Synthetic fixture",
+                  "metadata": {},
+                  "time": {
+                    "start": 1001,
+                    "end": 1002
+                  }
+                }
+              }
+            }
+          },
+          "outputs": [
+            {
+              "type": "tool_result",
+              "tool_use_id": "synthetic-call-1",
+              "content": "fixture-ok\n",
+              "is_error": false,
+              "session_id": "synthetic-opencode-session"
+            }
+          ]
+        },
+        {
+          "input_index": 8,
+          "input": {
+            "type": "message.part.updated",
+            "properties": {
+              "part": {
+                "id": "synthetic-final-part",
+                "sessionID": "synthetic-opencode-session",
+                "messageID": "synthetic-final",
+                "type": "text",
+                "text": "Fixture "
+              }
+            }
+          },
+          "outputs": [
+            {
+              "type": "text",
+              "content": "Fixture ",
+              "accumulated": "Fixture ",
+              "session_id": "synthetic-opencode-session"
+            }
+          ]
+        },
+        {
+          "input_index": 10,
+          "input": {
+            "type": "message.part.updated",
+            "properties": {
+              "part": {
+                "id": "synthetic-final-part",
+                "sessionID": "synthetic-opencode-session",
+                "messageID": "synthetic-final",
+                "type": "text",
+                "text": "Fixture complete."
+              }
+            }
+          },
+          "outputs": [
+            {
+              "type": "text",
+              "content": "complete.",
+              "accumulated": "Fixture complete.",
+              "session_id": "synthetic-opencode-session"
+            }
+          ]
+        },
+        {
+          "input_index": 11,
+          "input": {
+            "type": "message.part.updated",
+            "properties": {
+              "part": {
+                "id": "synthetic-final-part",
+                "sessionID": "synthetic-opencode-session",
+                "messageID": "synthetic-final",
+                "type": "text",
+                "text": "Fixture complete."
+              }
+            }
+          },
+          "outputs": []
+        },
+        {
+          "input_index": 12,
+          "input": {
+            "type": "session.idle",
+            "properties": {
+              "sessionID": "synthetic-opencode-session"
+            }
+          },
+          "outputs": [
+            {
+              "type": "done",
+              "session_id": "synthetic-opencode-session",
+              "result": "Fixture complete.",
+              "is_error": false
+            }
+          ]
+        },
+        {
+          "input_index": 13,
+          "input": {
+            "type": "session.idle",
+            "properties": {
+              "sessionID": "synthetic-opencode-session"
+            }
+          },
+          "outputs": []
+        }
+      ]
+    }
+  ]
+}

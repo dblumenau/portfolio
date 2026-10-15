@@ -48,6 +48,7 @@ const reviewedEvidenceMedia = [
   'curation/receipt.json', 'curation/recorded-merge.png',
   'image-revision/original.jpg', 'image-revision/revision.jpg',
   'image-revision/gallery-detail.png', 'image-revision/completed-chat.png', 'image-revision/receipt.json',
+  'engine-contract/receipt.json',
   'audio-intent/tone-0.wav', 'audio-intent/tone-1.wav', 'audio-intent/tone-2.wav',
   'audio-intent/receipt.json', 'audio-intent/licenses.txt',
   'code-history/week.png', 'code-history/peek.png', 'code-history/transcript.png',

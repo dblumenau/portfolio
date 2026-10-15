@@ -382,10 +382,10 @@ export const coreFeatures: Feature[] = [
       "Streaming",
       "Interface"
     ],
-    "intro": "Claude, Codex and OpenCode use distinct engine integrations while PanelForge maps their stream events into a shared client interaction contract.",
+    "intro": "Claude, Codex and OpenCode report their work differently. The engines translate those messages so the same chat can show text, tools and a finished answer.",
     "problem": "Supporting several agent runtimes can fragment the chat UI and force client code to understand each engine's streaming protocol.",
     "built": [
-      "Claude, Codex and OpenCode use distinct engine integrations while PanelForge maps their stream events into a shared client interaction contract.",
+      "Claude, Codex and OpenCode report their work differently. The engines translate those messages so the same chat can show text, tools and a finished answer.",
       "Keep each upstream integration native to its runtime and normalize the client-facing event envelope at the integration boundary."
     ],
     "use": [
@@ -406,12 +406,15 @@ export const coreFeatures: Feature[] = [
         "panel-forge/resources/js/composables/useClaudeEngineStream.ts",
         "panel-forge/resources/js/composables/useCodexEngineStream.ts",
         "panel-forge/resources/js/composables/useOpenCodeEngineStream.ts",
-        "claude-engine/claude_engine/routes/stream.py",
-        "codex-engine/codex_engine/appserver_client.py",
-        "opencode-engine/src/routes/stream.ts"
+        "claude-engine/claude_engine/invocation.py",
+        "claude-engine/tests/test_wire_contract.py",
+        "codex-engine/codex_engine/notifications.py",
+        "codex-engine/tests/test_notifications.py",
+        "opencode-engine/src/translator.ts",
+        "opencode-engine/tests/translator.test.ts"
       ],
       "status": "source-current",
-      "note": "Source and release record inspected; no current product execution is claimed for this illustration.",
+      "note": "New synthetic inputs were translated offline through unchanged Claude bf89abc, Codex e1553a5 and OpenCode 671de66 source. All 75 focused original tests passed separately. Claude used real SDK classes with mocked transport and its unit-harness branch. This is saved translation output, not live inference or a full HTTP/SSE client test.",
       "release": "panel-forge web-v7.83.0, web-v7.91.0; codex-engine v0.6.28; opencode-engine v1.0.0"
     },
     "related": [
@@ -421,7 +424,7 @@ export const coreFeatures: Feature[] = [
     ],
     "exhibit": {
       "title": "Three upstreams, one event vocabulary",
-      "caption": "Local explanatory exhibit · invented records · no live service or agent call",
+      "caption": "Saved translation output from pinned source · synthetic inputs · no live model or tool run",
       "steps": [
         {
           "name": "Inspect the upstream",

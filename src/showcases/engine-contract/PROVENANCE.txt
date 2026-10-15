@@ -1,0 +1,11 @@
+Engine contract saved translation exhibit
+
+The public receipt is a curated projection of actual output recorded on 15 October 2026 by running unchanged, pinned Claude/Codex/OpenCode production translation code against new synthetic upstream inputs, separately from each repository's original focused unit suites (75/75 passed).
+
+No translator executes in the visitor's browser. Astro renders the saved records and values at build time. Native HTML radio inputs and CSS select the visible engine; native details reveal selected records and evidence. The component loads no framework runtime, performs no fetch, and starts no engine, model or tool command.
+
+receipt.json defines the input, output-field and event selection. Retained values are unchanged. All IDs, message contents, models, commands and /tmp paths in the fixture are synthetic. Usage, cost, timing and context metadata are omitted. The selected optional fields differ by source producer; this is a shared-vocabulary exhibit, not an identical-payload or full-client-compatibility claim.
+
+Claude capture boundary: real SDK classes plus mocked SDK transport and the production source's explicit unit-harness compatibility branch. Its invocation translation logic is unchanged; its lifetime dispatcher and CLI were not exercised. Codex/OpenCode translators were called directly without their server/runtime processes. Full raw captures, inputs, source snapshots, dependency copies and test reports remain in the private project evidence, outside the public asset tree.
+
+The curated receipt contains no private filesystem paths, personal identities, service endpoints, keys or session content. Source revisions and SHA-256 values are recorded inside it. media-provenance.fragment.json records the reviewed public bytes for the central manifest owner. No generated interface screenshot or fabricated service recording is included.

@@ -171,7 +171,7 @@ const stories: Story[] = [
     id: 'workbench-07', slug: 'helm', name: 'Helm', title: 'Review delegated work across agent runtimes.', topics: ['Coordination', 'Evidence'],
     intro: 'I built a shared captain protocol for evidence, worker reports, handoffs and reviewed feedback, while keeping each runtime’s coordination tools.',
     problem: 'A delegation practice tied to one assistant breaks when the lead changes runtime. Child reports also need a review step before their suggestions become guidance.',
-    built: ['Helm separates the shared reporting and learning protocol from the runtime mechanics. Claude/Bosun and native Codex coordination can use their own tools while following the same evidence and handoff expectations.', 'A captain reviews worker results and proposed instruction changes. The September release history records the first stable protocol and a second-machine test; the portfolio makes no current fleet-wide installation claim.'],
+    built: ['Helm separates the shared reporting and learning protocol from the runtime mechanics. Claude/Bosun and native Codex coordination can use their own tools while following the same evidence and handoff expectations.', 'An independent review of the first stable protocol exposed conflicting report paths and a screenshot-staging rule that assumed all tools behaved alike. The captain corrected the guidance; a second source check verified both changes.'],
     use: [step('Give a worker a bounded task', 'Specify its scope and the evidence needed in its report.'), step('Review before accepting', 'Check the report and proposed guidance changes. A captain can accept useful feedback or decline a change that is unsupported.')],
     related: ['model-policy', 'reusable-skills', 'browser-evidence'],
     exhibit: { title: 'A report returns to the captain', caption: 'Synthetic task and report flow. No real panes, workers or sessions are displayed.', steps: [node('Captain', 'Assign a bounded investigation'), node('Worker', 'Return findings and supporting evidence'), node('Review', 'Accept result; assess guidance proposal')], choices: [choice('Evidence supports the proposal', 'Review and accept', 'The captain can adopt a useful change after checking its basis.'), choice('The proposal overgeneralizes', 'Decline the rule change', 'A successful task does not automatically establish a general instruction for future work.')] },
@@ -563,10 +563,11 @@ const metadata: Record<string, Pick<Feature, 'date' | 'evolution' | 'sources'>> 
         "helm/README.md",
         "helm/protocol.md",
         "helm/rules/retro-loop.md",
-        "helm/rules/handoff-lifecycle.md"
+        "helm/rules/handoff-lifecycle.md",
+        "helm/riders/output-file.md"
       ],
       "status": "source-current",
-      "note": "Protocol source and September release records inspected. Historical installation is separate from current availability."
+      "note": "The two artifact-rule corrections are in v1.0.0, commit 666911e (18 September 2026). The archived independent review and follow-up source check support this historical example. Captain review is not necessarily human approval; no live screenshot-path test or current fleet installation is claimed."
     }
   },
   "workbench-08": {
