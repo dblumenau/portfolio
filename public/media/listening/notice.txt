@@ -1,0 +1,12 @@
+Danish Listening Lab — fixture and source notice
+
+The original fictional Danish story was authored for this demonstration on 15 October 2026. Text and fixture data are dedicated to CC0 1.0 to the extent rights exist: https://creativecommons.org/publicdomain/zero/1.0/
+
+Narration is AI-generated, not a human recording. The standard built-in Cedar voice was generated with gpt-4o-mini-tts through the API speech endpoint. No custom speaker, imitation, cloning or reference recording was used. Output rights follow the applicable API terms; no rights to the service, model or voice itself are claimed. Clear AI-generated voice disclosure accompanies playback.
+https://developers.openai.com/api/docs/guides/text-to-speech
+https://openai.com/policies/services-agreement/
+https://openai.com/policies/service-terms/
+
+Waveform and timed-view implementation: source-derived components from David Blumenau’s Saturation Listening project, used by the owner for this portfolio demonstration. Original TypeScript source is retained and deterministically compiled. The adapter supplies static fixtures, in-memory settings, scoped keyboard controls, shared SVG icons and a declared synthetic gesture for keyboard phrase selection. It imports no original server, corpus, progress or database.
+
+React, React DOM and Scheduler are distributed under their adjacent MIT license notices. This notice grants no rights in unrelated original app materials.

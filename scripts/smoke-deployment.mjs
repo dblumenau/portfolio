@@ -59,9 +59,13 @@ try {
   assert(screenshot.status === 200 && screenshot.headers.get('content-type') === 'image/webp' && Number(screenshot.headers.get('content-length')) > 1000, 'Public screenshots are readable by nginx workers');
   const video = await fetch(base + '/media/pencil-page-workflow.mp4', { headers: { Range: 'bytes=0-1023' } });
   assert(video.status === 206 && (await video.arrayBuffer()).byteLength === 1024 && video.headers.get('content-range')?.startsWith('bytes 0-1023/'), 'Video supports byte ranges for playback and seeking');
+  const audio = await fetch(base + '/media/listening/sample.wav', { headers: { Range: 'bytes=0-1023' } });
+  const audioBytes = new Uint8Array(await audio.arrayBuffer());
+  report.audio = { status: audio.status, contentType: audio.headers.get('content-type'), contentRange: audio.headers.get('content-range'), bytes: audioBytes.byteLength, signature: String.fromCharCode(...audioBytes.subarray(0, 4)) };
+  assert(audio.status === 206 && /^audio\/(?:wav|x-wav)(?:;|$)/.test(audio.headers.get('content-type') ?? '') && audioBytes.byteLength === 1024 && String.fromCharCode(...audioBytes.subarray(0, 4)) === 'RIFF', 'Danish sample serves as seekable WAV audio');
   const captions = await fetch(base + '/media/pencil-page-workflow.vtt');
   assert(captions.status === 200 && captions.headers.get('content-type')?.includes('text/vtt') && (await captions.text()).startsWith('WEBVTT'), 'Caption files serve as WebVTT');
-  for (const [file, mime] of [['workbench/receipt.json', 'application/json'], ['workbench/transcript.txt', 'text/plain'], ['recovery/execution-receipt.json', 'application/json']]) {
+  for (const [file, mime] of [['workbench/receipt.json', 'application/json'], ['workbench/transcript.txt', 'text/plain'], ['recovery/execution-receipt.json', 'application/json'], ['attention/workshop-source.txt', 'text/plain'], ['listening/receipt.json', 'application/json'], ['archive/receipt.json', 'application/json']]) {
     const available = await fetch(base + '/media/' + file);
     assert(available.status === 200 && available.headers.get('content-type')?.includes(mime), `Reviewed execution evidence serves with its MIME type: ${file}`);
     const text = await available.text();

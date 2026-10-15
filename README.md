@@ -1,6 +1,6 @@
 # David Blumenau’s portfolio
 
-A static Astro site with six case studies, a Three.js world, 30 feature stories, eight interactive labs and a release explorer. The labs explore memory, configuration, recovery, browser graphics, gateway boundaries, preserved conversation branches, native questions and notebook timing. Product screenshots, captioned recordings and inspectable execution receipts accompany the stories. nginx serves the production build; browser interactions run without an application server.
+A static Astro site with six case studies, a Three.js world, 30 feature stories, eleven interactive labs and a release explorer. The labs explore memory, configuration, recovery, browser graphics, gateway boundaries, preserved conversation branches, native questions, terminal-to-Mac Attention, notebook timing, Danish listening and archive reconstruction. Product screenshots, captioned recordings and inspectable execution receipts accompany the stories. nginx serves the production build; browser interactions run without an application server.
 
 Use Node 22.12 or newer, npm, ffprobe and exiftool for the media audit.
 
@@ -16,7 +16,7 @@ The development site runs on port 4321. To check the complete production build:
 npm run verify
 ```
 
-This runs Astro diagnostics, builds static routes, audits links/assets/public media and runs Playwright at phone, tablet and desktop sizes. The browser suite includes WCAG checks through axe, keyboard navigation, architecture tabs, image dialogs and real video playback/captions. It starts its own preview on port 4322. Use `PORTFOLIO_TEST_URL` to test another local server instead.
+This checks the retained Listening source against its deterministic compiled output, runs Astro diagnostics, builds static routes, audits links/assets/public media and runs Playwright at phone, tablet and desktop sizes. The browser suite includes WCAG checks through axe, keyboard navigation, architecture tabs, image dialogs and real video playback/captions. It starts its own preview on port 4322. Use `PORTFOLIO_TEST_URL` to test another local server instead.
 
 For concurrent verification, build to a private directory with `npm run build -- --outDir /private/build`, then set `PORTFOLIO_DIST_ROOT=/private/build` for the audit, browser preview and Docker smoke scripts. `PORTFOLIO_PREVIEW_PORT` selects an available local preview port. Default behavior remains `dist/` on port 4322.
 

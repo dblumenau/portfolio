@@ -1,0 +1,187 @@
+/**
+ * The five display modes (RSVP, Block, Guide, Karaoke, Subtitle), plus the
+ * <TimedView> wrapper that subscribes to wavesurfer's timeupdate directly so
+ * that the parent <Listen> page does NOT re-render on every audio frame.
+ *
+ * Word changes happen at speech rate (~3-5Hz), not 60Hz. The wrapper only
+ * setStates when the active word index actually changes — keeping the
+ * surrounding controls/settings/waveform stable.
+ */
+import { memo, useEffect, useMemo, useRef, useState } from "react";
+import { renderOrp } from "../lib/orp";
+import type { DisplayMode } from "./SettingsPanel";
+
+export type AlignedWord = {
+  word: string;
+  start: number | null;
+  end: number | null;
+  source: string;
+  para: number | null;
+};
+
+export function findActiveIndex(words: AlignedWord[], t: number): number {
+  let lo = 0, hi = words.length - 1;
+  while (lo <= hi) {
+    const mid = (lo + hi) >> 1;
+    const w = words[mid];
+    if ((w.start ?? Infinity) > t) hi = mid - 1;
+    else if ((w.end ?? -Infinity) <= t) lo = mid + 1;
+    else return mid;
+  }
+  return Math.max(0, Math.min(words.length - 1, lo - 1));
+}
+
+/** Subscribes to the audio element's timeupdate and only re-renders when the
+ *  active word index changes. HTMLAudioElement's timeupdate fires ~4Hz which
+ *  is plenty for word-level sync (~5Hz speech rate). */
+export function TimedView({ audio, words, mode }: { audio: HTMLAudioElement | null; words: AlignedWord[]; mode: DisplayMode }) {
+  const [idx, setIdx] = useState(0);
+  useEffect(() => {
+    if (!audio) return;
+    const onTime = () => {
+      const ni = findActiveIndex(words, audio.currentTime);
+      setIdx((prev) => (prev === ni ? prev : ni));
+    };
+    audio.addEventListener("timeupdate", onTime);
+    onTime(); // initial sync
+    return () => audio.removeEventListener("timeupdate", onTime);
+  }, [audio, words]);
+
+  switch (mode) {
+    case "rsvp":     return <RsvpView    words={words} idx={idx} />;
+    case "block":    return <BlockView   words={words} idx={idx} />;
+    case "guide":    return <GuideView   words={words} idx={idx} />;
+    case "karaoke":  return <KaraokeView words={words} idx={idx} />;
+    case "subtitle": return <SubtitleView words={words} idx={idx} />;
+  }
+}
+
+type ViewProps = { words: AlignedWord[]; idx: number };
+
+// ---------- RSVP ----------
+export const RsvpView = memo(function RsvpView({ words, idx }: ViewProps) {
+  const w = words[idx]?.word ?? "";
+  const { before, orp, after } = renderOrp(w);
+  return (
+    <div className="rsvp">
+      <span>{before}</span>
+      <span className="orp-letter">{orp}</span>
+      <span>{after}</span>
+    </div>
+  );
+});
+
+// ---------- Block (full chapter text) ----------
+// Full chapter view with auto-scroll-to-current. Auto-scroll *suspends*
+// when the user manually scrolls — they can read backwards or skim ahead
+// without the page yanking back. Auto-scroll resumes after 5s of no
+// manual scroll, OR if the user scrolls back near the active word.
+export const BlockView = memo(function BlockView({ words, idx }: ViewProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const currentRef = useRef<HTMLSpanElement>(null);
+  const userScrolledAt = useRef<number>(0);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    let isProgrammatic = false;
+    const onScroll = () => {
+      if (isProgrammatic) { isProgrammatic = false; return; }
+      userScrolledAt.current = performance.now();
+    };
+    el.addEventListener("scroll", onScroll, { passive: true });
+
+    // Auto-scroll attempt (will be suppressed if user scrolled recently)
+    const sinceScroll = performance.now() - userScrolledAt.current;
+    if (sinceScroll > 5000 || userScrolledAt.current === 0) {
+      isProgrammatic = true;
+      currentRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+    return () => el.removeEventListener("scroll", onScroll);
+  }, [idx]);
+
+  return (
+    <div ref={containerRef} className="block-text scrollable">
+      {words.map((w, i) => (
+        <span key={i} ref={i === idx ? currentRef : null}>
+          {w.word}{" "}
+          {i > 0 && words[i].para !== words[i - 1].para ? <><br /><br /></> : null}
+        </span>
+      ))}
+    </div>
+  );
+});
+
+// ---------- Cue-based views (Subtitle / Guide / Karaoke) ----------
+// All three show only the *current SRT-like cue* (1–2 sentences, large,
+// centred). They differ in how they treat the active word inside the cue:
+//   - subtitle: no per-word marker
+//   - guide:    thin red underline under the active word
+//   - karaoke:  active word is bold + slightly larger; past = full opacity,
+//               future = 60% opacity
+
+type Cue = { firstIdx: number; lastIdx: number; words: AlignedWord[] };
+
+function buildCues(words: AlignedWord[]): Cue[] {
+  const out: Cue[] = [];
+  let bufStart = 0;
+  for (let i = 0; i < words.length; i++) {
+    const lastChar = words[i].word.slice(-1);
+    const len = i - bufStart + 1;
+    if (len >= 8 && (".?!".includes(lastChar) || len >= 14)) {
+      out.push({ firstIdx: bufStart, lastIdx: i, words: words.slice(bufStart, i + 1) });
+      bufStart = i + 1;
+    }
+  }
+  if (bufStart < words.length) {
+    out.push({ firstIdx: bufStart, lastIdx: words.length - 1, words: words.slice(bufStart) });
+  }
+  return out;
+}
+
+function findCue(cues: Cue[], idx: number): Cue | undefined {
+  for (const c of cues) if (c.firstIdx <= idx && idx <= c.lastIdx) return c;
+  return cues[0];
+}
+
+export const SubtitleView = memo(function SubtitleView({ words, idx }: ViewProps) {
+  const cues = useMemo(() => buildCues(words), [words]);
+  const cue = findCue(cues, idx);
+  return <div className="subtitle">{cue?.words.map((w) => w.word).join(" ") ?? ""}</div>;
+});
+
+export const GuideView = memo(function GuideView({ words, idx }: ViewProps) {
+  const cues = useMemo(() => buildCues(words), [words]);
+  const cue = findCue(cues, idx);
+  if (!cue) return null;
+  return (
+    <div className="subtitle guide">
+      {cue.words.map((w, i) => {
+        const absIdx = cue.firstIdx + i;
+        const isCurrent = absIdx === idx;
+        return (
+          <span key={i} className={isCurrent ? "word current" : "word"}>{w.word}{i < cue.words.length - 1 ? " " : ""}</span>
+        );
+      })}
+    </div>
+  );
+});
+
+export const KaraokeView = memo(function KaraokeView({ words, idx }: ViewProps) {
+  const cues = useMemo(() => buildCues(words), [words]);
+  const cue = findCue(cues, idx);
+  if (!cue) return null;
+  return (
+    <div className="subtitle karaoke">
+      {cue.words.map((w, i) => {
+        const absIdx = cue.firstIdx + i;
+        const isCurrent = absIdx === idx;
+        const isFuture = absIdx > idx;
+        const cls = isCurrent ? "word current" : isFuture ? "word future" : "word";
+        return (
+          <span key={i} className={cls}>{w.word}{i < cue.words.length - 1 ? " " : ""}</span>
+        );
+      })}
+    </div>
+  );
+});

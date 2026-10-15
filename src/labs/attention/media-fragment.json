@@ -1,0 +1,115 @@
+{
+  "version": 1,
+  "purpose": "Exact reviewed Attention media fragment for root-owned public/media/media-provenance.json. All file paths are relative to public/media.",
+  "assets": [
+    {
+      "file": "attention/answered.png",
+      "product": "Attention / Codex terminal and native Mac app",
+      "captured": "2026-10-14",
+      "method": "Actual released native Mac app detail-only screenshot",
+      "content": "Actual fictional Attention layout question or answered card, solid owned background. No personal sidebar pixels.",
+      "redactions": [],
+      "bytes": 93085,
+      "sha256": "c8a00f9ebfa293e15a0c84aaaac6971b37bacc468989c2f50be17d30b50955f3",
+      "width": 618,
+      "height": 800
+    },
+    {
+      "file": "attention/execution.mp4",
+      "product": "Attention / Codex terminal and native Mac app",
+      "captured": "2026-10-14",
+      "method": "Actual Mac screen recording, actual native captures or actual generated artifact",
+      "content": "Fictional Lantern Makers task. Actual shared Attention MCP returns Session cards to the same original Codex CLI task. Native layout selection is automated Intel Computer Helper. Live exchange build121; post-upgrade persisted-card check build128. Mac arrival observed; other APNs records are provider acceptance only. Production session ID is blank.",
+      "redactions": [
+        "Focused crops exclude unrelated inbox/sidebar pixels and an extra owned Terminal window.",
+        "Narrow time-bounded opaque masks hide private home/workspace paths, wrapped path continuations and the specific terminal hostname."
+      ],
+      "bytes": 1237300,
+      "sha256": "4a863d88a4a4e2278c5544e5d962a22ddcda793b1b894f55b9a718d6e82254e1",
+      "width": 1920,
+      "height": 1080,
+      "duration_seconds": 46,
+      "fps": 30,
+      "codec_name": "h264",
+      "editing": "35 continuous synchronized live seconds at original speed, focused crops; narrow opaque masks hide private workspace paths and a specific hostname without replacing terminal text. Followed by a six-second actual browser-rendered still and separate five-second latest-app answered-card recording. Square-pixel metadata, 1920 x 1080 raster preserved."
+    },
+    {
+      "file": "attention/execution.vtt",
+      "product": "Attention / Codex terminal and native Mac app",
+      "captured": "2026-10-14",
+      "method": "English WebVTT for the actual recording",
+      "content": "Seven readable cues identify automated Computer Use, the original returned call, actual built file and separate post-upgrade observation.",
+      "redactions": [],
+      "bytes": 689,
+      "sha256": "a38d0eced08429999a2c09d8d69de3af705d7c928b5ac511f4c24b7ceb0a6ed3"
+    },
+    {
+      "file": "attention/poster.png",
+      "product": "Attention / Codex terminal and native Mac app",
+      "captured": "2026-10-14",
+      "method": "Actual synchronized live recording frame, with authored descriptive labels",
+      "content": "Same original task; actual returned-call marker, Session cards acknowledgment and real native selected/confirmed card. Reviewed for private paths and hostname; none present.",
+      "redactions": [],
+      "bytes": 363659,
+      "sha256": "1cd4357299f50ad7114b755ecb83e3b9372f8b5d02413ee78efb08651036fe29",
+      "width": 1920,
+      "height": 1080
+    },
+    {
+      "file": "attention/question.png",
+      "product": "Attention / Codex terminal and native Mac app",
+      "captured": "2026-10-14",
+      "method": "Exact native-card crop from the authentic live Mac film at 0.1 seconds",
+      "content": "Actual pending fictional Attention layout question, both options unselected. No cursor trail or personal sidebar pixels; no replacement text.",
+      "redactions": [],
+      "bytes": 105146,
+      "sha256": "38d95f7797a3495ebcafb1aad52a4e3580d8f50a99478da21bc5fd0a50dd84e0",
+      "width": 618,
+      "height": 800
+    },
+    {
+      "file": "attention/receipt.json",
+      "product": "Attention / Codex terminal and native Mac app",
+      "captured": "2026-10-14",
+      "method": "Sanitized actual execution receipt and reviewed artifact fingerprints",
+      "content": "Actual return and equality results; original opaque identities omitted. Explicit actor, version, delivery and blank-session-field limitations retained.",
+      "redactions": [],
+      "bytes": 7135,
+      "sha256": "cd797392a51e64e8458a4dc125814dde8cbad3c84b3b7c0e5c801bd8c7ba1c24"
+    },
+    {
+      "file": "attention/workshop-desktop.png",
+      "product": "Attention / Codex terminal and native Mac app",
+      "captured": "2026-10-14",
+      "method": "Actual browser render of the same generated HTML",
+      "content": "Fictional workshop page generated after the real native answer. Desktop or phone-width browser viewport; no physical phone-device capture claimed.",
+      "redactions": [],
+      "bytes": 73819,
+      "sha256": "7346591a0ff288e627921b0462338a3b0c0bf1d548ca4f687c5ed4e6c7abf9fe",
+      "width": 1280,
+      "height": 800
+    },
+    {
+      "file": "attention/workshop-phone.png",
+      "product": "Attention / Codex terminal and native Mac app",
+      "captured": "2026-10-14",
+      "method": "Actual browser render of the same generated HTML",
+      "content": "Fictional workshop page generated after the real native answer. Desktop or phone-width browser viewport; no physical phone-device capture claimed.",
+      "redactions": [],
+      "bytes": 72814,
+      "sha256": "e7257c447b49ec78ba5e6140e2b1d21ba37ac996d1691f17f7e188a526272360",
+      "width": 390,
+      "height": 1437
+    },
+    {
+      "file": "attention/workshop-source.txt",
+      "product": "Attention / Codex terminal and native Mac app",
+      "captured": "2026-10-14",
+      "method": "Byte-identical actual generated standalone HTML, delivered as text/plain",
+      "content": "The exact harmless file created by the same terminal task after the native answer. No scripts, external requests, event handlers, forms, embedded documents or private references. Download filename lantern-workshop.html.",
+      "redactions": [],
+      "bytes": 2733,
+      "sha256": "0c8468b4b98dd0d57f9737e8f9a3e81eb8fe44642290d042524bca9f60125976"
+    }
+  ]
+}

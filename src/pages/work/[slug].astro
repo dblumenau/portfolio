@@ -10,7 +10,7 @@ import NativeClientDemo from '../../components/NativeClientDemo.astro';
 import WorkbenchMap from '../../components/WorkbenchMap.astro';
 import ConferenceOutput from '../../components/ConferenceOutput.astro';
 import RecoveryResult from '../../components/RecoveryResult.astro';
-import QuestionPreview from '../../components/QuestionPreview.astro';
+import AttentionPreview from '../../components/AttentionPreview.astro';
 import { features } from '../../data/features';
 import { caseFeatureSlugs } from '../../data/case-feature-links';
 import { caseStudies } from '../../data/projects';
@@ -35,7 +35,7 @@ const mobileImage = project.slug === 'conference-notes' ? '/media/conference-not
     <nav class="case-nav wrap" aria-label="Case study sections"><a href="#the-problem">The starting point</a><a href="#the-workflow">The workflow</a><a href="#the-decisions">The decisions</a><a href="#the-evolution">The evolution</a></nav>
     <section class="case-problem wrap" id="the-problem"><p class="eyebrow"><span class="section-number">01</span>The starting point</p><div class="case-text-grid"><h2>{project.premise}</h2><div>{project.problem.map((paragraph) => <p>{paragraph}</p>)}</div></div></section>
     <section class="case-showcase wrap" aria-label={`${project.name} product view`}>
-      {project.slug === 'connected-agents' ? <QuestionPreview /> : project.slug === 'connected-tools' ? <Architecture compact /> : project.slug === 'agent-workbench' ? <WorkbenchMap /> : <ScreenShowcase id={`case-${project.slug}`} desktop={project.image} desktopAlt={project.imageAlt} mobile={mobileImage} mobileAlt={project.slug === 'conference-notes' ? 'A finalised fictional attendee note in the mobile conference notebook.' : 'PanelForge gallery at a phone viewport.'} caption={project.imageCaption} label={project.name} />}
+      {project.slug === 'connected-agents' ? <AttentionPreview /> : project.slug === 'connected-tools' ? <Architecture compact /> : project.slug === 'agent-workbench' ? <WorkbenchMap /> : <ScreenShowcase id={`case-${project.slug}`} desktop={project.image} desktopAlt={project.imageAlt} mobile={mobileImage} mobileAlt={project.slug === 'conference-notes' ? 'A finalised fictional attendee note in the mobile conference notebook.' : 'PanelForge gallery at a phone viewport.'} caption={project.imageCaption} label={project.name} />}
     </section>
     {caseFeatures.length > 0 && <section class="case-feature-index wrap" aria-labelledby="case-feature-title"><p class="eyebrow">Explore the individual features</p><h2 id="case-feature-title">The smaller pieces of this story.</h2><div>{caseFeatures.map(feature => feature && <a href={`/features/${feature.slug}/`}><span>{feature.name}</span><strong>{feature.title}</strong><span aria-hidden="true"><Icon name="arrow-up-right" /></span></a>)}</div></section>}
     <section class="case-workflow wrap" id="the-workflow"><SectionHeading number="02" label="What the workflow looks like" title="A useful path through the product." /><ol class:list={['workflow-steps', { 'workflow-steps-four': project.workflow.length === 4 }]}>{project.workflow.map((step, index) => <li><span class="workflow-index">0{index + 1}</span><div><h3>{step.title}</h3><p>{step.description}</p></div></li>)}</ol>{project.video && <VideoDemo src={project.video} poster={project.image} title={`A walk through ${project.name}`} description={project.videoDescription ?? project.imageCaption} captions={project.captions} mediaCaption={project.mediaCaption} />}

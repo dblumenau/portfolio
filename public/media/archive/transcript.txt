@@ -1,0 +1,48 @@
+Photo Archive: actual recorded CLI output
+15 October 2026 / three synthetic PNG originals
+Data-root prefixes are replaced with $DEMO_ROOT.
+Commands use the entrypoint name; the actual run used a guarded Python CLI launcher.
+Refusal stderr is an explicitly labeled exact-text excerpt; full private tracebacks are omitted.
+
+$ photo-archive init-volume $DEMO_ROOT/archive
+initialized $DEMO_ROOT/archive
+[exit 0 / 1.692 seconds]
+
+$ photo-archive init-volume $DEMO_ROOT/archive
+
+[stderr excerpt] FileExistsError: [Errno 17] File exists:
+[exit 1 / 2.273 seconds]
+
+$ photo-archive stage-osxphotos $DEMO_ROOT/archive --source-library-uuid SYNTHETIC-DEMO-LIBRARY --metadata-json $DEMO_ROOT/metadata/DE000001-2026-4000-8000-000000000001.json --resource $DEMO_ROOT/fixtures/DE000001-2026-4000-8000-000000000001.png
+{"archive_id": "PFA1-DE000001-2026-4000-8000-000000000001", "state": "archive_verified", "resources": 2}
+[exit 0 / 1.943 seconds]
+
+$ photo-archive stage-osxphotos $DEMO_ROOT/archive --source-library-uuid SYNTHETIC-DEMO-LIBRARY --metadata-json $DEMO_ROOT/metadata/DE000002-2026-4000-8000-000000000002.json --resource $DEMO_ROOT/fixtures/DE000002-2026-4000-8000-000000000002.png
+{"archive_id": "PFA1-DE000002-2026-4000-8000-000000000002", "state": "archive_verified", "resources": 2}
+[exit 0 / 1.838 seconds]
+
+$ photo-archive stage-osxphotos $DEMO_ROOT/archive --source-library-uuid SYNTHETIC-DEMO-LIBRARY --metadata-json $DEMO_ROOT/metadata/DE000003-2026-4000-8000-000000000003.json --resource $DEMO_ROOT/fixtures/DE000003-2026-4000-8000-000000000003.png
+{"archive_id": "PFA1-DE000003-2026-4000-8000-000000000003", "state": "archive_verified", "resources": 2}
+[exit 0 / 1.833 seconds]
+
+$ photo-archive verify $DEMO_ROOT/archive
+{"assets": 3, "resources": 6, "status": "ok"}
+[exit 0 / 1.888 seconds]
+
+$ photo-archive rebuild-index $DEMO_ROOT/archive $DEMO_ROOT/state/archive.sqlite
+
+[stderr excerpt] Got unexpected extra argument(s)
+[exit 2 / 2.362 seconds]
+
+$ photo-archive rebuild-index $DEMO_ROOT/archive --destination $DEMO_ROOT/state/archive.sqlite
+{"assets": 3, "path": "$DEMO_ROOT/state/archive.sqlite"}
+[exit 0 / 1.765 seconds]
+
+$ photo-archive rebuild-index $DEMO_ROOT/archive --destination $DEMO_ROOT/state/archive.sqlite
+{"assets": 3, "path": "$DEMO_ROOT/state/archive.sqlite"}
+[exit 0 / 1.769 seconds]
+
+$ photo-archive verify $DEMO_ROOT/archive
+{"assets": 3, "resources": 6, "status": "ok"}
+[exit 0 / 1.896 seconds]
+

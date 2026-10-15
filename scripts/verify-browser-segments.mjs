@@ -12,6 +12,9 @@ const groups = {
   branches: ['branches'],
   margin: ['margin'],
   question: ['question'],
+  attention: ['attention'],
+  listening: ['listening'],
+  archive: ['archive'],
   world: ['world', 'world-exhibit', 'world-lifecycle'],
 };
 if (process.argv.includes('--list')) { console.log(JSON.stringify(groups, null, 2)); process.exit(0); }

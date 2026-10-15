@@ -21,6 +21,30 @@ const reviewedEvidenceMedia = [
   'margin/receipt.json', 'margin/scenarios.json',
   'question/execution.mp4', 'question/execution.vtt', 'question/question.png',
   'question/selected.png', 'question/completed.png', 'question/receipt.json',
+  'attention/answered.png', 'attention/execution.mp4', 'attention/execution.vtt',
+  'attention/poster.png', 'attention/question.png', 'attention/receipt.json',
+  'attention/workshop-desktop.png', 'attention/workshop-phone.png', 'attention/workshop-source.txt',
+  'listening/desktop.mp4',
+  'listening/desktop.vtt',
+  'listening/desktop.webp',
+  'listening/notice.txt',
+  'listening/react-dom-license.txt',
+  'listening/react-license.txt',
+  'listening/receipt.json',
+  'listening/sample.wav',
+  'listening/scheduler-license.txt',
+  'listening/touch.mp4',
+  'listening/touch.vtt',
+  'listening/touch.webp',
+  'archive/archive-boundary.png',
+  'archive/receipt.json',
+  'archive/recorded-replay.mp4',
+  'archive/recorded-replay.vtt',
+  'archive/replay-poster.png',
+  'archive/synthetic-01.png',
+  'archive/synthetic-02.png',
+  'archive/synthetic-03.png',
+  'archive/transcript.txt',
 ];
 const reviewedTextMedia = new Set(reviewedEvidenceMedia.filter(name => /\.(?:json|txt)$/.test(name)));
 const required = [
@@ -98,7 +122,7 @@ for (const file of htmlFiles) {
     ids: [...document.querySelectorAll('[id]')].map(item => item.id),
     routeHashes: document.querySelector('[data-forge-world]') ? [...document.querySelectorAll('[data-select-district]')].map(item => item.getAttribute('data-select-district')) : [],
     refs: [
-      ...[...document.querySelectorAll('a[href],link[href],img[src],script[src],source[src],track[src],video[poster],video[data-src]')].filter(item => item.getAttribute('rel') !== 'canonical').map(item => ({ tag: item.tagName, value: item.getAttribute(item.tagName === 'VIDEO' ? item.hasAttribute('poster') ? 'poster' : 'data-src' : item.hasAttribute('href') ? 'href' : 'src') })),
+      ...[...document.querySelectorAll('a[href],link[href],img[src],script[src],source[src],track[src],audio[src],video[poster],video[data-src]')].filter(item => item.getAttribute('rel') !== 'canonical').map(item => ({ tag: item.tagName, value: item.getAttribute(item.tagName === 'VIDEO' ? item.hasAttribute('poster') ? 'poster' : 'data-src' : item.hasAttribute('href') ? 'href' : 'src') })),
       ...[...document.querySelectorAll('[srcset]')].flatMap(item => (item.getAttribute('srcset') ?? '').split(',').map(candidate => ({ tag: item.tagName, value: candidate.trim().split(/\s+/)[0] }))),
       ...[...document.querySelectorAll('meta[property="og:image"]')].map(item => ({ tag: 'META', value: item.getAttribute('content') })),
     ],
@@ -225,6 +249,16 @@ for (const file of all) {
       videoDurations.set(name, info.duration);
       info.streams = metadata.streams;
       if (!(info.duration > 1) || !metadata.streams.some(stream => stream.codec_type === 'video' && stream.codec_name === 'h264')) errors.push(`Invalid browser MP4: ${name}`);
+    }
+  }
+  if (extname(file) === '.wav') {
+    const result = spawnSync('ffprobe', ['-v', 'error', '-show_entries', 'format=duration:stream=codec_name,codec_type,sample_rate,channels', '-of', 'json', file], { encoding: 'utf8' });
+    if (result.status !== 0) errors.push(`Audio cannot be inspected with ffprobe: ${name}`);
+    else {
+      const metadata = JSON.parse(result.stdout);
+      info.duration = Number(metadata.format.duration);
+      info.streams = metadata.streams;
+      if (!(info.duration > 0) || metadata.streams.length !== 1 || !metadata.streams.some(stream => stream.codec_type === 'audio' && stream.codec_name === 'pcm_s16le' && Number(stream.sample_rate) === 24000 && stream.channels === 1)) errors.push(`Audio differs from the reviewed mono 24 kHz PCM format: ${name}`);
     }
   }
   report.assets.push(info);

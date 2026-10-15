@@ -1,0 +1,632 @@
+{
+  "version": 1,
+  "recordedDate": "2026-10-15",
+  "sourceRevision": "7ecfaf029f48a41323e42f80e6f2fe238e99d60a",
+  "kind": "Recorded isolated Photo Archive CLI execution; no live backend.",
+  "invocation": "Unchanged Typer CLI invoked through a guarded Python launcher; commands displayed using the photo-archive entrypoint name.",
+  "pathRedaction": "The disposable data-root prefix is replaced consistently with $DEMO_ROOT. Full private tracebacks remain private; refusal excerpts are explicitly labeled.",
+  "fixtures": [
+    {
+      "id": "DE000001-2026-4000-8000-000000000001",
+      "name": "Chromatic grid",
+      "src": "/media/archive/synthetic-01.png",
+      "download": "synthetic-01.png",
+      "width": 640,
+      "height": 400,
+      "bytes": 3762,
+      "sha256": "5161464036288618fe892205908aa323b2420329b7ec00d7f4bccd2aa94a46de"
+    },
+    {
+      "id": "DE000002-2026-4000-8000-000000000002",
+      "name": "Orbit study",
+      "src": "/media/archive/synthetic-02.png",
+      "download": "synthetic-02.png",
+      "width": 640,
+      "height": 400,
+      "bytes": 4713,
+      "sha256": "9694257a1438544959d0068a97fef66f83d5ddd7f0d27ea92f02d9104cf484a5"
+    },
+    {
+      "id": "DE000003-2026-4000-8000-000000000003",
+      "name": "Signal bars",
+      "src": "/media/archive/synthetic-03.png",
+      "download": "synthetic-03.png",
+      "width": 640,
+      "height": 400,
+      "bytes": 3359,
+      "sha256": "6c329d5b536526360e4db3ab8563dccb0b8018a824c2fc143611ac90f62229b1"
+    }
+  ],
+  "results": {
+    "assets": 3,
+    "originalResources": 3,
+    "metadataResources": 3,
+    "totalResources": 6,
+    "canonicalFiles": 13,
+    "sqliteIntegrityBefore": "ok",
+    "sqliteIntegrityAfter": "ok",
+    "indexRowsIdentical": true,
+    "canonicalHashesIdentical": true,
+    "sourceTestsPassed": 6,
+    "sourceUnchanged": true
+  },
+  "sourceFiles": {
+    "src/photo_archive/cli.py": {
+      "size": 34021,
+      "sha256": "2833d01f8f72d9858c3d445c5e0497cadcb00d8bc78e6cb2fea922a60af48b3e"
+    },
+    "src/photo_archive/index.py": {
+      "size": 13420,
+      "sha256": "69444ce08d3207cc9636c372300b4bee2161f480e21f7000ff275bd527b870dc"
+    },
+    "src/photo_archive/staging.py": {
+      "size": 11357,
+      "sha256": "1748e6fcbb55aedeecdefff8dc9fea48a7a603351dac377e66e4621c8cab26cd"
+    },
+    "src/photo_archive/storage.py": {
+      "size": 20967,
+      "sha256": "bee831edc5627ebdff625c9cd5524d0fd2ae529522613508b13e277963c4a21c"
+    }
+  },
+  "canonicalBefore": {
+    "VOLUME-ID": {
+      "size": 17,
+      "sha256": "f74388571259b33669488758952cf9e8ef5d41d08295a973ae115dd2e722ee30"
+    },
+    "assets/DE/PFA1-DE000001-2026-4000-8000-000000000001/events.jsonl": {
+      "size": 599,
+      "sha256": "e1f5a2195ea5e08b6a8c05e303ac8c60f13b973c32300ef2be97e72660470e4f"
+    },
+    "assets/DE/PFA1-DE000001-2026-4000-8000-000000000001/manifest.json": {
+      "size": 2060,
+      "sha256": "9cda9c5542c01e6dd275a1f0bf92d899416dbf56df3484cbd6bb7902d93f5f04"
+    },
+    "assets/DE/PFA1-DE000001-2026-4000-8000-000000000001/metadata/osxphotos.json": {
+      "size": 135,
+      "sha256": "eaf8e6ab2cdecd027ea8ed7ff19f48415df005533370860daa76e51b51ae30dd"
+    },
+    "assets/DE/PFA1-DE000001-2026-4000-8000-000000000001/resources/00-original.png": {
+      "size": 3762,
+      "sha256": "5161464036288618fe892205908aa323b2420329b7ec00d7f4bccd2aa94a46de"
+    },
+    "assets/DE/PFA1-DE000002-2026-4000-8000-000000000002/events.jsonl": {
+      "size": 599,
+      "sha256": "536319ffebb3dc0325a7129455c1746f4555b3947dd5cedb2328e0c0d1d2d7d8"
+    },
+    "assets/DE/PFA1-DE000002-2026-4000-8000-000000000002/manifest.json": {
+      "size": 2060,
+      "sha256": "0146015306154c010a0ac5548af3b3710a29cb4185d2f3ce56e81c9010c489a4"
+    },
+    "assets/DE/PFA1-DE000002-2026-4000-8000-000000000002/metadata/osxphotos.json": {
+      "size": 135,
+      "sha256": "bf1b329e7b78060765b84ca3852c2cfa5351d6852e751cc7fbc02002b2c0523e"
+    },
+    "assets/DE/PFA1-DE000002-2026-4000-8000-000000000002/resources/00-original.png": {
+      "size": 4713,
+      "sha256": "9694257a1438544959d0068a97fef66f83d5ddd7f0d27ea92f02d9104cf484a5"
+    },
+    "assets/DE/PFA1-DE000003-2026-4000-8000-000000000003/events.jsonl": {
+      "size": 599,
+      "sha256": "a6d6dfac7a2fa832c21b13b62a7b3f5ebe7d1f8f2d948ecede2cebcdf6620592"
+    },
+    "assets/DE/PFA1-DE000003-2026-4000-8000-000000000003/manifest.json": {
+      "size": 2060,
+      "sha256": "1ecced3a56dff0e4fc7760e2773ffad8f0c61414a2f77d348246175940ad5d11"
+    },
+    "assets/DE/PFA1-DE000003-2026-4000-8000-000000000003/metadata/osxphotos.json": {
+      "size": 135,
+      "sha256": "573d8d917df2b0ea23192542d20a992663df1a5d27d22f1c1092278979128a80"
+    },
+    "assets/DE/PFA1-DE000003-2026-4000-8000-000000000003/resources/00-original.png": {
+      "size": 3359,
+      "sha256": "6c329d5b536526360e4db3ab8563dccb0b8018a824c2fc143611ac90f62229b1"
+    }
+  },
+  "canonicalAfter": {
+    "VOLUME-ID": {
+      "size": 17,
+      "sha256": "f74388571259b33669488758952cf9e8ef5d41d08295a973ae115dd2e722ee30"
+    },
+    "assets/DE/PFA1-DE000001-2026-4000-8000-000000000001/events.jsonl": {
+      "size": 599,
+      "sha256": "e1f5a2195ea5e08b6a8c05e303ac8c60f13b973c32300ef2be97e72660470e4f"
+    },
+    "assets/DE/PFA1-DE000001-2026-4000-8000-000000000001/manifest.json": {
+      "size": 2060,
+      "sha256": "9cda9c5542c01e6dd275a1f0bf92d899416dbf56df3484cbd6bb7902d93f5f04"
+    },
+    "assets/DE/PFA1-DE000001-2026-4000-8000-000000000001/metadata/osxphotos.json": {
+      "size": 135,
+      "sha256": "eaf8e6ab2cdecd027ea8ed7ff19f48415df005533370860daa76e51b51ae30dd"
+    },
+    "assets/DE/PFA1-DE000001-2026-4000-8000-000000000001/resources/00-original.png": {
+      "size": 3762,
+      "sha256": "5161464036288618fe892205908aa323b2420329b7ec00d7f4bccd2aa94a46de"
+    },
+    "assets/DE/PFA1-DE000002-2026-4000-8000-000000000002/events.jsonl": {
+      "size": 599,
+      "sha256": "536319ffebb3dc0325a7129455c1746f4555b3947dd5cedb2328e0c0d1d2d7d8"
+    },
+    "assets/DE/PFA1-DE000002-2026-4000-8000-000000000002/manifest.json": {
+      "size": 2060,
+      "sha256": "0146015306154c010a0ac5548af3b3710a29cb4185d2f3ce56e81c9010c489a4"
+    },
+    "assets/DE/PFA1-DE000002-2026-4000-8000-000000000002/metadata/osxphotos.json": {
+      "size": 135,
+      "sha256": "bf1b329e7b78060765b84ca3852c2cfa5351d6852e751cc7fbc02002b2c0523e"
+    },
+    "assets/DE/PFA1-DE000002-2026-4000-8000-000000000002/resources/00-original.png": {
+      "size": 4713,
+      "sha256": "9694257a1438544959d0068a97fef66f83d5ddd7f0d27ea92f02d9104cf484a5"
+    },
+    "assets/DE/PFA1-DE000003-2026-4000-8000-000000000003/events.jsonl": {
+      "size": 599,
+      "sha256": "a6d6dfac7a2fa832c21b13b62a7b3f5ebe7d1f8f2d948ecede2cebcdf6620592"
+    },
+    "assets/DE/PFA1-DE000003-2026-4000-8000-000000000003/manifest.json": {
+      "size": 2060,
+      "sha256": "1ecced3a56dff0e4fc7760e2773ffad8f0c61414a2f77d348246175940ad5d11"
+    },
+    "assets/DE/PFA1-DE000003-2026-4000-8000-000000000003/metadata/osxphotos.json": {
+      "size": 135,
+      "sha256": "573d8d917df2b0ea23192542d20a992663df1a5d27d22f1c1092278979128a80"
+    },
+    "assets/DE/PFA1-DE000003-2026-4000-8000-000000000003/resources/00-original.png": {
+      "size": 3359,
+      "sha256": "6c329d5b536526360e4db3ab8563dccb0b8018a824c2fc143611ac90f62229b1"
+    }
+  },
+  "indexBefore": {
+    "tables": {
+      "assets": [
+        {
+          "archive_id": "PFA1-DE000001-2026-4000-8000-000000000001",
+          "manifest_path": "assets/DE/PFA1-DE000001-2026-4000-8000-000000000001/manifest.json",
+          "state": "archive_verified",
+          "original_apple_uuid": "DE000001-2026-4000-8000-000000000001",
+          "proxy_apple_uuid": null,
+          "original_filename": "synthetic-01.png",
+          "capture_date": null,
+          "resource_count": 2,
+          "total_size": 3897,
+          "updated_at": "2026-10-15T00:20:00.326358+00:00",
+          "disposition": "active"
+        },
+        {
+          "archive_id": "PFA1-DE000002-2026-4000-8000-000000000002",
+          "manifest_path": "assets/DE/PFA1-DE000002-2026-4000-8000-000000000002/manifest.json",
+          "state": "archive_verified",
+          "original_apple_uuid": "DE000002-2026-4000-8000-000000000002",
+          "proxy_apple_uuid": null,
+          "original_filename": "synthetic-02.png",
+          "capture_date": null,
+          "resource_count": 2,
+          "total_size": 4848,
+          "updated_at": "2026-10-15T00:20:02.164765+00:00",
+          "disposition": "active"
+        },
+        {
+          "archive_id": "PFA1-DE000003-2026-4000-8000-000000000003",
+          "manifest_path": "assets/DE/PFA1-DE000003-2026-4000-8000-000000000003/manifest.json",
+          "state": "archive_verified",
+          "original_apple_uuid": "DE000003-2026-4000-8000-000000000003",
+          "proxy_apple_uuid": null,
+          "original_filename": "synthetic-03.png",
+          "capture_date": null,
+          "resource_count": 2,
+          "total_size": 3494,
+          "updated_at": "2026-10-15T00:20:04.003430+00:00",
+          "disposition": "active"
+        }
+      ],
+      "resources": [
+        {
+          "resource_id": "00-original",
+          "archive_id": "PFA1-DE000001-2026-4000-8000-000000000001",
+          "role": "original",
+          "relative_path": "resources/00-original.png",
+          "pack_relative_path": null,
+          "pack_member_path": null,
+          "pack_offset": null,
+          "original_filename": "synthetic-01.png",
+          "uti": "public.png",
+          "media_type": "image/png",
+          "size": 3762,
+          "sha256": "5161464036288618fe892205908aa323b2420329b7ec00d7f4bccd2aa94a46de"
+        },
+        {
+          "resource_id": "00-original",
+          "archive_id": "PFA1-DE000002-2026-4000-8000-000000000002",
+          "role": "original",
+          "relative_path": "resources/00-original.png",
+          "pack_relative_path": null,
+          "pack_member_path": null,
+          "pack_offset": null,
+          "original_filename": "synthetic-02.png",
+          "uti": "public.png",
+          "media_type": "image/png",
+          "size": 4713,
+          "sha256": "9694257a1438544959d0068a97fef66f83d5ddd7f0d27ea92f02d9104cf484a5"
+        },
+        {
+          "resource_id": "00-original",
+          "archive_id": "PFA1-DE000003-2026-4000-8000-000000000003",
+          "role": "original",
+          "relative_path": "resources/00-original.png",
+          "pack_relative_path": null,
+          "pack_member_path": null,
+          "pack_offset": null,
+          "original_filename": "synthetic-03.png",
+          "uti": "public.png",
+          "media_type": "image/png",
+          "size": 3359,
+          "sha256": "6c329d5b536526360e4db3ab8563dccb0b8018a824c2fc143611ac90f62229b1"
+        },
+        {
+          "resource_id": "metadata-osxphotos",
+          "archive_id": "PFA1-DE000001-2026-4000-8000-000000000001",
+          "role": "other",
+          "relative_path": "metadata/osxphotos.json",
+          "pack_relative_path": null,
+          "pack_member_path": null,
+          "pack_offset": null,
+          "original_filename": "osxphotos.json",
+          "uti": "public.json",
+          "media_type": "application/json",
+          "size": 135,
+          "sha256": "eaf8e6ab2cdecd027ea8ed7ff19f48415df005533370860daa76e51b51ae30dd"
+        },
+        {
+          "resource_id": "metadata-osxphotos",
+          "archive_id": "PFA1-DE000002-2026-4000-8000-000000000002",
+          "role": "other",
+          "relative_path": "metadata/osxphotos.json",
+          "pack_relative_path": null,
+          "pack_member_path": null,
+          "pack_offset": null,
+          "original_filename": "osxphotos.json",
+          "uti": "public.json",
+          "media_type": "application/json",
+          "size": 135,
+          "sha256": "bf1b329e7b78060765b84ca3852c2cfa5351d6852e751cc7fbc02002b2c0523e"
+        },
+        {
+          "resource_id": "metadata-osxphotos",
+          "archive_id": "PFA1-DE000003-2026-4000-8000-000000000003",
+          "role": "other",
+          "relative_path": "metadata/osxphotos.json",
+          "pack_relative_path": null,
+          "pack_member_path": null,
+          "pack_offset": null,
+          "original_filename": "osxphotos.json",
+          "uti": "public.json",
+          "media_type": "application/json",
+          "size": 135,
+          "sha256": "573d8d917df2b0ea23192542d20a992663df1a5d27d22f1c1092278979128a80"
+        }
+      ],
+      "apple_asset_ids": [
+        {
+          "local_identifier": "DE000001-2026-4000-8000-000000000001",
+          "archive_id": "PFA1-DE000001-2026-4000-8000-000000000001",
+          "role": "original",
+          "active": 1
+        },
+        {
+          "local_identifier": "DE000002-2026-4000-8000-000000000002",
+          "archive_id": "PFA1-DE000002-2026-4000-8000-000000000002",
+          "role": "original",
+          "active": 1
+        },
+        {
+          "local_identifier": "DE000003-2026-4000-8000-000000000003",
+          "archive_id": "PFA1-DE000003-2026-4000-8000-000000000003",
+          "role": "original",
+          "active": 1
+        }
+      ],
+      "purged_assets": []
+    },
+    "assets": 3,
+    "resources": 6,
+    "original_resources": 3,
+    "integrity": "ok",
+    "file": {
+      "size": 53248,
+      "sha256": "008256592783d111a85868c80a2ffa2a865ceedc913e1b91327f427b380420d5"
+    }
+  },
+  "indexAfter": {
+    "tables": {
+      "assets": [
+        {
+          "archive_id": "PFA1-DE000001-2026-4000-8000-000000000001",
+          "manifest_path": "assets/DE/PFA1-DE000001-2026-4000-8000-000000000001/manifest.json",
+          "state": "archive_verified",
+          "original_apple_uuid": "DE000001-2026-4000-8000-000000000001",
+          "proxy_apple_uuid": null,
+          "original_filename": "synthetic-01.png",
+          "capture_date": null,
+          "resource_count": 2,
+          "total_size": 3897,
+          "updated_at": "2026-10-15T00:20:00.326358+00:00",
+          "disposition": "active"
+        },
+        {
+          "archive_id": "PFA1-DE000002-2026-4000-8000-000000000002",
+          "manifest_path": "assets/DE/PFA1-DE000002-2026-4000-8000-000000000002/manifest.json",
+          "state": "archive_verified",
+          "original_apple_uuid": "DE000002-2026-4000-8000-000000000002",
+          "proxy_apple_uuid": null,
+          "original_filename": "synthetic-02.png",
+          "capture_date": null,
+          "resource_count": 2,
+          "total_size": 4848,
+          "updated_at": "2026-10-15T00:20:02.164765+00:00",
+          "disposition": "active"
+        },
+        {
+          "archive_id": "PFA1-DE000003-2026-4000-8000-000000000003",
+          "manifest_path": "assets/DE/PFA1-DE000003-2026-4000-8000-000000000003/manifest.json",
+          "state": "archive_verified",
+          "original_apple_uuid": "DE000003-2026-4000-8000-000000000003",
+          "proxy_apple_uuid": null,
+          "original_filename": "synthetic-03.png",
+          "capture_date": null,
+          "resource_count": 2,
+          "total_size": 3494,
+          "updated_at": "2026-10-15T00:20:04.003430+00:00",
+          "disposition": "active"
+        }
+      ],
+      "resources": [
+        {
+          "resource_id": "00-original",
+          "archive_id": "PFA1-DE000001-2026-4000-8000-000000000001",
+          "role": "original",
+          "relative_path": "resources/00-original.png",
+          "pack_relative_path": null,
+          "pack_member_path": null,
+          "pack_offset": null,
+          "original_filename": "synthetic-01.png",
+          "uti": "public.png",
+          "media_type": "image/png",
+          "size": 3762,
+          "sha256": "5161464036288618fe892205908aa323b2420329b7ec00d7f4bccd2aa94a46de"
+        },
+        {
+          "resource_id": "00-original",
+          "archive_id": "PFA1-DE000002-2026-4000-8000-000000000002",
+          "role": "original",
+          "relative_path": "resources/00-original.png",
+          "pack_relative_path": null,
+          "pack_member_path": null,
+          "pack_offset": null,
+          "original_filename": "synthetic-02.png",
+          "uti": "public.png",
+          "media_type": "image/png",
+          "size": 4713,
+          "sha256": "9694257a1438544959d0068a97fef66f83d5ddd7f0d27ea92f02d9104cf484a5"
+        },
+        {
+          "resource_id": "00-original",
+          "archive_id": "PFA1-DE000003-2026-4000-8000-000000000003",
+          "role": "original",
+          "relative_path": "resources/00-original.png",
+          "pack_relative_path": null,
+          "pack_member_path": null,
+          "pack_offset": null,
+          "original_filename": "synthetic-03.png",
+          "uti": "public.png",
+          "media_type": "image/png",
+          "size": 3359,
+          "sha256": "6c329d5b536526360e4db3ab8563dccb0b8018a824c2fc143611ac90f62229b1"
+        },
+        {
+          "resource_id": "metadata-osxphotos",
+          "archive_id": "PFA1-DE000001-2026-4000-8000-000000000001",
+          "role": "other",
+          "relative_path": "metadata/osxphotos.json",
+          "pack_relative_path": null,
+          "pack_member_path": null,
+          "pack_offset": null,
+          "original_filename": "osxphotos.json",
+          "uti": "public.json",
+          "media_type": "application/json",
+          "size": 135,
+          "sha256": "eaf8e6ab2cdecd027ea8ed7ff19f48415df005533370860daa76e51b51ae30dd"
+        },
+        {
+          "resource_id": "metadata-osxphotos",
+          "archive_id": "PFA1-DE000002-2026-4000-8000-000000000002",
+          "role": "other",
+          "relative_path": "metadata/osxphotos.json",
+          "pack_relative_path": null,
+          "pack_member_path": null,
+          "pack_offset": null,
+          "original_filename": "osxphotos.json",
+          "uti": "public.json",
+          "media_type": "application/json",
+          "size": 135,
+          "sha256": "bf1b329e7b78060765b84ca3852c2cfa5351d6852e751cc7fbc02002b2c0523e"
+        },
+        {
+          "resource_id": "metadata-osxphotos",
+          "archive_id": "PFA1-DE000003-2026-4000-8000-000000000003",
+          "role": "other",
+          "relative_path": "metadata/osxphotos.json",
+          "pack_relative_path": null,
+          "pack_member_path": null,
+          "pack_offset": null,
+          "original_filename": "osxphotos.json",
+          "uti": "public.json",
+          "media_type": "application/json",
+          "size": 135,
+          "sha256": "573d8d917df2b0ea23192542d20a992663df1a5d27d22f1c1092278979128a80"
+        }
+      ],
+      "apple_asset_ids": [
+        {
+          "local_identifier": "DE000001-2026-4000-8000-000000000001",
+          "archive_id": "PFA1-DE000001-2026-4000-8000-000000000001",
+          "role": "original",
+          "active": 1
+        },
+        {
+          "local_identifier": "DE000002-2026-4000-8000-000000000002",
+          "archive_id": "PFA1-DE000002-2026-4000-8000-000000000002",
+          "role": "original",
+          "active": 1
+        },
+        {
+          "local_identifier": "DE000003-2026-4000-8000-000000000003",
+          "archive_id": "PFA1-DE000003-2026-4000-8000-000000000003",
+          "role": "original",
+          "active": 1
+        }
+      ],
+      "purged_assets": []
+    },
+    "assets": 3,
+    "resources": 6,
+    "original_resources": 3,
+    "integrity": "ok",
+    "file": {
+      "size": 53248,
+      "sha256": "008256592783d111a85868c80a2ffa2a865ceedc913e1b91327f427b380420d5"
+    }
+  },
+  "indexRemoval": {
+    "path": "$DEMO_ROOT/state/archive.sqlite",
+    "identity": {
+      "size": 53248,
+      "sha256": "008256592783d111a85868c80a2ffa2a865ceedc913e1b91327f427b380420d5"
+    },
+    "only_file_removed": true,
+    "guard": "Resolved exact known disposable SQLite destination inside fresh demo root."
+  },
+  "commands": [
+    {
+      "id": "01-init",
+      "command": "photo-archive init-volume $DEMO_ROOT/archive",
+      "stdout": "initialized $DEMO_ROOT/archive\n",
+      "exitCode": 0,
+      "durationSeconds": 1.692,
+      "stderrExcerpt": "",
+      "stderrNote": "",
+      "rawStdoutSha256": "e54d4a76a105c6dedb4adf3f919894b41db9cbd6e930915d654e3141eed2a3cc",
+      "rawStderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "id": "02-existing-root-refusal",
+      "command": "photo-archive init-volume $DEMO_ROOT/archive",
+      "stdout": "",
+      "exitCode": 1,
+      "durationSeconds": 2.273,
+      "stderrExcerpt": "FileExistsError: [Errno 17] File exists:",
+      "stderrNote": "Exact error text excerpt; private traceback and wrapped path omitted.",
+      "rawStdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "rawStderrSha256": "c13a3cda99efabadc7fbeda17860758bb8f3cf64d17dddf990c9786f0c6d50b8"
+    },
+    {
+      "id": "03-stage",
+      "command": "photo-archive stage-osxphotos $DEMO_ROOT/archive --source-library-uuid SYNTHETIC-DEMO-LIBRARY --metadata-json $DEMO_ROOT/metadata/DE000001-2026-4000-8000-000000000001.json --resource $DEMO_ROOT/fixtures/DE000001-2026-4000-8000-000000000001.png",
+      "stdout": "{\"archive_id\": \"PFA1-DE000001-2026-4000-8000-000000000001\", \"state\": \"archive_verified\", \"resources\": 2}\n",
+      "exitCode": 0,
+      "durationSeconds": 1.943,
+      "stderrExcerpt": "",
+      "stderrNote": "",
+      "rawStdoutSha256": "725c44dcacf854f4365688eb2b2183ad7a872e067508a791ecd304bb361fa812",
+      "rawStderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "id": "04-stage",
+      "command": "photo-archive stage-osxphotos $DEMO_ROOT/archive --source-library-uuid SYNTHETIC-DEMO-LIBRARY --metadata-json $DEMO_ROOT/metadata/DE000002-2026-4000-8000-000000000002.json --resource $DEMO_ROOT/fixtures/DE000002-2026-4000-8000-000000000002.png",
+      "stdout": "{\"archive_id\": \"PFA1-DE000002-2026-4000-8000-000000000002\", \"state\": \"archive_verified\", \"resources\": 2}\n",
+      "exitCode": 0,
+      "durationSeconds": 1.838,
+      "stderrExcerpt": "",
+      "stderrNote": "",
+      "rawStdoutSha256": "ebfa99fd2734a6ed3a859c8af7d313dcc732613f751b03178e3eb683274dbb82",
+      "rawStderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "id": "05-stage",
+      "command": "photo-archive stage-osxphotos $DEMO_ROOT/archive --source-library-uuid SYNTHETIC-DEMO-LIBRARY --metadata-json $DEMO_ROOT/metadata/DE000003-2026-4000-8000-000000000003.json --resource $DEMO_ROOT/fixtures/DE000003-2026-4000-8000-000000000003.png",
+      "stdout": "{\"archive_id\": \"PFA1-DE000003-2026-4000-8000-000000000003\", \"state\": \"archive_verified\", \"resources\": 2}\n",
+      "exitCode": 0,
+      "durationSeconds": 1.833,
+      "stderrExcerpt": "",
+      "stderrNote": "",
+      "rawStdoutSha256": "2a373c4a585a6cbb800bdfa68921ac7fc18fe1fc8ade567c98f24f080109afb1",
+      "rawStderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "id": "06-verify",
+      "command": "photo-archive verify $DEMO_ROOT/archive",
+      "stdout": "{\"assets\": 3, \"resources\": 6, \"status\": \"ok\"}\n",
+      "exitCode": 0,
+      "durationSeconds": 1.888,
+      "stderrExcerpt": "",
+      "stderrNote": "",
+      "rawStdoutSha256": "a501aafad41f1a1ce9765838e0aba6c711c3ec92a997353ae75a98edd3983eb3",
+      "rawStderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "id": "07-positional-destination-refusal",
+      "command": "photo-archive rebuild-index $DEMO_ROOT/archive $DEMO_ROOT/state/archive.sqlite",
+      "stdout": "",
+      "exitCode": 2,
+      "durationSeconds": 2.362,
+      "stderrExcerpt": "Got unexpected extra argument(s)",
+      "stderrNote": "Exact error text excerpt; private traceback and wrapped path omitted.",
+      "rawStdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "rawStderrSha256": "e45076fdd2f71fe006cfe02cd9168a46794193b1f407a4253dff709f413ff83d"
+    },
+    {
+      "id": "08-initial-index",
+      "command": "photo-archive rebuild-index $DEMO_ROOT/archive --destination $DEMO_ROOT/state/archive.sqlite",
+      "stdout": "{\"assets\": 3, \"path\": \"$DEMO_ROOT/state/archive.sqlite\"}\n",
+      "exitCode": 0,
+      "durationSeconds": 1.765,
+      "stderrExcerpt": "",
+      "stderrNote": "",
+      "rawStdoutSha256": "e2b8bfbc0373f14b02e41c970f416dee1f8fc6c2d7c6fb5e3dd16405ab91afe6",
+      "rawStderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "id": "09-rebuilt-index",
+      "command": "photo-archive rebuild-index $DEMO_ROOT/archive --destination $DEMO_ROOT/state/archive.sqlite",
+      "stdout": "{\"assets\": 3, \"path\": \"$DEMO_ROOT/state/archive.sqlite\"}\n",
+      "exitCode": 0,
+      "durationSeconds": 1.769,
+      "stderrExcerpt": "",
+      "stderrNote": "",
+      "rawStdoutSha256": "e2b8bfbc0373f14b02e41c970f416dee1f8fc6c2d7c6fb5e3dd16405ab91afe6",
+      "rawStderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "id": "10-final-verify",
+      "command": "photo-archive verify $DEMO_ROOT/archive",
+      "stdout": "{\"assets\": 3, \"resources\": 6, \"status\": \"ok\"}\n",
+      "exitCode": 0,
+      "durationSeconds": 1.896,
+      "stderrExcerpt": "",
+      "stderrNote": "",
+      "rawStdoutSha256": "a501aafad41f1a1ce9765838e0aba6c711c3ec92a997353ae75a98edd3983eb3",
+      "rawStderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "scope": [
+    "Three code-generated PNGs with minimal synthetic metadata.",
+    "Actual init-volume, stage-osxphotos, verify and explicit-destination rebuild-index.",
+    "The index was removed; originals, metadata, manifests, event ledgers and sentinel were retained.",
+    "Original home directories and real-volume paths hidden; explicit private roots; network namespace isolated.",
+    "Six narrow existing source tests passed.",
+    "No Photos access, production catalog, enrichment, model, GPU, physical backup, purge or original-deletion workflow was tested."
+  ],
+  "corrections": [
+    "Staging retains metadata JSON as a hashed other resource: three PNG originals produce six total resource rows.",
+    "The optional index destination is --destination. The positional sample was refused with exit 2 before creating a database."
+  ]
+}

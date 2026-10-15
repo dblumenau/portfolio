@@ -53,6 +53,7 @@ export const districts: WorldDistrict[] = [
     exhibits: [
       { title: 'Three runtimes, one client contract', description: 'The engine adapters handle an agent SDK, app-server JSON-RPC and a typed OpenCode client. Each keeps its own session rules.', href: '/features/shared-engine-surface/' },
       { title: 'Return after a disconnect', description: 'An actual engine run keeps working after its browser disconnects, then returns the stored answer. Runtime restart recovery has separate rules.', href: '/labs/recovery/' },
+      { title: 'A terminal task reaches the Mac', description: 'Attention returns an actual native layout choice to the same waiting Codex task. The resulting responsive page is available to inspect and download.', href: '/labs/attention/' },
       { title: 'A native answer resumes the task', description: 'An actual Claude question waits for a recorded native choice, then the same invocation continues. The isolated build and its correction are disclosed.', href: '/labs/question/' },
       { title: 'Give the turn a new direction', description: 'A queued correction can reach a compatible tool boundary or follow-up turn, preserving the order of the instructions.', href: '/features/steer-without-interrupt/' },
     ],
@@ -71,7 +72,7 @@ export const districts: WorldDistrict[] = [
       { title: 'Know who is calling', description: 'Authentication identifies the caller. Ownership rules and resource scopes govern access to capabilities.', href: '/features/gateway-tool-profiles/' },
       { title: 'An executable tool boundary', description: 'A model-visible catalog and the engine’s enforced permissions have separate jobs. The native tool-profile exhibit makes that distinction tangible.', href: '/features/native-tool-boundary-profiles/' },
       { title: 'Reach a native canvas', description: 'Stateful proxy support lets InfinitySketch and Freeform retain their session requirements behind the common gateway.' },
-      { title: 'Bring the question to the person', description: 'A durable Engine question card carries the choices and returns the answer to the waiting agent.', href: '/features/focus-aware-question/' },
+      { title: 'Bring the question to the person', description: 'An actual Attention call reaches the Mac app, returns its choice to the original terminal, and changes the page it builds.', href: '/labs/attention/' },
     ],
     href: '/work/connected-tools/', link: 'Follow the connection',
     image: '/media/gateway/browser-replay.png',
@@ -90,6 +91,7 @@ export const districts: WorldDistrict[] = [
       { title: 'Try the Memory Lab', description: 'Explore a real reviewed graph sample, inspect a relationship’s source, and try a reversible correction.', href: '/labs/memory/' },
       { title: 'Relationships, with context', description: 'The knowledge graph connects entities, beliefs and decisions derived from the conversation archive. A relationship can lead back to its supporting conversation.', href: '/features/knowledge-graph/' },
       { title: 'A correction with a history', description: 'Curation actions preserve a reason and before-state snapshots. Supported inverse actions record the reversal too.', href: '/features/graph-curation/' },
+      { title: 'Keep the originals, rebuild the index', description: 'An actual Photo Archive run reconstructs its derived index without changing thirteen canonical files. Verify the three synthetic PNG originals yourself.', href: '/labs/archive/' },
       { title: 'Find that one thing', description: 'FindThat chooses messages, tool calls or modifications to retrieve a specific command, error, edit or decision, then checks its source.', href: '/features/find-that/' },
     ],
     href: '/work/knowledge-graph/', link: 'Inside the knowledge graph',
@@ -122,6 +124,7 @@ export const districts: WorldDistrict[] = [
     architecture: 'A colourful print workshop, a writing desk and a camera station represent Kitforge, Pencil Page and Legobro.',
     exhibits: [
       { title: 'Kitforge: make a tile and a clip', description: 'One browser rendering function drives the preview, JPG and looping MP4. The photo stays in the browser.' },
+      { title: 'Saturation Listening: hear the phrase again', description: 'The real waveform and timed-text components let you follow an original Danish story, seek and loop a passage. The narration is clearly labelled AI-generated.', href: '/labs/listening/' },
       { title: 'Pencil Page: notes in the margin', description: 'A native iPad handwriting page where feedback sits beside the writing. Explore the separate decisions about when to review and when to show a note.', href: '/labs/margin/' },
       { title: 'Conference notes: turn notes into a presentation', description: 'A conference notebook with reviewed analysis and an editable presentation output.', href: '/work/conference-notes/' },
       { title: 'Legobro: a playful photobooth', description: 'An iPad camera workflow turns a selfie into a collectible-figure style, then offers preview, email and printing.' },

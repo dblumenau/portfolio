@@ -1,0 +1,31 @@
+WEBVTT
+
+00:00.000 --> 00:03.800
+Silent Chromium touch emulation at 390 by 844.
+Playback changes the current word.
+
+00:03.800 --> 00:04.300
+An ordinary tap seeks without creating a loop.
+
+00:04.300 --> 00:04.900
+An early drag is ignored before the hold threshold.
+
+00:04.900 --> 00:05.500
+A deliberate 550 millisecond hold arms selection.
+
+00:05.500 --> 00:06.500
+The following drag marks a loop region.
+
+00:06.500 --> 00:15.350
+The playhead reaches the selected end and returns to the start.
+The phrase repeats twice.
+
+00:15.350 --> 00:15.700
+Clear removes the region.
+
+00:15.700 --> 00:16.150
+Zoom changes the waveform scale.
+
+00:16.150 --> 00:17.880
+The settings drawer switches reading views.
+This is browser emulation, not a physical device capture.

@@ -1,0 +1,22 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:07.000
+Actual Codex CLI waits for the native Attention answer.
+
+00:00:07.000 --> 00:00:12.000
+Intel Computer Helper selects Session cards and sends the native answer.
+
+00:00:12.000 --> 00:00:18.000
+The same tool call returns and the terminal acknowledges the choice.
+
+00:00:18.000 --> 00:00:31.000
+The same running task writes and validates the chosen workshop page.
+
+00:00:31.000 --> 00:00:35.000
+Completed: index.html contains three session cards.
+
+00:00:35.000 --> 00:00:41.000
+Actual browser render of the file built after the native answer.
+
+00:00:41.000 --> 00:00:46.000
+Separate post-upgrade observation: latest Mac app, build128, same answered card.

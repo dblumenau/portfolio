@@ -1,0 +1,13 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:05.500
+Recorded local proof using three generated PNGs.
+The initial index contains 3 assets and 6 resources.
+
+00:00:05.500 --> 00:00:09.800
+Only the explicitly named disposable SQLite index was removed.
+Originals, metadata, manifests and event ledgers stayed in place.
+
+00:00:09.800 --> 00:00:17.680
+The actual rebuild produced identical database rows.
+Original and canonical file hashes matched; SQLite integrity was ok.

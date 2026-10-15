@@ -1,0 +1,204 @@
+{
+  "status": "completed",
+  "runtime": {
+    "terminal": "Actual Codex CLI 0.162.0 in a dedicated owned tmux session",
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "high",
+    "live_native_release": "mac-v1.1.8",
+    "live_native_build": "121",
+    "post_upgrade_release": "mac-v1.1.14",
+    "post_upgrade_build": "128"
+  },
+  "task": "Fictional Lantern Makers workshop page",
+  "question": "[Portfolio demo] Which layout should I build for Lantern Makers?",
+  "options": [
+    "Schedule first",
+    "Session cards"
+  ],
+  "actual_tool_result": {
+    "status": "answered",
+    "route": "remote",
+    "answers": [
+      {
+        "otherText": null,
+        "questionId": "workshop-layout",
+        "selectedOptionIds": [
+          "cards"
+        ]
+      }
+    ]
+  },
+  "chosen_layout": "Session cards",
+  "native_selection_participant": "Automated Computer Use through Intel Computer Helper",
+  "capture_route_choice_participant": "David selected Use the Mac app for now through the real readiness card",
+  "same_task_proof": {
+    "original_cli_task_started_count": 1,
+    "original_cli_task_completed_count": 1,
+    "actual_attention_layout_call_count": 1,
+    "exact_owned_pane_matches_durable_request": true,
+    "durable_request_state": "answered",
+    "durable_event_state": "resolved",
+    "native_submit_selected_action": "answer",
+    "actual_returned_option_matches_built_layout": true,
+    "production_session_id_present": false,
+    "limitation": "Production session_id is blank. Original CLI thread is retained privately; no cross-system session ID equality claimed."
+  },
+  "apns": {
+    "matching_records": 10,
+    "status_codes": [
+      200,
+      200,
+      200,
+      200,
+      200,
+      200,
+      200,
+      200,
+      200,
+      200
+    ],
+    "interpretation": "Provider acceptance only, including answer-resolution pushes. Actual Mac native card arrival observed. No phone/iPad arrival observed or claimed.",
+    "by_topic": [
+      {
+        "platform": "iOS",
+        "environment": "production",
+        "status": 200,
+        "reason": null
+      },
+      {
+        "platform": "iOS",
+        "environment": "production",
+        "status": 200,
+        "reason": null
+      },
+      {
+        "platform": "iOS",
+        "environment": "sandbox",
+        "status": 200,
+        "reason": null
+      },
+      {
+        "platform": "macOS",
+        "environment": "production",
+        "status": 200,
+        "reason": null
+      },
+      {
+        "platform": "macOS",
+        "environment": "production",
+        "status": 200,
+        "reason": null
+      },
+      {
+        "platform": "iOS",
+        "environment": "production",
+        "status": 200,
+        "reason": null
+      },
+      {
+        "platform": "iOS",
+        "environment": "production",
+        "status": 200,
+        "reason": null
+      },
+      {
+        "platform": "macOS",
+        "environment": "production",
+        "status": 200,
+        "reason": null
+      },
+      {
+        "platform": "macOS",
+        "environment": "production",
+        "status": 200,
+        "reason": null
+      },
+      {
+        "platform": "iOS",
+        "environment": "sandbox",
+        "status": 200,
+        "reason": null
+      }
+    ]
+  },
+  "actual_file": {
+    "path": "task/index.html",
+    "sha256": "0c8468b4b98dd0d57f9737e8f9a3e81eb8fe44642290d042524bca9f60125976",
+    "layout": "cards",
+    "sessions": 3,
+    "badge": "Chosen layout: Session cards",
+    "footer": "Built after your native answer",
+    "responsive_widths": [
+      1280,
+      768,
+      390
+    ],
+    "horizontal_overflow": false
+  },
+  "timing": "35 seconds of synchronized original live Mac recording at original speed, focused crops. Then six seconds of the actual browser-rendered artifact and five seconds of direct latest-app persisted-card recording. Original arrival occurred earlier and is retained separately.",
+  "scope": "Actual shared Attention MCP and production native card; no shim, direct Relay submission, fabricated card/result or new terminal invocation. No source edits, commits, pushes, tags, deployments, email or outreach. Authorized latest signed Mac app update performed with build121 rollback retained.",
+  "sanitization": "Original thread/request/event/submission identifiers and installation hashes remain private. Public receipt uses equality results and controlled fictional content.",
+  "exhibit": {
+    "route": "/labs/attention/",
+    "interaction": "Local recorded-film chapter seeks. No live question, model call, answer submission, storage or backend interaction.",
+    "artifact_download_name": "lantern-workshop.html",
+    "artifact_download_content_type": "text/plain",
+    "artifact_bytes_identical_to_original": true,
+    "html_inspection": "No scripts, event handlers, links, forms, embedded documents, external requests, CSS imports or private references.",
+    "film_editing": {
+      "privacy": "Narrow opaque masks remove visible private home/workspace paths, their wrapped continuations and the specific terminal hostname. Actual filenames, call markers, answer and build result remain. No terminal text is replaced.",
+      "source": "The untouched original film and raw screen recording remain private.",
+      "timing": "The same 35-second live segment, six-second actual browser still and separate five-second latest-app observation; original speed and 46-second total preserved.",
+      "geometry": "1920 x 1080 coded raster preserved; sample aspect ratio normalized to 1:1 without resizing pixels."
+    },
+    "question_still": "Native-card crop from the authentic live film at 0.1 seconds, with both options unselected. No cursor trail, replacement pixels or reconstructed text."
+  },
+  "artifacts": {
+    "answered.png": {
+      "sha256": "c8a00f9ebfa293e15a0c84aaaac6971b37bacc468989c2f50be17d30b50955f3",
+      "bytes": 93085,
+      "width": 618,
+      "height": 800
+    },
+    "execution.mp4": {
+      "sha256": "4a863d88a4a4e2278c5544e5d962a22ddcda793b1b894f55b9a718d6e82254e1",
+      "bytes": 1237300,
+      "width": 1920,
+      "height": 1080,
+      "duration_seconds": 46,
+      "fps": 30
+    },
+    "execution.vtt": {
+      "sha256": "a38d0eced08429999a2c09d8d69de3af705d7c928b5ac511f4c24b7ceb0a6ed3",
+      "bytes": 689
+    },
+    "poster.png": {
+      "sha256": "1cd4357299f50ad7114b755ecb83e3b9372f8b5d02413ee78efb08651036fe29",
+      "bytes": 363659,
+      "width": 1920,
+      "height": 1080
+    },
+    "question.png": {
+      "sha256": "38d95f7797a3495ebcafb1aad52a4e3580d8f50a99478da21bc5fd0a50dd84e0",
+      "bytes": 105146,
+      "width": 618,
+      "height": 800
+    },
+    "workshop-desktop.png": {
+      "sha256": "7346591a0ff288e627921b0462338a3b0c0bf1d548ca4f687c5ed4e6c7abf9fe",
+      "bytes": 73819,
+      "width": 1280,
+      "height": 800
+    },
+    "workshop-phone.png": {
+      "sha256": "e7257c447b49ec78ba5e6140e2b1d21ba37ac996d1691f17f7e188a526272360",
+      "bytes": 72814,
+      "width": 390,
+      "height": 1437
+    },
+    "workshop-source.txt": {
+      "sha256": "0c8468b4b98dd0d57f9737e8f9a3e81eb8fe44642290d042524bca9f60125976",
+      "bytes": 2733
+    }
+  }
+}

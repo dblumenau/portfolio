@@ -1,0 +1,76 @@
+{
+  "project": "Saturation Listening",
+  "source_revision": "5c925b1de588f1f668648774925d8cca5efbcf39",
+  "components": [
+    {
+      "component": "Waveform",
+      "original_sha256": "91467b6ae855f46ab5f55d75c3757399559b41f650a342e8817bf5df00ea8a1a",
+      "compiled_sha256": "d714bf1f03ec7300823d66494abd5edee497282e52aa0fb6ee32619e9a93a85c"
+    },
+    {
+      "component": "views",
+      "original_sha256": "a3b2d02077110895ef66360891b9c9ba6e77e3ac1a0d17138235300400337a0c",
+      "compiled_sha256": "a23134574cb9eaeddbcc7774b58f3ceaaaf6c64c67603975ee23f6e568321825"
+    }
+  ],
+  "compilation": "Deterministic TypeScript5.9.3 transpileModule, ES2022/ESNext, ReactJSX. Original TSX text retained; no implementation edits.",
+  "adapter": [
+    "One static original fixture; no original app API or progress state.",
+    "In-memory reading mode and transport state; no storage or outbound mutations.",
+    "Scoped keyboard controls and native position range.",
+    "Keyboard sentence helper dispatches untrusted synthetic pointer events through the actual Waveform handlers; not described as trusted input.",
+    "Baseline ORP facade only; corpus vocabulary and wordlist loading omitted. Karaoke, guide and subtitle views offered.",
+    "Portfolio CSS and shared SVG icons."
+  ],
+  "voice": {
+    "provider": "OpenAI",
+    "model": "gpt-4o-mini-tts",
+    "voice": "cedar",
+    "ai_generated": true,
+    "custom_speaker": false
+  },
+  "fixture": {
+    "title": "Papirbåden ved havnen",
+    "language": "da",
+    "words": 39,
+    "duration_seconds": 15.9,
+    "audio_sha256": "81bb7d1ccf926a040aa7fa235005012b708e569aa3be08051d528e4954f788fc",
+    "timing_method": "Fresh medium-ASR word estimates reviewed against authored tokens and PCM, with three declared small-ASR timing overrides. No known ground-truth onset claim.",
+    "human_listening_review": false,
+    "original_pdf_srt_pipeline_tested": false
+  },
+  "recordings": {
+    "desktop": {
+      "duration_seconds": 24.233333,
+      "viewport": [
+        1440,
+        900
+      ],
+      "audio": "Actual recorded browser output",
+      "kind": "Genuine source-interface recording"
+    },
+    "touch": {
+      "duration_seconds": 17.88,
+      "viewport": [
+        390,
+        844
+      ],
+      "audio": "Silent",
+      "kind": "Genuine trusted browser touch input in Chromium mobile emulation",
+      "physical_device": false
+    }
+  },
+  "independent_checks": {
+    "source_asr_normalized_words_matched": 39,
+    "source_asr_words": 39,
+    "asr_text_prompt": false,
+    "recorded_pcm_windows_matched": 10,
+    "recorded_pcm_correlation_min": 0.9970734480312402,
+    "recorded_pcm_correlation_max": 0.999880731767589
+  },
+  "boundaries": [
+    "No private corpus, source server, progress, history, credentials or database.",
+    "No human listening, physical-device, learning-outcome or original alignment-accuracy claim."
+  ],
+  "captions": "English workflow action captions; full authored-story transcript provided on the page. Seeking/looping changes which story parts are heard."
+}
