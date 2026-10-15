@@ -1,0 +1,29 @@
+---
+import Icon from './Icon.astro';
+import { findRecords, missingExcerpt, conclusion } from '../world/memory-desk/model';
+import sample from '../labs/memory/sample.json';
+interface Props { fallback?: boolean }
+const { fallback = false } = Astro.props;
+const records = findRecords();
+---
+{fallback ? <details class="world-memory-readable" id="memory-desk-readable"><summary>Compare three names in project memory</summary><p>These three names appear separately in my project memory. What would justify treating them as one?</p><p>Real historical sample. Local search and download. The observatory is an illustration.</p><div class="memory-comparison">{records.map(record => <article><h3>{record.tuple.object}</h3><p>{record.tuple.subject} / {record.tuple.predicate} / {record.tuple.object}</p><p>Original type: {record.originalType ?? 'unknown (null)'}</p>{record.excerpt ? <><blockquote>{record.excerpt.quote}</blockquote><p>{record.excerpt.attribution}</p></> : <p>{missingExcerpt}</p>}</article>)}</div><p>{conclusion}</p><p>The interactive evidence desk needs JavaScript. <a href="/labs/memory/">Open the existing Memory Lab.</a></p></details> : <>
+  <div class="world-memory-overlay" data-memory-overlay hidden aria-hidden="true"><span>THE MEMORY OBSERVATORY</span><div><span>01 / Index drawer</span><span>02 / Reading light</span><span>03 / Evidence folder</span></div></div>
+  <aside class="world-memory-card" data-memory-card aria-label="Memory evidence desk" hidden>
+    <div class="memory-top"><span>KEEP THE EVIDENCE</span><button type="button" class="world-text-button" data-memory-exit><Icon name="arrow-left" /> Return to the world</button></div>
+    <h2 tabindex="-1">Three names.<br /><em>What connects them?</em></h2>
+    <p>These three names appear separately in my project memory. What would justify treating them as one?</p>
+    <p class="memory-boundary">Real historical sample. Local search and download. The observatory is an illustration.</p>
+    <details class="memory-method"><summary>What is this sample?</summary><p>{sample.description}</p><p>Captured {sample.capturedDate}. This dates the sample, not each claim or conversation. {sample.counts.distinctRelationships} distinct relationships were deduplicated from {sample.counts.originalFilteredRowCount} filtered rows. These three labels are an editorially chosen comparison. No model, private archive or live graph is queried.</p></details>
+    <div class="memory-drawer"><p class="memory-kicker">01 / EXACT LOCAL QUERY</p><p><code>panelforge / built_with</code><br /><code>vue · vue-js · vue-3</code></p><button class="world-button world-button-solid" type="button" data-memory-find disabled>Find these three names <Icon name="arrow-right" /></button></div>
+    <p class="memory-status" data-memory-status role="status">Open the index drawer to retrieve the records.</p>
+    <div data-memory-results hidden>
+      <div class="memory-selectors" aria-label="Inspect a record">{records.map(record => <button type="button" data-memory-inspect={record.tuple.object} aria-pressed="false">{record.tuple.object}</button>)}</div>
+      <section class="memory-inspector" aria-label="Record under the reading light"><p class="memory-kicker">02 / UNDER THE READING LIGHT</p><h3 data-memory-label></h3><p class="memory-tuple" data-memory-tuple></p><p>Original entity type: <strong data-memory-type></strong></p><div class="memory-source" data-memory-source><span class="memory-kicker">PUBLISHED EXCERPT / EXACT CONNECTION</span><blockquote data-memory-quote></blockquote><p data-memory-attribution></p></div><p class="memory-missing" data-memory-missing hidden>{missingExcerpt}</p><p class="memory-source-note">A short public excerpt is not the complete original conversation. Missing published evidence does not mean a connection has no source or is false.</p><button class="world-button" type="button" data-memory-toggle>Add to my evidence card <Icon name="plus" /></button></section>
+      <details class="memory-compare"><summary>Compare the three records</summary><div class="memory-comparison">{records.map(record => <article><h3>{record.tuple.object}</h3><p>{record.tuple.subject} / {record.tuple.predicate} / {record.tuple.object}</p><p>Original type: {record.originalType ?? 'unknown (null)'}</p>{record.excerpt ? <><blockquote>{record.excerpt.quote}</blockquote><p>{record.excerpt.attribution}</p></> : <p>{missingExcerpt}</p>}</article>)}</div></details>
+      <p class="memory-conclusion">{conclusion}</p>
+      <section class="memory-folder" aria-label="Your evidence card"><p class="memory-kicker">03 / YOUR EVIDENCE CARD</p><p data-memory-selection>0 of 3 records selected</p><details class="memory-preview"><summary>Preview the exact JSON</summary><pre data-memory-json tabindex="0" aria-label="Evidence card JSON preview"></pre></details><a class="world-button world-button-solid" data-memory-download download="memory-evidence-card.json" aria-disabled="true">Choose at least one record</a><button class="world-text-button" type="button" data-memory-reset>Reset selection</button><p data-memory-download-status role="status"></p></section>
+    </div>
+    <details class="memory-curation"><summary>A separate correction, on fictional data</summary><p>The recorded Laravel execution changed two product fields, kept the same-named place and unrelated row unchanged, retained four source links, and recorded an immediate inverse. Those fictional records do not establish that these Vue labels should merge.</p><a href="/labs/curation/">See a recorded correction on fictional data <Icon name="arrow-up-right" /></a></details>
+    <a class="memory-lab-link" href="/labs/memory/">Explore the existing Memory Lab <Icon name="arrow-up-right" /></a>
+  </aside>
+</>}

@@ -27,6 +27,7 @@ const groups = {
   'engine-contract': ['engine-contract'],
   'session-cron': ['session-cron'],
   'world-task': ['world-attention'],
+  'world-memory': ['world-memory', 'world-presentation'],
   world: ['world', 'world-exhibit', 'world-lifecycle'],
 };
 if (process.argv.includes('--list')) { console.log(JSON.stringify(groups, null, 2)); process.exit(0); }
