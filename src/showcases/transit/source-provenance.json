@@ -1,0 +1,73 @@
+{
+  "recorded": "2026-10-15",
+  "sample_date": "2026-05-24",
+  "source": {
+    "repository": "trains-mcp",
+    "commit": "20d2d1c3ddc0378cdf7d5da54f00cfa6bcd91df9",
+    "tag": "v0.2.4",
+    "advertised_server_version": "0.1.0",
+    "files": [
+      {
+        "path": "package-lock.json",
+        "sha256": "189ff186fcceacba35b4496460f5101c200516e22d5096b8e96d462da3e1fef0"
+      },
+      {
+        "path": "package.json",
+        "sha256": "4eec0da3e08c94bc916f0cb9c9c0eaaff4597db4d8258f41ceed86360f42597d"
+      },
+      {
+        "path": "src/mock-data.ts",
+        "sha256": "d39fb99ea5c7cde16f31f2ba6e5c9da25cff88f84941de78aa65ac7f646f7baf"
+      },
+      {
+        "path": "src/rejseplanen.ts",
+        "sha256": "6981c8372d90c436158a726f2582a009c314c2fde981698b0d6e17f4b4da2261"
+      },
+      {
+        "path": "src/server.ts",
+        "sha256": "a6961ac17fa3a0a391eebc2d7df311c70c181f4349c85742b5cdbdca956bb9cb"
+      },
+      {
+        "path": "src/tools/disruptions.ts",
+        "sha256": "501d75df6406b911eb9d38ac0fe61f3b2a8d22418e6177697334ea677fe5b425"
+      },
+      {
+        "path": "src/tools/plan-trip.ts",
+        "sha256": "fe6e9334c4fa5f8a7474861a1c624827535dfb3f5eb8b3da64cc3daf468978df"
+      },
+      {
+        "path": "src/tools/station-departures.ts",
+        "sha256": "91b74648ce257f48d8347593004114a08d47f9f9447828ef0657feae6ea82a05"
+      },
+      {
+        "path": "src/tools/station-search.ts",
+        "sha256": "ff05dd74c0ad8fcd7608230dbd1913194cb5b491185c31f58eed5e6c2d3f638d"
+      },
+      {
+        "path": "src/tools/train-at-station.ts",
+        "sha256": "9551aae8a68f77be0516e096803a6e39c907ef7a41f3a18b26d1ebf5922d6da2"
+      },
+      {
+        "path": "src/tools/train-journey.ts",
+        "sha256": "65671121f0c0119199a544efe2b32e960c1308f8f610e4fba8ebbf48416b1177"
+      },
+      {
+        "path": "tsconfig.json",
+        "sha256": "1bb94b88f1e9154f1e65bebf05916f94f63ab33ecfec98587db7d46b57374d4f"
+      }
+    ]
+  },
+  "method": "Actual recorded MCP tool calls using the original repository sample responses, with outbound networking disabled. No live travel requests were made.",
+  "display": "Typeset recorded outcomes. Not original product UI, not a live lookup. Native radio controls select already recorded results.",
+  "private_evidence": "Complete source snapshot, transport transcript, isolation evidence and 28 bounded checks retained in the private transit proof.",
+  "public_scope": "Three original platform lookups and the original board. Constructed route fixtures are excluded from the main section.",
+  "mount": "Existing Connected tools case, after case navigation and before starting-point prose. No new route or Lab.",
+  "limits": [
+    "The original sample has no trip response, so plan_trip returns no connections. These cards do not prove route planning.",
+    "Original board rows have no journey reference. train_journey reports a board miss despite listing IC 123 among visible services. Full journey lookup is not demonstrated.",
+    "Sample notice fields do not match the current notice handler: default filtering finds none and all-mode results have unknown operator and validity window.",
+    "The sample ignores several request filters, returns fixed board order and uses an all-stations fallback for an unknown station query. It does not prove current upstream filtering, chronological ordering or station-search accuracy.",
+    "Separate deliberately constructed route responses were used privately to check the actual formatter. They are not original sample itineraries and are not shown in this section.",
+    "This recorded run does not establish live API availability, geographic correctness or current service conditions."
+  ]
+}

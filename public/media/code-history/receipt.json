@@ -1,0 +1,243 @@
+{
+  "schema": "code-history-capture-v1",
+  "scope": "Actual isolated application with four hand-authored synthetic sessions; saved captures, not a live agent or analysis demonstration",
+  "source": {
+    "tag": "web-v10.20.97",
+    "revision": "93881d2eca613fde498e0933405cee3a07220a4c",
+    "baselineViews": [
+      "Week",
+      "Day",
+      "List",
+      "Peek",
+      "full-pane imported transcript"
+    ],
+    "unreleasedUiFix": {
+      "status": "private, unreleased",
+      "file": "resources/js/components/chat/ChatMessagesArea.vue",
+      "addedLines": 2,
+      "description": "Gate edit and multi-edit actions with !isImportedAgentSession, matching the existing server rejection of archive edits."
+    }
+  },
+  "fixtures": {
+    "authoredByHand": true,
+    "realArchiveCopied": false,
+    "hashes": [
+      {
+        "fixture": 1,
+        "sha256": "67e205ba37621d94bc9b14ff971000b2b81e13c84ec72c8dc47b34eebbf5bf25",
+        "bytes": 2161
+      },
+      {
+        "fixture": 2,
+        "sha256": "6aebc7d76563de5e7662f47d08ad1854702395c0e831aa1eba7c1777d5d754a2",
+        "bytes": 1255
+      },
+      {
+        "fixture": 3,
+        "sha256": "a2aaed7cceb22b6e379648ef05e3c2ba364c47ab5c504900fab5508a38b7a53b",
+        "bytes": 1219
+      },
+      {
+        "fixture": 4,
+        "sha256": "cffbfc191be5a8718f6e5945de9705bd4f0e942d14fccdd679a5016db52eb04e",
+        "bytes": 1255
+      }
+    ]
+  },
+  "counts": {
+    "sessions": 4,
+    "canonicalEvents": 29,
+    "turns": 5,
+    "humanPrompts": 5,
+    "mirroredMessages": 10,
+    "summaries": 4,
+    "analysisRows": 0
+  },
+  "method": {
+    "import": "Actual authenticated Laravel HTTP import, request validation and parser",
+    "projection": "Real deterministic materialization and summary services, explicitly invoked after intercepted dispatches",
+    "isolation": "Fresh synthetic owner and disposable MySQL on an internal network; queues, events, notifications and provider traffic fenced",
+    "modelOrAudioCalls": 0,
+    "requestedMaterializationJobs": 4,
+    "requestedSummaryJobs": 4,
+    "queueWorkerRan": false
+  },
+  "preservingArchive": {
+    "canonicalBytesAndRowsUnchanged": true,
+    "projectedMessagesAndSummariesUnchangedDuringBrowsing": true,
+    "viewState": "Local login and preference state changed; this is not a claim of zero database writes.",
+    "narration": "A separate derivative audio action exists; it was never invoked."
+  },
+  "costSemantics": "No token-usage events were authored. Source session costs and provenance are null; day $0.00 totals aggregate absent costs, not measured spend. Message counts are not human-prompt counts.",
+  "responses": [
+    {
+      "method": "POST",
+      "endpoint": "/api/codex-sessions/import-jsonl",
+      "status": 401,
+      "body": {
+        "message": "Unauthenticated."
+      }
+    },
+    {
+      "method": "POST",
+      "endpoint": "/api/codex-sessions/import-jsonl",
+      "status": 403,
+      "body": {
+        "message": "Invalid ability provided."
+      }
+    },
+    {
+      "method": "POST",
+      "endpoint": "/api/codex-sessions/import-jsonl",
+      "status": 422,
+      "body": {
+        "message": "The chunk bytes field must be at least 1.",
+        "errors": {
+          "chunk_bytes": [
+            "The chunk bytes field must be at least 1."
+          ]
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "endpoint": "/api/codex-sessions/import-jsonl",
+      "status": 201,
+      "body": {
+        "thread_id": "fictional-history-20261015-01",
+        "session_id": 1,
+        "events_new": 11,
+        "events_replayed": 0,
+        "projection_queued": true,
+        "last_offset": 1977,
+        "unknown_events": 0,
+        "malformed_events": 0
+      }
+    },
+    {
+      "method": "POST",
+      "endpoint": "/api/codex-sessions/import-jsonl",
+      "status": 201,
+      "body": {
+        "thread_id": "fictional-history-20261015-02",
+        "session_id": 2,
+        "events_new": 6,
+        "events_replayed": 0,
+        "projection_queued": true,
+        "last_offset": 1071,
+        "unknown_events": 0,
+        "malformed_events": 0
+      }
+    },
+    {
+      "method": "POST",
+      "endpoint": "/api/codex-sessions/import-jsonl",
+      "status": 201,
+      "body": {
+        "thread_id": "fictional-history-20261015-03",
+        "session_id": 3,
+        "events_new": 6,
+        "events_replayed": 0,
+        "projection_queued": true,
+        "last_offset": 1035,
+        "unknown_events": 0,
+        "malformed_events": 0
+      }
+    },
+    {
+      "method": "POST",
+      "endpoint": "/api/codex-sessions/import-jsonl",
+      "status": 201,
+      "body": {
+        "thread_id": "fictional-history-20261015-04",
+        "session_id": 4,
+        "events_new": 6,
+        "events_replayed": 0,
+        "projection_queued": true,
+        "last_offset": 1071,
+        "unknown_events": 0,
+        "malformed_events": 0
+      }
+    },
+    {
+      "method": "POST",
+      "endpoint": "/api/codex-sessions/import-jsonl",
+      "status": 200,
+      "body": {
+        "thread_id": "fictional-history-20261015-01",
+        "session_id": 1,
+        "events_new": 0,
+        "events_replayed": 11,
+        "projection_queued": false,
+        "last_offset": 1977,
+        "unknown_events": 0,
+        "malformed_events": 0
+      }
+    }
+  ],
+  "archiveEditRejections": [
+    {
+      "method": "POST",
+      "status": 403,
+      "body": {
+        "error": "Imported agent sessions are read-only."
+      }
+    },
+    {
+      "method": "POST",
+      "status": 403,
+      "body": {
+        "error": "Imported agent sessions are read-only."
+      }
+    }
+  ],
+  "media": {
+    "stills": "Actual Week and Peek captures from the tagged source; stable transcript capture includes the unreleased UI fix and its permanent label. No screenshot reconstruction.",
+    "film": {
+      "version": 3,
+      "width": 1440,
+      "height": 1120,
+      "durationSeconds": 25.04,
+      "finalCaptionEndSeconds": 25.04,
+      "reloadCaptionStartSeconds": 17.4,
+      "originalSpeed": true,
+      "audioStreams": 0,
+      "edit": "Existing initial-load trim; appended 120px disclosure/caption footer. All 626 source viewport frames remain unchanged before video encoding. Loading transitions are preserved.",
+      "captionTiming": "Reload cue begins in the retained reload-action interval, before the loading skeleton. Burned boundaries are frame-quantized."
+    },
+    "fonts": "App captures use local and fallback fonts with external font traffic prevented."
+  },
+  "files": [
+    {
+      "file": "week.png",
+      "bytes": 105564,
+      "sha256": "6ce7831bc9796b929de0d6cdf1afc9e9f98a48b25c5373186f98bedd073c6736",
+      "width": 1440,
+      "height": 1000
+    },
+    {
+      "file": "peek.png",
+      "bytes": 118187,
+      "sha256": "3563157b641e88354354411d19819c8ecb8d66119f6b55da9484b24ff6c2af1f",
+      "width": 1440,
+      "height": 1000
+    },
+    {
+      "file": "transcript.png",
+      "bytes": 310271,
+      "sha256": "e8ab7f7835c5e61f4b57bb1b67f4b8ce2403d5f74bd9fb9f37b9a117d47d2f83",
+      "width": 1440,
+      "height": 1060
+    },
+    {
+      "file": "execution.mp4",
+      "bytes": 1305756,
+      "sha256": "3dbff38f31a74eeb189aab4e757faf9ae447a4548c37f5e6530c6aeae23ef37f"
+    },
+    {
+      "file": "execution.vtt",
+      "bytes": 542,
+      "sha256": "30c4e3a238af76aea3aa578b0d1f958ea2086d62ad4e621daee48324a22bdee8"
+    }
+  ]
+}

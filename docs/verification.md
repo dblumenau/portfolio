@@ -6,6 +6,10 @@ The homepage tour opens a native dialog with the 78-second overview film. Tests 
 
 The PanelForge image-revision showcase checks the two actual generated JPEGs against their retained hashes. Native radio controls switch Original, Revision and Both images with keyboard, touch and JavaScript disabled. Its actual gallery/chat captures review completed jobs and keep reference lineage distinct from conversation branching.
 
+The Trains MCP section uses three recorded lookups with dated synthetic data. Tests exercise native radio controls with keyboard, touch and JavaScript disabled, verify exact saved responses, preserve cancellation priority and ensure the section makes no API calls. Its concise receipts retain source hashes and fixture limits.
+
+The Code History section presents actual isolated-app captures from four hand-authored sessions. Tests cover native image choices, full-size files, captioned playback, pause on disclosure close, exact media hashes and the disclosed unreleased UI correction. The selected-work PDF has a separate reviewed hash, six-page/font/link/metadata inspection and a real browser download check.
+
 The feature atlas suite checks every story route, combined filters, URL state, empty results and native disclosure controls. The memory lab suite exercises the exported sample, unknown and versioned labels, reversible curation, recorded before-state restoration, pagination, keyboard controls and its readable view without JavaScript.
 
 The Workbench Lab tests deliberate drift refusal, explicit adoption, local overlay preservation and the recorded CLI receipt. Its terminal video is a replay of captured output, with editorial display pacing. The Recovery Lab tests the client disconnect and later retrieval against a recorded execution of the actual engine and isolated Redis. The browser exhibits replay that evidence; they do not operate the services. Narrowly approved JSON receipts and text transcripts share the media hash gate and also undergo decoded-string privacy checks. Relative fictional protected-file names can appear; private absolute paths and credential values cannot.

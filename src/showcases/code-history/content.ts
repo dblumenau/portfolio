@@ -1,0 +1,32 @@
+export const captures = [
+  {
+    id: 'week',
+    choice: 'Week',
+    title: 'Scan the week',
+    caption: 'Seven daily columns give the archive a readable shape. This capture contains four hand-authored synthetic sessions.',
+    alt: 'Actual Code History week view with seven daily columns and four clearly labelled synthetic sessions, including three empty days.',
+    file: 'week.png',
+    width: 1440,
+    height: 1000,
+  },
+  {
+    id: 'peek',
+    choice: 'Peek',
+    title: 'Read the context first',
+    caption: 'A card opens the first prompt, last prompt and closing reply. This synthetic session has no analysis; the interface says so.',
+    alt: 'Actual session peek showing a synthetic opening prompt, the final prompt, the closing reply and a notice that the session has not been analysed.',
+    file: 'peek.png',
+    width: 1440,
+    height: 1000,
+  },
+  {
+    id: 'transcript',
+    choice: 'Transcript',
+    title: 'Give the conversation the full pane',
+    caption: 'The stable imported transcript fills its pane. This capture includes an unreleased two-line UI fix that hides archive edit actions.',
+    alt: 'Actual stable imported Codex transcript using the full conversation pane, with synthetic messages and a permanent label identifying the unreleased UI fix.',
+    file: 'transcript.png',
+    width: 1440,
+    height: 1060,
+  },
+] as const;

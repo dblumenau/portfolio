@@ -1,20 +1,30 @@
 {
-  "purpose": "Generated conference sample files. Fictional source notes; actual application and Claude subscription analysis.",
-  "source_version": "v1.1.1",
+  "purpose": "Reviewed downloadable artifacts: a portfolio companion and conference samples.",
   "assets": [
     {
       "file": "conference-notes-demo.pptx",
       "bytes": 5874654,
       "sha256": "d8ef06e5b45a20017eb8288fd5549a321b329f553380bb9a421f55db69742ff6",
       "content": "Twenty-five slides generated from fictional conference notes. Actual analysis; counts describe the demonstration.",
-      "editing": "Personal template-author metadata removed; slide content and editable objects unchanged. PDF rendered from the packaged PowerPoint."
+      "editing": "Personal template-author metadata removed; slide content and editable objects unchanged. PDF rendered from the packaged PowerPoint.",
+      "source_version": "v1.1.1"
     },
     {
       "file": "conference-notes-demo.pdf",
       "bytes": 636404,
       "sha256": "1404a7631b20c3f4d580a64dd580de675943b85e5e0223fa7ffb6f5cdefd7b65",
       "content": "Twenty-five slides generated from fictional conference notes. Actual analysis; counts describe the demonstration.",
-      "editing": "Personal template-author metadata removed; slide content and editable objects unchanged. PDF rendered from the packaged PowerPoint."
+      "editing": "Personal template-author metadata removed; slide content and editable objects unchanged. PDF rendered from the packaged PowerPoint.",
+      "source_version": "v1.1.1"
+    },
+    {
+      "file": "david-blumenau-selected-work.pdf",
+      "bytes": 4466012,
+      "sha256": "de251c223c0873ff9fe385d458558a87cd0c616d88903b87025e662a4895b80b",
+      "source_revision": "a75d7224b638a76fd29a265cff0a79f58bf118c0",
+      "pages": 6,
+      "content": "Six-page selected-work companion with public portrait, reviewed product captures, source-based writing and canonical links. Synthetic demonstration content and unreleased behavior retain their explicit boundaries.",
+      "editing": "Designed layout with searchable text, embedded local fonts and proportionally cropped approved images. Public author metadata; no private paths, forms, scripts or attachments."
     }
   ]
 }

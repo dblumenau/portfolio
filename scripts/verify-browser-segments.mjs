@@ -18,6 +18,9 @@ const groups = {
   curation: ['curation'],
   'image-revision': ['image-revision'],
   overview: ['overview'],
+  transit: ['transit'],
+  'code-history': ['code-history'],
+  'selected-work': ['selected-work'],
   'world-task': ['world-attention'],
   world: ['world', 'world-exhibit', 'world-lifecycle'],
 };

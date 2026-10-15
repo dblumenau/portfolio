@@ -1,0 +1,31 @@
+{
+  "sourceTag": "web-v10.20.97",
+  "sourceRevision": "93881d2eca613fde498e0933405cee3a07220a4c",
+  "captureDate": "2026-10-15",
+  "authoredFixtures": 4,
+  "archivedSessionsCopied": false,
+  "actualRuntime": "Laravel HTTP kernel, request validation/parser/importer, explicit deterministic projection/read-model services, MySQL and fresh Vue build",
+  "unreleasedUiFix": {
+    "status": "private, unreleased",
+    "file": "resources/js/components/chat/ChatMessagesArea.vue",
+    "addedLines": 2,
+    "description": "Gate edit and multi-edit actions with !isImportedAgentSession, matching the existing server rejection of archive edits."
+  },
+  "publicMedia": [
+    "code-history/week.png",
+    "code-history/peek.png",
+    "code-history/transcript.png",
+    "code-history/execution.mp4",
+    "code-history/execution.vtt",
+    "code-history/receipt.json"
+  ],
+  "captureLimits": [
+    "Synthetic authored assistant text is not inference output from this proof.",
+    "No analysis was fabricated.",
+    "Stable transcript capture does not establish a composer-free loading state.",
+    "Archive bytes/rows were retained; separate account/view-state writes occurred.",
+    "No word counts or production activity/financial figures are claimed.",
+    "No new route, lab, live app or model transport."
+  ],
+  "placement": "Existing PanelForge case only, after workflow and before decisions; shared case file remains root-owned."
+}

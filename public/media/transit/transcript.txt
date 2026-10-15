@@ -1,0 +1,76 @@
+TRAINS MCP / RECORDED OFFLINE SAMPLE
+Sample date: 24 May 2026. Recorded: 15 October 2026.
+Synthetic sample data, not current travel information.
+Source: trains-mcp @ 20d2d1c3ddc0378cdf7d5da54f00cfa6bcd91df9 (v0.2.4).
+
+The following tool names, arguments and returned text are copied exactly from the recorded calls. Markdown markers are part of the original text. The departure board retains its original order and the original on-time timestamp label beside the cancelled service. Cancellation takes precedence in the typeset card.
+
+CALL departure-board
+station_departures
+{
+  "station_name": "København H",
+  "date": "2026-05-24",
+  "time": "14:30",
+  "duration_minutes": 60,
+  "max_results": 5
+}
+
+RETURNED TEXT
+Departures from **København H** (id 008600626, train, s-tog, metro, letbane):
+
+- 2026-05-24 14:32 → 14:39 (+7min) | **IC 123** → Aarhus H | platform **5** (changed from 3)
+- 2026-05-24 14:35 (on time) | **A** → Hillerød St. | platform **1**
+- 2026-05-24 14:40 (on time) | **Re 5432** → Nykøbing F. | platform **7** **CANCELLED**
+- 2026-05-24 14:38 (on time) | **B** → Farum St. | platform **2**
+- 2026-05-24 14:45 → 14:48 (+3min) | **L 45** → Aalborg | platform **4**
+
+CALL changed-platform
+train_at_station
+{
+  "station_name": "København H",
+  "train_number": "IC 123",
+  "date": "2026-05-24",
+  "time": "14:30"
+}
+
+RETURNED TEXT
+**IC 123** → Aarhus H at **København H** (id 008600626)
+
+- Platform: **5** (changed from 3)
+- Scheduled: 2026-05-24 14:32
+- Realtime: 2026-05-24 14:39
+- Status: delayed 7 min
+- Stop: København H
+
+CALL cancelled-service
+train_at_station
+{
+  "station_name": "København H",
+  "train_number": "Re 5432",
+  "date": "2026-05-24",
+  "time": "14:30"
+}
+
+RETURNED TEXT
+**Re 5432** → Nykøbing F. at **København H** (id 008600626)
+
+- Platform: **7**
+- Scheduled: 2026-05-24 14:40
+- Realtime: 2026-05-24 14:40
+- Status: **CANCELLED**
+- Stop: København H
+
+CALL unmatched-service
+train_at_station
+{
+  "station_name": "København H",
+  "train_number": "ZZ 99999",
+  "date": "2026-05-24",
+  "time": "14:30"
+}
+
+RETURNED TEXT
+Train "ZZ 99999" not on the board at **København H** (id 008600626) in the next 2h.
+
+Visible services: IC 123, A, Re 5432, B, L 45
+

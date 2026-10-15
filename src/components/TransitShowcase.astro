@@ -1,0 +1,80 @@
+---
+import Icon from './Icon.astro';
+import recorded from '../showcases/transit/recorded-lookups.json';
+const choices = [
+  { id: 'changed', name: 'IC 123', label: 'Changed platform' },
+  { id: 'cancelled', name: 'Re 5432', label: 'Cancelled service' },
+  { id: 'missing', name: 'ZZ 99999', label: 'No matching train' },
+];
+const board = recorded['departure-board'].returned.content[0].text;
+---
+<section class="transit-showcase wrap" id="which-platform" aria-labelledby="transit-title" data-transit-showcase>
+  <div class="transit-intro">
+    <div><p class="transit-eyebrow">A small tool for an everyday question</p><h2 id="transit-title">Which platform?</h2></div>
+    <p>Trains MCP brings a service’s platform, departure time and status into one answer.</p>
+  </div>
+  <p class="transit-sample"><strong>Sample data · 24 May 2026</strong><span>Recorded offline. These are saved examples, not current travel information.</span></p>
+  <fieldset class="transit-lookup">
+    <legend>Choose a recorded lookup at København H</legend>
+    <div class="transit-choices">
+      {choices.map((choice, index) => <label><input type="radio" name="transit-lookup" value={choice.id} checked={index === 0} /><span><strong>{choice.name}</strong><span>{choice.label}</span></span></label>)}
+    </div>
+    <div class="transit-outcomes">
+      <article class="transit-outcome transit-changed" data-transit-outcome="changed" aria-labelledby="transit-changed-title">
+        <div class="transit-service"><p class="transit-kicker">Recorded answer</p><h3 id="transit-changed-title">IC 123 <span>to Aarhus H</span></h3><p>København H</p><div class="transit-times"><div><span>Scheduled</span><strong>14:32</strong></div><Icon name="arrow-right" /><div><span>Updated in sample</span><strong>14:39</strong></div></div><p class="transit-status">Delayed 7 minutes</p></div>
+        <div class="transit-platform"><span>Platform in sample</span><strong>5</strong><p>Changed from <b>3</b></p></div>
+      </article>
+      <article class="transit-outcome transit-cancelled" data-transit-outcome="cancelled" aria-labelledby="transit-cancelled-title">
+        <div class="transit-service"><p class="transit-kicker">Recorded answer</p><h3 id="transit-cancelled-title">Re 5432 <span>to Nykøbing F.</span></h3><p>København H · Scheduled 14:40</p><p class="transit-cancelled-status"><Icon name="close" />Cancelled</p><p class="transit-explanation">A published time and platform do not override the cancellation.</p></div>
+        <div class="transit-platform transit-platform-cancelled"><span>Platform listed in sample</span><strong>7</strong><p>Service cancelled</p></div>
+      </article>
+      <article class="transit-outcome transit-missing" data-transit-outcome="missing" aria-labelledby="transit-missing-title">
+        <div class="transit-service"><p class="transit-kicker">Recorded answer</p><h3 id="transit-missing-title">ZZ 99999 <span>at København H</span></h3><p class="transit-missing-status">No matching train on the board</p><p class="transit-explanation">The response lists the services it can see, so the next lookup has somewhere to start.</p></div>
+        <div class="transit-alternatives"><h4>Visible services in sample</h4><ul>{['IC 123', 'A', 'Re 5432', 'B', 'L 45'].map(name => <li>{name}</li>)}</ul></div>
+      </article>
+    </div>
+  </fieldset>
+  <p class="transit-caption">A typeset view of actual recorded tool responses. Selecting a train shows a saved answer; it does not request a new departure time.</p>
+  <details class="transit-evidence">
+    <summary>See the recorded responses <Icon name="plus" /></summary>
+    <div class="transit-evidence-content">
+      <p>The calls used the tool’s original synthetic sample data with networking disabled. The exact names, arguments and returned text are retained in the receipt.</p>
+      <details class="transit-board"><summary>Read the original departure board</summary><pre>{board}</pre></details>
+      <p>The original board labels the cancelled service’s timestamp “on time” alongside “CANCELLED”. The card gives the cancellation priority. These samples do not establish current service conditions, and the original sample does not provide a working route-planning example.</p>
+      <div class="transit-receipts"><a href="/media/transit/receipt.json">Read the source and call receipt <Icon name="arrow-up-right" /></a><a href="/media/transit/transcript.txt">Read the exact returned text <Icon name="arrow-up-right" /></a></div>
+    </div>
+  </details>
+</section>
+<style>
+  .transit-showcase{padding-block:48px 56px;border-bottom:1px solid var(--line);scroll-margin-top:32px}
+  .transit-intro{display:grid;grid-template-columns:1.15fr 1fr;align-items:end;gap:24px 48px;margin-bottom:26px}
+  .transit-eyebrow{color:var(--rust);font-size:14px;font-weight:650;letter-spacing:.06em;text-transform:uppercase;margin-bottom:14px}
+  .transit-intro h2{font-size:clamp(2.4rem,4.4vw,4.2rem)}
+  .transit-intro>p{font-size:17px;line-height:1.75;color:var(--muted);max-width:470px}
+  .transit-sample{display:flex;flex-wrap:wrap;gap:4px 20px;padding:14px 18px;border-left:3px solid var(--forest);background:#e8ecdf;font-size:14px;line-height:1.7;margin-bottom:24px}
+  .transit-sample strong{font-weight:650}.transit-sample span{color:#465443}
+  .transit-lookup{border:0;margin:0;padding:0;min-width:0}.transit-lookup legend{font-size:15px;font-weight:650;margin-bottom:12px}
+  .transit-choices{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+  .transit-choices label{display:flex;align-items:center;gap:12px;min-height:72px;border:1px solid #8a9587;border-radius:4px;padding:12px 18px;cursor:pointer;touch-action:manipulation}
+  .transit-choices label>span{display:grid;gap:2px}.transit-choices strong{font-size:16px;font-weight:650}.transit-choices label span span{font-size:14px;line-height:1.5}
+  .transit-choices input{width:18px;height:18px;flex-shrink:0;margin:0;accent-color:var(--forest)}
+  .transit-choices label:has(:checked){background:var(--forest-dark);color:var(--paper);border-color:var(--forest-dark)}.transit-choices label:has(:checked) input{accent-color:var(--paper)}
+  .transit-choices label:has(:focus-visible){outline:3px solid var(--rust);outline-offset:4px}
+  .transit-outcomes{border:1px solid var(--line);border-radius:5px;background:#faf8f1;overflow:hidden}
+  .transit-outcome{display:none;grid-template-columns:1.5fr 1fr;min-height:292px}
+  .transit-lookup:has([value=changed]:checked) .transit-changed,.transit-lookup:has([value=cancelled]:checked) .transit-cancelled,.transit-lookup:has([value=missing]:checked) .transit-missing{display:grid}
+  .transit-service{padding:28px 32px}.transit-kicker{font-size:14px;color:var(--muted);margin-bottom:12px}.transit-service h3{font-size:25px;line-height:1.3;margin-bottom:8px}.transit-service h3 span{font-size:21px;font-weight:450}.transit-service>p:not(.transit-kicker){font-size:15px;color:var(--muted)}
+  .transit-times{display:flex;align-items:center;gap:24px;margin-top:24px}.transit-times div{display:grid;gap:2px}.transit-times span{font-size:14px;color:var(--muted)}.transit-times strong{font-size:31px;font-weight:550;letter-spacing:-.04em}.transit-times :global(svg){width:22px;height:22px;color:var(--muted)}
+  .transit-service>.transit-status{color:var(--rust)!important;font-weight:650;margin-top:6px}
+  .transit-platform{display:flex;flex-direction:column;justify-content:center;padding:26px 32px;background:#e9eddf;border-left:1px solid var(--line)}.transit-platform>span{font-size:14px;color:#465443}.transit-platform>strong{font-family:var(--serif);font-size:96px;font-weight:480;line-height:1.2;letter-spacing:-.07em}.transit-platform p{font-size:17px}.transit-platform p b{font-weight:650}
+  .transit-platform-cancelled{background:#efe7db}.transit-platform-cancelled>strong{color:#6d614d}.transit-platform-cancelled p{color:#873a27;font-weight:650}
+  .transit-service>.transit-cancelled-status{display:flex;align-items:center;gap:10px;font-size:27px!important;font-weight:650;color:#873a27!important;margin-top:23px}.transit-cancelled-status :global(svg){width:25px;height:25px;flex-shrink:0}
+  .transit-service>.transit-explanation{font-size:15px;line-height:1.75;max-width:440px;margin-top:10px}.transit-service>.transit-missing-status{color:var(--ink)!important;font-size:20px!important;line-height:1.5;margin-top:24px;font-weight:550}
+  .transit-alternatives{display:flex;flex-direction:column;justify-content:center;padding:28px 32px;border-left:1px solid var(--line);background:#e9eddf}.transit-alternatives h4{font-size:15px;font-weight:550;margin:0 0 14px}.transit-alternatives ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:9px}.transit-alternatives li{font-size:16px;padding:7px 13px;border:1px solid #9daa93;border-radius:3px;background:#f5f4e9}
+  .transit-caption{font-size:14px;line-height:1.75;color:var(--muted);margin-top:14px;max-width:850px}
+  .transit-evidence{margin-top:24px;border-block:1px solid var(--line)}.transit-evidence>summary{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:52px;padding:14px 8px;font-size:15px;font-weight:650}.transit-evidence>summary :global(svg){width:18px;height:18px;flex-shrink:0}.transit-evidence[open]>summary :global(svg){transform:rotate(45deg)}
+  .transit-evidence-content{padding:8px 8px 22px}.transit-evidence-content>p{font-size:15px;line-height:1.8;color:var(--muted);max-width:860px;margin-bottom:14px}.transit-board{margin-block:12px 20px}.transit-board summary{font-size:15px;min-height:48px;padding:12px 0}.transit-board pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:14px;line-height:1.8;padding:18px;background:#e8ecdf;border:1px solid var(--line);border-radius:4px;margin:8px 0 0}
+  .transit-receipts{display:flex;flex-wrap:wrap;gap:8px 30px}.transit-receipts a{display:inline-flex;align-items:center;gap:18px;min-height:48px;font-size:15px;padding-block:10px}.transit-receipts :global(svg){width:18px;height:18px;flex-shrink:0}
+  @media(max-width:760px){.transit-showcase{padding-block:34px 42px}.transit-intro{grid-template-columns:1fr;gap:16px}.transit-intro>p{font-size:16px;max-width:600px}.transit-choices label{padding:12px;gap:8px}.transit-outcome{grid-template-columns:1.25fr 1fr}.transit-service,.transit-platform,.transit-alternatives{padding:24px}.transit-service h3 span{display:block;font-size:19px}.transit-times{gap:16px}.transit-times span{max-width:115px}}
+  @media(max-width:540px){.transit-changed .transit-platform{grid-row:1;border-top:0;border-bottom:1px solid var(--line)}.transit-changed .transit-service{grid-row:2}.transit-choices{grid-template-columns:1fr;gap:8px}.transit-choices label{min-height:52px;padding:10px 14px;gap:12px}.transit-choices label>span{display:flex;align-items:baseline;flex-wrap:wrap;gap:3px 12px}.transit-outcome{grid-template-columns:1fr;min-height:0}.transit-service{padding:22px}.transit-platform{border-left:0;border-top:1px solid var(--line);display:grid;grid-template-columns:80px 1fr;gap:0 14px;align-items:center;padding:18px 22px}.transit-platform>strong{grid-column:1;grid-row:1/3;font-size:76px;line-height:1}.transit-platform>span{grid-column:2;align-self:end}.transit-platform>p{grid-column:2;align-self:start;margin-top:3px}.transit-alternatives{border-left:0;border-top:1px solid var(--line);padding:22px}.transit-times{gap:22px}.transit-service h3 span{display:inline}.transit-times span{max-width:none}.transit-sample{padding:12px 14px}}
+</style>

@@ -428,7 +428,7 @@
     "change": "Code History added full-page list, day and week views.",
     "next": "Showing more sessions exposed a new problem: making a crowded week understandable.",
     "area": "memory",
-    "href": "/features/find-that/",
+    "href": "/work/panelforge/#code-history",
     "evidence": "Verified tag checkpoint; reviewed implementation"
   },
   {
@@ -444,7 +444,7 @@
     "change": "Daily activity bars, selected digest cards and expandable session strips gave the week a readable hierarchy.",
     "next": "The next interaction became deciding whether a session was worth opening.",
     "area": "memory",
-    "href": "/features/find-that/",
+    "href": "/work/panelforge/#code-history",
     "evidence": "Verified tag checkpoint; reviewed implementation"
   },
   {
@@ -460,7 +460,7 @@
     "change": "A larger session peek showed the beginning, ending and available analysis, with previous and next navigation.",
     "next": "Skimming became a meaningful step between the weekly overview and a full transcript.",
     "area": "memory",
-    "href": "/features/find-that/",
+    "href": "/work/panelforge/#code-history",
     "evidence": "Verified tag checkpoint; reviewed implementation"
   },
   {
@@ -476,7 +476,7 @@
     "change": "The transcript gained the whole pane, following digest, preview and typed-message corrections.",
     "next": "A sequence of patch checkpoints improved the complete journey from overview to reading.",
     "area": "memory",
-    "href": "/features/find-that/",
+    "href": "/work/panelforge/#code-history",
     "evidence": "Verified tag checkpoint; reviewed implementation"
   }
 ]

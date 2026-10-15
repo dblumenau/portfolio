@@ -1507,6 +1507,104 @@
       "editing": "Plain UTF-8 text; source/method/actor limits retained.",
       "bytes": 4502,
       "sha256": "1d4eb713e47a0b4c10ec5b038ed2a09f5e4cadec7fcef636ea834ec971baedfb"
+    },
+    {
+      "file": "transit/receipt.json",
+      "product": "Trains MCP",
+      "captured": "2026-10-15",
+      "method": "Recorded offline MCP calls using the original historical synthetic sample data.",
+      "content": "Concise source identity, hashes, exact selected arguments and returned text, and limitations.",
+      "redactions": [],
+      "bytes": 6417,
+      "sha256": "148d31c19ba60680f4faa7539f2df9befba651d2b44d5bac3efce40081aa4558"
+    },
+    {
+      "file": "transit/transcript.txt",
+      "product": "Trains MCP",
+      "captured": "2026-10-15",
+      "method": "Recorded offline MCP calls using the original historical synthetic sample data.",
+      "content": "Exact selected original tool arguments and returned text, including the cancelled-board timestamp contradiction.",
+      "redactions": [],
+      "bytes": 2213,
+      "sha256": "3f7622a15572d9ae0ed42c0fcb2975fbdb9d497198cb30c516800df064b2c891"
+    },
+    {
+      "file": "code-history/week.png",
+      "product": "PanelForge Code History",
+      "captured": "2026-10-15",
+      "method": "Actual isolated app, hand-authored synthetic Codex JSONL imported through actual request/parser/projection/read-model paths; no inference",
+      "content": "Baseline seven-day digest with four synthetic sessions.",
+      "redactions": [],
+      "bytes": 105564,
+      "sha256": "6ce7831bc9796b929de0d6cdf1afc9e9f98a48b25c5373186f98bedd073c6736",
+      "width": 1440,
+      "height": 1000,
+      "releaseScope": "Tagged baseline Week/Peek; stable transcript and film contain the private unreleased two-line UI fix."
+    },
+    {
+      "file": "code-history/peek.png",
+      "product": "PanelForge Code History",
+      "captured": "2026-10-15",
+      "method": "Actual isolated app, hand-authored synthetic Codex JSONL imported through actual request/parser/projection/read-model paths; no inference",
+      "content": "Baseline opening/final prompts and closing reply, explicitly unanalysed.",
+      "redactions": [],
+      "bytes": 118187,
+      "sha256": "3563157b641e88354354411d19819c8ecb8d66119f6b55da9484b24ff6c2af1f",
+      "width": 1440,
+      "height": 1000,
+      "releaseScope": "Tagged baseline Week/Peek; stable transcript and film contain the private unreleased two-line UI fix."
+    },
+    {
+      "file": "code-history/transcript.png",
+      "product": "PanelForge Code History",
+      "captured": "2026-10-15",
+      "method": "Actual isolated app, hand-authored synthetic Codex JSONL imported through actual request/parser/projection/read-model paths; no inference",
+      "content": "Stable imported full-pane transcript with permanent synthetic/unreleased-fix label.",
+      "redactions": [],
+      "bytes": 310271,
+      "sha256": "e8ab7f7835c5e61f4b57bb1b67f4b8ce2403d5f74bd9fb9f37b9a117d47d2f83",
+      "width": 1440,
+      "height": 1060,
+      "releaseScope": "Tagged baseline Week/Peek; stable transcript and film contain the private unreleased two-line UI fix."
+    },
+    {
+      "file": "code-history/execution.mp4",
+      "product": "PanelForge Code History",
+      "captured": "2026-10-15",
+      "method": "Actual isolated app, hand-authored synthetic Codex JSONL imported through actual request/parser/projection/read-model paths; no inference",
+      "content": "Original-speed controlled app recording; synthetic data and unreleased UI-fix disclosure, real loading transitions retained.",
+      "redactions": [],
+      "bytes": 1305756,
+      "sha256": "3dbff38f31a74eeb189aab4e757faf9ae447a4548c37f5e6530c6aeae23ef37f",
+      "width": 1440,
+      "height": 1120,
+      "durationSeconds": 25.04,
+      "videoCodec": "h264",
+      "audioStreams": 0,
+      "mediaVersion": 3,
+      "releaseScope": "Tagged baseline Week/Peek; stable transcript and film contain the private unreleased two-line UI fix."
+    },
+    {
+      "file": "code-history/execution.vtt",
+      "product": "PanelForge Code History",
+      "captured": "2026-10-15",
+      "method": "Actual isolated app, hand-authored synthetic Codex JSONL imported through actual request/parser/projection/read-model paths; no inference",
+      "content": "Six scene captions, ending exactly at the 25.040-second encoded duration.",
+      "redactions": [],
+      "bytes": 542,
+      "sha256": "30c4e3a238af76aea3aa578b0d1f958ea2086d62ad4e621daee48324a22bdee8",
+      "releaseScope": "Tagged baseline Week/Peek; stable transcript and film contain the private unreleased two-line UI fix."
+    },
+    {
+      "file": "code-history/receipt.json",
+      "product": "PanelForge Code History",
+      "captured": "2026-10-15",
+      "method": "Actual isolated app, hand-authored synthetic Codex JSONL imported through actual request/parser/projection/read-model paths; no inference",
+      "content": "Concise source/patch, synthetic fixture hashes/counts, exact import/guard response bodies and relative file hashes.",
+      "redactions": [],
+      "bytes": 7389,
+      "sha256": "148d81607b8eadd9dfa4608444d2c9ea7bbfadf19b615b51585c63ae29fe2934",
+      "releaseScope": "Tagged baseline Week/Peek; stable transcript and film contain the private unreleased two-line UI fix."
     }
   ]
 }

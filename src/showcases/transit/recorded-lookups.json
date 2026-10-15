@@ -1,0 +1,75 @@
+{
+  "departure-board": {
+    "id": "departure-board",
+    "name": "station_departures",
+    "arguments": {
+      "station_name": "København H",
+      "date": "2026-05-24",
+      "time": "14:30",
+      "duration_minutes": 60,
+      "max_results": 5
+    },
+    "returned": {
+      "content": [
+        {
+          "type": "text",
+          "text": "Departures from **København H** (id 008600626, train, s-tog, metro, letbane):\n\n- 2026-05-24 14:32 → 14:39 (+7min) | **IC 123** → Aarhus H | platform **5** (changed from 3)\n- 2026-05-24 14:35 (on time) | **A** → Hillerød St. | platform **1**\n- 2026-05-24 14:40 (on time) | **Re 5432** → Nykøbing F. | platform **7** **CANCELLED**\n- 2026-05-24 14:38 (on time) | **B** → Farum St. | platform **2**\n- 2026-05-24 14:45 → 14:48 (+3min) | **L 45** → Aalborg | platform **4**"
+        }
+      ]
+    }
+  },
+  "changed-platform": {
+    "id": "changed-platform",
+    "name": "train_at_station",
+    "arguments": {
+      "station_name": "København H",
+      "train_number": "IC 123",
+      "date": "2026-05-24",
+      "time": "14:30"
+    },
+    "returned": {
+      "content": [
+        {
+          "type": "text",
+          "text": "**IC 123** → Aarhus H at **København H** (id 008600626)\n\n- Platform: **5** (changed from 3)\n- Scheduled: 2026-05-24 14:32\n- Realtime: 2026-05-24 14:39\n- Status: delayed 7 min\n- Stop: København H"
+        }
+      ]
+    }
+  },
+  "cancelled-service": {
+    "id": "cancelled-service",
+    "name": "train_at_station",
+    "arguments": {
+      "station_name": "København H",
+      "train_number": "Re 5432",
+      "date": "2026-05-24",
+      "time": "14:30"
+    },
+    "returned": {
+      "content": [
+        {
+          "type": "text",
+          "text": "**Re 5432** → Nykøbing F. at **København H** (id 008600626)\n\n- Platform: **7**\n- Scheduled: 2026-05-24 14:40\n- Realtime: 2026-05-24 14:40\n- Status: **CANCELLED**\n- Stop: København H"
+        }
+      ]
+    }
+  },
+  "unmatched-service": {
+    "id": "unmatched-service",
+    "name": "train_at_station",
+    "arguments": {
+      "station_name": "København H",
+      "train_number": "ZZ 99999",
+      "date": "2026-05-24",
+      "time": "14:30"
+    },
+    "returned": {
+      "content": [
+        {
+          "type": "text",
+          "text": "Train \"ZZ 99999\" not on the board at **København H** (id 008600626) in the next 2h.\n\nVisible services: IC 123, A, Re 5432, B, L 45"
+        }
+      ]
+    }
+  }
+}

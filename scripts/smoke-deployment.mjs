@@ -75,7 +75,7 @@ try {
     assert(text.length > 100 && !/\/home\/|BEGIN .*PRIVATE KEY|\bsk-(?:proj-|ant-api\d+-)?[A-Za-z0-9_-]{20,}/.test(text), `Execution evidence remains readable and redacted: ${file}`);
     if (file.endsWith('.json')) assert(JSON.parse(text) !== null, `Execution receipt is valid JSON: ${file}`);
   }
-  for (const [file, mime] of [['conference-notes-demo.pdf', 'application/pdf'], ['conference-notes-demo.pptx', 'application/vnd.openxmlformats-officedocument.presentationml.presentation']]) {
+  for (const [file, mime] of [['conference-notes-demo.pdf', 'application/pdf'], ['david-blumenau-selected-work.pdf', 'application/pdf'], ['conference-notes-demo.pptx', 'application/vnd.openxmlformats-officedocument.presentationml.presentation']]) {
     const response = await fetch(base + '/sample-files/' + file, { method: 'HEAD' });
     assert(response.status === 200 && response.headers.get('content-type') === mime && Number(response.headers.get('content-length')) > 1000, `Reviewed artifact serves with its download MIME type: ${file}`);
   }

@@ -1,0 +1,72 @@
+---
+import Icon from './Icon.astro';
+import { captures } from '../showcases/code-history/content';
+const media = '/media/code-history';
+---
+<section class="code-history-showcase wrap" id="code-history" aria-labelledby="code-history-title" data-code-history-showcase>
+  <div class="history-intro">
+    <div><p class="history-eyebrow">Code History</p><h2 id="code-history-title">Find the work<br /> <em>behind a change.</em></h2></div>
+    <p>Many short sessions made the weekly view hard to scan. Daily digests give it structure; a session peek adds context before opening the full conversation.</p>
+  </div>
+  <p class="history-scope"><strong>Actual app. Synthetic sessions.</strong><span>The transcript includes an unreleased two-line UI fix. These are saved captures, with no live agent or analysis running here.</span></p>
+  <fieldset class="history-captures">
+    <legend>Follow one session</legend>
+    <div class="history-choices">
+      {captures.map((capture, index) => <label><input type="radio" name="code-history-capture" value={capture.id} checked={index === 0} /><span>{capture.choice}</span></label>)}
+    </div>
+    <div class="history-frames">
+      {captures.map(capture => <figure data-history-frame={capture.id}>
+        <a class="history-image-link" href={`${media}/${capture.file}`} aria-label={`Open full-size ${capture.choice} capture`}>
+          <img src={`${media}/${capture.file}`} alt={capture.alt} width={capture.width} height={capture.height} loading="lazy" />
+          <span>Open full size <Icon name="arrow-up-right" /></span>
+        </a>
+        <figcaption><strong>{capture.title}</strong><span>{capture.caption}</span></figcaption>
+      </figure>)}
+    </div>
+  </fieldset>
+  <details class="history-film">
+    <summary><span><Icon name="play" />Watch the 25-second walkthrough</span><Icon name="plus" /></summary>
+    <div class="history-film-content">
+      <video controls playsinline preload="none" poster={`${media}/week.png`} width="1440" height="1120" aria-label="Code History walkthrough in the actual isolated application, using synthetic sessions and an unreleased UI fix">
+        <source src={`${media}/execution.mp4`} type="video/mp4" />
+        <track kind="captions" src={`${media}/execution.vtt`} srclang="en" label="English scene captions" default />
+        <p><a href={`${media}/execution.mp4`}>Open the walkthrough film</a></p>
+      </video>
+      <p>The silent recording follows Week, Day, List, a session peek and the imported transcript, including its reload. The original app frames retain their loading transitions; the captions identify the synthetic archive and unreleased fix.</p>
+      <a href={`${media}/execution.vtt`}>Read the scene captions <Icon name="arrow-up-right" /></a>
+    </div>
+  </details>
+  <details class="history-method">
+    <summary>About these captures and the retained archive <Icon name="plus" /></summary>
+    <div class="history-method-content">
+      <p>Four sessions were written by hand and imported through the app’s actual endpoint into a disposable database. The real parser, projection and summary services produced the views shown here. No model response or analysis was generated during the proof.</p>
+      <p>The archive bytes and rows were retained. Login and view preferences can write separate state. Narration is a separate derivative action and was not used. The small $0.00 day totals aggregate absent costs; they are not measured spend.</p>
+      <p>The tagged source rejected archive edits on the server while still exposing edit actions in the interface. The two-line UI fix hides those actions for imported sessions. It is private and unreleased.</p>
+      <a href={`${media}/receipt.json`}>Read the concise source and file receipt <Icon name="arrow-up-right" /></a>
+    </div>
+  </details>
+</section>
+<script>
+  document.querySelectorAll<HTMLDetailsElement>('.history-film').forEach(details => {
+    const video = details.querySelector('video');
+    details.addEventListener('toggle', () => { if (!details.open) video?.pause(); });
+    window.addEventListener('pagehide', () => video?.pause());
+  });
+</script>
+<style>
+  .code-history-showcase{padding-block:48px 58px;border-bottom:1px solid var(--line);scroll-margin-top:32px}
+  .history-intro{display:grid;grid-template-columns:1.15fr 1fr;align-items:end;gap:24px 48px;margin-bottom:24px}
+  .history-eyebrow{color:var(--rust);font-size:14px;font-weight:650;letter-spacing:.07em;text-transform:uppercase;margin-bottom:14px}
+  .history-intro h2{font-size:clamp(2.2rem,4.2vw,4.1rem);line-height:1.08}.history-intro h2 em{color:var(--forest)}
+  .history-intro>p{max-width:470px;font-size:17px;line-height:1.75;color:var(--muted)}
+  .history-scope{display:flex;flex-wrap:wrap;gap:4px 20px;padding:14px 18px;border-left:3px solid var(--forest);background:#e8ecdf;font-size:14px;line-height:1.7;margin-bottom:24px}.history-scope strong{font-weight:650}.history-scope span{color:#465443;max-width:750px}
+  .history-captures{border:0;padding:0;margin:0;min-width:0}.history-captures legend{font-size:14px;font-weight:650;margin-bottom:10px}
+  .history-choices{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}.history-choices label{display:flex;align-items:center;gap:9px;min-height:46px;padding:10px 18px;border:1px solid #8a9587;border-radius:3px;cursor:pointer;font-size:15px;touch-action:manipulation}.history-choices input{width:17px;height:17px;margin:0;flex-shrink:0;accent-color:var(--forest)}
+  .history-choices label:has(:checked){color:var(--paper);background:var(--forest-dark);border-color:var(--forest-dark)}.history-choices label:has(:checked) input{accent-color:var(--paper)}.history-choices label:has(:focus-visible){outline:3px solid var(--rust);outline-offset:4px}
+  .history-frames{max-width:1050px;margin-inline:auto}.history-frames figure{min-width:0;margin:0}.history-image-link{display:block;border:1px solid var(--line);border-radius:4px;overflow:hidden;background:#10151d}.history-image-link img{display:block;width:100%;height:auto;aspect-ratio:1440/1060;object-fit:contain}.history-image-link>span{display:flex;align-items:center;justify-content:flex-end;gap:12px;min-height:44px;padding:10px 16px;color:#e5e9ec;font-size:14px;border-top:1px solid #39444c}
+  .history-frames figcaption{display:grid;grid-template-columns:1fr 1.8fr;gap:12px 36px;padding-block:16px 22px;font-size:14px;line-height:1.75}.history-frames figcaption strong{font-size:16px;font-weight:650}.history-frames figcaption>span{color:var(--muted)}
+  .history-captures:has([value=week]:checked) [data-history-frame]:not([data-history-frame=week]),.history-captures:has([value=peek]:checked) [data-history-frame]:not([data-history-frame=peek]),.history-captures:has([value=transcript]:checked) [data-history-frame]:not([data-history-frame=transcript]){display:none}
+  .history-film,.history-method{border-top:1px solid var(--line)}.history-method{border-bottom:1px solid var(--line)}.history-film>summary,.history-method>summary{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:54px;padding:13px 8px;font-size:15px;font-weight:650;cursor:pointer}.history-film>summary>span{display:flex;align-items:center;gap:12px}.history-film>summary>.ui-icon,.history-method>summary>.ui-icon{flex-shrink:0}.history-film[open]>summary>.ui-icon,.history-method[open]>summary>.ui-icon{transform:rotate(45deg)}
+  .history-film-content,.history-method-content{padding:12px 0 24px}.history-film video{display:block;width:100%;height:auto;background:#10151d;aspect-ratio:1440/1120;border:1px solid var(--line);border-radius:4px}.history-film-content>p,.history-method-content>p{font-size:14px;line-height:1.8;color:var(--muted);max-width:790px;margin-top:16px}.history-method-content>p:first-child{margin-top:0}.history-film-content>a,.history-method-content>a{display:inline-flex;align-items:center;gap:16px;min-height:46px;margin-top:12px;font-size:14px}
+  @media(max-width:760px){.history-film video:not(:fullscreen)::cue{font-size:14px}.code-history-showcase{padding-block:34px 42px}.history-intro{grid-template-columns:1fr;gap:16px;margin-bottom:20px}.history-intro h2{font-size:clamp(2rem,7vw,3rem)}.history-intro>p{font-size:16px}.history-frames figcaption{grid-template-columns:1fr;gap:4px}.history-scope{padding:13px 14px}.history-choices label{padding-inline:16px}.history-film>summary,.history-method>summary{font-size:14px}}
+</style>

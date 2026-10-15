@@ -48,6 +48,9 @@ const reviewedEvidenceMedia = [
   'curation/receipt.json', 'curation/recorded-merge.png',
   'image-revision/original.jpg', 'image-revision/revision.jpg',
   'image-revision/gallery-detail.png', 'image-revision/completed-chat.png', 'image-revision/receipt.json',
+  'code-history/week.png', 'code-history/peek.png', 'code-history/transcript.png',
+  'code-history/execution.mp4', 'code-history/execution.vtt', 'code-history/receipt.json',
+  'transit/receipt.json', 'transit/transcript.txt',
   'overview/selected-work-overview.mp4', 'overview/selected-work-poster.jpg',
   'overview/selected-work-overview.vtt', 'overview/selected-work-text-alternative.txt',
 ];
@@ -71,7 +74,7 @@ const required = [
   ...reviewedEvidenceMedia,
 ];
 const allowed = new Set(required);
-const requiredSamples = ['conference-notes-demo.pptx', 'conference-notes-demo.pdf', 'sample-provenance.json'];
+const requiredSamples = ['conference-notes-demo.pptx', 'conference-notes-demo.pdf', 'david-blumenau-selected-work.pdf', 'sample-provenance.json'];
 const studioNotices = ['studio/paper-license.txt', 'studio/paper-notice.txt', 'studio/mp4-muxer-license.txt'];
 const provenanceEntries = new Map();
 const captionEnds = new Map();
@@ -289,7 +292,7 @@ if (all.includes(resolve(root, 'sample-files/sample-provenance.json'))) {
   const content = await readFile(resolve(root, 'sample-files/sample-provenance.json'), 'utf8');
   try {
     const data = JSON.parse(content);
-    if (!Array.isArray(data.assets) || data.assets.length !== 2) errors.push('Sample provenance must cover both approved artifacts.');
+    if (!Array.isArray(data.assets) || data.assets.length !== requiredSamples.length - 1) errors.push('Sample provenance must cover every approved artifact.');
     else for (const entry of data.assets) {
       if (!requiredSamples.includes(entry.file) || entry.file === 'sample-provenance.json' || sampleEntries.has(entry.file)) errors.push(`Unreviewed or duplicate sample record: ${entry.file}`);
       if (!entry.content || !entry.editing || !/^[a-f0-9]{64}$/.test(entry.sha256 ?? '') || !Number.isSafeInteger(entry.bytes)) errors.push(`Incomplete sample provenance: ${entry.file}`);

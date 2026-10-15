@@ -1,0 +1,24 @@
+{
+  "assets": [
+    {
+      "file": "transit/receipt.json",
+      "product": "Trains MCP",
+      "captured": "2026-10-15",
+      "method": "Recorded offline MCP calls using the original historical synthetic sample data.",
+      "content": "Concise source identity, hashes, exact selected arguments and returned text, and limitations.",
+      "redactions": [],
+      "bytes": 6417,
+      "sha256": "148d31c19ba60680f4faa7539f2df9befba651d2b44d5bac3efce40081aa4558"
+    },
+    {
+      "file": "transit/transcript.txt",
+      "product": "Trains MCP",
+      "captured": "2026-10-15",
+      "method": "Recorded offline MCP calls using the original historical synthetic sample data.",
+      "content": "Exact selected original tool arguments and returned text, including the cancelled-board timestamp contradiction.",
+      "redactions": [],
+      "bytes": 2213,
+      "sha256": "3f7622a15572d9ae0ed42c0fcb2975fbdb9d497198cb30c516800df064b2c891"
+    }
+  ]
+}

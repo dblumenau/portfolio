@@ -71,6 +71,7 @@ export const districts: WorldDistrict[] = [
     exhibits: [
       { title: 'Know who is calling', description: 'Authentication identifies the caller. Ownership rules and resource scopes govern access to capabilities.', href: '/features/gateway-tool-profiles/' },
       { title: 'An executable tool boundary', description: 'A model-visible catalog and the engine’s enforced permissions have separate jobs. The native tool-profile exhibit makes that distinction tangible.', href: '/features/native-tool-boundary-profiles/' },
+      { title: 'Find the platform', description: 'Recorded Trains MCP lookups bring a changed platform, delay and cancellation into one answer. Explore the historical sample data.', href: '/work/connected-tools/#which-platform' },
       { title: 'Reach a native canvas', description: 'Stateful proxy support lets InfinitySketch and Freeform retain their session requirements behind the common gateway.' },
       { title: 'Bring the question to the person', description: 'An actual Attention call reaches the Mac app, returns its choice to the original terminal, and changes the page it builds.', href: '/labs/attention/' },
     ],

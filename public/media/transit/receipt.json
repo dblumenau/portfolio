@@ -1,0 +1,155 @@
+{
+  "title": "Trains MCP: Which platform?",
+  "recorded": "2026-10-15",
+  "sample_date": "2026-05-24",
+  "disclosure": "Recorded offline using historical synthetic sample data. Not current travel information. The portfolio cards are typeset presentations of the returned text, not screenshots of a transit product.",
+  "source": {
+    "repository": "trains-mcp",
+    "commit": "20d2d1c3ddc0378cdf7d5da54f00cfa6bcd91df9",
+    "tag": "v0.2.4",
+    "advertised_server_version": "0.1.0",
+    "files": [
+      {
+        "path": "package-lock.json",
+        "sha256": "189ff186fcceacba35b4496460f5101c200516e22d5096b8e96d462da3e1fef0"
+      },
+      {
+        "path": "package.json",
+        "sha256": "4eec0da3e08c94bc916f0cb9c9c0eaaff4597db4d8258f41ceed86360f42597d"
+      },
+      {
+        "path": "src/mock-data.ts",
+        "sha256": "d39fb99ea5c7cde16f31f2ba6e5c9da25cff88f84941de78aa65ac7f646f7baf"
+      },
+      {
+        "path": "src/rejseplanen.ts",
+        "sha256": "6981c8372d90c436158a726f2582a009c314c2fde981698b0d6e17f4b4da2261"
+      },
+      {
+        "path": "src/server.ts",
+        "sha256": "a6961ac17fa3a0a391eebc2d7df311c70c181f4349c85742b5cdbdca956bb9cb"
+      },
+      {
+        "path": "src/tools/disruptions.ts",
+        "sha256": "501d75df6406b911eb9d38ac0fe61f3b2a8d22418e6177697334ea677fe5b425"
+      },
+      {
+        "path": "src/tools/plan-trip.ts",
+        "sha256": "fe6e9334c4fa5f8a7474861a1c624827535dfb3f5eb8b3da64cc3daf468978df"
+      },
+      {
+        "path": "src/tools/station-departures.ts",
+        "sha256": "91b74648ce257f48d8347593004114a08d47f9f9447828ef0657feae6ea82a05"
+      },
+      {
+        "path": "src/tools/station-search.ts",
+        "sha256": "ff05dd74c0ad8fcd7608230dbd1913194cb5b491185c31f58eed5e6c2d3f638d"
+      },
+      {
+        "path": "src/tools/train-at-station.ts",
+        "sha256": "9551aae8a68f77be0516e096803a6e39c907ef7a41f3a18b26d1ebf5922d6da2"
+      },
+      {
+        "path": "src/tools/train-journey.ts",
+        "sha256": "65671121f0c0119199a544efe2b32e960c1308f8f610e4fba8ebbf48416b1177"
+      },
+      {
+        "path": "tsconfig.json",
+        "sha256": "1bb94b88f1e9154f1e65bebf05916f94f63ab33ecfec98587db7d46b57374d4f"
+      }
+    ]
+  },
+  "method": "Actual recorded MCP tool calls using the original repository sample responses, with outbound networking disabled. No live travel requests were made.",
+  "calls": [
+    {
+      "id": "departure-board",
+      "name": "station_departures",
+      "arguments": {
+        "station_name": "København H",
+        "date": "2026-05-24",
+        "time": "14:30",
+        "duration_minutes": 60,
+        "max_results": 5
+      },
+      "returned": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Departures from **København H** (id 008600626, train, s-tog, metro, letbane):\n\n- 2026-05-24 14:32 → 14:39 (+7min) | **IC 123** → Aarhus H | platform **5** (changed from 3)\n- 2026-05-24 14:35 (on time) | **A** → Hillerød St. | platform **1**\n- 2026-05-24 14:40 (on time) | **Re 5432** → Nykøbing F. | platform **7** **CANCELLED**\n- 2026-05-24 14:38 (on time) | **B** → Farum St. | platform **2**\n- 2026-05-24 14:45 → 14:48 (+3min) | **L 45** → Aalborg | platform **4**"
+          }
+        ]
+      }
+    },
+    {
+      "id": "changed-platform",
+      "name": "train_at_station",
+      "arguments": {
+        "station_name": "København H",
+        "train_number": "IC 123",
+        "date": "2026-05-24",
+        "time": "14:30"
+      },
+      "returned": {
+        "content": [
+          {
+            "type": "text",
+            "text": "**IC 123** → Aarhus H at **København H** (id 008600626)\n\n- Platform: **5** (changed from 3)\n- Scheduled: 2026-05-24 14:32\n- Realtime: 2026-05-24 14:39\n- Status: delayed 7 min\n- Stop: København H"
+          }
+        ]
+      }
+    },
+    {
+      "id": "cancelled-service",
+      "name": "train_at_station",
+      "arguments": {
+        "station_name": "København H",
+        "train_number": "Re 5432",
+        "date": "2026-05-24",
+        "time": "14:30"
+      },
+      "returned": {
+        "content": [
+          {
+            "type": "text",
+            "text": "**Re 5432** → Nykøbing F. at **København H** (id 008600626)\n\n- Platform: **7**\n- Scheduled: 2026-05-24 14:40\n- Realtime: 2026-05-24 14:40\n- Status: **CANCELLED**\n- Stop: København H"
+          }
+        ]
+      }
+    },
+    {
+      "id": "unmatched-service",
+      "name": "train_at_station",
+      "arguments": {
+        "station_name": "København H",
+        "train_number": "ZZ 99999",
+        "date": "2026-05-24",
+        "time": "14:30"
+      },
+      "returned": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Train \"ZZ 99999\" not on the board at **København H** (id 008600626) in the next 2h.\n\nVisible services: IC 123, A, Re 5432, B, L 45"
+          }
+        ]
+      }
+    }
+  ],
+  "presentation": {
+    "lookup_choices": [
+      "changed-platform",
+      "cancelled-service",
+      "unmatched-service"
+    ],
+    "departure_board_order": "Unchanged from the original returned text.",
+    "cancellation": "Cancellation takes precedence in the card. The exact board response below retains its original on-time timestamp label alongside CANCELLED; an equal scheduled and updated time does not make the cancelled service usable."
+  },
+  "limits": [
+    "The original sample has no trip response, so plan_trip returns no connections. These cards do not prove route planning.",
+    "Original board rows have no journey reference. train_journey reports a board miss despite listing IC 123 among visible services. Full journey lookup is not demonstrated.",
+    "Sample notice fields do not match the current notice handler: default filtering finds none and all-mode results have unknown operator and validity window.",
+    "The sample ignores several request filters, returns fixed board order and uses an all-stations fallback for an unknown station query. It does not prove current upstream filtering, chronological ordering or station-search accuracy.",
+    "Separate deliberately constructed route responses were used privately to check the actual formatter. They are not original sample itineraries and are not shown in this section.",
+    "This recorded run does not establish live API availability, geographic correctness or current service conditions."
+  ]
+}
