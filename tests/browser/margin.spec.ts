@@ -108,6 +108,22 @@ test('keyboard controls retain focus and browser back restores the check', async
   await expect(page.locator('[data-margin-lab]')).toHaveAttribute('data-case', 'brief-pause');
   await expect(page.locator('[data-margin-lab]')).toHaveAttribute('data-check', '0');
 });
+for (const size of [{ width: 390, height: 844 }, { width: 360, height: 640 }]) test(`changing a timing case reveals its decision and next action at ${size.width}x${size.height}`, async ({ page }) => {
+  await page.setViewportSize(size);
+  await page.goto('/labs/margin/');
+  for (const id of ['pause-review', 'hold-feedback', 'cooldown']) {
+    if (id === 'cooldown') await page.locator('.ml-extra > summary').click();
+    await page.locator(`[data-case-choice="${id}"]`).click();
+    await expect(page.locator('[data-margin-lab]')).toHaveAttribute('data-case', id);
+    await expect.poll(async () => {
+      const title = await page.locator('[data-result-title]').boundingBox();
+      const action = await page.locator('[data-next]').boundingBox();
+      return Boolean(title && action && title.y >= 0 && action.y + action.height <= size.height);
+    }).toBe(true);
+    if (id === 'hold-feedback') await expect(page.locator('[data-result-title]')).toHaveText('Hold the note');
+    if (id === 'cooldown') await expect(page.locator('[data-result-copy]')).toContainText('cooldown');
+  }
+});
 for (const width of [390, 768, 1440]) test(`timing cause, decision and action fit ${width}px with accessible controls`, async ({ page }) => {
   await page.setViewportSize({ width, height: 960 });
   await page.goto('/labs/margin/?case=hold-feedback&check=1');

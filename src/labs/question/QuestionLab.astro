@@ -5,6 +5,7 @@ import './question.css';
 ---
 <section class="ql" data-question-lab data-stage="0" aria-labelledby="ql-title">
   <header class="ql-heading"><div><p class="eyebrow">Actual native execution / recorded replay</p><h2 id="ql-title">A direction for the workshop.</h2></div><p>The film shows the real native flow. These controls move through its recorded moments; they make no new model request.</p></header>
+  <p class="ql-boundary" id="ql-boundary"><Icon name="check" /><span><strong>Isolated iPhone Simulator. Automated test participant.</strong> A local API shim forwards real Claude Engine inference. This build includes an <strong>unreleased Claude-only answer-key correction</strong>; it does not demonstrate the live PanelForge API.</span></p>
   <ol class="ql-stages" aria-label="Recorded question workflow">
     {stages.map((stage, index) => <li><button type="button" data-stage={index} aria-current={index === 0 ? 'step' : undefined} disabled><span>0{index + 1}</span>{stage.label}</button></li>)}
   </ol>
@@ -32,7 +33,6 @@ import './question.css';
       <a class="ql-original" href="/media/question/execution.mp4">Open the native recording <Icon name="arrow-up-right" /></a>
     </figure>
   </div>
-  <p class="ql-boundary" id="ql-boundary"><Icon name="check" /><span><strong>Isolated iPhone Simulator. Automated test participant.</strong> A local API shim forwards real Claude Engine inference. This build includes an <strong>unreleased Claude-only answer-key correction</strong>; it does not demonstrate the live PanelForge API.</span></p>
   <div class="ql-proof-strip"><div><span>Original invocation</span><strong>1 throughout</strong></div><div><span>Native answer</span><strong>+10.727 seconds</strong></div><div><span>Confirmed completion</span><strong>+12.551 seconds</strong></div></div>
 </section>
 <script>import { initQuestionLab } from './controller';document.querySelectorAll<HTMLElement>('[data-question-lab]').forEach(initQuestionLab);</script>

@@ -72,6 +72,14 @@ export function initMarginLab() {
     const url = new URL(location.href); url.searchParams.set('case', caseId); url.searchParams.set('check', String(checkIndex));
     history.pushState(null, '', url);
   }
+  function revealCase() {
+    if (!window.matchMedia('(max-width: 600px)').matches) return;
+    const introduction = get('.ml-case-copy');
+    const actionBottom = next.getBoundingClientRect().bottom;
+    const fitsWithIntroduction = actionBottom - introduction.getBoundingClientRect().top <= window.innerHeight - 36;
+    const target = fitsWithIntroduction ? introduction : get('.ml-decision');
+    window.scrollTo({ top: window.scrollY + target.getBoundingClientRect().top - 18, behavior: 'instant' });
+  }
   function readURL() {
     const params = new URLSearchParams(location.search);
     const meta = cases.find(item => item.id === params.get('case')) ?? cases[0];
@@ -83,7 +91,7 @@ export function initMarginLab() {
   root.addEventListener('click', event => {
     const button = (event.target as Element).closest<HTMLButtonElement>('button');
     if (!button || button.getAttribute('aria-disabled') === 'true') return;
-    if (button.dataset.caseChoice) { caseId = button.dataset.caseChoice; checkIndex = cases.find(item => item.id === caseId)!.start; render(); save(); }
+    if (button.dataset.caseChoice) { caseId = button.dataset.caseChoice; checkIndex = cases.find(item => item.id === caseId)!.start; render(); save(); revealCase(); }
     else if (button === next || button === previous) { checkIndex += button === next ? 1 : -1; render(); save(); }
     else if (button.dataset.checkChoice !== undefined) {
       checkIndex = Number(button.dataset.checkChoice); render(); save();
