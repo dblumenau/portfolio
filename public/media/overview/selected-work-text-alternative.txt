@@ -1,0 +1,26 @@
+DAVID BLUMENAU — SELECTED WORK
+Silent overview film / 78.2 seconds / October 2026
+
+0:00–0:03 — A small tour of things I've built.
+A typographic title introduces selected work by David Blumenau.
+
+0:03–0:14.33 — PanelForge: change the colour, keep the original.
+The actual local portfolio comparison shows two completed generated images: a blue teapot with a red handle and lid, then its mustard-handled revision. Genuine browser controls select Original, Revision and Both images. A separate actual PanelForge gallery screenshot shows the revised image and its retained-original relationship. This reviews two completed jobs, not inference in progress. The newly generated original was the sole reference for the revision. Its downloaded bytes remained unchanged. Recognisable composition is a visual judgment, not a pixel-perfect preservation claim.
+
+0:14.33–0:31.33 — Attention: a question gets an answer.
+An original-speed excerpt of the approved actual Mac screen recording shows the native question and the same Codex CLI task. Automated Intel Computer Helper selects Session cards and submits the native answer. The shared Attention MCP returns that answer to the original task, which acknowledges it. This live exchange used mac-v1.1.8/build121. The source film also contains a separate later mac-v1.1.14/build128 persisted-card observation, which is outside this overview's excerpts; a new round trip on build128 is not claimed. The card's generic Claude label does not identify the originating caller, which was Codex gpt-6.1-sol. The overview then cuts from source time 19s to 35.5s to show an actual browser render of the three-session workshop file the same task built. This is the fictional Lantern Makers example. Original private opaque paths and hostname are masked only in the already-approved source film; no replacement terminal text was added.
+
+0:31.33–0:47.33 — Recovery: close a connection, recover an answer.
+Continuous original-speed footage of a controlled local engine experiment shows the browser close its response stream after a partial answer. The same engine process continues the bare subscription turn, completes its fictional workshop checklist, and stores the answer in an isolated Redis instance. The browser later retrieves the complete answer and repeats the read with the same result. This uses real archived engine routes and a real subscription turn in a local harness. It does not show process-restart recovery, tools, delivered callbacks or production UI reconciliation. This overview starts at source time 2s and ends at 18s; no new inference was run for the edit.
+
+0:47.33–1:02.33 — Studio: make a small print.
+A fresh genuine local browser recording shows the working portfolio Studio tool adapted from David's Kitforge renderer. The headline changes from Something useful to Make room for ideas. Amber is selected, the animation is paused, and Download PNG creates a real 1080 × 1080 file. The resulting PNG is shown on its own. Its RGB pixels were independently compared with the paused canvas preview and match exactly. The Sunday Studio text is fictional. All editing and export remain local; the recording triggered no non-GET network request. This new PNG is a still export, not the separate pre-existing sample MP4.
+
+1:02.33–1:14.20 — World: carry a recorded answer.
+A genuine browser recording of the validated World build shows its interactive 3D illustration. A Lantern Makers ticket stays at the terminal. The fixed recorded Session cards choice is revealed at the Mac, carried back to the waiting call, and followed by an unfolding page. The actual generated workshop page opens in the result dialog. These are local illustration controls, not a fresh native question, CLI execution, model inference or notification. The underlying recorded native participant was automated Computer Use. The World source and screenshots use the same reviewed Attention artifacts.
+
+1:14.20–1:18.20 — Explore the work. Borrow the tools.
+The typographic end card credits David Blumenau and invites exploration of the portfolio.
+
+Editorial method
+All moving excerpts retain their original real-time speed. Scenes use hard cuts, contained scaling and authored typographic framing. Approved original clips and stills remain untouched. Newly captured sources and the downloaded PNG are retained privately. There is no audio, music, narration or cloned voice. The private shot ledger maps every scene, time range, claim, source and hash.

@@ -1,6 +1,6 @@
 # David Blumenau’s portfolio
 
-A static Astro site with six case studies, a Three.js world, 30 feature stories, eleven interactive labs and a release explorer. The labs explore memory, configuration, recovery, browser graphics, gateway boundaries, preserved conversation branches, native questions, terminal-to-Mac Attention, notebook timing, Danish listening and archive reconstruction. Product screenshots, captioned recordings and inspectable execution receipts accompany the stories. nginx serves the production build; browser interactions run without an application server.
+A static Astro site with six case studies, a Three.js world, 30 feature stories, twelve interactive labs and a release explorer. The labs explore memory, configuration, recovery, browser graphics, gateway boundaries, preserved conversation branches, native questions, terminal-to-Mac Attention, notebook timing, Danish listening, archive reconstruction and audited graph edits. A 78-second homepage film introduces the work. Product screenshots, captioned recordings and inspectable execution receipts accompany the stories. nginx serves the production build; browser interactions run without an application server.
 
 Use Node 22.12 or newer, npm, ffprobe and exiftool for the media audit.
 

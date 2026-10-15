@@ -167,7 +167,7 @@ for (const viewport of [{ width: 390, height: 844 }, { width: 768, height: 1024 
     await page.setViewportSize(viewport);
     const errors: string[] = []; page.on('pageerror', error => errors.push(error.message));
     await ready(page);
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('A small story.A second listen.');
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Repeat a phrase from a Danish story.');
     await expect(page.getByText('AI-generated Danish narration.', { exact: true })).toBeVisible();
     await page.getByRole('button', { name: 'Repeat this sentence' }).click();
     await page.getByRole('button', { name: 'Pause story', exact: true }).click();

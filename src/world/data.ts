@@ -90,7 +90,7 @@ export const districts: WorldDistrict[] = [
     exhibits: [
       { title: 'Try the Memory Lab', description: 'Explore a real reviewed graph sample, inspect a relationship’s source, and try a reversible correction.', href: '/labs/memory/' },
       { title: 'Relationships, with context', description: 'The knowledge graph connects entities, beliefs and decisions derived from the conversation archive. A relationship can lead back to its supporting conversation.', href: '/features/knowledge-graph/' },
-      { title: 'A correction with a history', description: 'Curation actions preserve a reason and before-state snapshots. Supported inverse actions record the reversal too.', href: '/features/graph-curation/' },
+      { title: 'A correction with a history', description: 'An actual type-scoped edit keeps its source links and records an immediate inverse. Inspect the fictional fixture and both audit batches.', href: '/labs/curation/' },
       { title: 'Keep the originals, rebuild the index', description: 'An actual Photo Archive run reconstructs its derived index without changing thirteen canonical files. Verify the three synthetic PNG originals yourself.', href: '/labs/archive/' },
       { title: 'Find that one thing', description: 'FindThat chooses messages, tool calls or modifications to retrieve a specific command, error, edit or decision, then checks its source.', href: '/features/find-that/' },
     ],

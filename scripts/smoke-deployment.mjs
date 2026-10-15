@@ -57,6 +57,8 @@ try {
   assert(missing.status === 404 && (await missing.text()).includes('Back to the work'), 'Missing route serves the portfolio 404 with HTTP404');
   const screenshot = await fetch(base + '/media/panelforge-gallery-desktop.webp');
   assert(screenshot.status === 200 && screenshot.headers.get('content-type') === 'image/webp' && Number(screenshot.headers.get('content-length')) > 1000, 'Public screenshots are readable by nginx workers');
+  const generatedImage = await fetch(base + '/media/image-revision/original.jpg', { method: 'HEAD' });
+  assert(generatedImage.status === 200 && generatedImage.headers.get('content-type') === 'image/jpeg' && Number(generatedImage.headers.get('content-length')) === 386307, 'Generated original serves as the reviewed JPEG');
   const video = await fetch(base + '/media/pencil-page-workflow.mp4', { headers: { Range: 'bytes=0-1023' } });
   assert(video.status === 206 && (await video.arrayBuffer()).byteLength === 1024 && video.headers.get('content-range')?.startsWith('bytes 0-1023/'), 'Video supports byte ranges for playback and seeking');
   const audio = await fetch(base + '/media/listening/sample.wav', { headers: { Range: 'bytes=0-1023' } });
@@ -65,9 +67,10 @@ try {
   assert(audio.status === 206 && /^audio\/(?:wav|x-wav)(?:;|$)/.test(audio.headers.get('content-type') ?? '') && audioBytes.byteLength === 1024 && String.fromCharCode(...audioBytes.subarray(0, 4)) === 'RIFF', 'Danish sample serves as seekable WAV audio');
   const captions = await fetch(base + '/media/pencil-page-workflow.vtt');
   assert(captions.status === 200 && captions.headers.get('content-type')?.includes('text/vtt') && (await captions.text()).startsWith('WEBVTT'), 'Caption files serve as WebVTT');
-  for (const [file, mime] of [['workbench/receipt.json', 'application/json'], ['workbench/transcript.txt', 'text/plain'], ['recovery/execution-receipt.json', 'application/json'], ['attention/workshop-source.txt', 'text/plain'], ['listening/receipt.json', 'application/json'], ['archive/receipt.json', 'application/json']]) {
+  for (const [file, mime] of [['workbench/receipt.json', 'application/json'], ['workbench/transcript.txt', 'text/plain'], ['recovery/execution-receipt.json', 'application/json'], ['attention/workshop-source.txt', 'text/plain'], ['listening/receipt.json', 'application/json'], ['archive/receipt.json', 'application/json'], ['curation/receipt.json', 'application/json'], ['overview/selected-work-text-alternative.txt', 'text/plain']]) {
     const available = await fetch(base + '/media/' + file);
     assert(available.status === 200 && available.headers.get('content-type')?.includes(mime), `Reviewed execution evidence serves with its MIME type: ${file}`);
+    if (file.endsWith('.txt')) assert(available.headers.get('content-type')?.includes('charset=utf-8'), `Text artifact declares its UTF-8 encoding: ${file}`);
     const text = await available.text();
     assert(text.length > 100 && !/\/home\/|BEGIN .*PRIVATE KEY|\bsk-(?:proj-|ant-api\d+-)?[A-Za-z0-9_-]{20,}/.test(text), `Execution evidence remains readable and redacted: ${file}`);
     if (file.endsWith('.json')) assert(JSON.parse(text) !== null, `Execution receipt is valid JSON: ${file}`);

@@ -45,6 +45,11 @@ const reviewedEvidenceMedia = [
   'archive/synthetic-02.png',
   'archive/synthetic-03.png',
   'archive/transcript.txt',
+  'curation/receipt.json', 'curation/recorded-merge.png',
+  'image-revision/original.jpg', 'image-revision/revision.jpg',
+  'image-revision/gallery-detail.png', 'image-revision/completed-chat.png', 'image-revision/receipt.json',
+  'overview/selected-work-overview.mp4', 'overview/selected-work-poster.jpg',
+  'overview/selected-work-overview.vtt', 'overview/selected-work-text-alternative.txt',
 ];
 const reviewedTextMedia = new Set(reviewedEvidenceMedia.filter(name => /\.(?:json|txt)$/.test(name)));
 const required = [
@@ -122,11 +127,12 @@ for (const file of htmlFiles) {
     ids: [...document.querySelectorAll('[id]')].map(item => item.id),
     routeHashes: document.querySelector('[data-forge-world]') ? [...document.querySelectorAll('[data-select-district]')].map(item => item.getAttribute('data-select-district')) : [],
     refs: [
-      ...[...document.querySelectorAll('a[href],link[href],img[src],script[src],source[src],track[src],audio[src],video[poster],video[data-src]')].filter(item => item.getAttribute('rel') !== 'canonical').map(item => ({ tag: item.tagName, value: item.getAttribute(item.tagName === 'VIDEO' ? item.hasAttribute('poster') ? 'poster' : 'data-src' : item.hasAttribute('href') ? 'href' : 'src') })),
+      ...[...document.querySelectorAll('a[href],link[href],img[src],script[src],source[src],track[src],track[data-src],audio[src],video[poster],video[data-src]')].filter(item => item.getAttribute('rel') !== 'canonical').map(item => ({ tag: item.tagName, value: item.getAttribute(item.tagName === 'VIDEO' ? item.hasAttribute('poster') ? 'poster' : 'data-src' : item.hasAttribute('href') ? 'href' : 'src') ?? item.getAttribute('data-src') })),
+      ...[...document.querySelectorAll('video[data-poster]')].map(item => ({ tag: 'VIDEO', value: item.getAttribute('data-poster') })),
       ...[...document.querySelectorAll('[srcset]')].flatMap(item => (item.getAttribute('srcset') ?? '').split(',').map(candidate => ({ tag: item.tagName, value: candidate.trim().split(/\s+/)[0] }))),
       ...[...document.querySelectorAll('meta[property="og:image"]')].map(item => ({ tag: 'META', value: item.getAttribute('content') })),
     ],
-    videos: [...document.querySelectorAll('video')].map(video => ({ source: video.querySelector('source')?.getAttribute('src') ?? video.getAttribute('src') ?? video.getAttribute('data-src'), captions: video.querySelector('track[kind="captions"]')?.getAttribute('src'), controls: video.controls, autoplay: video.autoplay })),
+    videos: [...document.querySelectorAll('video')].map(video => ({ source: video.querySelector('source')?.getAttribute('src') ?? video.getAttribute('src') ?? video.getAttribute('data-src'), captions: video.querySelector('track[kind="captions"]')?.getAttribute('src') ?? video.querySelector('track[kind="captions"]')?.getAttribute('data-src'), controls: video.controls, autoplay: video.autoplay })),
     placeholders: document.querySelectorAll('.missing-media').length,
     embeds: document.querySelectorAll('iframe,script[src^="http"]').length,
     forms: [...document.querySelectorAll('form')].map(form => ({

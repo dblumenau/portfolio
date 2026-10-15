@@ -55,7 +55,7 @@ export const siteCopy = {
   title: 'I make the tools I wish existed.',
   intro: "I'm David, a developer in Copenhagen. I build creative workspaces, tools that keep AI work moving, and small apps for everyday jobs.",
   selectedIntro: 'A closer look at what I built, the decisions behind it, and how it changed with use.',
-  architectureIntro: 'The interfaces connect to a wider system: agent engines, shared tools, inspectable memory and a workbench that carries the practice between sessions.',
+  architectureIntro: 'The interfaces connect to agent engines, shared tools, inspectable memory and versioned setup for the coding agents.',
   releasesIntro: 'A release can add a whole workspace. It can also stop a quiet agent being interrupted, or make a transcript easier to read. These changes explain how the products became usable.',
   approach: 'These projects started with specific problems: finding an image again, keeping an agent’s answer when a connection drops, making a social graphic without opening a design app. Some stayed small. PanelForge became the workspace that connects much of the rest. I use AI coding agents in that process and make the product decisions myself.',
 };
@@ -73,12 +73,12 @@ export const caseStudies: CaseStudy[] = [
     intro: 'A web workspace for images, conversations and coding-session history. Built around finding a result again, revising it and keeping its context.',
     premise: 'Making an image is one step.',
     problem: [
-      'Finding the right version later, changing part of it, and keeping its references together take a workspace. I started PanelForge around that whole loop: projects, scenes and panels, a gallery, and a mask for targeted image revision.',
-      'Conversations and coding sessions later joined the application. The challenge became giving different kinds of work a useful home without making every task start in a different interface.',
+      'Finding the right version later, changing part of it, and keeping its references together take a workspace. I started PanelForge with projects, scenes and panels, a gallery, and painted masks for image revision.',
+      'Image editing now lives in chat: attach a gallery reference, describe a change and keep the result connected to its original. Conversations and coding sessions give other work a home in the same application.',
     ],
     workflow: [
       { title: 'Give a result a place', description: 'Workspaces contain projects, scenes and panels. The gallery shows that hierarchy alongside images, audio and documents, so an asset can keep its context after the first task.' },
-      { title: 'Carry a reference into a conversation', description: 'A gallery image can become a chat reference. Editing an earlier message creates a branch, preserving the original direction alongside the new one.' },
+      { title: 'Carry a reference into a conversation', description: 'The teapot demonstration attaches one original image to an editing request. Its new result retains the gallery link back to that original. Editing a past chat instruction follows a separate branching path.' },
       { title: 'Find the work behind the result', description: 'Code History presents imported coding sessions as a list, a day view and a weekly digest. A session preview lets someone skim before opening the full transcript.' },
     ],
     decisions: [
@@ -94,7 +94,7 @@ export const caseStudies: CaseStudy[] = [
       releaseStories[2],
       { kind: 'Patch', version: 'web-v10.20.97', date: 'October 2026', title: 'Give the transcript the full pane', description: 'Read-only coding transcripts gained the full pane. This followed patches for digest cards, session previews and more accurate slash-command counting.', project: 'PanelForge' },
     ],
-    current: 'PanelForge brings the gallery, conversations and coding-session history into one web workspace. The gallery shown here is a fresh capture of the working product. The Branch Lab separately runs the actual interface and fork service in a controlled local fixture. Its answers are seeded, and its comparison footage includes a disclosed unreleased source fix. No model inference is claimed for that run.',
+    current: 'The gallery captures show the working product. The teapot comparison uses two actual Gemini image jobs initiated through PanelForge MCP on 15 October 2026, with the new original as the sole editing reference. They run in separate conversations connected by image lineage; the interface captures review the completed jobs. The Branch Lab separately runs the actual interface and fork service in a controlled local fixture. Its answers are seeded, its comparison footage includes a disclosed unreleased source fix, and no model inference is claimed for that branch run.',
     evidence: 'The first image and revision loop was working in May 2025. The releases below trace the product’s changes through October 2026.',
     stack: ['Laravel', 'Vue', 'TypeScript', 'MySQL', 'Redis'],
     image: '/media/panelforge-gallery-desktop.webp',

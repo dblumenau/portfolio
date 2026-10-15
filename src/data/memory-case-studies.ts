@@ -37,8 +37,8 @@ export const memoryCaseStudies: CaseStudy[] = [
   },
   {
     slug: 'agent-workbench', number: '05', name: 'Workbench', category: 'metaclaude + metacodex + Helm',
-    title: 'A workbench that carries the practice.',
-    intro: 'I built versioned setup and reusable workflows for coding agents, then connected browser ownership, human evidence and reviewed delegation to the same working practice.',
+    title: 'A workbench for coding agents.',
+    intro: 'I built versioned setup and reusable workflows for coding agents, then connected them to browser session ownership, evidence for human review and a protocol for reviewing delegated work.',
     premise: 'Agent setup is part of the work.',
     problem: [
       'A useful agent setup spans instructions, skills, hooks, settings and browser context. Copying those pieces by hand makes them drift between sessions and computers. Copying the whole runtime also carries credentials and state that belong to one machine.',

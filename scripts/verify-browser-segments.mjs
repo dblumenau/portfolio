@@ -15,6 +15,10 @@ const groups = {
   attention: ['attention'],
   listening: ['listening'],
   archive: ['archive'],
+  curation: ['curation'],
+  'image-revision': ['image-revision'],
+  overview: ['overview'],
+  'world-task': ['world-attention'],
   world: ['world', 'world-exhibit', 'world-lifecycle'],
 };
 if (process.argv.includes('--list')) { console.log(JSON.stringify(groups, null, 2)); process.exit(0); }

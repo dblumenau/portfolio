@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "product": "PanelForge",
+  "executed": "2026-10-15",
+  "workflow": "New fictional illustration followed by one reference-driven generative colour edit.",
+  "provider": "gemini",
+  "model": "gemini-3.1-flash-lite-image",
+  "generation_calls": 2,
+  "completed_jobs": 2,
+  "outputs_per_job": [
+    1,
+    1
+  ],
+  "requested": {
+    "resolution": "1K",
+    "aspect_ratio": "3:2"
+  },
+  "actual_dimensions": {
+    "width": 1264,
+    "height": 848
+  },
+  "reference_checks": {
+    "revision_parent_equals_original": true,
+    "revision_root_equals_original": true,
+    "ordered_references_equal_original_only": true,
+    "original_children_include_revision": true,
+    "source_conversations_are_different": true
+  },
+  "file_checks": {
+    "original_sha256_before_revision": "30a1dc254b749affc24493d9ed9ddef9ea55da983287db274a39f7386b406fb4",
+    "original_sha256_after_revision": "30a1dc254b749affc24493d9ed9ddef9ea55da983287db274a39f7386b406fb4",
+    "original_hashes_equal": true,
+    "public_original_sha256": "30a1dc254b749affc24493d9ed9ddef9ea55da983287db274a39f7386b406fb4",
+    "public_original_equals_downloaded_original": true,
+    "public_revision_sha256": "0a88b6ca8c77d834a580d289a95024f246258149054a9e47e33a99cae1eb9ea6",
+    "public_revision_equals_downloaded_revision": true
+  },
+  "recorded_job_costs_usd": {
+    "original": 0.043819,
+    "revision": 0.039146,
+    "total": 0.082965,
+    "scope": "Returned job cost_usd values; not independently reconciled with a provider invoice."
+  },
+  "visual_acceptance": {
+    "qualitative": true,
+    "full_resolution_inspected": true,
+    "requested_colour_change_observed": true,
+    "composition_recognisably_preserved": true,
+    "pixel_perfect_preservation_established": false
+  },
+  "evidence": {
+    "gallery": "gallery-detail.png",
+    "chat": "completed-chat.png",
+    "capture_mode": "Completed-generation review after the two jobs finished; not an inference recording.",
+    "gallery_editing": "Focused crop excludes account navigation. No generated image pixels were replaced.",
+    "chat_editing": "Opaque rectangle covers the personal avatar. No generated image pixels were replaced.",
+    "source_identifiers": "Account, job, message, conversation and source URL identifiers omitted from this receipt. The controlled gallery label remains visible in the reviewed screenshot."
+  }
+}

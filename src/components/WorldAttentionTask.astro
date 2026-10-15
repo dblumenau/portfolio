@@ -1,0 +1,46 @@
+---
+import Icon from './Icon.astro';
+import { presentation, execution, answer, artifact } from '../world/attention-task/data';
+import { stages } from '../world/attention-task/model';
+import { chapters } from '../labs/attention/model';
+interface Props { fallback?: boolean }
+const { fallback = false } = Astro.props;
+---
+{fallback ? <details class="world-task-static" id="follow-one-task">
+  <summary>Follow one task: a terminal asks, a Mac answers, the same work continues.</summary>
+  <p>Interactive illustration of a recorded run. The choice and result are fixed; nothing is sent. The native answer was selected by automated Computer Use.</p>
+  <ol>{stages.map(stage => <li><strong>{presentation[stage].title}</strong> {presentation[stage].description}</li>)}</ol>
+  <p>Recorded outcome: {answer}. The “Lantern Makers” ticket is an explanatory label, not a runtime identifier.</p>
+  <p><a href="/media/attention/execution.mp4">Watch the actual run</a> · <a href="/media/attention/workshop-desktop.png">Inspect the actual page</a> · <a href="/media/attention/workshop-source.txt" download={execution.exhibit.artifact_download_name}>Download the actual page</a> · <a href="/media/attention/receipt.json">Public receipt</a> · <a href="/labs/attention/">Full Attention provenance</a></p>
+</details> : <>
+  <div class="world-task-overlay" data-task-overlay hidden>
+    <span class="world-task-illustration">ILLUSTRATION · ONE RECORDED TASK</span>
+    <div class="world-task-ticket" data-task-anchor="ticket"><span>TERMINAL TASK</span><strong>Lantern Makers</strong><small data-task-ticket>Waiting for the native answer</small></div>
+    <span class="world-task-mac" data-task-anchor="mac">MAC · NATIVE QUESTION</span>
+    <div class="world-task-target" data-task-anchor="target" data-task-target hidden>Return to the<br />waiting call</div>
+    <button type="button" class="world-task-slip" data-task-anchor="slip" data-task-slip hidden aria-label={`Drag the recorded ${answer} answer to the waiting call, or use Carry the answer back`}><span>RECORDED ANSWER</span><strong>{answer}</strong><small>Drag to the terminal, or use the button</small></button>
+    <div class="world-task-docked" data-task-anchor="slip" data-task-docked hidden><span>RETURNED ANSWER</span><strong>{answer}</strong></div>
+    <span class="world-task-sheet-label" data-task-anchor="sheet" data-task-sheet-label>THE PAGE · STILL FOLDED</span>
+  </div>
+  <aside class="world-task-card" data-task-card aria-label="Carry the answer, an illustration of a recorded run" hidden>
+    <div class="world-task-card-top"><span data-task-step>01 / 04</span><button class="world-text-button" type="button" data-task-exit><Icon name="arrow-left" /> Return to the world</button></div>
+    <p class="world-task-scope">Interactive illustration of a recorded run. The choice and result are fixed; nothing is sent.</p>
+    <p class="world-task-participant">The native answer was selected by automated Computer Use.</p>
+    <h2 tabindex="-1" data-task-title>{presentation.waiting.title}</h2>
+    <p class="world-task-description" data-task-description>{presentation.waiting.description}</p>
+    <p class="world-task-outcome">Recorded outcome: <strong>{answer}</strong></p>
+    <button type="button" class="world-button world-button-solid world-task-primary" data-task-primary>{presentation.waiting.action} <Icon name="arrow-right" /></button>
+    <div class="world-task-result-actions" data-task-result-actions hidden><a class="world-button" href="/media/attention/workshop-source.txt" download={execution.exhibit.artifact_download_name}>Download the actual page <Icon name="arrow-down" /></a><span>{artifact.bytes.toLocaleString('en-US')} bytes · original HTML, delivered as text</span></div>
+    <div class="world-task-secondary"><button type="button" class="world-text-button" data-task-prev disabled><Icon name="arrow-left" /> Previous step</button><button type="button" class="world-text-button" data-task-replay><Icon name="rotate" /> Replay</button></div>
+    <button type="button" class="world-button world-task-watch" data-task-watch><Icon name="play" /> Watch this part of the actual run</button>
+    <div class="world-task-options"><span>The original options · read only</span>{execution.options.map(option => <p>{option}</p>)}</div>
+    <div class="world-task-compare" data-task-compare hidden><span>Compare the explanation</span><div><button class="world-text-button" type="button" data-task-before>Before the answer</button><button class="world-text-button" type="button" data-task-after>After the answer</button></div><p>Presentation comparison. Recorded outcome: {answer}.</p></div>
+    <details class="world-task-receipt"><summary>Evidence for the same task</summary><ul><li>{execution.same_task_proof.original_cli_task_started_count} task start and {execution.same_task_proof.original_cli_task_completed_count} completion.</li><li>{execution.same_task_proof.actual_attention_layout_call_count} Attention layout call.</li><li>Exact owned-pane match to the durable request.</li><li>Returned option matches the built layout.</li></ul><p>The production session ID was absent; no cross-system ID equality is claimed. “Lantern Makers” labels this illustration.</p><p><a href="/media/attention/receipt.json">Public receipt</a> · <a href="/labs/attention/">Full film, actor, version and redaction provenance</a></p></details>
+  </aside>
+  <dialog class="world-task-proof" data-task-proof aria-labelledby="task-proof-title">
+    <div class="world-task-proof-top"><div><p>ACTUAL RECORDING / GENERATED PAGE</p><h2 id="task-proof-title" data-task-proof-title>Actual recording</h2></div><button type="button" class="world-button" data-task-proof-close>Close <Icon name="close" /></button></div>
+    <section data-task-film hidden><video controls playsinline preload="none" data-task-video data-src="/media/attention/execution.mp4" aria-label="Actual recorded Attention run"><track kind="captions" data-src="/media/attention/execution.vtt" srclang="en" label="English" default /></video><p class="world-task-proof-context" data-task-proof-context aria-live="polite"></p><nav class="world-task-chapters" aria-label="Actual run chapters">{chapters.slice(0, 5).map(chapter => <button type="button" class="world-button" data-task-chapter={chapter.time}>{chapter.label}</button>)}</nav><p>Actual recording. Editorial chapter navigation; playback starts only with Play. Automated Computer Use chose the answer. The {chapters[5].time}s updated-app observation is separate from this causal sequence.</p></section>
+    <section data-task-result hidden><div class="world-task-result-tools"><button class="world-button" data-task-result-viewport="desktop" aria-pressed="true" type="button">Desktop</button><button class="world-button" data-task-result-viewport="phone" aria-pressed="false" type="button">Phone</button><a class="world-button world-button-solid" href="/media/attention/workshop-source.txt" download={execution.exhibit.artifact_download_name}>Download the actual page <Icon name="arrow-down" /></a></div><figure><img data-task-result-image alt={`Actual generated Lantern Makers workshop page, ${answer}, ${execution.actual_file.sessions} sessions`} width="1280" height="800" /><figcaption>Actual generated page · {answer} · {execution.actual_file.sessions} sessions. The original file is downloaded as plaintext and is never executed here.</figcaption></figure></section>
+    <p class="world-task-proof-provenance"><a href="/labs/attention/">Full Attention provenance and complete captioned film</a> · <a href="/media/attention/receipt.json">Public receipt</a></p>
+  </dialog>
+</>}

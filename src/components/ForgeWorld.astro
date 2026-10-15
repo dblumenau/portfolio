@@ -1,5 +1,6 @@
 ---
 import Icon from './Icon.astro';
+import WorldAttentionTask from './WorldAttentionTask.astro';
 import { districts } from '../world/data';
 import { imageDimensions } from '../data/media';
 import '../world/world.css';
@@ -7,7 +8,7 @@ import '../world/world.css';
 <section class="forge-world" data-forge-world data-world-state="loading" aria-label="Forge World, an illustrated map of David's work">
   <div class="world-toolbar">
     <div class="world-toolbar-title"><span class="world-cross" aria-hidden="true"><Icon name="asterisk" /></span><div><span>Forge World</span><p>A little place for the whole idea.</p></div></div>
-    <div class="world-toolbar-actions"><button class="world-button world-button-solid" type="button" data-start-tour data-world-control disabled>Take the guided route <span aria-hidden="true"><Icon name="arrow-right" /></span></button><a class="world-text-button" href="#districts">Read the map <span aria-hidden="true"><Icon name="arrow-down" /></span></a></div>
+    <div class="world-toolbar-actions"><div class="world-task-entry"><a class="world-button" href="#follow-one-task" data-open-task>Follow one task <span aria-hidden="true"><Icon name="arrow-right" /></span></a><small>A terminal asks. A Mac answers. The same work continues.</small></div><button class="world-button world-button-solid" type="button" data-start-tour data-world-control disabled>Take the guided route <span aria-hidden="true"><Icon name="arrow-right" /></span></button><a class="world-text-button" href="#districts">Read the map <span aria-hidden="true"><Icon name="arrow-down" /></span></a></div>
   </div>
   <div class="world-tour" data-world-tour hidden>
     <span class="world-tour-step" data-tour-step>01 / 06</span>
@@ -52,10 +53,12 @@ import '../world/world.css';
         <details class="world-architecture-note"><summary>What the model represents</summary><p>{district.architecture}</p></details>
       </article>)}
     </aside>
+    <WorldAttentionTask />
   </div>
   <nav class="world-district-nav" aria-label="Choose a district">{districts.map((district) => <button type="button" data-select-district={district.id} data-world-control disabled aria-pressed="false" style={`--district-color:${district.color}`}><span class="world-nav-number">{district.number}</span><strong>{district.name}</strong><span class="world-nav-label">{district.label}</span><span class="world-nav-arrow" aria-hidden="true"><Icon name="arrow-up-right" /></span></button>)}</nav>
   <div class="world-caption"><p>A designed map of personal projects, with actual product screenshots and recordings.</p><span>Choose a place. See what happens there.</span></div>
   <p class="world-live-region" data-world-announcement aria-live="polite" aria-atomic="true"></p>
+  <WorldAttentionTask fallback />
   <div class="world-directory" id="districts">
     <div class="world-directory-heading"><p class="eyebrow">The readable map</p><h2>Six places.<br /><em>One connected practice.</em></h2><p>The world is a way in. Each district has a plain-language story and a route to the work behind it.</p></div>
     <div class="world-directory-grid">{districts.map((district) => <article class="world-directory-card" style={`--district-color:${district.color}`}><p class="world-directory-number">{district.number} / {district.name}</p><h3>{district.title}</h3><p>{district.description}</p><details><summary>Look inside this district <span aria-hidden="true"><Icon name="plus" /></span></summary><ul>{district.exhibits.map((exhibit) => <li><strong>{exhibit.href ? <a href={exhibit.href}>{exhibit.title} <Icon name="arrow-up-right" /></a> : exhibit.title}</strong><p>{exhibit.description}</p></li>)}</ul><p class="world-model-caption">{district.architecture}</p></details><a class="world-case-link" href={district.href}>{district.link}<span aria-hidden="true"><Icon name="arrow-up-right" /></span></a></article>)}</div>
@@ -72,8 +75,12 @@ import '../world/world.css';
       if (loading) return;
       loading = true;
       try {
+        const { mountAttentionTask } = await import('../world/attention-task/controller');
+        const task = mountAttentionTask(worldRoot);
+        dispose = () => task.dispose();
         const { mountWorld } = await import('../world/controller');
-        dispose = mountWorld(worldRoot);
+        const disposeWorld = mountWorld(worldRoot, task);
+        dispose = () => { task.dispose(); disposeWorld(); };
       } catch (error) {
         worldRoot.dataset.worldState = 'fallback';
         const status = worldRoot.querySelector<HTMLElement>('[data-world-status]')!;

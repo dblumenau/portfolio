@@ -1,0 +1,744 @@
+{
+  "schema": "portfolio-curation-execution-v1",
+  "title": "Type-scoped alias merge, audit and immediate inverse",
+  "captured": "2026-10-15",
+  "disclosure": {
+    "actual": "Actual Laravel HTTP test kernel, request validation, routes, controllers, shared curation service, MySQL writes and audit reads. Synthetic actingAs owner; no live gateway or MCP transport.",
+    "replay": "The portfolio controls replay recorded results; they are not shipped PanelForge curator UI and do not call a backend.",
+    "synthetic": "One fictional owner, four conversations with one fictional user message each, and four directly seeded triples. No automatic extraction or semantic discovery was exercised.",
+    "isolation": "Dedicated disposable MySQL container/database on an internal network with no host port; removed after verification. Original application checkout unchanged. No original environment, credentials, graph or conversation content was copied.",
+    "seedSubstitution": "Conversation/message seed observers suppressed; the actual merge, audit and inverse application code was unmodified.",
+    "fixtureClock": "2026-10-15T10:00:00Z, one minute between mutations.",
+    "receiptCuration": "Request/response headers omitted. Core merge, audit and inverse response bodies below are unchanged synthetic responses. Profile responses are summarized by returned conversation IDs. No private filesystem paths, live credentials or session data are published."
+  },
+  "source": {
+    "project": "PanelForge",
+    "revision": "93881d2eca613fde498e0933405cee3a07220a4c",
+    "tag": "web-v10.20.97",
+    "applicationPatch": false,
+    "files": [
+      {
+        "path": "app/Http/Controllers/Api/McpKnowledgeWriteController.php",
+        "sha256": "66decb33edc4742af68d81ce01320b2d94481baaf0ece9e87e8ec258056bb0c9"
+      },
+      {
+        "path": "app/Http/Requests/Api/McpKnowledgeWriteRequest.php",
+        "sha256": "7d779a6c7f0a469ff4dbf05c37cec652ce6c6aa021f27a9bdc0abd81512e2010"
+      },
+      {
+        "path": "app/Services/KnowledgeCurationService.php",
+        "sha256": "8870e6efc25d43a5d3c73c0e585fddf26ba576cef44593b53fc19f074184c483"
+      },
+      {
+        "path": "app/Models/KnowledgeTriple.php",
+        "sha256": "1e4013e557e247ec66aca5e0e74fc21bfa13b228141b26612b4ea5c9aa9d0c89"
+      },
+      {
+        "path": "routes/api.php",
+        "sha256": "21231f5f7ffa9e2b501d3b6ba667a45e019e974201af43ab28d99c3af1c98a05"
+      },
+      {
+        "path": "tests/Feature/Mcp/McpKnowledgeWriteTest.php",
+        "sha256": "94d07cca1c868daedb099aa639e8a52b5ce17aa78debbd3d899726d8c0d8fd14"
+      }
+    ]
+  },
+  "verification": {
+    "featureTests": 18,
+    "featureAssertions": 189,
+    "independentMechanicalChecks": 1600,
+    "originalCheckoutUnchanged": true,
+    "runtimeRemoved": true
+  },
+  "counts": {
+    "owner": 1,
+    "conversations": 4,
+    "messages": 4,
+    "triples": 4,
+    "forwardFieldEdits": 2,
+    "forwardActions": 2,
+    "inverseActions": 2,
+    "reverted": 2,
+    "notInvertible": 0,
+    "runs": 2,
+    "jobs": 0,
+    "chatAttempts": 0
+  },
+  "batchLabels": {
+    "merge": "45596194-2b7b-4f44-ac50-1fac7987cfef",
+    "inverse": "565196e0-d534-41c3-a8ab-7bb69df5ed9e"
+  },
+  "requests": [
+    {
+      "label": "type-scoped merge",
+      "method": "POST",
+      "uri": "/api/mcp/knowledge/merge-entities",
+      "json": {
+        "from": "Slate Pad",
+        "to": "Slate Tablet",
+        "entity_type": "product",
+        "reason": "Fictional studio glossary: normalize the product alias; preserve the place name."
+      },
+      "responseStatus": 200,
+      "response": {
+        "from": "slate pad",
+        "to": "slate tablet",
+        "affected": 2,
+        "sample": [
+          {
+            "triple_id": 1,
+            "subject": "mira",
+            "predicate": "uses",
+            "object": "slate tablet"
+          },
+          {
+            "triple_id": 2,
+            "subject": "slate tablet",
+            "predicate": "has_feature",
+            "object": "detachable keyboard"
+          }
+        ],
+        "batch_id": "45596194-2b7b-4f44-ac50-1fac7987cfef"
+      },
+      "responseBodySha256": "1d1fc0c236b20ea13058d2d6a36395f9cb237049030b811a3d95a04ce4d018de",
+      "responseRawBody": "{\"from\":\"slate pad\",\"to\":\"slate tablet\",\"affected\":2,\"sample\":[{\"triple_id\":1,\"subject\":\"mira\",\"predicate\":\"uses\",\"object\":\"slate tablet\"},{\"triple_id\":2,\"subject\":\"slate tablet\",\"predicate\":\"has_feature\",\"object\":\"detachable keyboard\"}],\"batch_id\":\"45596194-2b7b-4f44-ac50-1fac7987cfef\"}"
+    },
+    {
+      "label": "forward batch audit read",
+      "method": "GET",
+      "uri": "/api/mcp/knowledge/edits?batch_id=45596194-2b7b-4f44-ac50-1fac7987cfef",
+      "json": null,
+      "responseStatus": 200,
+      "response": {
+        "run": {
+          "id": 1,
+          "user_id": 1,
+          "batch_id": "45596194-2b7b-4f44-ac50-1fac7987cfef",
+          "dedup_batch": null,
+          "status": "completed",
+          "source": "mcp",
+          "dry_run": false,
+          "incremental": false,
+          "skip_dedup": true,
+          "batch_size": 0,
+          "triple_limit": null,
+          "target_clusters": null,
+          "cluster_offset": 0,
+          "reviewed_count": 2,
+          "batch_count": 0,
+          "batches_completed": 0,
+          "batches_failed": 0,
+          "action_counts": {
+            "canonicalize": 2
+          },
+          "cost_usd": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "model": "portfolio-controller-test",
+          "started_at": "2026-10-15T10:01:00.000000Z",
+          "completed_at": "2026-10-15T10:01:00.000000Z",
+          "created_at": "2026-10-15T10:01:00.000000Z",
+          "updated_at": "2026-10-15T10:01:00.000000Z"
+        },
+        "actions": [
+          {
+            "id": 1,
+            "user_id": 1,
+            "batch_id": "45596194-2b7b-4f44-ac50-1fac7987cfef",
+            "triple_id": 1,
+            "action": "canonicalize",
+            "reason": "Fictional studio glossary: normalize the product alias; preserve the place name.",
+            "subject": "mira",
+            "predicate": "uses",
+            "object": "slate pad",
+            "subject_type": "person",
+            "object_type": "product",
+            "changes": {
+              "object": "slate tablet"
+            },
+            "created_at": "2026-10-15T10:01:00.000000Z"
+          },
+          {
+            "id": 2,
+            "user_id": 1,
+            "batch_id": "45596194-2b7b-4f44-ac50-1fac7987cfef",
+            "triple_id": 2,
+            "action": "canonicalize",
+            "reason": "Fictional studio glossary: normalize the product alias; preserve the place name.",
+            "subject": "slate pad",
+            "predicate": "has_feature",
+            "object": "detachable keyboard",
+            "subject_type": "product",
+            "object_type": "product",
+            "changes": {
+              "subject": "slate tablet"
+            },
+            "created_at": "2026-10-15T10:01:00.000000Z"
+          }
+        ]
+      },
+      "responseBodySha256": "ac0fd036e78b00696ca9cd2568476cca092ca8ba9e4549f646a66883d43d3c5c",
+      "responseRawBody": "{\"run\":{\"id\":1,\"user_id\":1,\"batch_id\":\"45596194-2b7b-4f44-ac50-1fac7987cfef\",\"dedup_batch\":null,\"status\":\"completed\",\"source\":\"mcp\",\"dry_run\":false,\"incremental\":false,\"skip_dedup\":true,\"batch_size\":0,\"triple_limit\":null,\"target_clusters\":null,\"cluster_offset\":0,\"reviewed_count\":2,\"batch_count\":0,\"batches_completed\":0,\"batches_failed\":0,\"action_counts\":{\"canonicalize\":2},\"cost_usd\":0,\"input_tokens\":0,\"output_tokens\":0,\"model\":\"portfolio-controller-test\",\"started_at\":\"2026-10-15T10:01:00.000000Z\",\"completed_at\":\"2026-10-15T10:01:00.000000Z\",\"created_at\":\"2026-10-15T10:01:00.000000Z\",\"updated_at\":\"2026-10-15T10:01:00.000000Z\"},\"actions\":[{\"id\":1,\"user_id\":1,\"batch_id\":\"45596194-2b7b-4f44-ac50-1fac7987cfef\",\"triple_id\":1,\"action\":\"canonicalize\",\"reason\":\"Fictional studio glossary: normalize the product alias; preserve the place name.\",\"subject\":\"mira\",\"predicate\":\"uses\",\"object\":\"slate pad\",\"subject_type\":\"person\",\"object_type\":\"product\",\"changes\":{\"object\":\"slate tablet\"},\"created_at\":\"2026-10-15T10:01:00.000000Z\"},{\"id\":2,\"user_id\":1,\"batch_id\":\"45596194-2b7b-4f44-ac50-1fac7987cfef\",\"triple_id\":2,\"action\":\"canonicalize\",\"reason\":\"Fictional studio glossary: normalize the product alias; preserve the place name.\",\"subject\":\"slate pad\",\"predicate\":\"has_feature\",\"object\":\"detachable keyboard\",\"subject_type\":\"product\",\"object_type\":\"product\",\"changes\":{\"subject\":\"slate tablet\"},\"created_at\":\"2026-10-15T10:01:00.000000Z\"}]}"
+    },
+    {
+      "label": "revert latest identity batch",
+      "method": "POST",
+      "uri": "/api/mcp/knowledge/revert",
+      "json": {
+        "batch_id": "45596194-2b7b-4f44-ac50-1fac7987cfef",
+        "reason": "Fictional review: restore this latest alias merge and retain its audit history."
+      },
+      "responseStatus": 200,
+      "response": {
+        "reverted": 2,
+        "not_invertible": 0,
+        "results": [
+          {
+            "action_id": 2,
+            "original_action": "canonicalize",
+            "triple_id": 2,
+            "status": "inverted",
+            "note": null
+          },
+          {
+            "action_id": 1,
+            "original_action": "canonicalize",
+            "triple_id": 1,
+            "status": "inverted",
+            "note": null
+          }
+        ],
+        "batch_id": "565196e0-d534-41c3-a8ab-7bb69df5ed9e"
+      },
+      "responseBodySha256": "46552ac583a18c569647c14f34219a0e0c12c3c79ece6b6ddf1049ae446c45e7",
+      "responseRawBody": "{\"reverted\":2,\"not_invertible\":0,\"results\":[{\"action_id\":2,\"original_action\":\"canonicalize\",\"triple_id\":2,\"status\":\"inverted\",\"note\":null},{\"action_id\":1,\"original_action\":\"canonicalize\",\"triple_id\":1,\"status\":\"inverted\",\"note\":null}],\"batch_id\":\"565196e0-d534-41c3-a8ab-7bb69df5ed9e\"}"
+    },
+    {
+      "label": "inverse batch audit read",
+      "method": "GET",
+      "uri": "/api/mcp/knowledge/edits?batch_id=565196e0-d534-41c3-a8ab-7bb69df5ed9e",
+      "json": null,
+      "responseStatus": 200,
+      "response": {
+        "run": {
+          "id": 2,
+          "user_id": 1,
+          "batch_id": "565196e0-d534-41c3-a8ab-7bb69df5ed9e",
+          "dedup_batch": null,
+          "status": "completed",
+          "source": "mcp",
+          "dry_run": false,
+          "incremental": false,
+          "skip_dedup": true,
+          "batch_size": 0,
+          "triple_limit": null,
+          "target_clusters": null,
+          "cluster_offset": 0,
+          "reviewed_count": 2,
+          "batch_count": 0,
+          "batches_completed": 0,
+          "batches_failed": 0,
+          "action_counts": {
+            "canonicalize": 2
+          },
+          "cost_usd": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "model": "portfolio-controller-test",
+          "started_at": "2026-10-15T10:02:00.000000Z",
+          "completed_at": "2026-10-15T10:02:00.000000Z",
+          "created_at": "2026-10-15T10:02:00.000000Z",
+          "updated_at": "2026-10-15T10:02:00.000000Z"
+        },
+        "actions": [
+          {
+            "id": 3,
+            "user_id": 1,
+            "batch_id": "565196e0-d534-41c3-a8ab-7bb69df5ed9e",
+            "triple_id": 2,
+            "action": "canonicalize",
+            "reason": "Fictional review: restore this latest alias merge and retain its audit history.",
+            "subject": "slate tablet",
+            "predicate": "has_feature",
+            "object": "detachable keyboard",
+            "subject_type": "product",
+            "object_type": "product",
+            "changes": {
+              "subject": "slate pad"
+            },
+            "created_at": "2026-10-15T10:02:00.000000Z"
+          },
+          {
+            "id": 4,
+            "user_id": 1,
+            "batch_id": "565196e0-d534-41c3-a8ab-7bb69df5ed9e",
+            "triple_id": 1,
+            "action": "canonicalize",
+            "reason": "Fictional review: restore this latest alias merge and retain its audit history.",
+            "subject": "mira",
+            "predicate": "uses",
+            "object": "slate tablet",
+            "subject_type": "person",
+            "object_type": "product",
+            "changes": {
+              "object": "slate pad"
+            },
+            "created_at": "2026-10-15T10:02:00.000000Z"
+          }
+        ]
+      },
+      "responseBodySha256": "7fac2f635cabdf302095828ec861ff7142e40a195f1adf7089fe21ac4815d622",
+      "responseRawBody": "{\"run\":{\"id\":2,\"user_id\":1,\"batch_id\":\"565196e0-d534-41c3-a8ab-7bb69df5ed9e\",\"dedup_batch\":null,\"status\":\"completed\",\"source\":\"mcp\",\"dry_run\":false,\"incremental\":false,\"skip_dedup\":true,\"batch_size\":0,\"triple_limit\":null,\"target_clusters\":null,\"cluster_offset\":0,\"reviewed_count\":2,\"batch_count\":0,\"batches_completed\":0,\"batches_failed\":0,\"action_counts\":{\"canonicalize\":2},\"cost_usd\":0,\"input_tokens\":0,\"output_tokens\":0,\"model\":\"portfolio-controller-test\",\"started_at\":\"2026-10-15T10:02:00.000000Z\",\"completed_at\":\"2026-10-15T10:02:00.000000Z\",\"created_at\":\"2026-10-15T10:02:00.000000Z\",\"updated_at\":\"2026-10-15T10:02:00.000000Z\"},\"actions\":[{\"id\":3,\"user_id\":1,\"batch_id\":\"565196e0-d534-41c3-a8ab-7bb69df5ed9e\",\"triple_id\":2,\"action\":\"canonicalize\",\"reason\":\"Fictional review: restore this latest alias merge and retain its audit history.\",\"subject\":\"slate tablet\",\"predicate\":\"has_feature\",\"object\":\"detachable keyboard\",\"subject_type\":\"product\",\"object_type\":\"product\",\"changes\":{\"subject\":\"slate pad\"},\"created_at\":\"2026-10-15T10:02:00.000000Z\"},{\"id\":4,\"user_id\":1,\"batch_id\":\"565196e0-d534-41c3-a8ab-7bb69df5ed9e\",\"triple_id\":1,\"action\":\"canonicalize\",\"reason\":\"Fictional review: restore this latest alias merge and retain its audit history.\",\"subject\":\"mira\",\"predicate\":\"uses\",\"object\":\"slate tablet\",\"subject_type\":\"person\",\"object_type\":\"product\",\"changes\":{\"object\":\"slate pad\"},\"created_at\":\"2026-10-15T10:02:00.000000Z\"}]}"
+    }
+  ],
+  "fixtures": [
+    {
+      "role": "source_relation",
+      "label": "Mira’s studio notes",
+      "tripleId": 1,
+      "source": {
+        "conversationId": 1,
+        "messageId": 1,
+        "title": "Mira chooses a tablet",
+        "content": "Fictional fixture: Mira uses Slate Pad for studio notes.",
+        "conversationFullRowHashes": {
+          "before": "4e2f6d702d858c988b0bf743c67b547de7bb3c8c2ed098ea70d1ce613c83f7b8",
+          "merged": "4e2f6d702d858c988b0bf743c67b547de7bb3c8c2ed098ea70d1ce613c83f7b8",
+          "restored": "4e2f6d702d858c988b0bf743c67b547de7bb3c8c2ed098ea70d1ce613c83f7b8"
+        },
+        "messageFullRowHashes": {
+          "before": "1437d776c0b83d1caba3210e308daead12e26dcc00ae3a0a321d46efcd48afa0",
+          "merged": "1437d776c0b83d1caba3210e308daead12e26dcc00ae3a0a321d46efcd48afa0",
+          "restored": "1437d776c0b83d1caba3210e308daead12e26dcc00ae3a0a321d46efcd48afa0"
+        }
+      },
+      "states": {
+        "before": {
+          "row": {
+            "id": 1,
+            "conversation_id": 1,
+            "user_id": 1,
+            "subject": "mira",
+            "predicate": "uses",
+            "object": "slate pad",
+            "subject_type": "person",
+            "object_type": "product",
+            "origin": "analysis",
+            "pruned_at": null,
+            "prune_reason": null,
+            "prune_batch": null,
+            "dedup_batch": null,
+            "significance": null,
+            "deprecated_at": null,
+            "reviewed_at": null,
+            "deprecated_reason": null,
+            "created_at": "2026-10-15 10:00:00",
+            "updated_at": "2026-10-15 10:00:00"
+          },
+          "fullRowSha256": "684ef22340dea2dc43778b4691adefa0d4f34216d94f21a70ae3f06ccd7bfe76"
+        },
+        "merged": {
+          "row": {
+            "id": 1,
+            "conversation_id": 1,
+            "user_id": 1,
+            "subject": "mira",
+            "predicate": "uses",
+            "object": "slate tablet",
+            "subject_type": "person",
+            "object_type": "product",
+            "origin": "analysis",
+            "pruned_at": null,
+            "prune_reason": null,
+            "prune_batch": "45596194-2b7b-4f44-ac50-1fac7987cfef",
+            "dedup_batch": null,
+            "significance": null,
+            "deprecated_at": null,
+            "reviewed_at": "2026-10-15 10:01:00",
+            "deprecated_reason": null,
+            "created_at": "2026-10-15 10:00:00",
+            "updated_at": "2026-10-15 10:01:00"
+          },
+          "fullRowSha256": "31570d32823178b80e6a5fca80dcbfaf035eccd129c1481810e23f7ac96dabd5"
+        },
+        "restored": {
+          "row": {
+            "id": 1,
+            "conversation_id": 1,
+            "user_id": 1,
+            "subject": "mira",
+            "predicate": "uses",
+            "object": "slate pad",
+            "subject_type": "person",
+            "object_type": "product",
+            "origin": "analysis",
+            "pruned_at": null,
+            "prune_reason": null,
+            "prune_batch": "565196e0-d534-41c3-a8ab-7bb69df5ed9e",
+            "dedup_batch": null,
+            "significance": null,
+            "deprecated_at": null,
+            "reviewed_at": "2026-10-15 10:02:00",
+            "deprecated_reason": null,
+            "created_at": "2026-10-15 10:00:00",
+            "updated_at": "2026-10-15 10:02:00"
+          },
+          "fullRowSha256": "7e82e50ff8f808308fe3eea563af18f17858d0564708015b38d9de551298dc2e"
+        }
+      }
+    },
+    {
+      "role": "second_alias",
+      "label": "The keyboard relationship",
+      "tripleId": 2,
+      "source": {
+        "conversationId": 2,
+        "messageId": 2,
+        "title": "Tablet keyboard notes",
+        "content": "Fictional fixture: Slate Pad has a detachable keyboard.",
+        "conversationFullRowHashes": {
+          "before": "19846904224c32c4a7607ccfade1bec8502deb7e773bb2d41fc8dd72e38bc605",
+          "merged": "19846904224c32c4a7607ccfade1bec8502deb7e773bb2d41fc8dd72e38bc605",
+          "restored": "19846904224c32c4a7607ccfade1bec8502deb7e773bb2d41fc8dd72e38bc605"
+        },
+        "messageFullRowHashes": {
+          "before": "19b13f95f7a2f6743722164661770e34744f6156525c916d8db33ecfa967402b",
+          "merged": "19b13f95f7a2f6743722164661770e34744f6156525c916d8db33ecfa967402b",
+          "restored": "19b13f95f7a2f6743722164661770e34744f6156525c916d8db33ecfa967402b"
+        }
+      },
+      "states": {
+        "before": {
+          "row": {
+            "id": 2,
+            "conversation_id": 2,
+            "user_id": 1,
+            "subject": "slate pad",
+            "predicate": "has_feature",
+            "object": "detachable keyboard",
+            "subject_type": "product",
+            "object_type": "product",
+            "origin": "analysis",
+            "pruned_at": null,
+            "prune_reason": null,
+            "prune_batch": null,
+            "dedup_batch": null,
+            "significance": null,
+            "deprecated_at": null,
+            "reviewed_at": null,
+            "deprecated_reason": null,
+            "created_at": "2026-10-15 10:00:00",
+            "updated_at": "2026-10-15 10:00:00"
+          },
+          "fullRowSha256": "31ea39d1d735d3d4f7f3bb1718675e5451ac29edd9313f99b669254b33c5d2c6"
+        },
+        "merged": {
+          "row": {
+            "id": 2,
+            "conversation_id": 2,
+            "user_id": 1,
+            "subject": "slate tablet",
+            "predicate": "has_feature",
+            "object": "detachable keyboard",
+            "subject_type": "product",
+            "object_type": "product",
+            "origin": "analysis",
+            "pruned_at": null,
+            "prune_reason": null,
+            "prune_batch": "45596194-2b7b-4f44-ac50-1fac7987cfef",
+            "dedup_batch": null,
+            "significance": null,
+            "deprecated_at": null,
+            "reviewed_at": "2026-10-15 10:01:00",
+            "deprecated_reason": null,
+            "created_at": "2026-10-15 10:00:00",
+            "updated_at": "2026-10-15 10:01:00"
+          },
+          "fullRowSha256": "e27dfeb524d52572bcd77bda4165c5979034e5a54f85895f7602096b3c454bfa"
+        },
+        "restored": {
+          "row": {
+            "id": 2,
+            "conversation_id": 2,
+            "user_id": 1,
+            "subject": "slate pad",
+            "predicate": "has_feature",
+            "object": "detachable keyboard",
+            "subject_type": "product",
+            "object_type": "product",
+            "origin": "analysis",
+            "pruned_at": null,
+            "prune_reason": null,
+            "prune_batch": "565196e0-d534-41c3-a8ab-7bb69df5ed9e",
+            "dedup_batch": null,
+            "significance": null,
+            "deprecated_at": null,
+            "reviewed_at": "2026-10-15 10:02:00",
+            "deprecated_reason": null,
+            "created_at": "2026-10-15 10:00:00",
+            "updated_at": "2026-10-15 10:02:00"
+          },
+          "fullRowSha256": "2597f1546878804f2e561043d7e40deba32ef07314f1da5e1ecdfe07b45c4d2e"
+        }
+      }
+    },
+    {
+      "role": "homonym_control",
+      "label": "The place with the same name",
+      "tripleId": 3,
+      "source": {
+        "conversationId": 3,
+        "messageId": 3,
+        "title": "A place beside the pond",
+        "content": "Fictional fixture: the place called Slate Pad is near Lily Pond.",
+        "conversationFullRowHashes": {
+          "before": "fd6c92e55a64d7c3457d6c9e4a1257133011347376834e55c41be4dec6c3f5f0",
+          "merged": "fd6c92e55a64d7c3457d6c9e4a1257133011347376834e55c41be4dec6c3f5f0",
+          "restored": "fd6c92e55a64d7c3457d6c9e4a1257133011347376834e55c41be4dec6c3f5f0"
+        },
+        "messageFullRowHashes": {
+          "before": "1dd1b2beed4d8628d4759cf35cad0cd5cbb82a984b54f39ee4600a434cce3686",
+          "merged": "1dd1b2beed4d8628d4759cf35cad0cd5cbb82a984b54f39ee4600a434cce3686",
+          "restored": "1dd1b2beed4d8628d4759cf35cad0cd5cbb82a984b54f39ee4600a434cce3686"
+        }
+      },
+      "states": {
+        "before": {
+          "row": {
+            "id": 3,
+            "conversation_id": 3,
+            "user_id": 1,
+            "subject": "slate pad",
+            "predicate": "near",
+            "object": "lily pond",
+            "subject_type": "place",
+            "object_type": "location",
+            "origin": "analysis",
+            "pruned_at": null,
+            "prune_reason": null,
+            "prune_batch": null,
+            "dedup_batch": null,
+            "significance": null,
+            "deprecated_at": null,
+            "reviewed_at": null,
+            "deprecated_reason": null,
+            "created_at": "2026-10-15 10:00:00",
+            "updated_at": "2026-10-15 10:00:00"
+          },
+          "fullRowSha256": "7a7ce736492e176fe7d6f994103b1f5c42bc68d2d3a9a19fee688f4d246a413e"
+        },
+        "merged": {
+          "row": {
+            "id": 3,
+            "conversation_id": 3,
+            "user_id": 1,
+            "subject": "slate pad",
+            "predicate": "near",
+            "object": "lily pond",
+            "subject_type": "place",
+            "object_type": "location",
+            "origin": "analysis",
+            "pruned_at": null,
+            "prune_reason": null,
+            "prune_batch": null,
+            "dedup_batch": null,
+            "significance": null,
+            "deprecated_at": null,
+            "reviewed_at": null,
+            "deprecated_reason": null,
+            "created_at": "2026-10-15 10:00:00",
+            "updated_at": "2026-10-15 10:00:00"
+          },
+          "fullRowSha256": "7a7ce736492e176fe7d6f994103b1f5c42bc68d2d3a9a19fee688f4d246a413e"
+        },
+        "restored": {
+          "row": {
+            "id": 3,
+            "conversation_id": 3,
+            "user_id": 1,
+            "subject": "slate pad",
+            "predicate": "near",
+            "object": "lily pond",
+            "subject_type": "place",
+            "object_type": "location",
+            "origin": "analysis",
+            "pruned_at": null,
+            "prune_reason": null,
+            "prune_batch": null,
+            "dedup_batch": null,
+            "significance": null,
+            "deprecated_at": null,
+            "reviewed_at": null,
+            "deprecated_reason": null,
+            "created_at": "2026-10-15 10:00:00",
+            "updated_at": "2026-10-15 10:00:00"
+          },
+          "fullRowSha256": "7a7ce736492e176fe7d6f994103b1f5c42bc68d2d3a9a19fee688f4d246a413e"
+        }
+      }
+    },
+    {
+      "role": "unrelated_control",
+      "label": "An unrelated product",
+      "tripleId": 4,
+      "source": {
+        "conversationId": 4,
+        "messageId": 4,
+        "title": "Paper for sketches",
+        "content": "Fictional fixture: Mira uses Graph Paper for sketches.",
+        "conversationFullRowHashes": {
+          "before": "ac66931d3467f069ee3de963d1e2867394916514ecdf74db99be5025794daf87",
+          "merged": "ac66931d3467f069ee3de963d1e2867394916514ecdf74db99be5025794daf87",
+          "restored": "ac66931d3467f069ee3de963d1e2867394916514ecdf74db99be5025794daf87"
+        },
+        "messageFullRowHashes": {
+          "before": "fa37647a38644ae3e0e9213e2b5db143636e34e9fe18090b9c33327aa318c20b",
+          "merged": "fa37647a38644ae3e0e9213e2b5db143636e34e9fe18090b9c33327aa318c20b",
+          "restored": "fa37647a38644ae3e0e9213e2b5db143636e34e9fe18090b9c33327aa318c20b"
+        }
+      },
+      "states": {
+        "before": {
+          "row": {
+            "id": 4,
+            "conversation_id": 4,
+            "user_id": 1,
+            "subject": "mira",
+            "predicate": "uses",
+            "object": "graph paper",
+            "subject_type": "person",
+            "object_type": "product",
+            "origin": "analysis",
+            "pruned_at": null,
+            "prune_reason": null,
+            "prune_batch": null,
+            "dedup_batch": null,
+            "significance": null,
+            "deprecated_at": null,
+            "reviewed_at": null,
+            "deprecated_reason": null,
+            "created_at": "2026-10-15 10:00:00",
+            "updated_at": "2026-10-15 10:00:00"
+          },
+          "fullRowSha256": "8bae34e551359ac9aa82820b5e3dcfdfe5c747aaa77d001bbba9991d65beca98"
+        },
+        "merged": {
+          "row": {
+            "id": 4,
+            "conversation_id": 4,
+            "user_id": 1,
+            "subject": "mira",
+            "predicate": "uses",
+            "object": "graph paper",
+            "subject_type": "person",
+            "object_type": "product",
+            "origin": "analysis",
+            "pruned_at": null,
+            "prune_reason": null,
+            "prune_batch": null,
+            "dedup_batch": null,
+            "significance": null,
+            "deprecated_at": null,
+            "reviewed_at": null,
+            "deprecated_reason": null,
+            "created_at": "2026-10-15 10:00:00",
+            "updated_at": "2026-10-15 10:00:00"
+          },
+          "fullRowSha256": "8bae34e551359ac9aa82820b5e3dcfdfe5c747aaa77d001bbba9991d65beca98"
+        },
+        "restored": {
+          "row": {
+            "id": 4,
+            "conversation_id": 4,
+            "user_id": 1,
+            "subject": "mira",
+            "predicate": "uses",
+            "object": "graph paper",
+            "subject_type": "person",
+            "object_type": "product",
+            "origin": "analysis",
+            "pruned_at": null,
+            "prune_reason": null,
+            "prune_batch": null,
+            "dedup_batch": null,
+            "significance": null,
+            "deprecated_at": null,
+            "reviewed_at": null,
+            "deprecated_reason": null,
+            "created_at": "2026-10-15 10:00:00",
+            "updated_at": "2026-10-15 10:00:00"
+          },
+          "fullRowSha256": "8bae34e551359ac9aa82820b5e3dcfdfe5c747aaa77d001bbba9991d65beca98"
+        }
+      }
+    }
+  ],
+  "sourceProfileReads": [
+    {
+      "label": "before entity source links",
+      "method": "GET",
+      "uri": "/api/knowledge-graph/entity/slate%20pad",
+      "responseStatus": 200,
+      "conversationIds": [
+        2,
+        3,
+        1
+      ]
+    },
+    {
+      "label": "merged product source links",
+      "method": "GET",
+      "uri": "/api/knowledge-graph/entity/slate%20tablet",
+      "responseStatus": 200,
+      "conversationIds": [
+        2,
+        1
+      ]
+    },
+    {
+      "label": "place homonym source links",
+      "method": "GET",
+      "uri": "/api/knowledge-graph/entity/slate%20pad",
+      "responseStatus": 200,
+      "conversationIds": [
+        3
+      ]
+    },
+    {
+      "label": "restored source links",
+      "method": "GET",
+      "uri": "/api/knowledge-graph/entity/slate%20pad",
+      "responseStatus": 200,
+      "conversationIds": [
+        2,
+        3,
+        1
+      ]
+    }
+  ],
+  "inverseCorrelation": [
+    {
+      "originalActionId": 2,
+      "inverseActionId": 3,
+      "tripleId": 2,
+      "forwardBatchId": "45596194-2b7b-4f44-ac50-1fac7987cfef",
+      "inverseBatchId": "565196e0-d534-41c3-a8ab-7bb69df5ed9e",
+      "basis": "Revert response action_id plus matching triple_id; inverse audit does not store a dedicated original_action_id column."
+    },
+    {
+      "originalActionId": 1,
+      "inverseActionId": 4,
+      "tripleId": 1,
+      "forwardBatchId": "45596194-2b7b-4f44-ac50-1fac7987cfef",
+      "inverseBatchId": "565196e0-d534-41c3-a8ab-7bb69df5ed9e",
+      "basis": "Revert response action_id plus matching triple_id; inverse audit does not store a dedicated original_action_id column."
+    }
+  ],
+  "limitations": [
+    "No compare-and-swap: only immediate latest identity edits are exercised; later edits could be overwritten.",
+    "Authentication uses a synthetic actingAs owner; gateway OAuth and model-capability gating are not exercised.",
+    "The profile lookup groups labels without a type filter; restored slate pad includes the place conversation as well as both product conversations.",
+    "No shipped merge/revert UI is claimed. Any visual companion is a portfolio harness/replay.",
+    "Inverse restores selected identity fields. prune_batch, reviewed_at and updated_at reflect the inverse and remain changed."
+  ]
+}

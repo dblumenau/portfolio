@@ -1,0 +1,24 @@
+{
+  "execution_date": "2026-10-15",
+  "method": "PanelForge generate_image followed by get_image_job terminal receipts and full-resolution get_image inspection. Two calls total.",
+  "private_evidence": "Actual source identifiers, exact arguments and terminal receipts retained in the private image-revision evidence workroot.",
+  "lineage": "Read-only metadata verifies parent/root equality, sole ordered reference, and inverse child relation. Public receipt publishes explicit equality checks without source IDs.",
+  "preservation": "Same original URL downloaded before and after revision. SHA-256 equality verified. Public JPEGs copied byte-for-byte.",
+  "inspection": "Both full-resolution JPEGs visually inspected without structured analysis; acceptance is qualitative.",
+  "captures": "Actual product detail and actual revision conversation after generation. Gallery crop and opaque avatar cover documented in public receipt.",
+  "public_media": [
+    "image-revision/completed-chat.png",
+    "image-revision/gallery-detail.png",
+    "image-revision/original.jpg",
+    "image-revision/receipt.json",
+    "image-revision/revision.jpg"
+  ],
+  "no_new_route": true,
+  "mount": "Existing PanelForge case, after case navigation and before starting-point prose.",
+  "generative_limits": [
+    "Approximate 3:2 framing at 1264x848.",
+    "Soft shading and texture; not strictly flat vector fills.",
+    "No pixel-perfect preservation claim.",
+    "Two source conversations linked through image lineage."
+  ]
+}

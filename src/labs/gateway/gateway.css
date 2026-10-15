@@ -2,3 +2,5 @@
 
 .gl-icon{display:inline-block;flex-shrink:0;vertical-align:middle}.gl-toolbox li>.gl-icon{color:var(--gl-green);width:1rem;height:1rem}.gl-gate-symbol .gl-icon{width:2.3rem;height:2.3rem}.gl-identity>.gl-icon{margin-top:.15rem}.gl-context-links a,.gl-hero>a{display:inline-flex;gap:.4rem;align-items:center}.gl-lane-check .gl-icon{width:1.2rem;height:1.2rem}
 .gl-film{margin-top:3rem}.gl-film video{width:100%;aspect-ratio:4/3;object-fit:contain;background:#f4f1e9}.gl-film figcaption{line-height:1.7}.gl-film .text-link{font-size:.8rem;margin:1rem 1.5rem}
+
+.gl-hero-foot>a{display:inline-flex;align-items:center;min-height:44px;font-size:.875rem;line-height:1.5;padding-block:10px}

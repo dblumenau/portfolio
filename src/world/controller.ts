@@ -3,6 +3,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { districts, journey, type DistrictId } from './data';
 import { buildWorld } from './scene';
+import type { AttentionTask } from './attention-task/controller';
 
 interface CameraMove {
   started: number;
@@ -13,7 +14,7 @@ interface CameraMove {
   toTarget: THREE.Vector3;
 }
 
-export function mountWorld(root: HTMLElement): () => void {
+export function mountWorld(root: HTMLElement, task: AttentionTask): () => void {
   const viewport = root.querySelector<HTMLElement>('[data-world-viewport]')!;
   const canvas = root.querySelector<HTMLCanvasElement>('[data-world-canvas]')!;
   const stage = root.querySelector<HTMLElement>('[data-world-stage]')!;
@@ -78,6 +79,45 @@ export function mountWorld(root: HTMLElement): () => void {
   controls.rotateSpeed = 0.52;
   controls.zoomSpeed = 0.8;
   const world = buildWorld(requestRender);
+  let savedControls = true;
+  const savedPosition = new THREE.Vector3(), savedTarget = new THREE.Vector3();
+  const savedOrientation = new THREE.Quaternion();
+  task.connect({
+    capture() { return { worldHash: selected ? `#${selected}${exhibit ? '/exhibit' : ''}` : '', position: camera.position.toArray(), target: controls.target.toArray(), quaternion: camera.quaternion.toArray() }; },
+    open(origin) {
+      const [rawId, mode] = (origin.pose?.worldHash ?? origin.hash).slice(1).split('/');
+      const originId = districts.find(item => item.id === rawId)?.id ?? null;
+      const originExhibit = mode === 'exhibit' && Boolean(districts.find(item => item.id === originId)?.image);
+      if ((!rawId || districts.some(item => item.id === rawId)) && (selected !== originId || exhibit !== originExhibit)) {
+        const taskMode = stage.dataset.task;
+        delete stage.dataset.task;
+        selectDistrict(originId, { history: false, reveal: false });
+        if (originExhibit) setExhibit(true, false);
+        if (move) { camera.position.copy(move.toPosition); controls.target.copy(move.toTarget); controls.update(); }
+        if (taskMode) stage.dataset.task = taskMode;
+      }
+      if (origin.pose) {
+        camera.position.fromArray(origin.pose.position); camera.quaternion.fromArray(origin.pose.quaternion); controls.target.fromArray(origin.pose.target);
+      }
+      move = null;
+      pointerStart = null; activePointers.clear(); multiplePointers = false; hovered = null;
+      savedPosition.copy(camera.position); savedTarget.copy(controls.target); savedOrientation.copy(camera.quaternion);
+      savedControls = controls.enabled; controls.enabled = false;
+      renderer.shadowMap.enabled = false;
+      pauseMedia();
+      labelButtons.forEach(button => { button.hidden = true; });
+      size(); requestRender();
+    },
+    close() {
+      controls.enableDamping = false; controls.update(); controls.enableDamping = true;
+      camera.position.copy(savedPosition); camera.quaternion.copy(savedOrientation); controls.target.copy(savedTarget);
+      controls.enabled = savedControls;
+      renderer.shadowMap.enabled = true;
+      renderer.shadowMap.needsUpdate = true;
+      size(); requestRender();
+    },
+    invalidate: requestRender,
+  });
 
   function listen(target: EventTarget, type: string, callback: EventListener) {
     target.addEventListener(type, callback);
@@ -109,6 +149,7 @@ export function mountWorld(root: HTMLElement): () => void {
     requestRender();
   }
   function updateLabels() {
+    if (task.active) return;
     const width = viewport.clientWidth;
     const height = viewport.clientHeight;
     labelButtons.forEach((button) => {
@@ -178,6 +219,7 @@ export function mountWorld(root: HTMLElement): () => void {
     if (pushHistory) rememberView();
   }
   function selectDistrict(id: DistrictId | null, options: { history?: boolean; tour?: boolean; focus?: boolean; reveal?: boolean } = {}) {
+    if (task.active) task.exit(false, false);
     if (options.history !== false) rememberView();
     if (!selected && id) overviewScroll = window.scrollY;
     selected = id;
@@ -226,6 +268,7 @@ export function mountWorld(root: HTMLElement): () => void {
     root.querySelector<HTMLButtonElement>('[data-start-tour]')!.textContent = 'Take the guided route';
   }
   function tourTo(index: number) {
+    if (task.active) task.exit(false, false);
     if (index >= journey.length) {
       stopTour();
       selectDistrict(null);
@@ -251,6 +294,8 @@ export function mountWorld(root: HTMLElement): () => void {
     return (hit?.object.userData.district as DistrictId | undefined) ?? null;
   }
   function fromHash() {
+    if (window.location.hash.startsWith('#task/')) return;
+    if (task.active) task.exit(false);
     const [rawId, mode] = window.location.hash.slice(1).split('/');
     if (rawId && !districts.some(district => district.id === rawId)) return;
     const id = rawId ? rawId as DistrictId : null;
@@ -290,6 +335,7 @@ export function mountWorld(root: HTMLElement): () => void {
   listen(window, 'popstate', fromHash);
   listen(window, 'hashchange', fromHash);
   listen(canvas, 'pointerdown', (event) => {
+    if (task.active) return;
     const pointerEvent = event as PointerEvent;
     activePointers.add(pointerEvent.pointerId);
     if (activePointers.size === 1) {
@@ -299,6 +345,7 @@ export function mountWorld(root: HTMLElement): () => void {
     move = null;
   });
   listen(canvas, 'pointermove', (event) => {
+    if (task.active) return;
     const pointerEvent = event as PointerEvent;
     if (pointerEvent.buttons) return;
     hovered = pick(pointerEvent);
@@ -306,6 +353,7 @@ export function mountWorld(root: HTMLElement): () => void {
   });
   listen(canvas, 'pointerleave', () => { hovered = null; });
   listen(canvas, 'pointerup', (event) => {
+    if (task.active) return;
     const pointerEvent = event as PointerEvent;
     if (!multiplePointers && pointerStart?.id === pointerEvent.pointerId && Math.hypot(pointerEvent.clientX - pointerStart.x, pointerEvent.clientY - pointerStart.y) < 7 && performance.now() - pointerStart.time < 600) {
       const id = pick(pointerEvent);
@@ -321,6 +369,7 @@ export function mountWorld(root: HTMLElement): () => void {
   listen(canvas, 'wheel', () => { move = null; });
   listen(window, 'keydown', (event) => {
     const keyboard = event as KeyboardEvent;
+    if (task.active || keyboard.defaultPrevented) return;
     if (keyboard.key === 'Escape' && exhibit) {
       setExhibit(false);
     } else if (keyboard.key === 'Escape' && selected) {
@@ -346,13 +395,14 @@ export function mountWorld(root: HTMLElement): () => void {
   const intersection = new IntersectionObserver(([entry]) => {
     visible = entry?.isIntersecting ?? true;
     if (visible) requestRender();
-    else stopRendering();
+    else { task.suspend(); stopRendering(); }
   }, { rootMargin: '160px' });
   intersection.observe(viewport);
   listen(window, 'resize', size);
   listen(window, 'pagehide', (event) => {
     if (!(event as PageTransitionEvent).persisted) return;
     pageSuspended = true;
+    task.suspend();
     stopRendering();
     pauseMedia();
   });
@@ -387,6 +437,10 @@ export function mountWorld(root: HTMLElement): () => void {
   function render(now: number) {
     frame = 0;
     if (!canRender()) return;
+    if (task.active) {
+      if (task.render(renderer, now)) requestRender();
+      return;
+    }
     if (move) {
       const progress = move.duration ? Math.min((now - move.started) / move.duration, 1) : 1;
       const eased = progress < 0.5 ? 4 * progress ** 3 : 1 - (-2 * progress + 2) ** 3 / 2;
@@ -406,7 +460,7 @@ export function mountWorld(root: HTMLElement): () => void {
   root.querySelectorAll<HTMLButtonElement>('[data-world-control]').forEach((button) => { button.disabled = false; });
   size();
   if (window.location.hash && districts.some((district) => district.id === window.location.hash.slice(1).split('/')[0])) fromHash();
-  else cameraTo(null);
+  else if (!task.active) cameraTo(null);
   requestRender();
 
   return () => {

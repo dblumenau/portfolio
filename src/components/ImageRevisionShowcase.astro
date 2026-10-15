@@ -1,0 +1,81 @@
+---
+import Icon from './Icon.astro';
+const media = '/media/image-revision';
+---
+<section class="image-revision wrap" id="image-revision" aria-labelledby="image-revision-title" data-image-revision>
+  <div class="revision-intro">
+    <p class="revision-eyebrow">An actual image revision</p>
+    <h2 id="image-revision-title">Change the colour.<br /><em>Keep the original.</em></h2>
+    <p>This newly generated blue teapot was the sole reference for a revision: turn its red lid and handle mustard yellow.</p>
+  </div>
+  <fieldset class="revision-comparison">
+    <legend>Compare the two images</legend>
+    <div class="revision-choices">
+      <label><input type="radio" name="teapot-view" value="original" />Original</label>
+      <label><input type="radio" name="teapot-view" value="revision" />Revision</label>
+      <label><input type="radio" name="teapot-view" value="both" checked />Both images</label>
+    </div>
+    <div class="revision-images">
+      <figure class="revision-original">
+        <img src={`${media}/original.jpg`} alt="Original blue teapot with a red lid, knob and handle, on a cream background above a grey oval shadow." width="1264" height="848" loading="lazy" />
+        <figcaption><strong>Original</strong><span>Red lid and handle. The source file stays intact.</span></figcaption>
+      </figure>
+      <figure class="revision-result">
+        <img src={`${media}/revision.jpg`} alt="Revised blue teapot with a mustard-yellow lid, knob and handle, retaining the same recognisable composition." width="1264" height="848" loading="lazy" />
+        <figcaption><strong>Revision</strong><span>Mustard lid and handle. Saved as a separate image.</span></figcaption>
+      </figure>
+    </div>
+  </fieldset>
+  <div class="revision-outcome">
+    <p><strong>The original file is unchanged.</strong> PanelForge’s gallery links the revision back to it.</p>
+    <p><strong>The edit keeps the composition recognisable.</strong> This is a generative result judged by inspection; it does not establish pixel-perfect preservation.</p>
+  </div>
+  <details class="revision-evidence">
+    <summary>See the actual reference and result</summary>
+    <div class="revision-evidence-content">
+      <p>Two completed PanelForge jobs, using Gemini 3.1 Flash-Lite Image on 15 October 2026. The second used only the new original as its reference. These captures review the completed generations.</p>
+      <figure>
+        <a href={`${media}/gallery-detail.png`} aria-label="Open the full gallery detail capture"><img src={`${media}/gallery-detail.png`} alt="Actual PanelForge gallery detail showing the mustard teapot, its edit prompt, and Based on Original with View Original (#35769)." width="1424" height="822" loading="lazy" /></a>
+        <figcaption>The gallery links the revision to its retained original. That “View Original” link was followed successfully. This focused crop excludes the account navigation.</figcaption>
+      </figure>
+      <figure>
+        <a href={`${media}/completed-chat.png`} aria-label="Open the full completed chat capture"><img src={`${media}/completed-chat.png`} alt="Actual PanelForge chat showing the original reference attachment, the colour-change instruction, and the completed mustard teapot result. Personal avatar covered." width="1383" height="1182" loading="lazy" /></a>
+        <figcaption>The attached reference, edit instruction, and result in the actual revision chat. The personal avatar is covered with an opaque rectangle. The two calls created separate conversations, connected by image lineage.</figcaption>
+      </figure>
+      <p>Recorded job costs total $0.082965. This is the cost returned by the two jobs, without an independent invoice check. Requested size: 1K, 3:2; returned images: 1264 × 848.</p>
+      <a class="revision-receipt" href={`${media}/receipt.json`}>Read the file and reference checks <span aria-hidden="true"><Icon name="arrow-up-right" /></span></a>
+    </div>
+  </details>
+</section>
+<style>
+  .image-revision{padding-block:52px 64px;border-bottom:1px solid var(--line);scroll-margin-top:32px}
+  .revision-intro{display:grid;grid-template-columns:1.15fr 1fr;gap:14px 50px;align-items:end;margin-bottom:28px}
+  .revision-eyebrow{grid-column:1/-1;color:var(--rust);font-size:14px;font-weight:650;letter-spacing:.08em;text-transform:uppercase}
+  .revision-intro h2{font-size:clamp(2.1rem,4.5vw,4.4rem);line-height:1.08}.revision-intro h2 em{color:var(--forest)}
+  .revision-intro>p:last-child{font-size:17px;line-height:1.75;max-width:440px;color:var(--muted)}
+  .revision-comparison{border:0;padding:0;margin:0;min-width:0}
+  .revision-comparison legend{font-size:14px;font-weight:650;margin-bottom:10px}
+  .revision-choices{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+  .revision-choices label{display:flex;align-items:center;gap:9px;min-height:46px;padding:10px 17px;border:1px solid #8a9587;border-radius:3px;font-size:15px;cursor:pointer;touch-action:manipulation}
+  .revision-choices label:has(:checked){background:var(--forest-dark);border-color:var(--forest-dark);color:var(--paper)}
+  .revision-choices label:has(:focus-visible){outline:3px solid var(--rust);outline-offset:4px}
+  .revision-choices input{margin:0;accent-color:var(--forest);width:17px;height:17px;flex-shrink:0}
+  .revision-choices label:has(:checked) input{accent-color:var(--paper)}
+  .revision-images{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+  .revision-images figure{min-width:0;background:#ede8d9;border:1px solid var(--line);border-radius:4px;overflow:hidden}
+  .revision-images img{width:100%;height:auto;aspect-ratio:1264/848}
+  .revision-images figcaption{display:grid;gap:3px;padding:15px 18px;font-size:14px;line-height:1.6}
+  .revision-images figcaption strong{font-size:16px}.revision-images figcaption span{color:#505b51}
+  .revision-comparison:has([value=original]:checked) .revision-result,.revision-comparison:has([value=revision]:checked) .revision-original{display:none}
+  .revision-comparison:has([value=original]:checked) .revision-images,.revision-comparison:has([value=revision]:checked) .revision-images{grid-template-columns:1fr;max-width:860px;margin-inline:auto}
+  .revision-outcome{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:22px}
+  .revision-outcome p{font-size:14px;line-height:1.75;color:var(--muted)}.revision-outcome strong{color:var(--ink)}
+  .revision-evidence{margin-top:28px;border-block:1px solid var(--line)}
+  .revision-evidence summary{font-size:15px;font-weight:650;min-height:52px;padding:14px 8px}
+  .revision-evidence-content{padding:12px 0 24px;max-width:1000px}.revision-evidence-content>p{font-size:15px;line-height:1.8;margin-bottom:22px;max-width:760px;color:var(--muted)}
+  .revision-evidence figure{margin-block:22px}.revision-evidence figure a{display:block;min-height:44px}.revision-evidence img{width:100%;height:auto;border-radius:4px;border:1px solid var(--line)}
+  .revision-evidence figcaption{font-size:14px;line-height:1.75;color:var(--muted);margin-top:10px;max-width:780px}
+  .revision-receipt{display:inline-flex;align-items:center;gap:20px;font-size:15px;min-height:48px;padding-block:10px}
+  @media(max-width:760px){.image-revision{padding-block:34px 44px}.revision-intro{grid-template-columns:1fr;gap:15px;margin-bottom:24px}.revision-intro h2{font-size:clamp(2rem,7vw,3rem)}.revision-intro>p:last-child{font-size:16px}.revision-images{gap:12px}.revision-images figcaption{padding:12px;font-size:14px}.revision-outcome{grid-template-columns:1fr;gap:12px}.revision-choices{gap:7px}.revision-choices label{padding-inline:12px}}
+  @media(max-width:480px){.revision-images{grid-template-columns:1fr}.revision-choices label{font-size:14px;padding-inline:10px;gap:6px}.revision-choices{gap:6px}}
+</style>
